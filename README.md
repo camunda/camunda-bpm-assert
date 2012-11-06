@@ -14,63 +14,78 @@ This project leverages two great testing libraries. Namely [Fixtures for Easy So
 You can write fluent and more readable process unit tests like this one:
 
     :::java
-    @Test
-    @Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE, JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
-    public void testHappyPath() {
+    ...
+    import com.plexiti.activiti.test.fluent.mocking.ActivitiMockitoTest;
 
-        when(jobAnnouncement.getId()).thenReturn(1L);
-        when(jobAnnouncementService.findRequester(1L)).thenReturn(USER_MANAGER);
-        when(jobAnnouncementService.findEditor(1L)).thenReturn(USER_STAFF);
+    import static com.plexiti.activiti.test.fluent.ActivitiFestConditions.*;
+    import static org.mockito.Mockito.*;
+    import static org.fest.assertions.Assertions.assertThat;
 
-        start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS)
-            .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
-        );
+    public class JobAnnouncementTest extends ActivitiMockitoTest {
 
-        assertThat(process().diagramLayout()).is(containingNode(TASK_DESCRIBE_POSITION));
-        assertThat(process().diagramLayout()).is(containingNode(TASK_REVIEW_ANNOUNCEMENT));
-        assertThat(process().diagramLayout()).is(containingNode(TASK_CORRECT_ANNOUNCEMENT));
-        assertThat(process().diagramLayout()).is(containingNode(TASK_INITIATE_ANNOUNCEMENT));
+        @Mock public JobAnnouncementService jobAnnouncementService;
+        @Mock public JobAnnouncement jobAnnouncement;
 
-        assertThat(process().execution()).is(started());
+        @Test
+        @Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE, JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
+        public void testHappyPath() {
 
-        assertThat(process().execution()).is(atActivity(TASK_DESCRIBE_POSITION));
-        assertThat(process().currentTask()).is(inCandidateGroup(ROLE_STAFF));
-        assertThat(process().currentTask()).is(unassigned());
+            when(jobAnnouncement.getId()).thenReturn(1L);
+            when(jobAnnouncementService.findRequester(1L)).thenReturn(USER_MANAGER);
+            when(jobAnnouncementService.findEditor(1L)).thenReturn(USER_STAFF);
 
-        process().claim(process().currentTask(), USER_STAFF);
+            start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS)
+                .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
+            );
 
-        assertThat(process().currentTask()).isNot(unassigned());
-        assertThat(process().currentTask()).is(assignedTo(USER_STAFF));
+            assertThat(process().diagramLayout()).is(containingNode(TASK_DESCRIBE_POSITION));
+            assertThat(process().diagramLayout()).is(containingNode(TASK_REVIEW_ANNOUNCEMENT));
+            assertThat(process().diagramLayout()).is(containingNode(TASK_CORRECT_ANNOUNCEMENT));
+            assertThat(process().diagramLayout()).is(containingNode(TASK_INITIATE_ANNOUNCEMENT));
 
-        process().complete(process().currentTask());
+            assertThat(process().execution()).is(started());
 
-        assertThat(process().execution()).is(atActivity(TASK_REVIEW_ANNOUNCEMENT));
-        assertThat(process().currentTask()).isNot(unassigned());
-        assertThat(process().currentTask()).is(assignedTo(USER_MANAGER));
+            assertThat(process().execution()).is(atActivity(TASK_DESCRIBE_POSITION));
+            assertThat(process().currentTask()).is(inCandidateGroup(ROLE_STAFF));
+            assertThat(process().currentTask()).is(unassigned());
 
-        process().complete(process().currentTask(), "approved", true);
+            process().claim(process().currentTask(), USER_STAFF);
 
-        assertThat(process().execution()).is(atActivity(TASK_INITIATE_ANNOUNCEMENT));
-        assertThat(process().currentTask()).is(inCandidateGroup(ROLE_STAFF));
-        assertThat(process().currentTask()).is(unassigned());
+            assertThat(process().currentTask()).isNot(unassigned());
+            assertThat(process().currentTask()).is(assignedTo(USER_STAFF));
 
-        process().claim(process().currentTask(), USER_STAFF);
+            process().complete(process().currentTask());
 
-        assertThat(process().currentTask()).isNot(unassigned());
-        assertThat(process().currentTask()).is(assignedTo(USER_STAFF));
+            assertThat(process().execution()).is(atActivity(TASK_REVIEW_ANNOUNCEMENT));
+            assertThat(process().currentTask()).isNot(unassigned());
+            assertThat(process().currentTask()).is(assignedTo(USER_MANAGER));
 
-        process().complete(process().currentTask(), "twitter", true, "facebook", true);
+            process().complete(process().currentTask(), "approved", true);
 
-        verify(jobAnnouncementService).findRequester(jobAnnouncement.getId());
-        verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
-        verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
-        verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
-        verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
+            assertThat(process().execution()).is(atActivity(TASK_INITIATE_ANNOUNCEMENT));
+            assertThat(process().currentTask()).is(inCandidateGroup(ROLE_STAFF));
+            assertThat(process().currentTask()).is(unassigned());
 
-        assertThat(process().execution()).is(finished());
+            process().claim(process().currentTask(), USER_STAFF);
 
-        verifyNoMoreInteractions(jobAnnouncementService);
+            assertThat(process().currentTask()).isNot(unassigned());
+            assertThat(process().currentTask()).is(assignedTo(USER_STAFF));
+
+            process().complete(process().currentTask(), "twitter", true, "facebook", true);
+
+            verify(jobAnnouncementService).findRequester(jobAnnouncement.getId());
+            verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
+            verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
+            verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
+            verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
+
+            assertThat(process().execution()).is(finished());
+
+            verifyNoMoreInteractions(jobAnnouncementService);
+        }
     }
+Check the included unit tests for a full example!
+
 
 # Using it in your own project
 
