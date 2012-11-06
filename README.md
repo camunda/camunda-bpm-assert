@@ -8,7 +8,7 @@ technology stack and the [camunda fox BPM Platform](http://www.camunda.com/fox).
 
 An online version of the web application can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/).
 
-This project leverages two great testing libraries. Namely [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
+This project leverages two great testing libraries: [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
 [Mockito](http://code.google.com/p/mockito/).
 
 You can write fluent and more readable process unit tests like this one:
