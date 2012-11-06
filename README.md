@@ -1,17 +1,17 @@
 # Introduction
 
 A small library to facilitate the creation of [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) unit tests
-for your [Activiti](http://activit.org) and [camunda fox](http://www.camunda.com/fox) BPMN processes. It's a project spin-off of
-[The Job Announcement](https://bitbucket.org/plexiti/the-job-announcement-fox), a web application built in order to
-showcase a business process-centric application based on the [Java EE 6](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
+for your [Activiti](http://activiti.org) and [camunda fox](http://www.camunda.com/fox) BPMN processes.
+This project is a spin-off of [The Job Announcement](https://bitbucket.org/plexiti/the-job-announcement-fox), a showcase
+for a business process-centric application based on the [Java EE 6](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
 technology stack and the [camunda fox BPM Platform](http://www.camunda.com/fox).
 
-An online version of the web application can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/).
+An online version of The Job Announcement can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/).
 
 This project leverages two great testing libraries: [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
 [Mockito](http://code.google.com/p/mockito/).
 
-You can write fluent and more readable process unit tests like this one:
+You can write fluent and more readable process unit tests like this:
 
     :::java
     ...
@@ -111,10 +111,10 @@ and this repository to your pom.xml
             <enabled>true</enabled>
         </releases>
         <snapshots>
-            <enabled>true</enabled>
+            <enabled>false</enabled>
         </snapshots>
     </repository>
 
 # Feedback and Future Work
 
-Suggestions, pull request, ... you name it! are always welcome!
+Suggestions, pull requests, ... you name it... are always welcome!
