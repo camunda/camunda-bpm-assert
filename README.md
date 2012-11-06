@@ -27,7 +27,8 @@ You can write fluent and more readable process unit tests like this one:
         @Mock public JobAnnouncement jobAnnouncement;
 
         @Test
-        @Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE, JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
+        @Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE,
+                                  JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
         public void testHappyPath() {
 
             when(jobAnnouncement.getId()).thenReturn(1L);
