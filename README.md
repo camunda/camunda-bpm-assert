@@ -96,7 +96,7 @@ To use in your project you will need to add this dependency
     <dependency>
         <groupId>com.plexiti.activiti</groupId>
         <artifactId>activiti-fluent-tests</artifactId>
-        <version>0.1-SNAPSHOT</version>
+        <version>0.1</version>
         <scope>test</scope>
     </dependency>
 
@@ -104,9 +104,9 @@ and this repository to your pom.xml
 
     :::xml
     <repository>
-        <id>plexiti-public-repository</id>
-        <name>plexiti Public Repository</name>
-        <url>http://nexus.schimak.at/content/groups/public</url>
+        <id>plexiti-public-releases</id>
+        <name>plexiti Public Releases Repository</name>
+        <url>https://nexus.schimak.at/nexus/content/repositories/plexiti-public-releases/</url>
         <releases>
             <enabled>true</enabled>
         </releases>
