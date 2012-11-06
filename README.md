@@ -1,0 +1,106 @@
+# Introduction
+
+A small library to facilitate the creation of [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) unit tests
+for your [Activiti](http://activit.org) and [camunda fox](http://www.camunda.com/fox) BPMN processes. It's a project spin-off of
+[The Job Announcement](https://bitbucket.org/plexiti/the-job-announcement-fox), a web application built in order to
+showcase a business process-centric application based on the [Java EE 6](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
+technology stack and the [camunda fox BPM Platform](http://www.camunda.com/fox).
+An online version of the web application can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/).
+
+This project leverages two great testing libraries. Namely [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
+[Mockito](http://code.google.com/p/mockito/).
+
+You can write fluent and more readable process unit tests like this one:
+
+:::java
+	@Test
+	@Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE, JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
+	public void testHappyPath() {
+
+		when(jobAnnouncement.getId()).thenReturn(1L);
+		when(jobAnnouncementService.findRequester(1L)).thenReturn(USER_MANAGER);
+		when(jobAnnouncementService.findEditor(1L)).thenReturn(USER_STAFF);
+
+		start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS)
+			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
+		);
+
+		assertThat(process().diagramLayout()).is(containingNode(TASK_DESCRIBE_POSITION));
+		assertThat(process().diagramLayout()).is(containingNode(TASK_REVIEW_ANNOUNCEMENT));
+		assertThat(process().diagramLayout()).is(containingNode(TASK_CORRECT_ANNOUNCEMENT));
+		assertThat(process().diagramLayout()).is(containingNode(TASK_INITIATE_ANNOUNCEMENT));
+
+		assertThat(process().execution()).is(started());
+
+		assertThat(process().execution()).is(atActivity(TASK_DESCRIBE_POSITION));
+		assertThat(process().currentTask()).is(inCandidateGroup(ROLE_STAFF));
+		assertThat(process().currentTask()).is(unassigned());
+
+		process().claim(process().currentTask(), USER_STAFF);
+
+		assertThat(process().currentTask()).isNot(unassigned());
+		assertThat(process().currentTask()).is(assignedTo(USER_STAFF));
+
+		process().complete(process().currentTask());
+
+		assertThat(process().execution()).is(atActivity(TASK_REVIEW_ANNOUNCEMENT));
+		assertThat(process().currentTask()).isNot(unassigned());
+		assertThat(process().currentTask()).is(assignedTo(USER_MANAGER));
+
+		process().complete(process().currentTask(), "approved", true);
+
+		assertThat(process().execution()).is(atActivity(TASK_INITIATE_ANNOUNCEMENT));
+		assertThat(process().currentTask()).is(inCandidateGroup(ROLE_STAFF));
+		assertThat(process().currentTask()).is(unassigned());
+
+		process().claim(process().currentTask(), USER_STAFF);
+
+		assertThat(process().currentTask()).isNot(unassigned());
+		assertThat(process().currentTask()).is(assignedTo(USER_STAFF));
+
+		process().complete(process().currentTask(), "twitter", true, "facebook", true);
+
+		verify(jobAnnouncementService).findRequester(jobAnnouncement.getId());
+		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
+		verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
+		verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
+		verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
+
+		assertThat(process().execution()).is(finished());
+
+		verifyNoMoreInteractions(jobAnnouncementService);
+	}
+
+# Using it in your own project
+
+To use in your project you will need to add this dependency to your pom.xml:
+
+:::xml
+		<dependency>
+			<groupId>com.plexiti.activiti</groupId>
+			<artifactId>activiti-fluent-tests</artifactId>
+			<version>0.1-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
+and this repository:
+
+:::xml
+	<repositories>
+        ...
+		<repository>
+			<id>plexiti-public-repository</id>
+			<name>plexiti Public Repository</name>
+			<url>http://nexus.schimak.at/content/groups/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+    </repositories>
+
+# Feedback and Future Work
+
+Suggestions, pull request, ... you name it! are always welcome!

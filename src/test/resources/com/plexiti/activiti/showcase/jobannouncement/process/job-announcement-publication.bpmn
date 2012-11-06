@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="6.0.0" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-c2339534-7029-477b-9831-3df9906509f9" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+   <process id="job-announcement-publication" isExecutable="true" name="Job Announcement Publication (Subprocess)">
+      <startEvent id="startEvent_1" name="">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <outgoing>sequenceFlow_68</outgoing>
+      </startEvent>
+      <serviceTask activiti:expression="#{jobAnnouncementService.postToWebsite(jobAnnouncementId)}" completionQuantity="1" id="Anzeige_auf_Firmenwebsite_publizieren_5" implementation="webService" isForCompensation="false" name="Anzeige auf Firmenwebsite publizieren" startQuantity="1">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+            <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
+            <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]"/>
+         </extensionElements>
+         <incoming>sequenceFlow_68</incoming>
+         <outgoing>sequenceFlow_71</outgoing>
+      </serviceTask>
+      <parallelGateway gatewayDirection="Diverging" id="parallelGateway_12" name="">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <incoming>sequenceFlow_71</incoming>
+         <outgoing>sequenceFlow_79</outgoing>
+         <outgoing>sequenceFlow_72</outgoing>
+      </parallelGateway>
+      <exclusiveGateway gatewayDirection="Diverging" id="Twitter_gew_hlt__57" name="Twitter&#10;gewählt?">
+         <extensionElements>
+            <signavio:signavioLabel align="right" bottom="true" left="true" ref="text_name" right="false" top="false" x="9.0" y="29.0"/>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <incoming>sequenceFlow_79</incoming>
+         <outgoing>sequenceFlow_69</outgoing>
+         <outgoing>sequenceFlow_73</outgoing>
+      </exclusiveGateway>
+      <serviceTask activiti:expression="#{jobAnnouncementService.postToTwitter(jobAnnouncementId)}" completionQuantity="1" id="Anzeige_auf_Twitter_publizieren_50" implementation="webService" isForCompensation="false" name="Anzeige auf Twitter publizieren" startQuantity="1">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+            <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
+            <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]"/>
+         </extensionElements>
+         <incoming>sequenceFlow_69</incoming>
+         <outgoing>sequenceFlow_70</outgoing>
+      </serviceTask>
+      <exclusiveGateway gatewayDirection="Converging" id="exclusiveGateway_44" name="">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <incoming>sequenceFlow_70</incoming>
+         <incoming>sequenceFlow_73</incoming>
+         <outgoing>sequenceFlow_80</outgoing>
+      </exclusiveGateway>
+      <parallelGateway gatewayDirection="Converging" id="parallelGateway_38" name="">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <incoming>sequenceFlow_80</incoming>
+         <incoming>sequenceFlow_75</incoming>
+         <outgoing>sequenceFlow_76</outgoing>
+      </parallelGateway>
+      <exclusiveGateway gatewayDirection="Converging" id="exclusiveGateway_25" name="">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <incoming>sequenceFlow_78</incoming>
+         <incoming>sequenceFlow_74</incoming>
+         <outgoing>sequenceFlow_75</outgoing>
+      </exclusiveGateway>
+      <serviceTask activiti:expression="#{jobAnnouncementService.postToFacebook(jobAnnouncementId)}" completionQuantity="1" id="Anzeige_auf_Facebook_Page_publizieren_31" implementation="webService" isForCompensation="false" name="Anzeige auf Facebook Page publizieren" startQuantity="1">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+            <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
+            <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]"/>
+         </extensionElements>
+         <incoming>sequenceFlow_77</incoming>
+         <outgoing>sequenceFlow_78</outgoing>
+      </serviceTask>
+      <exclusiveGateway gatewayDirection="Diverging" id="Facebook_gew_hlt__18" name="Facebook&#10;gewählt?">
+         <extensionElements>
+            <signavio:signavioLabel align="right" bottom="true" left="true" ref="text_name" right="false" top="false" x="9.0" y="29.0"/>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <incoming>sequenceFlow_72</incoming>
+         <outgoing>sequenceFlow_77</outgoing>
+         <outgoing>sequenceFlow_74</outgoing>
+      </exclusiveGateway>
+      <endEvent id="endEvent_64" name="">
+         <extensionElements>
+            <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+         </extensionElements>
+         <incoming>sequenceFlow_76</incoming>
+      </endEvent>
+      <sequenceFlow id="sequenceFlow_77" isImmediate="true" name="Ja" sourceRef="Facebook_gew_hlt__18" targetRef="Anzeige_auf_Facebook_Page_publizieren_31">
+         <conditionExpression id="sid-54b51d6e-8673-42c5-8d8d-14435a8064bb" xsi:type="tFormalExpression">#{facebook}</conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="sequenceFlow_80" isImmediate="true" name="" sourceRef="exclusiveGateway_44" targetRef="parallelGateway_38"/>
+      <sequenceFlow id="sequenceFlow_68" isImmediate="true" name="" sourceRef="startEvent_1" targetRef="Anzeige_auf_Firmenwebsite_publizieren_5"/>
+      <sequenceFlow id="sequenceFlow_79" isImmediate="true" name="" sourceRef="parallelGateway_12" targetRef="Twitter_gew_hlt__57"/>
+      <sequenceFlow id="sequenceFlow_70" isImmediate="true" name="" sourceRef="Anzeige_auf_Twitter_publizieren_50" targetRef="exclusiveGateway_44"/>
+      <sequenceFlow id="sequenceFlow_72" isImmediate="true" name="" sourceRef="parallelGateway_12" targetRef="Facebook_gew_hlt__18"/>
+      <sequenceFlow id="sequenceFlow_78" isImmediate="true" name="" sourceRef="Anzeige_auf_Facebook_Page_publizieren_31" targetRef="exclusiveGateway_25"/>
+      <sequenceFlow id="sequenceFlow_76" isImmediate="true" name="" sourceRef="parallelGateway_38" targetRef="endEvent_64"/>
+      <sequenceFlow id="sequenceFlow_71" isImmediate="true" name="" sourceRef="Anzeige_auf_Firmenwebsite_publizieren_5" targetRef="parallelGateway_12"/>
+      <sequenceFlow id="sequenceFlow_75" isImmediate="true" name="" sourceRef="exclusiveGateway_25" targetRef="parallelGateway_38"/>
+      <sequenceFlow id="sequenceFlow_74" isImmediate="true" name="Nein" sourceRef="Facebook_gew_hlt__18" targetRef="exclusiveGateway_25">
+         <conditionExpression id="sid-9c263286-a99e-40b4-970e-e4e28e7644a0" xsi:type="tFormalExpression">#{!facebook}</conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="sequenceFlow_69" isImmediate="true" name="Ja" sourceRef="Twitter_gew_hlt__57" targetRef="Anzeige_auf_Twitter_publizieren_50">
+         <conditionExpression id="sid-c6f170b1-aaf9-446d-963a-d9db89ae6250" xsi:type="tFormalExpression">#{twitter}</conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="sequenceFlow_73" isImmediate="true" name="Nein" sourceRef="Twitter_gew_hlt__57" targetRef="exclusiveGateway_44">
+         <extensionElements>
+            <signavio:signavioLabel bottom="false" edge="startbottom" left="false" ref="text_name" right="false" top="false"/>
+         </extensionElements>
+         <conditionExpression id="sid-9d4d7ebd-ff62-411f-9228-b10a15616557" xsi:type="tFormalExpression">#{!twitter}</conditionExpression>
+      </sequenceFlow>
+   </process>
+   <bpmndi:BPMNDiagram id="sid-830c5f5e-90b8-4b10-84fa-0fe5d466f2d0">
+      <bpmndi:BPMNPlane bpmnElement="job-announcement-publication" id="sid-c40130ce-08e6-4f67-ae3d-774a7f6a3ead">
+         <bpmndi:BPMNShape bpmnElement="startEvent_1" id="startEvent_1_gui">
+            <omgdc:Bounds height="30.0" width="30.0" x="106.0" y="171.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="Anzeige_auf_Firmenwebsite_publizieren_5" id="Anzeige_auf_Firmenwebsite_publizieren_5_gui">
+            <omgdc:Bounds height="80.0" width="100.0" x="180.0" y="145.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="parallelGateway_12" id="parallelGateway_12_gui">
+            <omgdc:Bounds height="40.0" width="40.0" x="330.0" y="165.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="Twitter_gew_hlt__57" id="Twitter_gew_hlt__57_gui" isMarkerVisible="true">
+            <omgdc:Bounds height="40.0" width="40.0" x="420.0" y="110.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="Anzeige_auf_Twitter_publizieren_50" id="Anzeige_auf_Twitter_publizieren_50_gui">
+            <omgdc:Bounds height="80.0" width="100.0" x="522.0" y="90.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="exclusiveGateway_44" id="exclusiveGateway_44_gui" isMarkerVisible="true">
+            <omgdc:Bounds height="40.0" width="40.0" x="675.0" y="110.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="parallelGateway_38" id="parallelGateway_38_gui">
+            <omgdc:Bounds height="40.0" width="40.0" x="755.0" y="165.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="exclusiveGateway_25" id="exclusiveGateway_25_gui" isMarkerVisible="true">
+            <omgdc:Bounds height="40.0" width="40.0" x="680.0" y="215.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="Anzeige_auf_Facebook_Page_publizieren_31" id="Anzeige_auf_Facebook_Page_publizieren_31_gui">
+            <omgdc:Bounds height="80.0" width="100.0" x="522.0" y="195.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="Facebook_gew_hlt__18" id="Facebook_gew_hlt__18_gui" isMarkerVisible="true">
+            <omgdc:Bounds height="40.0" width="40.0" x="425.0" y="215.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNShape bpmnElement="endEvent_64" id="endEvent_64_gui">
+            <omgdc:Bounds height="28.0" width="28.0" x="830.0" y="171.0"/>
+         </bpmndi:BPMNShape>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_79" id="sequenceFlow_79_gui">
+            <omgdi:waypoint x="350.0" y="165.0"/>
+            <omgdi:waypoint x="350.5" y="130.5"/>
+            <omgdi:waypoint x="420.0" y="130.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_77" id="sequenceFlow_77_gui">
+            <omgdi:waypoint x="465.0" y="235.0"/>
+            <omgdi:waypoint x="522.0" y="235.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_78" id="sequenceFlow_78_gui">
+            <omgdi:waypoint x="622.0" y="235.0"/>
+            <omgdi:waypoint x="680.0" y="235.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_69" id="sequenceFlow_69_gui">
+            <omgdi:waypoint x="460.0" y="130.0"/>
+            <omgdi:waypoint x="522.0" y="130.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_68" id="sequenceFlow_68_gui">
+            <omgdi:waypoint x="136.0" y="186.0"/>
+            <omgdi:waypoint x="180.0" y="185.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_72" id="sequenceFlow_72_gui">
+            <omgdi:waypoint x="350.0" y="205.0"/>
+            <omgdi:waypoint x="350.0" y="235.5"/>
+            <omgdi:waypoint x="425.0" y="235.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_71" id="sequenceFlow_71_gui">
+            <omgdi:waypoint x="280.0" y="185.0"/>
+            <omgdi:waypoint x="330.0" y="185.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_80" id="sequenceFlow_80_gui">
+            <omgdi:waypoint x="715.0" y="130.0"/>
+            <omgdi:waypoint x="775.5" y="130.5"/>
+            <omgdi:waypoint x="775.0" y="165.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_70" id="sequenceFlow_70_gui">
+            <omgdi:waypoint x="622.0" y="130.0"/>
+            <omgdi:waypoint x="675.0" y="130.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_76" id="sequenceFlow_76_gui">
+            <omgdi:waypoint x="795.0" y="185.0"/>
+            <omgdi:waypoint x="830.0" y="185.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_75" id="sequenceFlow_75_gui">
+            <omgdi:waypoint x="720.0" y="235.0"/>
+            <omgdi:waypoint x="775.0" y="235.5"/>
+            <omgdi:waypoint x="775.0" y="205.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_74" id="sequenceFlow_74_gui">
+            <omgdi:waypoint x="445.0" y="255.0"/>
+            <omgdi:waypoint x="445.5" y="311.0"/>
+            <omgdi:waypoint x="700.5" y="311.0"/>
+            <omgdi:waypoint x="700.0" y="255.0"/>
+         </bpmndi:BPMNEdge>
+         <bpmndi:BPMNEdge bpmnElement="sequenceFlow_73" id="sequenceFlow_73_gui">
+            <omgdi:waypoint x="440.0" y="110.0"/>
+            <omgdi:waypoint x="440.5" y="58.0"/>
+            <omgdi:waypoint x="695.5" y="58.0"/>
+            <omgdi:waypoint x="695.0" y="110.0"/>
+         </bpmndi:BPMNEdge>
+      </bpmndi:BPMNPlane>
+   </bpmndi:BPMNDiagram>
+</definitions>

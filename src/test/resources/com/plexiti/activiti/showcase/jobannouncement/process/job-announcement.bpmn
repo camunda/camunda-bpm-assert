@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sid-4897dfb4-f921-4ddc-8ac0-43f3a67ad714" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="6.0.0" targetNamespace="http://www.signavio.com/bpmn20">
+  <message id="sid-3cb3e5f5-137b-4be8-8629-4d2d78cc009d" name=""/>
+  <collaboration id="sid-b7b63732-318f-435f-b683-8c25310a1050">
+    <participant id="Process_Engine_5" name="Job Announcement" processRef="job-announcement">
+      <extensionElements>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffff"/>
+      </extensionElements>
+    </participant>
+  </collaboration>
+  <process id="job-announcement" name="Process Engine" isClosed="true" isExecutable="true">
+    <laneSet id="sid-ad57a900-ff4b-40ba-8e7b-0d3965be50d8">
+      <lane id="Automatisch_284" name="Automatisch">
+        <extensionElements>
+          <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue=""/>
+        </extensionElements>
+        <flowNodeRef>Freie_Stelle_gemeldet_303</flowNodeRef>
+        <flowNodeRef>Erfolgsmeldung_senden_316</flowNodeRef>
+        <flowNodeRef>Stelle_ausgeschrieben_323</flowNodeRef>
+        <flowNodeRef>publication</flowNodeRef>
+      </lane>
+      <lane id="F_hrungskraft_291" name="Führungskraft">
+        <extensionElements>
+          <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue=""/>
+        </extensionElements>
+        <flowNodeRef>review</flowNodeRef>
+        <flowNodeRef>OK__335</flowNodeRef>
+      </lane>
+      <lane id="SB_Personal_296" name="SB Personal">
+        <extensionElements>
+          <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue=""/>
+        </extensionElements>
+        <flowNodeRef>edit</flowNodeRef>
+        <flowNodeRef>correct</flowNodeRef>
+        <flowNodeRef>publish</flowNodeRef>
+      </lane>
+    </laneSet>
+    <startEvent id="Freie_Stelle_gemeldet_303" name="Freie Stelle&#xA;gemeldet">
+      <extensionElements>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="viaitsystem" metaValue=""/>
+      </extensionElements>
+      <outgoing>sequenceFlow_363</outgoing>
+      <messageEventDefinition id="sid-e1d44160-0a00-4e58-9351-03eb3919cabf" messageRef="sid-3cb3e5f5-137b-4be8-8629-4d2d78cc009d"/>
+    </startEvent>
+    <serviceTask id="Erfolgsmeldung_senden_316" activiti:expression="#{jobAnnouncementService.notifyAboutPostings(jobAnnouncementId)}" name="Erfolgsmeldung senden" implementation="webService">
+      <extensionElements>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="risklevel" metaValue=""/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="externaldocuments" metaValue=""/>
+      </extensionElements>
+      <incoming>sequenceFlow_368</incoming>
+      <outgoing>sequenceFlow_369</outgoing>
+    </serviceTask>
+    <endEvent id="Stelle_ausgeschrieben_323" name="Stelle&#xA;ausgeschrieben">
+      <extensionElements>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffff"/>
+      </extensionElements>
+      <incoming>sequenceFlow_369</incoming>
+    </endEvent>
+    <callActivity id="publication" name="Durchführung der Ausschreibung" calledElement="job-announcement-publication">
+      <extensionElements>
+        <signavio:signavioStencil xsi:type="xsd:anyType" id="CollapsedSubprocess"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="externaldocuments" metaValue="[]"/>
+        <activiti:in source="jobAnnouncementId" target="jobAnnouncementId"/>
+        <activiti:in source="facebook" target="facebook"/>
+        <activiti:in source="twitter" target="twitter"/>
+      </extensionElements>
+      <incoming>sequenceFlow_367</incoming>
+      <outgoing>sequenceFlow_368</outgoing>
+    </callActivity>
+    <userTask id="review" activiti:assignee="#{jobAnnouncementService.findRequester(jobAnnouncementId)}" name="Stellenbeschreibung sichten" implementation="webService">
+      <extensionElements>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="risklevel" metaValue=""/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="externaldocuments" metaValue=""/>
+      </extensionElements>
+      <incoming>sequenceFlow_364</incoming>
+      <incoming>sequenceFlow_366</incoming>
+      <outgoing>sequenceFlow_365</outgoing>
+    </userTask>
+    <exclusiveGateway id="OK__335" name="OK?" gatewayDirection="Diverging">
+      <extensionElements>
+        <signavio:signavioLabel xsi:type="xsd:anyType" align="center" bottom="true" left="false" ref="text_name" right="false" top="false" x="21.0" y="45.0"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffff"/>
+      </extensionElements>
+      <incoming>sequenceFlow_365</incoming>
+      <outgoing>ja_371</outgoing>
+      <outgoing>nein_370</outgoing>
+    </exclusiveGateway>
+    <userTask id="edit" activiti:candidateGroups="engineering" name="Stelle beschreiben" implementation="webService">
+      <extensionElements>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="risklevel" metaValue=""/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="externaldocuments" metaValue=""/>
+      </extensionElements>
+      <incoming>sequenceFlow_363</incoming>
+      <outgoing>sequenceFlow_364</outgoing>
+    </userTask>
+    <userTask id="correct" activiti:assignee="#{jobAnnouncementService.findEditor(jobAnnouncementId)}" name="Stellenbeschreibung korrigieren" implementation="webService">
+      <extensionElements>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="risklevel" metaValue=""/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="externaldocuments" metaValue=""/>
+      </extensionElements>
+      <incoming>nein_370</incoming>
+      <outgoing>sequenceFlow_366</outgoing>
+    </userTask>
+    <userTask id="publish" activiti:candidateGroups="engineering" name="Ausschreibung anstoßen" implementation="webService">
+      <extensionElements>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="risklevel" metaValue=""/>
+        <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="externaldocuments" metaValue=""/>
+      </extensionElements>
+      <incoming>ja_371</incoming>
+      <outgoing>sequenceFlow_367</outgoing>
+    </userTask>
+    <sequenceFlow id="sequenceFlow_365" name="" isImmediate="true" sourceRef="review" targetRef="OK__335"/>
+    <sequenceFlow id="sequenceFlow_364" name="" isImmediate="true" sourceRef="edit" targetRef="review"/>
+    <sequenceFlow id="sequenceFlow_369" name="" isImmediate="true" sourceRef="Erfolgsmeldung_senden_316" targetRef="Stelle_ausgeschrieben_323"/>
+    <sequenceFlow id="sequenceFlow_367" name="" isImmediate="true" sourceRef="publish" targetRef="publication"/>
+    <sequenceFlow id="sequenceFlow_368" name="" isImmediate="true" sourceRef="publication" targetRef="Erfolgsmeldung_senden_316"/>
+    <sequenceFlow id="sequenceFlow_363" name="" isImmediate="true" sourceRef="Freie_Stelle_gemeldet_303" targetRef="edit"/>
+    <sequenceFlow id="sequenceFlow_366" name="" isImmediate="true" sourceRef="correct" targetRef="review"/>
+    <sequenceFlow id="ja_371" name="Ja" isImmediate="true" sourceRef="OK__335" targetRef="publish">
+      <conditionExpression xsi:type="tFormalExpression" id="sid-bfa951d7-5ae1-474f-a2d5-86841d9495b0">#{approved}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="nein_370" name="Nein" isImmediate="true" sourceRef="OK__335" targetRef="correct">
+      <conditionExpression xsi:type="tFormalExpression" id="sid-910212bd-fe30-4a7b-98dd-44a42522b2ed">#{!approved}</conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="sid-34675459-0340-4c41-9d19-e1f49b540b24">
+    <bpmndi:BPMNPlane id="sid-d6abd6d7-5203-42cb-a86a-fd15d6fa02b8" bpmnElement="sid-b7b63732-318f-435f-b683-8c25310a1050">
+      <bpmndi:BPMNShape id="Process_Engine_5_gui" bpmnElement="Process_Engine_5" isHorizontal="true">
+        <omgdc:Bounds height="616.0" width="1374.0" x="0.0" y="0.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Automatisch_284_gui" bpmnElement="Automatisch_284" isHorizontal="true">
+        <omgdc:Bounds height="205.63333" width="1344.0" x="30.0" y="0.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="F_hrungskraft_291_gui" bpmnElement="F_hrungskraft_291" isHorizontal="true">
+        <omgdc:Bounds height="205.63333" width="1344.0" x="30.0" y="411.26666"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SB_Personal_296_gui" bpmnElement="SB_Personal_296" isHorizontal="true">
+        <omgdc:Bounds height="205.63333" width="1344.0" x="30.0" y="205.63333"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Freie_Stelle_gemeldet_303_gui" bpmnElement="Freie_Stelle_gemeldet_303" isHorizontal="true">
+        <omgdc:Bounds height="30.0" width="30.0" x="88.49999" y="90.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Erfolgsmeldung_senden_316_gui" bpmnElement="Erfolgsmeldung_senden_316" isHorizontal="true">
+        <omgdc:Bounds height="79.0" width="111.0" x="1099.0" y="62.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Stelle_ausgeschrieben_323_gui" bpmnElement="Stelle_ausgeschrieben_323" isHorizontal="true">
+        <omgdc:Bounds height="28.0" width="28.0" x="1256.26" y="88.36667"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="publication_gui" bpmnElement="publication" isHorizontal="true">
+        <omgdc:Bounds height="78.0" width="111.0" x="943.0" y="63.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="review_gui" bpmnElement="review" isHorizontal="true">
+        <omgdc:Bounds height="80.0" width="100.0" x="345.0" y="474.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="OK__335_gui" bpmnElement="OK__335" isHorizontal="true" isMarkerVisible="true">
+        <omgdc:Bounds height="40.0" width="40.0" x="490.0" y="494.26666"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="edit_gui" bpmnElement="edit" isHorizontal="true">
+        <omgdc:Bounds height="80.0" width="100.0" x="180.0" y="268.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="correct_gui" bpmnElement="correct" isHorizontal="true">
+        <omgdc:Bounds height="80.0" width="100.0" x="555.0" y="268.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="publish_gui" bpmnElement="publish" isHorizontal="true">
+        <omgdc:Bounds height="79.0" width="111.0" x="763.0" y="268.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="ja_371_gui" bpmnElement="ja_371" sourceElement="OK__335_gui" targetElement="publish_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="530.0" y="514.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="720.0" y="514.76666"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="720.0" y="308.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="763.0" y="308.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="nein_370_gui" bpmnElement="nein_370" sourceElement="OK__335_gui" targetElement="correct_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="510.0" y="494.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="510.5" y="308.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="555.0" y="308.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sequenceFlow_365_gui" bpmnElement="sequenceFlow_365" sourceElement="review_gui" targetElement="OK__335_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="445.0" y="514.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="490.0" y="514.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sequenceFlow_366_gui" bpmnElement="sequenceFlow_366" sourceElement="correct_gui" targetElement="review_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="655.0" y="308.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="689.0" y="308.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="689.0" y="236.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="395.0" y="236.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="395.0" y="474.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sequenceFlow_363_gui" bpmnElement="sequenceFlow_363" sourceElement="Freie_Stelle_gemeldet_303_gui" targetElement="edit_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="118.0" y="105.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="149.19427" y="103.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="149.19427" y="307.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="180.0" y="307.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sequenceFlow_364_gui" bpmnElement="sequenceFlow_364" sourceElement="edit_gui" targetElement="review_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="280.0" y="307.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="304.79" y="307.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="304.79" y="514.26666"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="345.0" y="514.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sequenceFlow_369_gui" bpmnElement="sequenceFlow_369" sourceElement="Erfolgsmeldung_senden_316_gui" targetElement="Stelle_ausgeschrieben_323_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1210.0" y="102.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1256.0" y="102.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sequenceFlow_367_gui" bpmnElement="sequenceFlow_367" sourceElement="publish_gui" targetElement="publication_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="874.0" y="307.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="908.5" y="307.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="908.5" y="102.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="943.0" y="102.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="sequenceFlow_368_gui" bpmnElement="sequenceFlow_368" sourceElement="publication_gui" targetElement="Erfolgsmeldung_senden_316_gui">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1054.0" y="102.0"/>
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1099.0" y="101.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
