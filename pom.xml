@@ -12,7 +12,7 @@
 
     <properties>
         <activiti.version>5.10</activiti.version>
-        <fest.assert.version>1.4</fest.assert.version>
+        <fest.assert.version>2.0M8</fest.assert.version>
         <junit.version>4.8.2</junit.version>
         <mockito.version>1.9.0</mockito.version>
         <h2.version>1.3.162</h2.version>
@@ -38,7 +38,7 @@
         </dependency>
         <dependency>
             <groupId>org.easytesting</groupId>
-            <artifactId>fest-assert</artifactId>
+            <artifactId>fest-assert-core</artifactId>
             <version>${fest.assert.version}</version>
             <scope>compile</scope>
         </dependency>

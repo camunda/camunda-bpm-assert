@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.plexiti.helper.Console.println;
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

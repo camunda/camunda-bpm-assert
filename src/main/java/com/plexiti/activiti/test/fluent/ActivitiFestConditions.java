@@ -13,12 +13,12 @@
  */
 package com.plexiti.activiti.test.fluent;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.*;
+import org.fest.assertions.core.Condition;
 
 import org.activiti.engine.repository.DiagramLayout;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Task;
-import org.fest.assertions.Condition;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

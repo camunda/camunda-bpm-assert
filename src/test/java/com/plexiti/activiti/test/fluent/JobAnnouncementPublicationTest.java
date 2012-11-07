@@ -13,7 +13,7 @@ import static com.plexiti.activiti.test.fluent.ActivitiFestConditions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.*;
 
 public class JobAnnouncementPublicationTest extends ActivitiMockitoTest {
 	

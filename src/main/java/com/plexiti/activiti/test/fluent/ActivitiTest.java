@@ -13,7 +13,7 @@
  */
 package com.plexiti.activiti.test.fluent;
 
-import static org.fest.assertions.Assertions.assertThat;
+import static org.fest.assertions.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
