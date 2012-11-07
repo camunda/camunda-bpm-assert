@@ -22,32 +22,29 @@ import org.activiti.engine.task.Task;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class ActivitiFestConditions {
 	
-	public static Condition<Object> assignedTo(final String userId) {
-		return new Condition<Object>() {
+	public static Condition<Task> assignedTo(final String userId) {
+		return new Condition<Task>() {
 			@Override
-			public boolean matches(Object task) {
+			public boolean matches(Task task) {
 				assertThat(userId).isNotNull();
-				// This cast and the Condition<Object> return value should not be necessary anymore with a newer version of fest...
-				// TODO Review in more depth http://jira.codehaus.org/browse/FEST-363
-				return userId.equals(((Task) task).getAssignee());
+				return userId.equals(task.getAssignee());
 			}
 		};
 	}
 	
-	public static Condition<Object> atActivity(final String nodeId) {
-		return new Condition<Object>() {
+	public static Condition<Execution> atActivity(final String nodeId) {
+		return new Condition<Execution>() {
 			@Override
-			public boolean matches(Object execution) {
+			public boolean matches(Execution execution) {
 				assertThat(nodeId).isNotNull();
 				assertThat(execution).isNotNull();
-				// This cast and the Condition<Object> return value should not be necessary anymore with a newer version of fest...
-				// TODO Review in more depth http://jira.codehaus.org/browse/FEST-363
-				Execution exec = (Execution) execution;
-				String targetActivity = (String) ActivitiRuleHelper.get().getRuntimeService().getVariableLocal(exec.getId(), TestProcessInstance.ActivitiTargetActivity);
-				boolean atActivity = ActivitiRuleHelper.get().getRuntimeService().getActiveActivityIds(exec.getId()).contains(nodeId);
+
+				String targetActivity = (String) ActivitiRuleHelper.get().getRuntimeService().getVariableLocal(execution.getId(), TestProcessInstance.ActivitiTargetActivity);
+				boolean atActivity = ActivitiRuleHelper.get().getRuntimeService().getActiveActivityIds(execution.getId()).contains(nodeId);
 				if (nodeId.equals(targetActivity) && atActivity) {
 					throw new TestProcessInstance.ActivitiTargetActivityReached();
 				}
@@ -56,59 +53,49 @@ public class ActivitiFestConditions {
 		};
 	}
 
-	public static Condition<Object> containingNode(final String nodeId) {
-		return new Condition<Object>() {
+	public static Condition<DiagramLayout> containingNode(final String nodeId) {
+		return new Condition<DiagramLayout>() {
 			@Override
-			public boolean matches(Object diagramLayout) {
+			public boolean matches(DiagramLayout diagramLayout) {
 				assertThat(nodeId).isNotNull();
-				// This cast and the Condition<Object> return value should not be necessary anymore with a newer version of fest...
-				// TODO Review in more depth http://jira.codehaus.org/browse/FEST-363
-				return ((DiagramLayout) diagramLayout).getNode(nodeId) != null;
+				return diagramLayout.getNode(nodeId) != null;
 			}
 		};
 	}
 
-	public static Condition<Object> finished() {
-		return new Condition<Object>() {
+	public static Condition<Execution> finished() {
+		return new Condition<Execution>() {
 			@Override
-			public boolean matches(Object execution) {
-				// This cast and the Condition<Object> return value should not be necessary anymore with a newer version of fest...
-				// TODO Review in more depth http://jira.codehaus.org/browse/FEST-363
-				return execution == null || ((Execution) execution).isEnded();
+			public boolean matches(Execution execution) {
+				return execution == null || execution.isEnded();
 			}
 		};
 	}
 	
-	public static Condition<Object> inCandidateGroup(final String groupId) {
-		return new Condition<Object>() {
+	public static Condition<Task> inCandidateGroup(final String groupId) {
+		return new Condition<Task>() {
 			@Override
-			public boolean matches(Object task) {
+			public boolean matches(Task task) {
 				assertThat(groupId).isNotNull();
-				// This cast and the Condition<Object> return value should not be necessary anymore with a newer version of fest...
-				// TODO Review in more depth http://jira.codehaus.org/browse/FEST-363
-				return ActivitiRuleHelper.get().getTaskService().createTaskQuery().taskId(((Task) task).getId()).taskCandidateGroup(groupId).singleResult() != null;
+				return ActivitiRuleHelper.get().getTaskService().createTaskQuery().taskId(task.getId()).taskCandidateGroup(groupId).singleResult() != null;
 			}
 		};
 	}
 
-	public static Condition<Object> started() {
-		return new Condition<Object>() {
+	public static Condition<Execution> started() {
+		return new Condition<Execution>() {
 			@Override
-			public boolean matches(Object execution) {
-				// This cast and the Condition<Object> return value should not be necessary anymore with a newer version of fest...
-				// TODO Review in more depth http://jira.codehaus.org/browse/FEST-363
-				return execution != null && !((Execution) execution).isEnded();
+			public boolean matches(Execution execution) {
+				return execution != null && !execution.isEnded();
 			}
 		};
 	}
 
-	public static Condition<Object> unassigned() {
-		return new Condition<Object>() {
+	public static Condition<Task> unassigned() {
+		return new Condition<Task>() {
 			@Override
-			public boolean matches(Object task) {
-				// This cast and the Condition<Object> return value should not be necessary anymore with a newer version of fest...
-				// TODO Review in more depth http://jira.codehaus.org/browse/FEST-363
-				return ((Task) task).getAssignee() == null;
+			public boolean matches(Task task) {
+				return task.getAssignee() == null;
 			}
 		};
 	}
