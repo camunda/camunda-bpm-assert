@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class Mockitos {
 

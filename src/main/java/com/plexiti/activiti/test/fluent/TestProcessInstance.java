@@ -13,6 +13,7 @@
  */
 package com.plexiti.activiti.test.fluent;
 
+import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
@@ -26,27 +27,33 @@ import org.activiti.engine.task.TaskQuery;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static com.plexiti.helper.Console.println;
 import static org.fest.assertions.api.Assertions.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ *
  */
 public class TestProcessInstance {
-	
+
+    private static Logger log = Logger.getLogger(TestProcessInstance.class.getName());
+
 	protected static final String ActivitiTargetActivity = "ActivitiTargetActivity";
 
 	protected String processDefinitionKey;
 	protected ProcessInstance processInstance;
 	protected Map<String, Object> processVariables = new HashMap<String, Object>();
+    //protected TaskService taskService = ActivitiRuleHelper.get().getTaskService();
 	
 	public TestProcessInstance(String processDefinitionKey) {
 		this.processDefinitionKey = processDefinitionKey;
 	}
 
 	public List<String> activeActivities(Execution execution) {
-		return ActivitiRuleHelper.get().getRuntimeService().getActiveActivityIds(execution.getId());
+		return ActivitiFluentTestHelper.getRuntimeService().getActiveActivityIds(execution.getId());
 	}
 	
 	public String activeActivity(Execution execution) {
@@ -55,21 +62,21 @@ public class TestProcessInstance {
 		return activeActivities.get(0);
 	}
 	
-	protected ExecutionQuery activitiExecutionQuery() { return ActivitiRuleHelper.get().getRuntimeService().createExecutionQuery(); }
+	protected ExecutionQuery activitiExecutionQuery() { return ActivitiFluentTestHelper.getRuntimeService().createExecutionQuery(); }
 
-	protected GroupQuery activitiGroupQuery() { return ActivitiRuleHelper.get().getIdentityService().createGroupQuery(); };
+	protected GroupQuery activitiGroupQuery() { return ActivitiFluentTestHelper.getIdentityService().createGroupQuery(); };
 	
-	protected TaskQuery activitiTaskQuery() { return ActivitiRuleHelper.get().getTaskService().createTaskQuery(); }
-	protected UserQuery activitiUserQuery() { return ActivitiRuleHelper.get().getIdentityService().createUserQuery(); }
+	protected TaskQuery activitiTaskQuery() { return ActivitiFluentTestHelper.getTaskService().createTaskQuery(); }
+	protected UserQuery activitiUserQuery() { return ActivitiFluentTestHelper.getIdentityService().createUserQuery(); }
 	public void claim(Task task, String userId) {
-		ActivitiRuleHelper.get().getTaskService().claim(currentTask().getId(), userId);
+		ActivitiFluentTestHelper.getTaskService().claim(currentTask().getId(), userId);
 	}
 	public void claim(Task task, User user) {
 		claim(currentTask(), user.getId());
 	}
 
 	public void complete(Task task, Object... variables) {
-		ActivitiRuleHelper.get().getTaskService().complete(task.getId(), parseProcessVariables(variables));
+        ActivitiFluentTestHelper.getTaskService().complete(task.getId(), parseProcessVariables(variables));
 	}
 	
 	public Task currentTask() {
@@ -83,7 +90,7 @@ public class TestProcessInstance {
 	}
 
 	public DiagramLayout diagramLayout() {
-		DiagramLayout diagramLayout = ActivitiRuleHelper.get().getRepositoryService().getProcessDiagramLayout(processInstance().getProcessDefinitionId());
+		DiagramLayout diagramLayout = ActivitiFluentTestHelper.getRepositoryService().getProcessDiagramLayout(processInstance().getProcessDefinitionId());
 		assertThat(diagramLayout).overridingErrorMessage("Fatal error. Could not retrieve diagram layout!").isNotNull();				
 		return diagramLayout;
 	}
@@ -92,7 +99,7 @@ public class TestProcessInstance {
 		List<Execution> executions = executions();
 		if (executions.size() == 0) 
 			return null;
-		assertThat(executions).as("By calling execution() you implicitedly assumed that at most one such object exists.").hasSize(1);
+		assertThat(executions).as("By calling execution() you implicitly assumed that at most one such object exists.").hasSize(1);
 		return executions.get(0);
 	}
 
@@ -104,10 +111,10 @@ public class TestProcessInstance {
 	
 	public void moveTo(String targetActivity) {
 		try {
-			ActivitiRuleHelper.get().getRuntimeService().setVariable(processInstance.getId(), ActivitiTargetActivity, targetActivity);
+			ActivitiFluentTestHelper.getRuntimeService().setVariable(processInstance.getId(), ActivitiTargetActivity, targetActivity);
 			moveAlong(); 
 		} catch (ActivitiTargetActivityReached e) {
-			ActivitiRuleHelper.get().getRuntimeService().setVariable(processInstance.getId(), ActivitiTargetActivity, null);
+            ActivitiFluentTestHelper.getRuntimeService().setVariable(processInstance.getId(), ActivitiTargetActivity, null);
 		}
 	}
 	
@@ -127,7 +134,8 @@ public class TestProcessInstance {
 	
 	public TestProcessInstance start() {
 		processVariables.put(ActivitiTargetActivity, null);
-		processInstance = ActivitiRuleHelper.get().getRuntimeService().startProcessInstanceByKey(processDefinitionKey, processVariables); 
+		processInstance = ActivitiFluentTestHelper.getRuntimeService()
+                                                  .startProcessInstanceByKey(processDefinitionKey, processVariables);
 		println("Started process '" + processDefinitionKey +  "' (definition id: '" + processInstance.getProcessDefinitionId() + "', instance id: '" + processInstance.getId() + "').");			
 		return this;
 	}

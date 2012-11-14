@@ -35,7 +35,7 @@
         <flowNodeRef>publish</flowNodeRef>
       </lane>
     </laneSet>
-    <startEvent id="Freie_Stelle_gemeldet_303" name="Freie Stelle&#xA;gemeldet">
+    <startEvent id="Freie_Stelle_gemeldet_303" name="Freie Stelle gemeldet">
       <extensionElements>
         <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="bgcolor" metaValue="#ffffff"/>
         <signavio:signavioMetaData xsi:type="xsd:anyType" metaKey="viaitsystem" metaValue=""/>
