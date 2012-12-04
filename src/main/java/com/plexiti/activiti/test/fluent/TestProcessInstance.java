@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import static com.plexiti.helper.Console.println;
 import static org.fest.assertions.api.Assertions.*;
 
 /**
@@ -163,7 +162,7 @@ public class TestProcessInstance {
         // processVariables.put(ActivitiTargetActivity, null);
         actualProcessInstance = ActivitiFluentTestHelper.getRuntimeService()
                 .startProcessInstanceByKey(processDefinitionKey, processVariables);
-        println("Started process '" + processDefinitionKey + "' (definition id: '" + actualProcessInstance.getProcessDefinitionId() + "', instance id: '" + actualProcessInstance.getId() + "').");
+        log.info("Started process '" + processDefinitionKey + "' (definition id: '" + actualProcessInstance.getProcessDefinitionId() + "', instance id: '" + actualProcessInstance.getId() + "').");
         return this;
     }
 
