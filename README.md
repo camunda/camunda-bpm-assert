@@ -2,9 +2,9 @@
 
 > ACHTUNG! The code in this project is in an EARLY DRAFT state. Future releases *will* brake your tests
 > since the API will definitely change . We are following the ["Release Early, Release Often"](http://www.catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/ar01s04.html) principle here in order
-> to get feedback from the Activiti developer community.
+> to get feedback from the Activiti developer community. ;-)
 
-A library aiming at improving the developer experience when developing process-centric applications based on [Activiti](http://activiti.org) and [camunda fox](http://www.camunda.com/fox) BPMN platforms.
+This library aims at improving the developer experience when developing process-centric applications based on [Activiti](http://activiti.org) and [camunda fox](http://www.camunda.com/fox) BPMN platforms.
 This library provides:
 * a Test Driven Development (TDD) approach by allowing you to mock your service implementation
 * a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) API so you can focus on your tests
