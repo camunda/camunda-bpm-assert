@@ -1,6 +1,11 @@
 package com.plexiti.activiti.showcase.jobannouncement.process;
 
-
+/**
+ *
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ *
+ */
 public abstract class ProcessConstants {
 
     public static final String JOBANNOUNCEMENT_PROCESS = "job-announcement";

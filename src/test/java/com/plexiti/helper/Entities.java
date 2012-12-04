@@ -1,5 +1,11 @@
 package com.plexiti.helper;
 
+/**
+ *
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ *
+ */
 public class Entities {
 
     public static String idVariableName(Class<?> clazz) {

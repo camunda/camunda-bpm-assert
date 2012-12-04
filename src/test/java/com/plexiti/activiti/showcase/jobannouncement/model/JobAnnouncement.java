@@ -6,6 +6,12 @@ import java.util.Date;
 import com.plexiti.helper.Strings;
 import org.activiti.engine.task.Task;
 
+/**
+ *
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ *
+ */
 public class JobAnnouncement implements Serializable {
 
     private static final long serialVersionUID = 7458230741177377962L;

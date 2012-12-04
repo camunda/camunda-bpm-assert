@@ -9,7 +9,10 @@ import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 
 /**
- * Activiti Task fluent assertions
+ *
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ *
  */
 public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
 

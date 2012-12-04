@@ -4,7 +4,12 @@ import java.util.List;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 
-
+/**
+ *
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ *
+ */
 public interface JobAnnouncementService {
 
     List<JobAnnouncement> listPublished();

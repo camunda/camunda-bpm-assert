@@ -12,6 +12,12 @@ import static com.plexiti.activiti.test.fluent.Assertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ *
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ *
+ */
 public class JobAnnouncementPublicationTest extends ActivitiFluentTest {
 	
 	@Mock

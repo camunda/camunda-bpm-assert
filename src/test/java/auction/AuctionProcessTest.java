@@ -21,6 +21,9 @@ import static com.plexiti.activiti.test.fluent.Assertions.*;
 
 import static org.mockito.Mockito.when;
 
+/*
+ * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
+ */
 public class AuctionProcessTest extends ActivitiFluentTest {
 
     @Mock

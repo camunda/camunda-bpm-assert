@@ -7,6 +7,7 @@ import org.fest.assertions.api.LongAssert;
 import org.fest.assertions.api.StringAssert;
 
 /**
+ *
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
