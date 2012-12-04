@@ -1,6 +1,7 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
 import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
+import com.plexiti.activiti.test.fluent.TestProcessInstance;
 import org.activiti.engine.runtime.Execution;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
@@ -63,6 +64,11 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
                 .overridingErrorMessage("Expected execution with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s",
                                         actual.getId(), activityId, activeActivityIds)
                 .contains(activityId);
+
+        if (activityId.equals(ActivitiFluentTestHelper.getMoveToActivityId())) {
+            ActivitiFluentTestHelper.setMoveToActivityId(null);
+            throw new TestProcessInstance.ActivitiTargetActivityReached();
+        }
 
         return this;
     }

@@ -137,10 +137,9 @@ public class TestProcessInstance {
 
     public void moveTo(String targetActivity) {
         try {
-            ActivitiFluentTestHelper.getRuntimeService().setVariable(actualProcessInstance.getId(), ActivitiTargetActivity, targetActivity);
+            ActivitiFluentTestHelper.setMoveToActivityId(targetActivity);
             moveAlong();
         } catch (ActivitiTargetActivityReached e) {
-            ActivitiFluentTestHelper.getRuntimeService().setVariable(actualProcessInstance.getId(), ActivitiTargetActivity, null);
         }
     }
 
@@ -192,7 +191,7 @@ public class TestProcessInstance {
         return new TestProcessVariable(variableName, variableValue);
     }
 
-    protected static class ActivitiTargetActivityReached extends RuntimeException {
+    public static class ActivitiTargetActivityReached extends RuntimeException {
         private static final long serialVersionUID = 2282185191899085294L;
     }
 }

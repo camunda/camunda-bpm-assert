@@ -11,6 +11,7 @@ import org.activiti.engine.test.ActivitiRule;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class ActivitiFluentTestHelper {
+
     private static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
     private static ThreadLocal<RepositoryService> repositoryService = new ThreadLocal<RepositoryService>();
     private static ThreadLocal<RuntimeService> runtimeService = new ThreadLocal<RuntimeService>();
@@ -19,6 +20,7 @@ public class ActivitiFluentTestHelper {
     private static ThreadLocal<IdentityService> identityService = new ThreadLocal<IdentityService>();
     private static ThreadLocal<ManagementService> managementService = new ThreadLocal<ManagementService>();
     private static ThreadLocal<FormService> formService = new ThreadLocal<FormService>();
+    private static ThreadLocal<String> moveToActivityId = new ThreadLocal<String>();
 
     public ProcessEngine getProcessEngine() {
         return processEngine.get();
@@ -52,6 +54,14 @@ public class ActivitiFluentTestHelper {
         return formService.get();
     }
 
+    public static String getMoveToActivityId() {
+        return moveToActivityId.get();
+    }
+
+    public static void setMoveToActivityId(String moveToActivityId) {
+        ActivitiFluentTestHelper.moveToActivityId.set(moveToActivityId);
+    }
+
     public static void setUpEngineAndServices(ProcessEngine processEngine, RepositoryService repositoryService,
                                               RuntimeService runtimeService, TaskService taskService,
                                               HistoryService historicDataService, IdentityService identityService,
@@ -65,4 +75,5 @@ public class ActivitiFluentTestHelper {
         ActivitiFluentTestHelper.managementService.set(managementService);
         ActivitiFluentTestHelper.formService.set(formService);
     }
+
 }
