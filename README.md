@@ -241,7 +241,7 @@ To use in your project you will need to add this dependency
 <dependency>
     <groupId>com.plexiti.activiti</groupId>
     <artifactId>activiti-fluent-tests</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <scope>test</scope>
 </dependency>
 ```
