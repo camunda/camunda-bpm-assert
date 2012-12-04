@@ -27,6 +27,12 @@ public class AuctionProcessTest extends ActivitiFluentTest {
     @Mock
     public AuctionService auctionService;
 
+    /*
+     * Added since some of the process expressions use ${auction. ...}
+     */
+    @Mock(name = "auction")
+    public Auction theAuction = new Auction("Auction name", "Auction description", new Date());
+
     @Test
     @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
     public void testProcessDeployment() {
@@ -34,7 +40,6 @@ public class AuctionProcessTest extends ActivitiFluentTest {
        assertThat(processDefinition("Auction Process")).isDeployed();
     }
 
-    @Ignore
     @Test
     @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
     public void testWalkThroughProcess() throws Exception {

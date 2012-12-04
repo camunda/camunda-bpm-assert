@@ -102,9 +102,9 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 
 	}
 
-    @Ignore
 	@Test
-	@Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE, JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
+    @Ignore
+    @Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE, JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
 	public void testPositionDescriptionNeedsToBeCorrectedPath() {
 
 		when(jobAnnouncement.getId()).thenReturn(1L);
