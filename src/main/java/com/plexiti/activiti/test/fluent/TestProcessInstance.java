@@ -13,7 +13,6 @@
  */
 package com.plexiti.activiti.test.fluent;
 
-import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
@@ -35,119 +34,165 @@ import static org.fest.assertions.api.Assertions.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
- *
  */
 public class TestProcessInstance {
 
     private static Logger log = Logger.getLogger(TestProcessInstance.class.getName());
 
-	protected static final String ActivitiTargetActivity = "ActivitiTargetActivity";
+    protected static final String ActivitiTargetActivity = "ActivitiTargetActivity";
 
-	protected String processDefinitionKey;
-	protected ProcessInstance processInstance;
-	protected Map<String, Object> processVariables = new HashMap<String, Object>();
+    protected String processDefinitionKey;
+
+    /*
+     * Reference to the Activiti process instance
+     */
+    protected ProcessInstance actualProcessInstance;
+    protected Map<String, Object> processVariables = new HashMap<String, Object>();
     //protected TaskService taskService = ActivitiRuleHelper.get().getTaskService();
-	
-	public TestProcessInstance(String processDefinitionKey) {
-		this.processDefinitionKey = processDefinitionKey;
-	}
 
-	public List<String> activeActivities(Execution execution) {
-		return ActivitiFluentTestHelper.getRuntimeService().getActiveActivityIds(execution.getId());
-	}
-	
-	public String activeActivity(Execution execution) {
-		List<String> activeActivities = activeActivities(execution);
-		assertThat(activeActivities).as("By calling execution() you implicitedly assumed that exactly one such object exists.").hasSize(1);
-		return activeActivities.get(0);
-	}
-	
-	protected ExecutionQuery activitiExecutionQuery() { return ActivitiFluentTestHelper.getRuntimeService().createExecutionQuery(); }
+    public TestProcessInstance(String processDefinitionKey) {
+        this.processDefinitionKey = processDefinitionKey;
+    }
 
-	protected GroupQuery activitiGroupQuery() { return ActivitiFluentTestHelper.getIdentityService().createGroupQuery(); };
-	
-	protected TaskQuery activitiTaskQuery() { return ActivitiFluentTestHelper.getTaskService().createTaskQuery(); }
-	protected UserQuery activitiUserQuery() { return ActivitiFluentTestHelper.getIdentityService().createUserQuery(); }
-	public void claim(Task task, String userId) {
-		ActivitiFluentTestHelper.getTaskService().claim(currentTask().getId(), userId);
-	}
-	public void claim(Task task, User user) {
-		claim(currentTask(), user.getId());
-	}
+    public List<String> activeActivities(Execution execution) {
+        return ActivitiFluentTestHelper.getRuntimeService().getActiveActivityIds(execution.getId());
+    }
 
-	public void complete(Task task, Object... variables) {
+    public ProcessInstance getActualProcessInstance() {
+        return actualProcessInstance;
+    }
+
+    public String activeActivity(Execution execution) {
+        List<String> activeActivities = activeActivities(execution);
+        assertThat(activeActivities)
+                .as("By calling execution() you implicitly assumed that exactly one such object exists.")
+                .hasSize(1);
+        return activeActivities.get(0);
+    }
+
+    protected ExecutionQuery activitiExecutionQuery() {
+        return ActivitiFluentTestHelper.getRuntimeService().createExecutionQuery();
+    }
+
+    protected GroupQuery activitiGroupQuery() {
+        return ActivitiFluentTestHelper.getIdentityService().createGroupQuery();
+    }
+
+    protected TaskQuery activitiTaskQuery() {
+        return ActivitiFluentTestHelper.getTaskService().createTaskQuery();
+    }
+
+    protected UserQuery activitiUserQuery() {
+        return ActivitiFluentTestHelper.getIdentityService().createUserQuery();
+    }
+
+    public void claim(Task task, String userId) {
+        ActivitiFluentTestHelper.getTaskService().claim(currentTask().getId(), userId);
+    }
+
+    public void claim(Task task, User user) {
+        claim(currentTask(), user.getId());
+    }
+
+    public void complete(Task task, Object... variables) {
         ActivitiFluentTestHelper.getTaskService().complete(task.getId(), parseProcessVariables(variables));
-	}
-	
-	public Task currentTask() {
-		List<Task> tasks = currentTasks();
-		assertThat(tasks).as("By calling task() you implicitedly assumed that exactly one such object exists.").hasSize(1);
-		return tasks.get(0);
-	}
+    }
 
-	public List<Task> currentTasks() {
-		return activitiTaskQuery().list();
-	}
+    public Task currentTask() {
+        List<Task> tasks = currentTasks();
+        assertThat(tasks)
+                .as("By calling task() you implicitly assumed that exactly one such object exists.")
+                .hasSize(1);
+        return tasks.get(0);
+    }
 
-	public DiagramLayout diagramLayout() {
-		DiagramLayout diagramLayout = ActivitiFluentTestHelper.getRepositoryService().getProcessDiagramLayout(processInstance().getProcessDefinitionId());
-		assertThat(diagramLayout).overridingErrorMessage("Fatal error. Could not retrieve diagram layout!").isNotNull();				
-		return diagramLayout;
-	}
-	
-	public Execution execution() {
-		List<Execution> executions = executions();
-		if (executions.size() == 0) 
-			return null;
-		assertThat(executions).as("By calling execution() you implicitly assumed that at most one such object exists.").hasSize(1);
-		return executions.get(0);
-	}
+    public List<Task> currentTasks() {
+        return activitiTaskQuery().list();
+    }
 
-	public List<Execution> executions() {
-		return activitiExecutionQuery().processInstanceId(processInstance().getId()).list();
-	}
-	
-	public void moveAlong() {}
-	
-	public void moveTo(String targetActivity) {
-		try {
-			ActivitiFluentTestHelper.getRuntimeService().setVariable(processInstance.getId(), ActivitiTargetActivity, targetActivity);
-			moveAlong(); 
-		} catch (ActivitiTargetActivityReached e) {
-            ActivitiFluentTestHelper.getRuntimeService().setVariable(processInstance.getId(), ActivitiTargetActivity, null);
-		}
-	}
-	
-	protected Map<String, Object> parseProcessVariables(Object... variables) {
-		Map<String, Object> variablesMap = new HashMap<String, Object>();
-		for (int i=0; variables != null && i < variables.length; i+=2) {
-			variablesMap.put((String) variables[i], variables[i+1]);
-		}
-		
-		return variablesMap;
-	}
-	
-	protected ProcessInstance processInstance() {
-		assertThat(processInstance).overridingErrorMessage("No process instantiated yet. Call start(process) first!").isNotNull();
-		return processInstance;
-	}
-	
-	public TestProcessInstance start() {
-		processVariables.put(ActivitiTargetActivity, null);
-		processInstance = ActivitiFluentTestHelper.getRuntimeService()
-                                                  .startProcessInstanceByKey(processDefinitionKey, processVariables);
-		println("Started process '" + processDefinitionKey +  "' (definition id: '" + processInstance.getProcessDefinitionId() + "', instance id: '" + processInstance.getId() + "').");			
-		return this;
-	}
+    public DiagramLayout diagramLayout() {
+        DiagramLayout diagramLayout = ActivitiFluentTestHelper.getRepositoryService().getProcessDiagramLayout(processInstance().getProcessDefinitionId());
+        assertThat(diagramLayout)
+                .overridingErrorMessage("Fatal error. Could not retrieve diagram layout!")
+                .isNotNull();
+        return diagramLayout;
+    }
 
-	public TestProcessInstance withVariable(String name, Object value) {
-		assertThat(processInstance).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
-		this.processVariables.put(name, value);
-		return this;
-	}
-	
-	protected static class ActivitiTargetActivityReached extends RuntimeException {
-		private static final long serialVersionUID = 2282185191899085294L;
-	}
+    public Execution execution() {
+        List<Execution> executions = executions();
+        if (executions.size() == 0)
+            return null;
+        assertThat(executions)
+                .as("By calling execution() you implicitly assumed that at most one such object exists.")
+                .hasSize(1);
+        return executions.get(0);
+    }
 
+    public List<Execution> executions() {
+        return activitiExecutionQuery().processInstanceId(processInstance().getId()).list();
+    }
+
+    public void moveAlong() {
+    }
+
+    public void moveTo(String targetActivity) {
+        try {
+            ActivitiFluentTestHelper.getRuntimeService().setVariable(actualProcessInstance.getId(), ActivitiTargetActivity, targetActivity);
+            moveAlong();
+        } catch (ActivitiTargetActivityReached e) {
+            ActivitiFluentTestHelper.getRuntimeService().setVariable(actualProcessInstance.getId(), ActivitiTargetActivity, null);
+        }
+    }
+
+    protected Map<String, Object> parseProcessVariables(Object... variables) {
+        Map<String, Object> variablesMap = new HashMap<String, Object>();
+        for (int i = 0; variables != null && i < variables.length; i += 2) {
+            variablesMap.put((String) variables[i], variables[i + 1]);
+        }
+
+        return variablesMap;
+    }
+
+    protected ProcessInstance processInstance() {
+        assertThat(actualProcessInstance)
+                .overridingErrorMessage("No process instantiated yet. Call start(process) first!")
+                .isNotNull();
+        return actualProcessInstance;
+    }
+
+    public TestProcessInstance start() {
+        // processVariables.put(ActivitiTargetActivity, null);
+        actualProcessInstance = ActivitiFluentTestHelper.getRuntimeService()
+                .startProcessInstanceByKey(processDefinitionKey, processVariables);
+        println("Started process '" + processDefinitionKey + "' (definition id: '" + actualProcessInstance.getProcessDefinitionId() + "', instance id: '" + actualProcessInstance.getId() + "').");
+        return this;
+    }
+
+    public TestProcessInstance withVariable(String name, Object value) {
+        assertThat(actualProcessInstance).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
+        this.processVariables.put(name, value);
+        return this;
+    }
+
+    public TestProcessInstance withVariables(Map<String, Object> variables) {
+        assertThat(actualProcessInstance).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
+        for (String name: variables.keySet()) {
+            this.processVariables.put(name, variables.get(name));
+        }
+
+        return this;
+    }
+
+    public TestProcessVariable variable(String variableName) {
+        Object variableValue = ActivitiFluentTestHelper.getRuntimeService().getVariable(actualProcessInstance.getId(), variableName);
+
+        assertThat(variableValue)
+                .overridingErrorMessage("Unable to find process variable '%s'", variableName)
+                .isNotNull();
+        return new TestProcessVariable(variableName, variableValue);
+    }
+
+    protected static class ActivitiTargetActivityReached extends RuntimeException {
+        private static final long serialVersionUID = 2282185191899085294L;
+    }
 }

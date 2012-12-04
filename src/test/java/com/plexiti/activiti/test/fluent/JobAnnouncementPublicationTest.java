@@ -3,15 +3,12 @@ package com.plexiti.activiti.test.fluent;
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
 import com.plexiti.helper.Entities;
-import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.Deployment;
-import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
-import static com.plexiti.activiti.test.fluent.ActivitiFestConditions.*;
-import static com.plexiti.activiti.test.fluent.assertions.Assertions.*;
+import static com.plexiti.activiti.test.fluent.Assertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -39,7 +36,8 @@ public class JobAnnouncementPublicationTest extends ActivitiFluentTest {
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
 		verify(jobAnnouncementService, never()).postToTwitter(any(Long.class));
 		verify(jobAnnouncementService, never()).postToFacebook(any(Long.class));
-		// FIXME: assertThat(process().execution()).isFinished();
+
+		assertThat(process().execution()).isFinished();
 
 		verifyNoMoreInteractions(jobAnnouncementService);
 
@@ -58,7 +56,8 @@ public class JobAnnouncementPublicationTest extends ActivitiFluentTest {
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
 		verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
 		verify(jobAnnouncementService, never()).postToFacebook(any(Long.class));
-		// FIXME: assertThat(process().execution()).isFinished();
+
+		assertThat(process().execution()).isFinished();
 
 		verifyNoMoreInteractions(jobAnnouncementService);
 		
@@ -77,7 +76,8 @@ public class JobAnnouncementPublicationTest extends ActivitiFluentTest {
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
 		verify(jobAnnouncementService, never()).postToTwitter(any(Long.class));
 		verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
-		// FIXME: assertThat(process().execution()).isFinished();
+
+        assertThat(process().execution()).isFinished();
 
 		verifyNoMoreInteractions(jobAnnouncementService);
 		
@@ -96,7 +96,8 @@ public class JobAnnouncementPublicationTest extends ActivitiFluentTest {
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
 		verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
 		verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
-		// FIXME: assertThat(process().execution()).isFinished();
+
+		assertThat(process().execution()).isFinished();
 
 		verifyNoMoreInteractions(jobAnnouncementService);
 		

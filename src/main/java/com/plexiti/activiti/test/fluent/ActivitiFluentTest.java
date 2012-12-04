@@ -14,18 +14,21 @@
 package com.plexiti.activiti.test.fluent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.activiti.engine.*;
-import org.activiti.engine.test.ActivitiRule;
+import com.plexiti.activiti.test.fluent.assertions.ProcessDefinitionAssert;
+import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Task;
 import org.activiti.engine.test.ActivitiTestCase;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.mockito.MockitoAnnotations;
 
 import com.plexiti.activiti.test.fluent.mocking.Mockitos;
-import com.plexiti.activiti.test.fluent.assertions.Assertions.*;
+
 import static org.fest.assertions.api.Assertions.*;
 
 /**
@@ -86,4 +89,33 @@ public abstract class ActivitiFluentTest extends ActivitiTestCase {
         assertThat(processes).hasSize(1);
         return processes.values().iterator().next();
     }
+
+    protected ProcessDefinition processDefinition(String processDefinitionName) {
+        List<ProcessDefinition> definitions = repositoryService.createProcessDefinitionQuery()
+                .processDefinitionName(processDefinitionName).list();
+
+        assertThat(definitions)
+            .overridingErrorMessage("Unable to find a deployed process definition with name '%s'", processDefinitionName)
+            .hasSize(1);
+
+        return definitions.get(0);
+    }
+
+    protected void startProcessInstanceByKey(String processKey, Map<String, Object> processVariables) {
+        // TODO: Assert that a process definition with that key is already deployed
+        TestProcessInstance testInstance = new TestProcessInstance(processKey);
+        testInstance.withVariables(processVariables);
+        testInstance.start();
+        processes.put(processKey, testInstance);
+    }
+
+    protected Task findTaskByTaskId(String taskId) {
+        ProcessInstance pi = process().getActualProcessInstance();
+        List<Task> tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
+        assertThat(tasks.size())
+                .overridingErrorMessage("Unable to find a task with id '%s'", taskId)
+                .isEqualTo(1);
+        return tasks.get(0);
+    }
+
 }

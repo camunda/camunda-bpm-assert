@@ -3,26 +3,23 @@ package com.plexiti.activiti.test.fluent;
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
 import com.plexiti.helper.Entities;
-import org.activiti.engine.HistoryService;
 import org.activiti.engine.history.HistoricActivityInstance;
-import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.Deployment;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
-
-import java.util.List;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
 import static com.plexiti.activiti.test.fluent.ActivitiFestConditions.*;
 import static org.mockito.Mockito.*;
 
-import static org.fest.assertions.api.Assertions.*;
-import static com.plexiti.activiti.test.fluent.assertions.Assertions.*;
+import static com.plexiti.activiti.test.fluent.Assertions.*;
 
 public class JobAnnouncementTest extends ActivitiFluentTest {
 	
+    /*
+     * Mock your services and domain model classes
+     */
 	@Mock
     public JobAnnouncementService jobAnnouncementService;
 	@Mock
@@ -33,7 +30,7 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 	public void testHappyPath() {
 
         /*
-         * Stub your services and domain model classes
+         * Stub service and domain model methods
          */
 		when(jobAnnouncement.getId()).thenReturn(1L);
 		when(jobAnnouncementService.findRequester(1L)).thenReturn(USER_MANAGER);
@@ -53,7 +50,7 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 
 		assertThat(process().execution()).isStarted();
 
-		assertThat(process().execution()).isAtActivity(TASK_DESCRIBE_POSITION);
+		assertThat(process().execution()).isWaitingAt(TASK_DESCRIBE_POSITION);
 		assertThat(process().currentTask()).hasCandidateGroup(ROLE_STAFF);
 		assertThat(process().currentTask()).isUnassigned();
 
@@ -63,12 +60,12 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 
 		process().complete(process().currentTask());
 
-		assertThat(process().execution()).isAtActivity(TASK_REVIEW_ANNOUNCEMENT);
+		assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
 		assertThat(process().currentTask()).isAssignedTo(USER_MANAGER);
 
 		process().complete(process().currentTask(), "approved", true);
 
-		assertThat(process().execution()).isAtActivity(TASK_INITIATE_ANNOUNCEMENT);
+		assertThat(process().execution()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
 		assertThat(process().currentTask()).hasCandidateGroup(ROLE_STAFF);
 		assertThat(process().currentTask()).isUnassigned();
 
@@ -87,17 +84,21 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 		verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 		verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
 
-		// FIXME: assertThat(process().execution()).isFinished();
+		assertThat(process().execution()).isFinished();
 		
 		verifyNoMoreInteractions(jobAnnouncementService);
 
         /*
          * You can also use assertions on the process execution history
          */
-        List<HistoricActivityInstance> activityInstances = historicDataService.createHistoricActivityInstanceQuery().list();
-        assertThat(activityInstances).hasSize(19);
-        assertThat(extractProperty("activityName", String.class).from(activityInstances))
-                .startsWith("Freie Stelle gemeldet", "Stelle beschreiben", "Stellenbeschreibung sichten", "OK?");
+        //assertThat(process()).history().task(TASK_DESCRIBE_POSITION).isCompletedBy(USER_STAFF);
+        //assertThat(process()).history().activities()
+        //        .startsWith("Freie Stelle gemeldet", "Stelle beschreiben", "Stellenbeschreibung sichten", "OK?");
+
+        //List<HistoricActivityInstance> activityInstances = historicDataService.createHistoricActivityInstanceQuery().list();
+        //assertThat(activityInstances).hasSize(19);
+        //assertThat(extractProperty("activityName", String.class).from(activityInstances))
+        //        .startsWith("Freie Stelle gemeldet", "Stelle beschreiben", "Stellenbeschreibung sichten", "OK?");
 
 	}
 
@@ -118,17 +119,17 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 
         assertThat(process().execution()).isStarted();
 
-		assertThat(process().execution()).isAtActivity(TASK_REVIEW_ANNOUNCEMENT);
+		assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
 
 		process().complete(process().currentTask(), "approved", false);
 
-		assertThat(process().execution()).isAtActivity(TASK_CORRECT_ANNOUNCEMENT);
+		assertThat(process().execution()).isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
 		assertThat(process().currentTask()).isAssignedTo(USER_STAFF);
 
 		process().complete(process().currentTask());
 		process().complete(process().currentTask(), "approved", true);
 
-		assertThat(process().execution()).isAtActivity(TASK_INITIATE_ANNOUNCEMENT);
+		assertThat(process().execution()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
 
 		verify(jobAnnouncementService, times(2)).findRequester(jobAnnouncement.getId());
 		verify(jobAnnouncementService).findEditor(jobAnnouncement.getId());

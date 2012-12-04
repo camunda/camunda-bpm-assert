@@ -1,7 +1,6 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
 import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
-import org.activiti.engine.RuntimeService;
 import org.activiti.engine.runtime.Execution;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
@@ -24,9 +23,20 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
         return new ExecutionAssert(actual);
     }
 
-    public ExecutionAssert isFinished() {
-        isNotNull();
+    // TODO: add isNotFinished()
 
+    public ExecutionAssert isFinished() {
+        /*
+         * TODO: we need to review this
+         * If the incomming Execution instance is null we consider the execution finished
+         */
+        if (actual == null) {
+            return this;
+        }
+
+        /*
+         * If it is not null we make sure that it is actually finished.
+         */
         Assertions.assertThat(actual.isEnded()).
                 overridingErrorMessage("Expected execution %s to be finished but it is not!", actual.getId()).
                 isTrue();
@@ -44,7 +54,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
         return this;
     }
 
-    public ExecutionAssert isAtActivity(String activityId) {
+    public ExecutionAssert isWaitingAt(String activityId) {
         isNotNull();
 
         List<String> activeActivityIds = ActivitiFluentTestHelper.getRuntimeService()

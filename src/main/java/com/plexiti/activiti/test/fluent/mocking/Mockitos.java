@@ -27,6 +27,11 @@ public class Mockitos {
 
 	private static Logger log = Logger.getLogger(Mockitos.class.getName());
 
+    /**
+     * FIXME list
+     *
+     *  - Give a better error when mocked services have been declared as private class members
+     */
 	public static void register(Object junitTest)
 	{
 		Class<?> clazz = junitTest.getClass();
