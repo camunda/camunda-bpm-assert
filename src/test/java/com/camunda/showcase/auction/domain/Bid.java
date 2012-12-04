@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+/*
+ * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
+ */
 @Entity
 public class Bid {
 

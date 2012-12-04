@@ -2,6 +2,9 @@ package com.camunda.showcase.auction.service;
 
 import javax.ejb.ApplicationException;
 
+/*
+ * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
+ */
 @ApplicationException
 public class BidException extends RuntimeException {
 

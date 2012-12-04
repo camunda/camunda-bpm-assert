@@ -5,6 +5,9 @@ import com.camunda.showcase.auction.domain.Bid;
 
 import java.util.List;
 
+/*
+ * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
+ */
 public interface AuctionService {
 
     public Long createAuction(Auction auction);

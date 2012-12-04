@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/*
+ * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
+ */
 @Entity
 public class Auction implements Serializable {
 
