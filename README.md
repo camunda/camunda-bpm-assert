@@ -6,8 +6,8 @@
 
 This library aims at easing the creation of readable and fluen tests when developing process-centric applications based on the [Activiti](http://activiti.org) BPMN process engine.
 This library:
-
 * makes it easier to use a Test Driven Development (TDD) approach by using a simple @Mock annotation to make your mocked services availabe to your process instance
+
 ```java
 ...
 /*
@@ -19,6 +19,7 @@ public JobAnnouncementService jobAnnouncementService;
 ```
 
 * provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) API so you can focus on your process expert's domain knowledge while writing (and reading!) your tests
+
 ```java
 ...
 assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
@@ -28,6 +29,7 @@ process().complete(process().currentTask(), "approved", true);
 ```
 
 * allows you to directly "jump" to a specific process activity by fast-forwarding along an execution path of another test scenario
+
 ```java
 ...
 start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS) { 
