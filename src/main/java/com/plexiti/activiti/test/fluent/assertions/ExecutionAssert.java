@@ -9,10 +9,10 @@ import org.fest.assertions.api.Assertions;
 import java.util.List;
 
 /**
+ * Fluent assertions for {@link org.activiti.engine.runtime.Execution}
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
- *
  */
 public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> {
 

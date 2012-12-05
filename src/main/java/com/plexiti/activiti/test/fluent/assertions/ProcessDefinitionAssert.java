@@ -1,11 +1,12 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
 
-import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.fest.assertions.api.AbstractAssert;
 
 /**
+ * Fluent assertions for {@link org.activiti.engine.repository.ProcessDefinition}
+ *
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */

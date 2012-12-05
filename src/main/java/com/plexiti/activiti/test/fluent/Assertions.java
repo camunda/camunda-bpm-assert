@@ -18,7 +18,6 @@ import java.util.List;
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
- *
  */
 public class Assertions extends org.fest.assertions.api.Assertions {
 
