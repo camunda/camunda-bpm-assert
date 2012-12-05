@@ -4,7 +4,7 @@
 
     <groupId>com.plexiti.activiti</groupId>
     <artifactId>activiti-fluent-tests</artifactId>
-    <version>0.3</version>
+    <version>0.4-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
