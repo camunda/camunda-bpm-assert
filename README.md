@@ -1,18 +1,43 @@
 # Introduction
 
-> ACHTUNG! The code in this project is in an EARLY DRAFT state. Future releases *will* brake your tests
-> since the API will definitely change . We are following the ["Release Early, Release Often"](http://www.catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/ar01s04.html) principle here in order
-> to get feedback from the Activiti developer community. ;-)
+> **ACHTUNG! The code in this project is in an EARLY DRAFT state. Future releases might brake your tests
+> since the API will definitely evolve. We are following the ["Release Early, Release Often"](http://www.catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/ar01s04.html) principle here in order
+> to get feedback from the Activiti developer community. ;-)**
 
-This library aims at improving the developer experience when developing process-centric applications based on [Activiti](http://activiti.org) and [camunda fox](http://www.camunda.com/fox) BPMN platforms.
-This library provides:
-* a Test Driven Development (TDD) approach by allowing you to mock your service implementation
-* a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) API so you can focus on your tests
-* a way to test alternate process execution paths by allowing you to re-use your "happy path" test code 
+This library aims at easing the creation of readable and fluen tests when developing process-centric applications based on the [Activiti](http://activiti.org) BPMN process engine.
+This library:
+* makes it easier to use a Test Driven Development (TDD) approach by using a simple @Mock annotation to make your mocked services availabe to your process instance
+```java
+...
+/*
+ * Make 'jobAnnouncementService' available in JUEL expressions 
+ */
+@Mock
+public JobAnnouncementService jobAnnouncementService;
+...
+```
+* provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) API so you can focus on your process expert's domain knowledge while writing (and reading!) your tests
+```java
+...
+assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
+assertThat(process().currentTask()).isAssignedTo(USER_MANAGER);
+process().complete(process().currentTask(), "approved", true);
+...
+```
+* allows you to directly "jump" to a specific process activity by fast-forwarding along an execution path of another test scenario
+```java
+...
+start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS) { 
+          public void moveAlong() { 
+            testHappyPath(); 
+          }
+      }).moveTo(TASK_REVIEW_ANNOUNCEMENT);
+...
+``` 
 
 This project is a spin-off of [The Job Announcement](https://github.com/plexiti/the-job-announcement-fox), a showcase
 for a business process-centric application based on the [Java EE 6](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
-technology stack and the [camunda fox BPM Platform](http://www.camunda.com/fox). An online version of The Job Announcement can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/).
+technology stack and the [camunda fox BPM Platform](http://www.camunda.com/fox). An online version of The Job Announcement can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/) and the source code on [GitHub](https://github.com/plexiti/the-job-announcement-fox).
 
 This project leverages two great testing libraries: [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
 [Mockito](http://code.google.com/p/mockito/).
@@ -241,7 +266,7 @@ To use in your project you will need to add this dependency
 <dependency>
     <groupId>com.plexiti.activiti</groupId>
     <artifactId>activiti-fluent-tests</artifactId>
-    <version>0.2</version>
+    <version>0.3</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -261,6 +286,6 @@ and this repository to your pom.xml
 </repository>
 ```
 
-# Feedback and Future Work
+# Feedback
 
 Suggestions, pull requests, ... you name it... are very welcome!
