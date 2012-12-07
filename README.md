@@ -4,9 +4,9 @@
 > since the API will definitely evolve. We are following the ["Release Early, Release Often"](http://www.catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/ar01s04.html) principle here in order
 > to get feedback from the Activiti developer community. ;-)**
 
-This library aims at easing the creation of readable and fluen tests when developing process-centric applications based on the [Activiti](http://activiti.org) BPMN process engine.
+This library aims at easing the creation of readable and fluent tests when developing process-centric applications based on the [Activiti](http://activiti.org) BPMN process engine.
 This library:
-* makes it easier to use a Test Driven Development (TDD) approach by using a simple @Mock annotation to make your mocked services availabe to your process instance
+* makes it easier to mock the services available to your process instance by using a simple @Mock annotation
 
 ```java
 ...
