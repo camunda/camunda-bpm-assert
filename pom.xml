@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <activiti.version>5.10</activiti.version>
+        <camunda-bpm.version>7.0.0-SNAPSHOT</camunda-bpm.version>
         <fest.assert.version>2.0M8</fest.assert.version>
         <junit.version>4.8.2</junit.version>
         <mockito.version>1.9.0</mockito.version>
@@ -23,9 +23,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-engine</artifactId>
-            <version>${activiti.version}</version>
+            <groupId>com.camunda.fox.engine</groupId>
+            <artifactId>fox-engine</artifactId>
+            <version>${camunda-bpm.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -63,9 +63,9 @@
 
     <repositories>
         <repository>
-            <id>activiti</id>
-            <name>Activiti</name>
-            <url>http://maven.alfresco.com/nexus/content/groups/public/</url>
+            <id>camunda-bpm-nexus</id>
+            <name>camunda-bpm-nexus</name>
+            <url>https://app.camunda.com/nexus/content/groups/public</url>
         </repository>
     </repositories>
 
