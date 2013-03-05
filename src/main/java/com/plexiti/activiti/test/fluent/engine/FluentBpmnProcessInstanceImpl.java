@@ -17,6 +17,7 @@ import com.plexiti.activiti.test.fluent.FluentBpmnTests;
 import com.plexiti.activiti.test.fluent.assertions.ExecutionAssert;
 import org.activiti.engine.repository.DiagramLayout;
 import org.activiti.engine.runtime.Execution;
+import org.activiti.engine.runtime.Job;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 
@@ -97,6 +98,20 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     @Override
     public List<Task> tasks() {
         return FluentBpmnLookups.createTaskQuery().list();
+    }
+
+    @Override
+    public FluentBpmnJob job() {
+        List<Job> jobs = jobs();
+        assertThat(jobs)
+                .as("By calling processJob() you implicitly assumed that exactly one such object exists.")
+                .hasSize(1);
+        return new FluentBpmnJobImpl(jobs.get(0));
+    }
+
+    @Override
+    public List<Job> jobs() {
+        return FluentBpmnLookups.createJobQuery().list();
     }
 
     @Override

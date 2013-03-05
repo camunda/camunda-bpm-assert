@@ -2,42 +2,37 @@ package auction;
 
 import com.camunda.showcase.auction.domain.Auction;
 import com.camunda.showcase.auction.service.AuctionService;
+import com.camunda.showcase.auction.service.TwitterPublishService;
 import com.plexiti.activiti.test.fluent.FluentBpmnTestCase;
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
+import org.activiti.engine.runtime.Job;
 import org.activiti.engine.test.Deployment;
-import org.junit.Assert;
+import org.activiti.engine.test.mock.Mocks;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import java.util.Date;
-import java.util.List;
 
 import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 
 import static org.mockito.Mockito.*;
 
-/*
- * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
+/**
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class AuctionProcessTest extends FluentBpmnTestCase {
 
     @Mock
     public AuctionService auctionService;
 
-    /*
-     * Added since some of the processInstance expressions use ${auction. ...}
-     */
-    @Mock(name = "auction")
-    public Auction theAuction = new Auction("Auction name", "Auction description", new Date());
+    @Mock
+    public TwitterPublishService twitterPublishService;
 
     @Test
     @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
     public void testProcessDeployment() {
-
        assertThat(processDefinition("Auction Process")).isDeployed();
     }
 
@@ -45,80 +40,54 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
     @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
     public void testWalkThroughProcess() throws Exception {
 
-        /*
-         * Set up the test fixtures and expectations
-         */
-        Auction auction = new Auction("Cheap Ferrari!", "Ferrari Testarossa on sale!", new Date());
+        // Set up test fixtures
 
-        /*
-         * Set up the expectations for the auctionService using Mockito
-         */
-        when(auctionService.createAuction(auction))
-             .thenAnswer(new Answer() {
-                 public Object answer(InvocationOnMock invocation) {
-                     Auction auction = (Auction) invocation.getArguments()[0];
+        final Auction auction = new Auction();
+        auction.setName("Cheap Ferrari!");
+        auction.setDescription("Ferrari Testarossa on sale!");
+        auction.setEndTime(new Date());
 
-                     // Assign an id to the auction
-                     auction.setId(new Long(1));
+        Mocks.register("auction", auction);
 
-                     // start the processInstance
-                     newProcessInstance("auction-process")
-                          .withVariable("auctionId", auction.getId())
-                     .start();
+        when(auctionService.createAuction((Auction) anyObject()))
+            .thenAnswer(new Answer() {
+                public Object answer(InvocationOnMock invocation) {
+                    auction.setId(1L);
+                    newProcessInstance("auction-process")
+                            .withVariable("auctionId", auction.getId())
+                            .start();
+                    return auction.getId();
+                }
+            });
 
-                     return auction.getId();
-                 }
-             });
+        doAnswer(new Answer() {
+            public Object answer(InvocationOnMock invocation) {
+                auction.setAuthorized(true);
+                processTask().complete();
+                return null;
+            }
+        }).when(auctionService).authorizeAuction(anyString(), anyBoolean());
 
-        /*
-         * Start the test
-         */
-         auctionService.createAuction(auction);
+        when(auctionService.locateHighestBidId(anyLong())).thenReturn(1L);
 
-         /*
-          * The processInstance should have been started from the service implementation
-          */
-         assertThat(processExecution()).isStarted();
+        // Execute the test
 
-         // The processInstance processVariable "auctionId" must exist
-         assertThat(processVariable("auctionId"))
-                 .exists()
-                 .isDefined()
-                 // The ID of the auction should also have been set!
-                 .asLong().isEqualTo(1);
+        auctionService.createAuction(auction);
 
-         assertThat(processExecution()).isWaitingAt("authorizeAuction");
-//         Task authorizeAuctionTask = findTaskByTaskId("authorizeAuction");
-         auctionService.authorizeAuction(processTask().getId(), true);
+        assertThat(processExecution()).isStarted();
+        assertThat(processExecution()).isWaitingAt("authorizeAuction");
+        assertThat(processVariable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
 
-         // end complete processTask 1 ///////////////
+        auctionService.authorizeAuction(processTask().getId(), true);
 
-         // wait for auction end //////////////
+        processJob().execute();
 
-         // wait for 6 seconds
-         Thread.sleep(6000);
+        assertThat(processExecution()).isWaitingAt("UserTask_2");
 
-         // end wait for auction end //////////
+        processTask().complete();
 
-         // complete processTask 2 ///////////////////
-         ProcessInstance pi = processInstance().getDelegate();
-         List<Task> tasksAfterTimer = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-         Assert.assertEquals(1,tasksAfterTimer.size());
+        assertThat(processExecution()).isFinished();
 
-         Task billingAndShippingTask = tasksAfterTimer.get(0);
+    }
 
-         // complete processTask
-         taskService.complete(billingAndShippingTask.getId());
-
-         // end complete processTask 2 ///////////////
-
-         // check if processInstance instance is really ended
-
-         long runningInstancesCount = runtimeService
-                 .createProcessInstanceQuery()
-                 .processInstanceId(pi.getId())
-                 .count();
-
-         Assert.assertEquals(0,runningInstancesCount);
-     }
 }

@@ -5,6 +5,7 @@ import org.activiti.engine.*;
 import org.activiti.engine.identity.UserQuery;
 import org.activiti.engine.impl.test.TestHelper;
 import org.activiti.engine.runtime.ExecutionQuery;
+import org.activiti.engine.runtime.JobQuery;
 import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.activiti.engine.task.TaskQuery;
 import org.activiti.engine.test.ActivitiRule;
@@ -77,6 +78,10 @@ public class FluentBpmnLookups {
 
     public static UserQuery createUserQuery() {
         return getIdentityService().createUserQuery();
+    }
+
+    public static JobQuery createJobQuery() {
+        return getManagementService().createJobQuery();
     }
 
 }

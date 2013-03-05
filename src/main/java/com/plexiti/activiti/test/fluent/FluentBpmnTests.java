@@ -49,6 +49,10 @@ public class FluentBpmnTests extends org.fest.assertions.api.Assertions {
         return FluentBpmnProcessInstanceLookup.processInstance().task();
     }
 
+    public static FluentBpmnJob processJob() {
+        return FluentBpmnProcessInstanceLookup.processInstance().job();
+    }
+
     // TODO From here on more "FluentBpmn" interfaces and wrappers have to be implemented
 
     public static ProcessDefinition processDefinition(String processDefinitionId) {
