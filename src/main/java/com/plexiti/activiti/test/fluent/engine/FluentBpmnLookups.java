@@ -2,7 +2,11 @@ package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.support.Classes;
 import org.activiti.engine.*;
+import org.activiti.engine.identity.UserQuery;
 import org.activiti.engine.impl.test.TestHelper;
+import org.activiti.engine.runtime.ExecutionQuery;
+import org.activiti.engine.runtime.ProcessInstanceQuery;
+import org.activiti.engine.task.TaskQuery;
 import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.ActivitiTestCase;
 
@@ -57,6 +61,22 @@ public class FluentBpmnLookups {
 
     public static FormService getFormService() {
         return getProcessEngine().getFormService();
+    }
+
+    public static ProcessInstanceQuery createProcessInstanceQuery() {
+        return getRuntimeService().createProcessInstanceQuery();
+    }
+
+    public static ExecutionQuery createExecutionQuery() {
+        return getRuntimeService().createExecutionQuery();
+    }
+
+    public static TaskQuery createTaskQuery() {
+        return getTaskService().createTaskQuery();
+    }
+
+    public static UserQuery createUserQuery() {
+        return getIdentityService().createUserQuery();
     }
 
 }
