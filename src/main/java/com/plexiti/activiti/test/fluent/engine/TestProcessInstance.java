@@ -14,6 +14,7 @@
 package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.assertions.ExecutionAssert;
+import com.plexiti.activiti.test.fluent.support.Maps;
 import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
@@ -95,7 +96,7 @@ public class TestProcessInstance {
     }
 
     public void complete(Task task, Object... variables) {
-        TestLookups.getTaskService().complete(task.getId(), parseProcessVariables(variables));
+        TestLookups.getTaskService().complete(task.getId(), Maps.parseMap(variables));
     }
 
     public Task currentTask() {
@@ -141,15 +142,6 @@ public class TestProcessInstance {
             moveAlong();
         } catch (ActivitiTargetActivityReached e) {
         }
-    }
-
-    protected Map<String, Object> parseProcessVariables(Object... variables) {
-        Map<String, Object> variablesMap = new HashMap<String, Object>();
-        for (int i = 0; variables != null && i < variables.length; i += 2) {
-            variablesMap.put((String) variables[i], variables[i + 1]);
-        }
-
-        return variablesMap;
     }
 
     protected ProcessInstance processInstance() {
