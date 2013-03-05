@@ -80,6 +80,8 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
 
         auctionService.authorizeAuction(processTask().getId(), true);
 
+        assertThat(processInstance()).isWaitingAt("IntermediateCatchEvent_1");
+
         processJob().execute();
 
         assertThat(processExecution()).isWaitingAt("UserTask_2");

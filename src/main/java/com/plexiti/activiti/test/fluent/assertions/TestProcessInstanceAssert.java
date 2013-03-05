@@ -17,11 +17,26 @@ import java.util.List;
 public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanceAssert, FluentBpmnProcessInstance> {
 
     protected TestProcessInstanceAssert(FluentBpmnProcessInstance actual) {
-        super(actual, FluentBpmnProcessInstanceImpl.class);
+        super(actual, TestProcessInstanceAssert.class);
     }
 
     public static TestProcessInstanceAssert assertThat(FluentBpmnProcessInstance actual) {
         return new TestProcessInstanceAssert(actual);
+    }
+
+    public TestProcessInstanceAssert isWaitingAt(String activityId) {
+        isNotNull();
+
+        List<String> activeActivityIds = FluentBpmnLookups.getRuntimeService()
+                .getActiveActivityIds(actual.getId());
+        Assertions.assertThat(activeActivityIds)
+                .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s",
+                        actual.getId(), activityId, activeActivityIds)
+                .contains(activityId);
+
+        ExecutionAssert.checkForMoveToActivityIdException(activityId);
+
+        return this;
     }
 
 }

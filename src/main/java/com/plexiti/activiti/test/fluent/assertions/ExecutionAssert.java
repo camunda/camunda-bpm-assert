@@ -70,12 +70,16 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
                                         actual.getId(), activityId, activeActivityIds)
                 .contains(activityId);
 
+        checkForMoveToActivityIdException(activityId);
+
+        return this;
+    }
+
+    public static void checkForMoveToActivityIdException(String activityId) {
         if (activityId.equals(moveToActivityId.get())) {
             setMoveToActivityId(null);
             throw new MoveToActivityIdException();
         }
-
-        return this;
     }
 
     public static class MoveToActivityIdException extends RuntimeException {
