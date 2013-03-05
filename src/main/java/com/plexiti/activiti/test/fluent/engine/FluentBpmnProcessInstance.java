@@ -1,6 +1,5 @@
 package com.plexiti.activiti.test.fluent.engine;
 
-import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.DiagramLayout;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -13,7 +12,7 @@ import java.util.Map;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessInstance> {
+public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessInstance>, ProcessInstance {
 
     FluentBpmnProcessInstance start();
 
@@ -27,7 +26,9 @@ public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessIns
 
     FluentBpmnProcessVariable variable(String variableName);
 
-    Task task();
+    FluentBpmnTask task();
+
+    // TODO From here on more "FluentBpmn" interfaces and wrappers have to be implemented
 
     List<Task> tasks();
 
@@ -36,11 +37,5 @@ public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessIns
     Execution execution();
 
     List<Execution> executions();
-
-    void claim(Task task, String userId);
-
-    void claim(Task task, User user);
-
-    void complete(Task task, Object... variables);
 
 }

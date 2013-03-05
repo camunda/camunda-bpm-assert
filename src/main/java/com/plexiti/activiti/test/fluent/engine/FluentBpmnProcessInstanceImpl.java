@@ -14,8 +14,6 @@
 package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.assertions.ExecutionAssert;
-import com.plexiti.activiti.test.fluent.support.Maps;
-import org.activiti.engine.identity.User;
 import org.activiti.engine.repository.DiagramLayout;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ExecutionQuery;
@@ -38,17 +36,61 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
 
     private static Logger log = Logger.getLogger(FluentBpmnProcessInstanceImpl.class.getName());
 
-    protected String processDefinitionKey;
-    protected ProcessInstance actualProcessInstance;
+    protected String processDefinitionId;
+    protected ProcessInstance delegate;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
 
+    @Override
+    public String getProcessDefinitionId() {
+        return delegate != null ? delegate.getProcessDefinitionId() : processDefinitionId;
+    }
+
+    @Override
+    public String getBusinessKey() {
+        checkDelegate();
+        return delegate.getBusinessKey();
+    }
+
+    @Override
+    public boolean isSuspended() {
+        checkDelegate();
+        return delegate.isSuspended();
+    }
+
+    @Override
+    public String getId() {
+        checkDelegate();
+        return delegate.getId();
+    }
+
+    @Override
+    public boolean isEnded() {
+        checkDelegate();
+        return delegate.isEnded();
+    }
+
+    @Override
+    public String getProcessInstanceId() {
+        checkDelegate();
+        return delegate.getProcessInstanceId();
+    }
+
+    private void checkDelegate() {
+        if (delegate == null)
+            throw new IllegalStateException("Process instance not yet started. You cannot access that method before starting the process instance.");
+    }
+
     public FluentBpmnProcessInstanceImpl(String processDefinitionKey) {
-        this.processDefinitionKey = processDefinitionKey;
+        this.processDefinitionId = processDefinitionKey;
+    }
+
+    protected FluentBpmnProcessInstanceImpl(ProcessInstance delegate) {
+        this.delegate = delegate;
     }
 
     @Override
     public ProcessInstance getDelegate() {
-        return actualProcessInstance;
+        return delegate;
     }
 
     protected ExecutionQuery activitiExecutionQuery() {
@@ -60,27 +102,12 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     }
 
     @Override
-    public void claim(Task task, String userId) {
-        FluentBpmnLookups.getTaskService().claim(task().getId(), userId);
-    }
-
-    @Override
-    public void claim(Task task, User user) {
-        claim(task(), user.getId());
-    }
-
-    @Override
-    public void complete(Task task, Object... variables) {
-        FluentBpmnLookups.getTaskService().complete(task.getId(), Maps.parseMap(variables));
-    }
-
-    @Override
-    public Task task() {
+    public FluentBpmnTask task() {
         List<Task> tasks = tasks();
         assertThat(tasks)
                 .as("By calling task() you implicitly assumed that exactly one such object exists.")
                 .hasSize(1);
-        return tasks.get(0);
+        return new FluentBpmnTaskImpl(tasks.get(0));
     }
 
     @Override
@@ -127,30 +154,30 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     }
 
     protected ProcessInstance processInstance() {
-        assertThat(actualProcessInstance)
+        assertThat(delegate)
                 .overridingErrorMessage("No process instantiated yet. Call start(process) first!")
                 .isNotNull();
-        return actualProcessInstance;
+        return delegate;
     }
 
     @Override
     public FluentBpmnProcessInstance start() {
-        actualProcessInstance = FluentBpmnLookups.getRuntimeService()
-                .startProcessInstanceByKey(processDefinitionKey, processVariables);
-        log.info("Started process '" + processDefinitionKey + "' (definition id: '" + actualProcessInstance.getProcessDefinitionId() + "', instance id: '" + actualProcessInstance.getId() + "').");
+        delegate = FluentBpmnLookups.getRuntimeService()
+                .startProcessInstanceByKey(processDefinitionId, processVariables);
+        log.info("Started process '" + processDefinitionId + "' (definition id: '" + delegate.getProcessDefinitionId() + "', instance id: '" + delegate.getId() + "').");
         return this;
     }
 
     @Override
     public FluentBpmnProcessInstanceImpl withVariable(String name, Object value) {
-        assertThat(actualProcessInstance).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
+        assertThat(delegate).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
         this.processVariables.put(name, value);
         return this;
     }
 
     @Override
     public FluentBpmnProcessInstance withVariables(Map<String, Object> variables) {
-        assertThat(actualProcessInstance).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
+        assertThat(delegate).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
         for (String name: variables.keySet()) {
             this.processVariables.put(name, variables.get(name));
         }
@@ -160,7 +187,7 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
 
     @Override
     public FluentBpmnProcessVariable variable(String variableName) {
-        Object variableValue = FluentBpmnLookups.getRuntimeService().getVariable(actualProcessInstance.getId(), variableName);
+        Object variableValue = FluentBpmnLookups.getRuntimeService().getVariable(delegate.getId(), variableName);
 
         assertThat(variableValue)
                 .overridingErrorMessage("Unable to find process variable '%s'", variableName)

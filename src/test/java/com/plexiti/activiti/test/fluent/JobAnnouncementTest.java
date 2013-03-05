@@ -44,7 +44,7 @@ public class JobAnnouncementTest extends FluentBpmnTestCase {
          * Start the process with (optionally) process variables
          */
 		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS)
-                .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
+             .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
         );
 		
 		assertThat(process().diagramLayout()).isContainingNode(TASK_DESCRIBE_POSITION);
@@ -58,26 +58,26 @@ public class JobAnnouncementTest extends FluentBpmnTestCase {
 		assertThat(process().task()).hasCandidateGroup(ROLE_STAFF);
 		assertThat(process().task()).isUnassigned();
 
-		process().claim(process().task(), USER_STAFF);
+		process().task().claim(USER_STAFF);
 		
 		assertThat(process().task()).isAssignedTo(USER_STAFF);
 
-		process().complete(process().task());
+		process().task().complete();
 
 		assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
 		assertThat(process().task()).isAssignedTo(USER_MANAGER);
 
-		process().complete(process().task(), "approved", true);
+		process().task().complete("approved", true);
 
 		assertThat(process().execution()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
 		assertThat(process().task()).hasCandidateGroup(ROLE_STAFF);
 		assertThat(process().task()).isUnassigned();
 
-		process().claim(process().task(), USER_STAFF);
+		process().task().claim(USER_STAFF);
 		
 		assertThat(process().task()).isAssignedTo(USER_STAFF);
 
-		process().complete(process().task(), "twitter", true, "facebook", true);
+		process().task().complete("twitter", true, "facebook", true);
 
         /*
          * Verify expected behavior
@@ -92,18 +92,6 @@ public class JobAnnouncementTest extends FluentBpmnTestCase {
 		
 		verifyNoMoreInteractions(jobAnnouncementService);
 
-        /*
-         * You can also use assertions on the process execution history
-         */
-        //assertThat(process()).history().task(TASK_DESCRIBE_POSITION).isCompletedBy(USER_STAFF);
-        //assertThat(process()).history().activities()
-        //        .startsWith("Freie Stelle gemeldet", "Stelle beschreiben", "Stellenbeschreibung sichten", "OK?");
-
-        //List<HistoricActivityInstance> activityInstances = historicDataService.createHistoricActivityInstanceQuery().list();
-        //assertThat(activityInstances).hasSize(19);
-        //assertThat(extractProperty("activityName", String.class).from(activityInstances))
-        //        .startsWith("Freie Stelle gemeldet", "Stelle beschreiben", "Stellenbeschreibung sichten", "OK?");
-
 	}
 
 	@Test
@@ -113,24 +101,23 @@ public class JobAnnouncementTest extends FluentBpmnTestCase {
 		when(jobAnnouncement.getId()).thenReturn(1L);
 
 		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS) {
-				public void moveAlong() { 
-					testHappyPath(); 
+		        public void moveAlong() {
+			   		testHappyPath();
 				}
-			}
-			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
+			}.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
 		).moveTo(TASK_REVIEW_ANNOUNCEMENT);
 
         assertThat(process().execution()).isStarted();
 
 		assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
 
-		process().complete(process().task(), "approved", false);
+		process().task().complete("approved", false);
 
 		assertThat(process().execution()).isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
 		assertThat(process().task()).isAssignedTo(USER_STAFF);
 
-		process().complete(process().task());
-		process().complete(process().task(), "approved", true);
+        process().task().complete();
+		process().task().complete("approved", true);
 
 		assertThat(process().execution()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
 

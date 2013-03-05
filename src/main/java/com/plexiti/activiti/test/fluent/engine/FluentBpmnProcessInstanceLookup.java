@@ -30,10 +30,10 @@ public class FluentBpmnProcessInstanceLookup {
     }
 
     public static FluentBpmnProcessInstance start(FluentBpmnProcessInstanceImpl testProcess) {
-        if (getTestProcessInstances().containsKey(testProcess.processDefinitionKey)) {
-            return getTestProcessInstances().get(testProcess.processDefinitionKey);
+        if (getTestProcessInstances().containsKey(testProcess.processDefinitionId)) {
+            return getTestProcessInstances().get(testProcess.processDefinitionId);
         } else {
-            getTestProcessInstances().put(testProcess.processDefinitionKey, testProcess);
+            getTestProcessInstances().put(testProcess.processDefinitionId, testProcess);
             testProcess.start();
             return testProcess;
         }
