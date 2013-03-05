@@ -61,12 +61,12 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
 
     @Override
     public void claim(Task task, String userId) {
-        FluentBpmnLookups.getTaskService().claim(currentTask().getId(), userId);
+        FluentBpmnLookups.getTaskService().claim(task().getId(), userId);
     }
 
     @Override
     public void claim(Task task, User user) {
-        claim(currentTask(), user.getId());
+        claim(task(), user.getId());
     }
 
     @Override
@@ -75,8 +75,8 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     }
 
     @Override
-    public Task currentTask() {
-        List<Task> tasks = currentTasks();
+    public Task task() {
+        List<Task> tasks = tasks();
         assertThat(tasks)
                 .as("By calling task() you implicitly assumed that exactly one such object exists.")
                 .hasSize(1);
@@ -84,7 +84,7 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     }
 
     @Override
-    public List<Task> currentTasks() {
+    public List<Task> tasks() {
         return activitiTaskQuery().list();
     }
 

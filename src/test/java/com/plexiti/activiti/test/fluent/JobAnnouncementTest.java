@@ -55,29 +55,29 @@ public class JobAnnouncementTest extends FluentBpmnTestCase {
 		assertThat(process().execution()).isStarted();
 
 		assertThat(process().execution()).isWaitingAt(TASK_DESCRIBE_POSITION);
-		assertThat(process().currentTask()).hasCandidateGroup(ROLE_STAFF);
-		assertThat(process().currentTask()).isUnassigned();
+		assertThat(process().task()).hasCandidateGroup(ROLE_STAFF);
+		assertThat(process().task()).isUnassigned();
 
-		process().claim(process().currentTask(), USER_STAFF);
+		process().claim(process().task(), USER_STAFF);
 		
-		assertThat(process().currentTask()).isAssignedTo(USER_STAFF);
+		assertThat(process().task()).isAssignedTo(USER_STAFF);
 
-		process().complete(process().currentTask());
+		process().complete(process().task());
 
 		assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
-		assertThat(process().currentTask()).isAssignedTo(USER_MANAGER);
+		assertThat(process().task()).isAssignedTo(USER_MANAGER);
 
-		process().complete(process().currentTask(), "approved", true);
+		process().complete(process().task(), "approved", true);
 
 		assertThat(process().execution()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
-		assertThat(process().currentTask()).hasCandidateGroup(ROLE_STAFF);
-		assertThat(process().currentTask()).isUnassigned();
+		assertThat(process().task()).hasCandidateGroup(ROLE_STAFF);
+		assertThat(process().task()).isUnassigned();
 
-		process().claim(process().currentTask(), USER_STAFF);
+		process().claim(process().task(), USER_STAFF);
 		
-		assertThat(process().currentTask()).isAssignedTo(USER_STAFF);
+		assertThat(process().task()).isAssignedTo(USER_STAFF);
 
-		process().complete(process().currentTask(), "twitter", true, "facebook", true);
+		process().complete(process().task(), "twitter", true, "facebook", true);
 
         /*
          * Verify expected behavior
@@ -124,13 +124,13 @@ public class JobAnnouncementTest extends FluentBpmnTestCase {
 
 		assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
 
-		process().complete(process().currentTask(), "approved", false);
+		process().complete(process().task(), "approved", false);
 
 		assertThat(process().execution()).isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
-		assertThat(process().currentTask()).isAssignedTo(USER_STAFF);
+		assertThat(process().task()).isAssignedTo(USER_STAFF);
 
-		process().complete(process().currentTask());
-		process().complete(process().currentTask(), "approved", true);
+		process().complete(process().task());
+		process().complete(process().task(), "approved", true);
 
 		assertThat(process().execution()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
 

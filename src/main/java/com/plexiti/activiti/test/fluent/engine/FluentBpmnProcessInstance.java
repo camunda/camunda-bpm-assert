@@ -15,15 +15,21 @@ import java.util.Map;
  */
 public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessInstance> {
 
-    void claim(Task task, String userId);
+    FluentBpmnProcessInstance start();
 
-    void claim(Task task, User user);
+    FluentBpmnProcessInstanceImpl withVariable(String name, Object value);
 
-    void complete(Task task, Object... variables);
+    FluentBpmnProcessInstance withVariables(Map<String, Object> variables);
 
-    Task currentTask();
+    void moveAlong();
 
-    List<Task> currentTasks();
+    void moveTo(String activity);
+
+    FluentBpmnProcessVariable variable(String variableName);
+
+    Task task();
+
+    List<Task> tasks();
 
     DiagramLayout diagramLayout();
 
@@ -31,16 +37,10 @@ public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessIns
 
     List<Execution> executions();
 
-    void moveAlong();
+    void claim(Task task, String userId);
 
-    void moveTo(String targetActivity);
+    void claim(Task task, User user);
 
-    FluentBpmnProcessInstance start();
-
-    FluentBpmnProcessInstanceImpl withVariable(String name, Object value);
-
-    FluentBpmnProcessInstance withVariables(Map<String, Object> variables);
-
-    FluentBpmnProcessVariable variable(String variableName);
+    void complete(Task task, Object... variables);
 
 }
