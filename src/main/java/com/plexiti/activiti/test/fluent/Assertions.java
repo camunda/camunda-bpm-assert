@@ -1,6 +1,7 @@
 package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.test.fluent.assertions.*;
+import org.activiti.engine.repository.DiagramLayout;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -43,6 +44,10 @@ public class Assertions extends org.fest.assertions.api.Assertions {
 
     public static ProcessDefinitionAssert assertThat(ProcessDefinition actual) {
         return ProcessDefinitionAssert.assertThat(actual);
+    }
+
+    public static DiagramLayoutAssert assertThat(DiagramLayout actual) {
+        return DiagramLayoutAssert.assertThat(actual);
     }
 
     public static TestProcessInstanceAssert assertThat(TestProcessInstance actual) {
