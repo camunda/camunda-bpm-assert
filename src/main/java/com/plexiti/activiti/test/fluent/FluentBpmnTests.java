@@ -25,6 +25,46 @@ import java.util.Map;
  */
 public class FluentBpmnTests extends org.fest.assertions.api.Assertions {
 
+    public static interface Move { void along(); }
+
+    public static FluentBpmnProcessInstance newProcessInstance(String processDefinitionId, Move move) {
+        FluentBpmnProcessInstanceImpl fluentBpmnProcessInstance = (FluentBpmnProcessInstanceImpl) FluentBpmnProcessInstanceLookup.newProcessInstance(processDefinitionId);
+        fluentBpmnProcessInstance.moveAlong(move);
+        return fluentBpmnProcessInstance;
+    }
+
+    public static FluentBpmnProcessInstance newProcessInstance(String processDefinitionId) {
+        return FluentBpmnProcessInstanceLookup.newProcessInstance(processDefinitionId);
+    }
+
+    public static FluentBpmnProcessInstance processInstance() {
+        return FluentBpmnProcessInstanceLookup.processInstance();
+    }
+
+    public static FluentBpmnProcessVariable processVariable(String id) {
+        return FluentBpmnProcessInstanceLookup.processInstance().variable(id);
+    }
+
+    public static FluentBpmnTask processTask() {
+        return FluentBpmnProcessInstanceLookup.processInstance().task();
+    }
+
+    // TODO From here on more "FluentBpmn" interfaces and wrappers have to be implemented
+
+    public static ProcessDefinition processDefinition(String processDefinitionId) {
+        return FluentBpmnProcessInstanceLookup.processDefinition(processDefinitionId);
+    }
+
+    public static DiagramLayout processDiagramLayout() {
+        return FluentBpmnProcessInstanceLookup.processInstance().diagramLayout();
+    }
+
+    public static Execution processExecution() {
+        return FluentBpmnProcessInstanceLookup.processInstance().execution();
+    }
+
+    // Assertions
+
     public static ExecutionAssert assertThat(Execution actual) {
         return ExecutionAssert.assertThat(actual);
     }
@@ -59,36 +99,6 @@ public class FluentBpmnTests extends org.fest.assertions.api.Assertions {
 
     public static TestProcessVariableAssert assertThat(FluentBpmnProcessVariable actual) {
         return TestProcessVariableAssert.assertThat(actual);
-    }
-
-    public static FluentBpmnProcessInstance start(FluentBpmnProcessInstanceImpl testProcess) {
-        return FluentBpmnProcessInstanceLookup.start(testProcess);
-    }
-
-    public static FluentBpmnProcessInstance processInstance() {
-        return FluentBpmnProcessInstanceLookup.processInstance();
-    }
-
-    public static FluentBpmnProcessVariable processVariable(String id) {
-        return FluentBpmnProcessInstanceLookup.processInstance().variable(id);
-    }
-
-    public static FluentBpmnTask processTask() {
-        return FluentBpmnProcessInstanceLookup.processInstance().task();
-    }
-
-    // TODO From here on more "FluentBpmn" interfaces and wrappers have to be implemented
-
-    public static ProcessDefinition processDefinition(String processDefinitionName) {
-        return FluentBpmnProcessInstanceLookup.processDefinition(processDefinitionName);
-    }
-
-    public static DiagramLayout processDiagramLayout() {
-        return FluentBpmnProcessInstanceLookup.processInstance().diagramLayout();
-    }
-
-    public static Execution processExecution() {
-        return FluentBpmnProcessInstanceLookup.processInstance().execution();
     }
 
 }

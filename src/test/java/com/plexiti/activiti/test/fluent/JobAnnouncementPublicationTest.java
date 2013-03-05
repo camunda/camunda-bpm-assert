@@ -2,8 +2,6 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
-import com.plexiti.helper.Entities;
 import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.Deployment;
 import org.junit.Rule;
@@ -39,12 +37,12 @@ public class JobAnnouncementPublicationTest {
 	public void testPublishOnlyOnCompanyWebsite() {
 		
 		when(jobAnnouncement.getId()).thenReturn(1L);
-		
-		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
-			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
+
+        newProcessInstance(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
+			.withVariable("jobAnnouncementId", jobAnnouncement.getId())
 			.withVariable("twitter", false)
 			.withVariable("facebook", false)
-		);
+		.start();
 		
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
 		verify(jobAnnouncementService, never()).postToTwitter(any(Long.class));
@@ -60,11 +58,11 @@ public class JobAnnouncementPublicationTest {
 	@Deployment(resources = { JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
 	public void testPublishAlsoOnTwitter() {
 		
-		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
-			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
+		newProcessInstance(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
+			.withVariable("jobAnnouncementId", jobAnnouncement.getId())
 			.withVariable("twitter", true)
 			.withVariable("facebook", false)
-		);
+		.start();
 
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
 		verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
@@ -79,12 +77,12 @@ public class JobAnnouncementPublicationTest {
 	@Test
 	@Deployment(resources = { JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
 	public void testPublishAlsoOnFacebook() {
-		
-		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
-			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
+
+        newProcessInstance(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
+			.withVariable("jobAnnouncementId", jobAnnouncement.getId())
 			.withVariable("twitter", false)
 			.withVariable("facebook", true)
-		);
+		.start();
 
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
 		verify(jobAnnouncementService, never()).postToTwitter(any(Long.class));
@@ -99,12 +97,12 @@ public class JobAnnouncementPublicationTest {
 	@Test
 	@Deployment(resources = { JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
 	public void testPublishAlsoOnFacebookAndTwitter() {
-		
-		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
-			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
+
+        newProcessInstance(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
+			.withVariable("jobAnnouncementId", jobAnnouncement.getId())
 			.withVariable("facebook", true)
 			.withVariable("twitter", true)
-		);
+		.start();
 
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
 		verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());

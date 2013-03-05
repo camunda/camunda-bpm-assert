@@ -13,6 +13,7 @@
  */
 package com.plexiti.activiti.test.fluent.engine;
 
+import com.plexiti.activiti.test.fluent.FluentBpmnTests;
 import com.plexiti.activiti.test.fluent.assertions.ExecutionAssert;
 import org.activiti.engine.repository.DiagramLayout;
 import org.activiti.engine.runtime.Execution;
@@ -37,6 +38,7 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     private ProcessInstance delegate;
     protected String processDefinitionId;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
+    protected FluentBpmnTests.Move move = new FluentBpmnTests.Move() { public void along() {} };
 
     public FluentBpmnProcessInstanceImpl(String processDefinitionId) {
         this.processDefinitionId = processDefinitionId;
@@ -122,15 +124,15 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
         return FluentBpmnLookups.createExecutionQuery().processInstanceId(getDelegate().getId()).list();
     }
 
-    @Override
-    public void moveAlong() {
+    public void moveAlong(FluentBpmnTests.Move move) {
+        this.move = move;
     }
 
     @Override
-    public void moveTo(String activity) {
+    public void startAndMoveTo(String activity) {
         try {
             ExecutionAssert.setMoveToActivityId(activity);
-            moveAlong();
+            move.along();
         } catch (ExecutionAssert.MoveToActivityIdException e) {
         }
     }

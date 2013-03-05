@@ -2,8 +2,6 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
-import com.plexiti.helper.Entities;
 import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.Deployment;
 import org.junit.Rule;
@@ -44,13 +42,10 @@ public class JobAnnouncementTest {
 		when(jobAnnouncementService.findRequester(1L)).thenReturn(USER_MANAGER);
 		when(jobAnnouncementService.findEditor(1L)).thenReturn(USER_STAFF);
 
-        /*
-         * Start the processInstance with (optionally) processInstance variables
-         */
-		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS)
-             .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
-        );
-		
+        newProcessInstance(JOBANNOUNCEMENT_PROCESS)
+            .withVariable("jobAnnouncementId", jobAnnouncement.getId())
+            .start();
+
 		assertThat(processDiagramLayout()).isContainingNode(TASK_DESCRIBE_POSITION);
 		assertThat(processDiagramLayout()).isContainingNode(TASK_REVIEW_ANNOUNCEMENT);
 		assertThat(processDiagramLayout()).isContainingNode(TASK_CORRECT_ANNOUNCEMENT);
@@ -104,12 +99,12 @@ public class JobAnnouncementTest {
 
 		when(jobAnnouncement.getId()).thenReturn(1L);
 
-		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS) {
-		        public void moveAlong() {
-			   		testHappyPath();
-				}
-			}.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
-		).moveTo(TASK_REVIEW_ANNOUNCEMENT);
+        newProcessInstance(JOBANNOUNCEMENT_PROCESS, new Move() {
+            public void along() {
+                testHappyPath();
+            }
+        }).withVariable("jobAnnouncementId", jobAnnouncement.getId())
+        .startAndMoveTo(TASK_REVIEW_ANNOUNCEMENT);
 
         assertThat(processExecution()).isStarted();
 

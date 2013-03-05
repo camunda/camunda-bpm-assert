@@ -29,18 +29,11 @@ public class FluentBpmnProcessInstanceLookup {
         return processes;
     }
 
-    public static FluentBpmnProcessInstance start(FluentBpmnProcessInstanceImpl testProcess) {
-        if (getTestProcessInstances().containsKey(testProcess.processDefinitionId)) {
-            return getTestProcessInstances().get(testProcess.processDefinitionId);
-        } else {
-            getTestProcessInstances().put(testProcess.processDefinitionId, testProcess);
-            testProcess.start();
-            return testProcess;
+    public static FluentBpmnProcessInstance newProcessInstance(String processDefinitionId) {
+        if (!getTestProcessInstances().containsKey(processDefinitionId)) {
+            getTestProcessInstances().put(processDefinitionId, new FluentBpmnProcessInstanceImpl(processDefinitionId));
         }
-    }
-
-    public static FluentBpmnProcessInstance processInstance(String processDefinitionKey) {
-        return getTestProcessInstances().get(processDefinitionKey);
+        return getTestProcessInstances().get(processDefinitionId);
     }
 
     public static FluentBpmnProcessInstance processInstance() {
@@ -48,12 +41,12 @@ public class FluentBpmnProcessInstanceLookup {
         return getTestProcessInstances().values().iterator().next();
     }
 
-    public static ProcessDefinition processDefinition(String processDefinitionName) {
+    public static ProcessDefinition processDefinition(String processDefinitionId) {
         List<ProcessDefinition> definitions = FluentBpmnLookups.getRepositoryService().createProcessDefinitionQuery()
-                .processDefinitionName(processDefinitionName).list();
+                .processDefinitionName(processDefinitionId).list();
 
         assertThat(definitions)
-                .overridingErrorMessage("Unable to find a deployed processInstance definition with name '%s'", processDefinitionName)
+                .overridingErrorMessage("Unable to find a deployed processInstance definition with name '%s'", processDefinitionId)
                 .hasSize(1);
 
         return definitions.get(0);

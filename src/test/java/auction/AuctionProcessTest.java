@@ -62,9 +62,9 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
                      auction.setId(new Long(1));
 
                      // start the processInstance
-                     start(new FluentBpmnProcessInstanceImpl("auction-process")
+                     newProcessInstance("auction-process")
                           .withVariable("auctionId", auction.getId())
-                     );
+                     .start();
 
                      return auction.getId();
                  }

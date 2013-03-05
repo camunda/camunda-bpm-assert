@@ -16,13 +16,11 @@ public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessIns
 
     FluentBpmnProcessInstance start();
 
+    void startAndMoveTo(String activity);
+
     FluentBpmnProcessInstanceImpl withVariable(String name, Object value);
 
     FluentBpmnProcessInstance withVariables(Map<String, Object> variables);
-
-    void moveAlong();
-
-    void moveTo(String activity);
 
     FluentBpmnProcessVariable variable(String variableName);
 
