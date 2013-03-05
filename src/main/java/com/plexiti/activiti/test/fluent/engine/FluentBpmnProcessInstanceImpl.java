@@ -71,7 +71,7 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
 
     @Override
     public boolean isEnded() {
-        return getDelegate().isEnded();
+        return execution() == null || getDelegate().isEnded();
     }
 
     @Override

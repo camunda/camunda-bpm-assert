@@ -74,8 +74,8 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
 
         auctionService.createAuction(auction);
 
-        assertThat(processExecution()).isStarted();
-        assertThat(processExecution()).isWaitingAt("authorizeAuction");
+        assertThat(processInstance()).isStarted();
+        assertThat(processInstance()).isWaitingAt("authorizeAuction");
         assertThat(processVariable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
 
         auctionService.authorizeAuction(processTask().getId(), true);
@@ -84,11 +84,11 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
 
         processJob().execute();
 
-        assertThat(processExecution()).isWaitingAt("UserTask_2");
+        assertThat(processInstance()).isWaitingAt("UserTask_2");
 
         processTask().complete();
 
-        assertThat(processExecution()).isFinished();
+        assertThat(processInstance()).isFinished();
 
     }
 

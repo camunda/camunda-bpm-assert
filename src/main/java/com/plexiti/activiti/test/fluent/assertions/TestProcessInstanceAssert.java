@@ -39,4 +39,33 @@ public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanc
         return this;
     }
 
+    public TestProcessInstanceAssert isFinished() {
+        /*
+         * TODO: we need to review this
+         * If the incomming Execution instance is null we consider the processExecution finished
+         */
+        if (actual == null) {
+            return this;
+        }
+
+        /*
+         * If it is not null we make sure that it is actually finished.
+         */
+        Assertions.assertThat(actual.isEnded()).
+                overridingErrorMessage("Expected processExecution %s to be finished but it is not!", actual.getId()).
+                isTrue();
+
+        return this;
+    }
+
+    public TestProcessInstanceAssert isStarted() {
+        isNotNull();
+
+        Assertions.assertThat(actual.isEnded()).
+                overridingErrorMessage("Expected processExecution %s to be started but it is not!", actual.getId()).
+                isFalse();
+
+        return this;
+    }
+
 }
