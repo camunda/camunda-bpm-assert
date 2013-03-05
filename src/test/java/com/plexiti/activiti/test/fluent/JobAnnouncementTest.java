@@ -3,9 +3,7 @@ package com.plexiti.activiti.test.fluent;
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
 import com.plexiti.helper.Entities;
-import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.test.Deployment;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -21,7 +19,7 @@ import static com.plexiti.activiti.test.fluent.Assertions.*;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  *
  */
-public class JobAnnouncementTest extends ActivitiFluentTest {
+public class JobAnnouncementTest extends ActivitiFluentTestCase {
 	
     /*
      * Mock your services and domain model classes

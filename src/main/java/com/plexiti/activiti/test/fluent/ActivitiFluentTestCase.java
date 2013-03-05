@@ -36,7 +36,7 @@ import static org.fest.assertions.api.Assertions.*;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  *
  */
-public abstract class ActivitiFluentTest extends ActivitiTestCase {
+public abstract class ActivitiFluentTestCase extends ActivitiTestCase {
 
     private Map<String, TestProcessInstance> processes = new HashMap<String, TestProcessInstance>();
 

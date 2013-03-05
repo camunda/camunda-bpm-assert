@@ -2,7 +2,7 @@ package auction;
 
 import com.camunda.showcase.auction.domain.Auction;
 import com.camunda.showcase.auction.service.AuctionService;
-import com.plexiti.activiti.test.fluent.ActivitiFluentTest;
+import com.plexiti.activiti.test.fluent.ActivitiFluentTestCase;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.test.Deployment;
@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 /*
  * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
  */
-public class AuctionProcessTest extends ActivitiFluentTest {
+public class AuctionProcessTest extends ActivitiFluentTestCase {
 
     @Mock
     public AuctionService auctionService;

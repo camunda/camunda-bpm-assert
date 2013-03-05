@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  *
  */
-public class JobAnnouncementPublicationTest extends ActivitiFluentTest {
+public class JobAnnouncementPublicationTest extends ActivitiFluentTestCase {
 	
 	@Mock
     public JobAnnouncementService jobAnnouncementService;
