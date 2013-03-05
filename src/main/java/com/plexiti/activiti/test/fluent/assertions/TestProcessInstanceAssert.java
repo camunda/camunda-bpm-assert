@@ -24,16 +24,4 @@ public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanc
         return new TestProcessInstanceAssert(actual);
     }
 
-    public Execution execution() {
-        List<Execution> executions = executions();
-        if (executions.size() == 0) return null;
-        Assertions.assertThat(executions)
-                .as("By calling processExecution() you implicitly assumed that at most one processExecution exists but there are " + executions.size())
-                .hasSize(1);
-        return executions.get(0);
-    }
-
-    public List<Execution> executions() {
-        ExecutionQuery executionQuery = FluentBpmnLookups.getRuntimeService().createExecutionQuery();
-        return executionQuery.processInstanceId(actual.getDelegate().getId()).list();
-    }}
+}
