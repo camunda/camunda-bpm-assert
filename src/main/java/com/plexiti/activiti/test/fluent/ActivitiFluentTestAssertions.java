@@ -13,13 +13,13 @@ import java.util.List;
  *
  * In your code use
  *
- *    import static com.plexiti.activiti.test.fluent.api.Assertions.*;
+ *    import static com.plexiti.activiti.test.fluent.api.ActivitiFluentTestAssertions.*;
  *
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class Assertions extends org.fest.assertions.api.Assertions {
+public class ActivitiFluentTestAssertions extends org.fest.assertions.api.Assertions {
 
     public static ExecutionAssert assertThat(Execution actual) {
         return ExecutionAssert.assertThat(actual);

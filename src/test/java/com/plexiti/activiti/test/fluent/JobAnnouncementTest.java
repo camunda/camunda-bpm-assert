@@ -11,7 +11,7 @@ import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConst
 import static com.plexiti.activiti.test.fluent.ActivitiFestConditions.*;
 import static org.mockito.Mockito.*;
 
-import static com.plexiti.activiti.test.fluent.Assertions.*;
+import static com.plexiti.activiti.test.fluent.ActivitiFluentTestAssertions.*;
 
 /**
  *

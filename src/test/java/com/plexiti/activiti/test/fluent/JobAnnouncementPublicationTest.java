@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
-import static com.plexiti.activiti.test.fluent.Assertions.*;
+import static com.plexiti.activiti.test.fluent.ActivitiFluentTestAssertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
