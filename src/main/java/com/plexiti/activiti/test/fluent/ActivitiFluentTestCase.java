@@ -40,15 +40,12 @@ public abstract class ActivitiFluentTestCase extends ActivitiTestCase {
 
     private Map<String, TestProcessInstance> processes = new HashMap<String, TestProcessInstance>();
 
-    @Before
-    public void setUp() throws Exception {
-        super.setUp();
+    private ActivitiFluentTestRule activitiFluentTestRule = new ActivitiFluentTestRule(this);
 
-        /*
-         * Initialize @Mock annotations and register the mocks
-         */
-        MockitoAnnotations.initMocks(this);
-        Mockitos.register(this);
+    @Override @Before
+    protected void setUp() throws Exception {
+        super.setUp();
+        activitiFluentTestRule.before();
     }
 
     @After
