@@ -1,7 +1,6 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
 import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
 import org.activiti.engine.runtime.Execution;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
@@ -73,10 +72,14 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
 
         if (activityId.equals(moveToActivityId.get())) {
             setMoveToActivityId(null);
-            throw new FluentBpmnProcessInstanceImpl.ActivitiTargetActivityReached();
+            throw new MoveToActivityIdException();
         }
 
         return this;
+    }
+
+    public static class MoveToActivityIdException extends RuntimeException {
+        private static final long serialVersionUID = 2282185191899085294L;
     }
 
 }

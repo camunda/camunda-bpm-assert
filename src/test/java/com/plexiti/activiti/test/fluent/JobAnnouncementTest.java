@@ -4,7 +4,9 @@ import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
 import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
 import com.plexiti.helper.Entities;
+import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.Deployment;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -19,12 +21,14 @@ import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  *
  */
-public class JobAnnouncementTest extends FluentBpmnTestCase {
-	
-    /*
-     * Mock your services and domain model classes
-     */
-	@Mock
+public class JobAnnouncementTest {
+
+    @Rule
+    public ActivitiRule activitiRule = new ActivitiRule();
+    @Rule
+    public FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
+
+    @Mock
     public JobAnnouncementService jobAnnouncementService;
 	@Mock
     public JobAnnouncement jobAnnouncement;
