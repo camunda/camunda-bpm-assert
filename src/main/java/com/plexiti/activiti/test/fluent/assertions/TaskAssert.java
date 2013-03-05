@@ -27,7 +27,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
         isNotNull();
 
         Assertions.assertThat(actual.getAssignee())
-                .overridingErrorMessage("Expected task '%s' to be unassigned but it is assigned to '%s'",
+                .overridingErrorMessage("Expected processTask '%s' to be unassigned but it is assigned to '%s'",
                                         actual.getName(), actual.getAssignee())
                 .isNull();
 
@@ -38,7 +38,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
         isNotNull();
 
         Assertions.assertThat(actual.getAssignee())
-                .overridingErrorMessage("Expected task '%s' to be assigned to user '%s' but it is assigned to '%s'",
+                .overridingErrorMessage("Expected processTask '%s' to be assigned to user '%s' but it is assigned to '%s'",
                                         actual.getName(), userId, actual.getAssignee())
                 .isEqualTo(userId);
 
@@ -52,7 +52,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
         TaskQuery query = taskService.createTaskQuery()
                                      .taskId(actual.getId()).taskCandidateGroup(candidateGroupId);
         Assertions.assertThat(query.singleResult())
-                .overridingErrorMessage("Expected task '%s' to have '%s' as a candidate group",
+                .overridingErrorMessage("Expected processTask '%s' to have '%s' as a candidate group",
                                         actual.getName(), candidateGroupId);
 
         return this;

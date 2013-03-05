@@ -65,24 +65,30 @@ public class FluentBpmnTests extends org.fest.assertions.api.Assertions {
         return FluentBpmnProcessInstanceLookup.start(testProcess);
     }
 
-    public static void startProcessInstanceByKey(String processKey, Map<String, Object> processVariables) {
-        FluentBpmnProcessInstanceLookup.startProcessInstanceByKey(processKey, processVariables);
+    public static FluentBpmnProcessInstance processInstance() {
+        return FluentBpmnProcessInstanceLookup.processInstance();
     }
 
-    public static FluentBpmnProcessInstance process(String processDefinitionKey) {
-        return FluentBpmnProcessInstanceLookup.process(processDefinitionKey);
+    public static FluentBpmnProcessVariable processVariable(String id) {
+        return FluentBpmnProcessInstanceLookup.processInstance().variable(id);
     }
+
+    public static FluentBpmnTask processTask() {
+        return FluentBpmnProcessInstanceLookup.processInstance().task();
+    }
+
+    // TODO From here on more "FluentBpmn" interfaces and wrappers have to be implemented
 
     public static ProcessDefinition processDefinition(String processDefinitionName) {
         return FluentBpmnProcessInstanceLookup.processDefinition(processDefinitionName);
     }
 
-    public static FluentBpmnProcessInstance process() {
-        return FluentBpmnProcessInstanceLookup.process();
+    public static DiagramLayout processDiagramLayout() {
+        return FluentBpmnProcessInstanceLookup.processInstance().diagramLayout();
     }
 
-    public static Task findTaskByTaskId(String taskId) {
-        return FluentBpmnProcessInstanceLookup.findTaskByTaskId(taskId);
+    public static Execution processExecution() {
+        return FluentBpmnProcessInstanceLookup.processInstance().execution();
     }
 
 }

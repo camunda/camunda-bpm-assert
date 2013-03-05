@@ -39,11 +39,11 @@ public class FluentBpmnProcessInstanceLookup {
         }
     }
 
-    public static FluentBpmnProcessInstance process(String processDefinitionKey) {
+    public static FluentBpmnProcessInstance processInstance(String processDefinitionKey) {
         return getTestProcessInstances().get(processDefinitionKey);
     }
 
-    public static FluentBpmnProcessInstance process() {
+    public static FluentBpmnProcessInstance processInstance() {
         assertThat(getTestProcessInstances()).hasSize(1);
         return getTestProcessInstances().values().iterator().next();
     }
@@ -53,14 +53,14 @@ public class FluentBpmnProcessInstanceLookup {
                 .processDefinitionName(processDefinitionName).list();
 
         assertThat(definitions)
-                .overridingErrorMessage("Unable to find a deployed process definition with name '%s'", processDefinitionName)
+                .overridingErrorMessage("Unable to find a deployed processInstance definition with name '%s'", processDefinitionName)
                 .hasSize(1);
 
         return definitions.get(0);
     }
 
     public static void startProcessInstanceByKey(String processKey, Map<String, Object> processVariables) {
-        // TODO: Assert that a process definition with that key is already deployed
+        // TODO: Assert that a processInstance definition with that key is already deployed
         FluentBpmnProcessInstance testInstance = new FluentBpmnProcessInstanceImpl(processKey);
         testInstance.withVariables(processVariables);
         testInstance.start();
@@ -68,10 +68,10 @@ public class FluentBpmnProcessInstanceLookup {
     }
 
     public static Task findTaskByTaskId(String taskId) {
-        ProcessInstance pi = process().getDelegate();
+        ProcessInstance pi = processInstance().getDelegate();
         List<Task> tasks = FluentBpmnLookups.getTaskService().createTaskQuery().processInstanceId(pi.getId()).list();
         assertThat(tasks.size())
-                .overridingErrorMessage("Unable to find a task with id '%s'", taskId)
+                .overridingErrorMessage("Unable to find a processTask with id '%s'", taskId)
                 .isEqualTo(1);
         return tasks.get(0);
     }

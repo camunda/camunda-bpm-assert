@@ -3,6 +3,7 @@ package auction;
 import com.camunda.showcase.auction.domain.Auction;
 import com.camunda.showcase.auction.service.AuctionService;
 import com.plexiti.activiti.test.fluent.FluentBpmnTestCase;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.test.Deployment;
@@ -13,13 +14,11 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /*
  * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
@@ -30,7 +29,7 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
     public AuctionService auctionService;
 
     /*
-     * Added since some of the process expressions use ${auction. ...}
+     * Added since some of the processInstance expressions use ${auction. ...}
      */
     @Mock(name = "auction")
     public Auction theAuction = new Auction("Auction name", "Auction description", new Date());
@@ -62,10 +61,10 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
                      // Assign an id to the auction
                      auction.setId(new Long(1));
 
-                     Map<String, Object> processVariables = new HashMap<String, Object>();
-                     processVariables.put("auctionId", auction.getId());
-                     // start the process
-                     startProcessInstanceByKey("auction-process", processVariables);
+                     // start the processInstance
+                     start(new FluentBpmnProcessInstanceImpl("auction-process")
+                          .withVariable("auctionId", auction.getId())
+                     );
 
                      return auction.getId();
                  }
@@ -77,22 +76,22 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
          auctionService.createAuction(auction);
 
          /*
-          * The process should have been started from the service implementation
+          * The processInstance should have been started from the service implementation
           */
-         assertThat(process().execution()).isStarted();
+         assertThat(processExecution()).isStarted();
 
-         // The process variable "auctionId" must exist
-         assertThat(process().variable("auctionId"))
+         // The processInstance processVariable "auctionId" must exist
+         assertThat(processVariable("auctionId"))
                  .exists()
                  .isDefined()
                  // The ID of the auction should also have been set!
                  .asLong().isEqualTo(1);
 
-         assertThat(process().execution()).isWaitingAt("authorizeAuction");
-         Task authorizeAuctionTask = findTaskByTaskId("authorizeAuction");
-         auctionService.authorizeAuction(authorizeAuctionTask.getId(), true);
+         assertThat(processExecution()).isWaitingAt("authorizeAuction");
+//         Task authorizeAuctionTask = findTaskByTaskId("authorizeAuction");
+         auctionService.authorizeAuction(processTask().getId(), true);
 
-         // end complete task 1 ///////////////
+         // end complete processTask 1 ///////////////
 
          // wait for auction end //////////////
 
@@ -101,19 +100,19 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
 
          // end wait for auction end //////////
 
-         // complete task 2 ///////////////////
-         ProcessInstance pi = process().getDelegate();
+         // complete processTask 2 ///////////////////
+         ProcessInstance pi = processInstance().getDelegate();
          List<Task> tasksAfterTimer = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
          Assert.assertEquals(1,tasksAfterTimer.size());
 
          Task billingAndShippingTask = tasksAfterTimer.get(0);
 
-         // complete task
+         // complete processTask
          taskService.complete(billingAndShippingTask.getId());
 
-         // end complete task 2 ///////////////
+         // end complete processTask 2 ///////////////
 
-         // check if process instance is really ended
+         // check if processInstance instance is really ended
 
          long runningInstancesCount = runtimeService
                  .createProcessInstanceQuery()

@@ -28,7 +28,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
     public ExecutionAssert isFinished() {
         /*
          * TODO: we need to review this
-         * If the incomming Execution instance is null we consider the execution finished
+         * If the incomming Execution instance is null we consider the processExecution finished
          */
         if (actual == null) {
             return this;
@@ -38,7 +38,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
          * If it is not null we make sure that it is actually finished.
          */
         Assertions.assertThat(actual.isEnded()).
-                overridingErrorMessage("Expected execution %s to be finished but it is not!", actual.getId()).
+                overridingErrorMessage("Expected processExecution %s to be finished but it is not!", actual.getId()).
                 isTrue();
 
         return this;
@@ -48,7 +48,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
         isNotNull();
 
         Assertions.assertThat(actual.isEnded()).
-                overridingErrorMessage("Expected execution %s to be started but it is not!", actual.getId()).
+                overridingErrorMessage("Expected processExecution %s to be started but it is not!", actual.getId()).
                 isFalse();
 
         return this;
@@ -66,7 +66,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
         List<String> activeActivityIds = FluentBpmnLookups.getRuntimeService()
                                                                  .getActiveActivityIds(actual.getId());
         Assertions.assertThat(activeActivityIds)
-                .overridingErrorMessage("Expected execution with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s",
+                .overridingErrorMessage("Expected processExecution with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s",
                                         actual.getId(), activityId, activeActivityIds)
                 .contains(activityId);
 

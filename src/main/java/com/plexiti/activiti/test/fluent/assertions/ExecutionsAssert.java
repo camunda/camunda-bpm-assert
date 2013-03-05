@@ -24,7 +24,7 @@ public class ExecutionsAssert extends AbstractAssert<ExecutionsAssert, List<Exec
     public ExecutionsAssert areFinished() {
         /*
          * TODO: we need to review this
-         * If the incomming Execution instance is null we consider the execution finished
+         * If the incomming Execution instance is null we consider the processExecution finished
          */
         if (actual == null) {
             return this;
@@ -36,7 +36,7 @@ public class ExecutionsAssert extends AbstractAssert<ExecutionsAssert, List<Exec
         //ExecutionQuery executionQuery = ActivitiFluentTestHelper.getRuntimeService().createExecutionQuery();
         //executionQuery.processInstanceId(actual.getActualProcessInstance().getId()).list();
         //FluentBpmnTests.assertThat(actual.get(0).is).
-        //        overridingErrorMessage("Expected execution %s to be finished but it is not!", actual.getId()).
+        //        overridingErrorMessage("Expected processExecution %s to be finished but it is not!", actual.getId()).
         //        isTrue();
 
         return this;
