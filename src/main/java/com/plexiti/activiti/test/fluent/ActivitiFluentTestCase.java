@@ -32,9 +32,10 @@ public abstract class ActivitiFluentTestCase extends ActivitiTestCase {
         activitiFluentTestRule.before();
     }
 
-    @After
+    @Override @After
     public void tearDown() throws Exception {
         super.tearDown();
+        activitiFluentTestRule.after();
     }
 
 }

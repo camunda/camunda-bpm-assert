@@ -29,7 +29,7 @@ public class ActivitiFluentTestRule implements TestRule {
                 try {
                     statement.evaluate();
                 } finally {
-                    // after();
+                    after();
                 }
             }
         };
@@ -40,6 +40,9 @@ public class ActivitiFluentTestRule implements TestRule {
         TestLookup.initTest();
         MockitoAnnotations.initMocks(test);
         Mockitos.register(test);
+    }
+
+    public void after() {
     }
 
 }
