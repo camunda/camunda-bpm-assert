@@ -61,7 +61,7 @@ public class ActivitiFluentTests extends org.fest.assertions.api.Assertions {
         return TestProcessVariableAssert.assertThat(actual);
     }
 
-    public static TestProcessInstance start(TestProcessInstance testProcess) {
+    public static TestProcessInstance start(TestProcessInstanceImpl testProcess) {
         return TestProcessInstanceLookup.start(testProcess);
     }
 

@@ -1,7 +1,7 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
 import com.plexiti.activiti.test.fluent.engine.TestLookups;
-import com.plexiti.activiti.test.fluent.engine.TestProcessInstance;
+import com.plexiti.activiti.test.fluent.engine.TestProcessInstanceImpl;
 import org.activiti.engine.runtime.Execution;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
@@ -73,7 +73,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
 
         if (activityId.equals(moveToActivityId.get())) {
             setMoveToActivityId(null);
-            throw new TestProcessInstance.ActivitiTargetActivityReached();
+            throw new TestProcessInstanceImpl.ActivitiTargetActivityReached();
         }
 
         return this;

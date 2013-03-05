@@ -2,6 +2,7 @@ package com.plexiti.activiti.test.fluent.assertions;
 
 import com.plexiti.activiti.test.fluent.engine.TestLookups;
 import com.plexiti.activiti.test.fluent.engine.TestProcessInstance;
+import com.plexiti.activiti.test.fluent.engine.TestProcessInstanceImpl;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ExecutionQuery;
 import org.fest.assertions.api.AbstractAssert;
@@ -16,7 +17,7 @@ import java.util.List;
 public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanceAssert, TestProcessInstance> {
 
     protected TestProcessInstanceAssert(TestProcessInstance actual) {
-        super(actual, TestProcessInstance.class);
+        super(actual, TestProcessInstanceImpl.class);
     }
 
     public static TestProcessInstanceAssert assertThat(TestProcessInstance actual) {

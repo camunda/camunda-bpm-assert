@@ -2,7 +2,7 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
-import com.plexiti.activiti.test.fluent.engine.TestProcessInstance;
+import com.plexiti.activiti.test.fluent.engine.TestProcessInstanceImpl;
 import com.plexiti.helper.Entities;
 import org.activiti.engine.test.Deployment;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class JobAnnouncementTest extends ActivitiFluentTestCase {
         /*
          * Start the process with (optionally) process variables
          */
-		start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS)
+		start(new TestProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS)
                 .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
         );
 		
@@ -112,7 +112,7 @@ public class JobAnnouncementTest extends ActivitiFluentTestCase {
 
 		when(jobAnnouncement.getId()).thenReturn(1L);
 
-		start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS) { 
+		start(new TestProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS) {
 				public void moveAlong() { 
 					testHappyPath(); 
 				}

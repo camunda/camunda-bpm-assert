@@ -29,7 +29,7 @@ public class TestProcessInstanceLookup {
         return processes;
     }
 
-    public static TestProcessInstance start(TestProcessInstance testProcess) {
+    public static TestProcessInstance start(TestProcessInstanceImpl testProcess) {
         if (getTestProcessInstances().containsKey(testProcess.processDefinitionKey)) {
             return getTestProcessInstances().get(testProcess.processDefinitionKey);
         } else {
@@ -61,7 +61,7 @@ public class TestProcessInstanceLookup {
 
     public static void startProcessInstanceByKey(String processKey, Map<String, Object> processVariables) {
         // TODO: Assert that a process definition with that key is already deployed
-        TestProcessInstance testInstance = new TestProcessInstance(processKey);
+        TestProcessInstance testInstance = new TestProcessInstanceImpl(processKey);
         testInstance.withVariables(processVariables);
         testInstance.start();
         getTestProcessInstances().put(processKey, testInstance);
