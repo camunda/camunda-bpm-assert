@@ -1,7 +1,7 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.TestLookups;
-import com.plexiti.activiti.test.fluent.engine.TestProcessInstanceImpl;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
 import org.activiti.engine.runtime.Execution;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
@@ -64,7 +64,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
     public ExecutionAssert isWaitingAt(String activityId) {
         isNotNull();
 
-        List<String> activeActivityIds = TestLookups.getRuntimeService()
+        List<String> activeActivityIds = FluentBpmnLookups.getRuntimeService()
                                                                  .getActiveActivityIds(actual.getId());
         Assertions.assertThat(activeActivityIds)
                 .overridingErrorMessage("Expected execution with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s",
@@ -73,7 +73,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
 
         if (activityId.equals(moveToActivityId.get())) {
             setMoveToActivityId(null);
-            throw new TestProcessInstanceImpl.ActivitiTargetActivityReached();
+            throw new FluentBpmnProcessInstanceImpl.ActivitiTargetActivityReached();
         }
 
         return this;

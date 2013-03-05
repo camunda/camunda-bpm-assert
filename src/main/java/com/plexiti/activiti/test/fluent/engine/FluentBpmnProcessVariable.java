@@ -9,12 +9,12 @@ import java.io.Serializable;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  *
  */
-public class TestProcessVariable implements Serializable {
+public class FluentBpmnProcessVariable implements Serializable {
 
     private final String name;
     private final Object value;
 
-    public TestProcessVariable(String name, Object value) {
+    public FluentBpmnProcessVariable(String name, Object value) {
         this.name = name;
         this.value = value;
     }

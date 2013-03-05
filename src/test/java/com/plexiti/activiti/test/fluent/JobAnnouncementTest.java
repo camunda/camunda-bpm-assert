@@ -2,7 +2,7 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
-import com.plexiti.activiti.test.fluent.engine.TestProcessInstanceImpl;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
 import com.plexiti.helper.Entities;
 import org.activiti.engine.test.Deployment;
 import org.junit.Test;
@@ -11,7 +11,7 @@ import org.mockito.Mock;
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
 import static org.mockito.Mockito.*;
 
-import static com.plexiti.activiti.test.fluent.ActivitiFluentTests.*;
+import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 
 /**
  *
@@ -19,7 +19,7 @@ import static com.plexiti.activiti.test.fluent.ActivitiFluentTests.*;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  *
  */
-public class JobAnnouncementTest extends ActivitiFluentTestCase {
+public class JobAnnouncementTest extends FluentBpmnTestCase {
 	
     /*
      * Mock your services and domain model classes
@@ -43,7 +43,7 @@ public class JobAnnouncementTest extends ActivitiFluentTestCase {
         /*
          * Start the process with (optionally) process variables
          */
-		start(new TestProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS)
+		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS)
                 .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
         );
 		
@@ -112,7 +112,7 @@ public class JobAnnouncementTest extends ActivitiFluentTestCase {
 
 		when(jobAnnouncement.getId()).thenReturn(1L);
 
-		start(new TestProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS) {
+		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PROCESS) {
 				public void moveAlong() { 
 					testHappyPath(); 
 				}

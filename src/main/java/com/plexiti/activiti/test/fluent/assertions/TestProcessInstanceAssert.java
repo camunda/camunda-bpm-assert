@@ -1,8 +1,8 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.TestLookups;
-import com.plexiti.activiti.test.fluent.engine.TestProcessInstance;
-import com.plexiti.activiti.test.fluent.engine.TestProcessInstanceImpl;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstance;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ExecutionQuery;
 import org.fest.assertions.api.AbstractAssert;
@@ -14,13 +14,13 @@ import java.util.List;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanceAssert, TestProcessInstance> {
+public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanceAssert, FluentBpmnProcessInstance> {
 
-    protected TestProcessInstanceAssert(TestProcessInstance actual) {
-        super(actual, TestProcessInstanceImpl.class);
+    protected TestProcessInstanceAssert(FluentBpmnProcessInstance actual) {
+        super(actual, FluentBpmnProcessInstanceImpl.class);
     }
 
-    public static TestProcessInstanceAssert assertThat(TestProcessInstance actual) {
+    public static TestProcessInstanceAssert assertThat(FluentBpmnProcessInstance actual) {
         return new TestProcessInstanceAssert(actual);
     }
 
@@ -34,6 +34,6 @@ public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanc
     }
 
     public List<Execution> executions() {
-        ExecutionQuery executionQuery = TestLookups.getRuntimeService().createExecutionQuery();
-        return executionQuery.processInstanceId(actual.getActualProcessInstance().getId()).list();
+        ExecutionQuery executionQuery = FluentBpmnLookups.getRuntimeService().createExecutionQuery();
+        return executionQuery.processInstanceId(actual.getDelegate().getId()).list();
     }}

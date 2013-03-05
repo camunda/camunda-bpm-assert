@@ -17,13 +17,13 @@ import java.util.Map;
  *
  * In your code use
  *
- *    import static com.plexiti.activiti.test.fluent.ActivitiFluentTests.*;
+ *    import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
  *
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class ActivitiFluentTests extends org.fest.assertions.api.Assertions {
+public class FluentBpmnTests extends org.fest.assertions.api.Assertions {
 
     public static ExecutionAssert assertThat(Execution actual) {
         return ExecutionAssert.assertThat(actual);
@@ -53,36 +53,36 @@ public class ActivitiFluentTests extends org.fest.assertions.api.Assertions {
         return DiagramLayoutAssert.assertThat(actual);
     }
 
-    public static TestProcessInstanceAssert assertThat(TestProcessInstance actual) {
+    public static TestProcessInstanceAssert assertThat(FluentBpmnProcessInstance actual) {
         return TestProcessInstanceAssert.assertThat(actual);
     }
 
-    public static TestProcessVariableAssert assertThat(TestProcessVariable actual) {
+    public static TestProcessVariableAssert assertThat(FluentBpmnProcessVariable actual) {
         return TestProcessVariableAssert.assertThat(actual);
     }
 
-    public static TestProcessInstance start(TestProcessInstanceImpl testProcess) {
-        return TestProcessInstanceLookup.start(testProcess);
+    public static FluentBpmnProcessInstance start(FluentBpmnProcessInstanceImpl testProcess) {
+        return FluentBpmnProcessInstanceLookup.start(testProcess);
     }
 
     public static void startProcessInstanceByKey(String processKey, Map<String, Object> processVariables) {
-        TestProcessInstanceLookup.startProcessInstanceByKey(processKey, processVariables);
+        FluentBpmnProcessInstanceLookup.startProcessInstanceByKey(processKey, processVariables);
     }
 
-    public static TestProcessInstance process(String processDefinitionKey) {
-        return TestProcessInstanceLookup.process(processDefinitionKey);
+    public static FluentBpmnProcessInstance process(String processDefinitionKey) {
+        return FluentBpmnProcessInstanceLookup.process(processDefinitionKey);
     }
 
     public static ProcessDefinition processDefinition(String processDefinitionName) {
-        return TestProcessInstanceLookup.processDefinition(processDefinitionName);
+        return FluentBpmnProcessInstanceLookup.processDefinition(processDefinitionName);
     }
 
-    public static TestProcessInstance process() {
-        return TestProcessInstanceLookup.process();
+    public static FluentBpmnProcessInstance process() {
+        return FluentBpmnProcessInstanceLookup.process();
     }
 
     public static Task findTaskByTaskId(String taskId) {
-        return TestProcessInstanceLookup.findTaskByTaskId(taskId);
+        return FluentBpmnProcessInstanceLookup.findTaskByTaskId(taskId);
     }
 
 }

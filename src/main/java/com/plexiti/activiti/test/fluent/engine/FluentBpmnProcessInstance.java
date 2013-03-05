@@ -12,9 +12,7 @@ import java.util.Map;
 /**
  * @author martin.schimak@plexiti.com
  */
-public interface TestProcessInstance {
-
-    ProcessInstance getActualProcessInstance();
+public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessInstance> {
 
     void claim(Task task, String userId);
 
@@ -36,12 +34,12 @@ public interface TestProcessInstance {
 
     void moveTo(String targetActivity);
 
-    TestProcessInstance start();
+    FluentBpmnProcessInstance start();
 
-    TestProcessInstanceImpl withVariable(String name, Object value);
+    FluentBpmnProcessInstanceImpl withVariable(String name, Object value);
 
-    TestProcessInstance withVariables(Map<String, Object> variables);
+    FluentBpmnProcessInstance withVariables(Map<String, Object> variables);
 
-    TestProcessVariable variable(String variableName);
+    FluentBpmnProcessVariable variable(String variableName);
 
 }

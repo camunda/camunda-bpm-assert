@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.TestProcessVariable;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessVariable;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 import org.fest.assertions.api.LongAssert;
@@ -10,13 +10,13 @@ import org.fest.assertions.api.StringAssert;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class TestProcessVariableAssert extends AbstractAssert<TestProcessVariableAssert, TestProcessVariable> {
+public class TestProcessVariableAssert extends AbstractAssert<TestProcessVariableAssert, FluentBpmnProcessVariable> {
 
-    protected TestProcessVariableAssert(TestProcessVariable actual) {
+    protected TestProcessVariableAssert(FluentBpmnProcessVariable actual) {
         super(actual, TestProcessVariableAssert.class);
     }
 
-    public static TestProcessVariableAssert assertThat(TestProcessVariable actual) {
+    public static TestProcessVariableAssert assertThat(FluentBpmnProcessVariable actual) {
         return new TestProcessVariableAssert(actual);
     }
 

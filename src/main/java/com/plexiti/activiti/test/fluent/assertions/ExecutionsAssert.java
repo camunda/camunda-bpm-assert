@@ -35,7 +35,7 @@ public class ExecutionsAssert extends AbstractAssert<ExecutionsAssert, List<Exec
          */
         //ExecutionQuery executionQuery = ActivitiFluentTestHelper.getRuntimeService().createExecutionQuery();
         //executionQuery.processInstanceId(actual.getActualProcessInstance().getId()).list();
-        //ActivitiFluentTests.assertThat(actual.get(0).is).
+        //FluentBpmnTests.assertThat(actual.get(0).is).
         //        overridingErrorMessage("Expected execution %s to be finished but it is not!", actual.getId()).
         //        isTrue();
 

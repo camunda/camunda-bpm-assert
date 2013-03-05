@@ -2,7 +2,7 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
-import com.plexiti.activiti.test.fluent.engine.TestProcessInstanceImpl;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
 import com.plexiti.helper.Entities;
 import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.Deployment;
@@ -14,7 +14,7 @@ import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConst
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
-import static com.plexiti.activiti.test.fluent.ActivitiFluentTests.*;
+import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 
 /**
  *
@@ -27,14 +27,12 @@ public class JobAnnouncementPublicationTest {
     @Rule
     public ActivitiRule activitiRule = new ActivitiRule();
     @Rule
-    public ActivitiFluentTestRule activitiFluentTestRule = new ActivitiFluentTestRule(this);
+    public FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
 
 	@Mock
     public JobAnnouncementService jobAnnouncementService;
 	@Mock
     public JobAnnouncement jobAnnouncement;
-
-	String positionDescription = "- 10+ years Java development experience\n- Good knowledge of BPMN 2.0";
 
 	@Test
 	@Deployment(resources = { JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
@@ -42,7 +40,7 @@ public class JobAnnouncementPublicationTest {
 		
 		when(jobAnnouncement.getId()).thenReturn(1L);
 		
-		start(new TestProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
+		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
 			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
 			.withVariable("twitter", false)
 			.withVariable("facebook", false)
@@ -62,7 +60,7 @@ public class JobAnnouncementPublicationTest {
 	@Deployment(resources = { JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
 	public void testPublishAlsoOnTwitter() {
 		
-		start(new TestProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
+		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
 			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
 			.withVariable("twitter", true)
 			.withVariable("facebook", false)
@@ -82,7 +80,7 @@ public class JobAnnouncementPublicationTest {
 	@Deployment(resources = { JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
 	public void testPublishAlsoOnFacebook() {
 		
-		start(new TestProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
+		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
 			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
 			.withVariable("twitter", false)
 			.withVariable("facebook", true)
@@ -102,7 +100,7 @@ public class JobAnnouncementPublicationTest {
 	@Deployment(resources = { JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
 	public void testPublishAlsoOnFacebookAndTwitter() {
 		
-		start(new TestProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
+		start(new FluentBpmnProcessInstanceImpl(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
 			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
 			.withVariable("facebook", true)
 			.withVariable("twitter", true)

@@ -22,20 +22,20 @@ import org.junit.Before;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  *
  */
-public abstract class ActivitiFluentTestCase extends ActivitiTestCase {
+public abstract class FluentBpmnTestCase extends ActivitiTestCase {
 
-    private ActivitiFluentTestRule activitiFluentTestRule = new ActivitiFluentTestRule(this);
+    private FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
 
     @Override @Before
     protected void setUp() throws Exception {
         super.setUp();
-        activitiFluentTestRule.before();
+        bpmnFluentTestRule.before();
     }
 
     @Override @After
     public void tearDown() throws Exception {
         super.tearDown();
-        activitiFluentTestRule.after();
+        bpmnFluentTestRule.after();
     }
 
 }

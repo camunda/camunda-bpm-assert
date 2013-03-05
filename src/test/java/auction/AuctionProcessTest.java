@@ -2,7 +2,7 @@ package auction;
 
 import com.camunda.showcase.auction.domain.Auction;
 import com.camunda.showcase.auction.service.AuctionService;
-import com.plexiti.activiti.test.fluent.ActivitiFluentTestCase;
+import com.plexiti.activiti.test.fluent.FluentBpmnTestCase;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.test.Deployment;
@@ -17,14 +17,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.plexiti.activiti.test.fluent.ActivitiFluentTests.*;
+import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 
 import static org.mockito.Mockito.when;
 
 /*
  * @author Nico Rehwaldt <nico.rehwaldt@camunda.com>
  */
-public class AuctionProcessTest extends ActivitiFluentTestCase {
+public class AuctionProcessTest extends FluentBpmnTestCase {
 
     @Mock
     public AuctionService auctionService;
@@ -102,7 +102,7 @@ public class AuctionProcessTest extends ActivitiFluentTestCase {
          // end wait for auction end //////////
 
          // complete task 2 ///////////////////
-         ProcessInstance pi = process().getActualProcessInstance();
+         ProcessInstance pi = process().getDelegate();
          List<Task> tasksAfterTimer = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
          Assert.assertEquals(1,tasksAfterTimer.size());
 

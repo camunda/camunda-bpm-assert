@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.TestLookups;
+import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -48,7 +48,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
     public TaskAssert hasCandidateGroup(String candidateGroupId) {
         isNotNull();
 
-        TaskService taskService = TestLookups.getTaskService();
+        TaskService taskService = FluentBpmnLookups.getTaskService();
         TaskQuery query = taskService.createTaskQuery()
                                      .taskId(actual.getId()).taskCandidateGroup(candidateGroupId);
         Assertions.assertThat(query.singleResult())

@@ -10,13 +10,13 @@ import org.activiti.engine.test.ActivitiTestCase;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class TestLookups {
+public class FluentBpmnLookups {
 
     private static ThreadLocal testObject = new ThreadLocal();
 
     public static void init(Object testObject) {
-        TestLookups.testObject.set(testObject);
-        TestProcessInstanceLookup.init(testObject);
+        FluentBpmnLookups.testObject.set(testObject);
+        FluentBpmnProcessInstanceLookup.init(testObject);
     }
 
     public static ProcessEngine getProcessEngine() {

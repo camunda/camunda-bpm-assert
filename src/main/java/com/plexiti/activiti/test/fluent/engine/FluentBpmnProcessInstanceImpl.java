@@ -34,34 +34,34 @@ import static org.fest.assertions.api.Assertions.*;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class TestProcessInstanceImpl implements TestProcessInstance {
+public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance {
 
-    private static Logger log = Logger.getLogger(TestProcessInstanceImpl.class.getName());
+    private static Logger log = Logger.getLogger(FluentBpmnProcessInstanceImpl.class.getName());
 
     protected String processDefinitionKey;
     protected ProcessInstance actualProcessInstance;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
 
-    public TestProcessInstanceImpl(String processDefinitionKey) {
+    public FluentBpmnProcessInstanceImpl(String processDefinitionKey) {
         this.processDefinitionKey = processDefinitionKey;
     }
 
     @Override
-    public ProcessInstance getActualProcessInstance() {
+    public ProcessInstance getDelegate() {
         return actualProcessInstance;
     }
 
     protected ExecutionQuery activitiExecutionQuery() {
-        return TestLookups.getRuntimeService().createExecutionQuery();
+        return FluentBpmnLookups.getRuntimeService().createExecutionQuery();
     }
 
     protected TaskQuery activitiTaskQuery() {
-        return TestLookups.getTaskService().createTaskQuery();
+        return FluentBpmnLookups.getTaskService().createTaskQuery();
     }
 
     @Override
     public void claim(Task task, String userId) {
-        TestLookups.getTaskService().claim(currentTask().getId(), userId);
+        FluentBpmnLookups.getTaskService().claim(currentTask().getId(), userId);
     }
 
     @Override
@@ -71,7 +71,7 @@ public class TestProcessInstanceImpl implements TestProcessInstance {
 
     @Override
     public void complete(Task task, Object... variables) {
-        TestLookups.getTaskService().complete(task.getId(), Maps.parseMap(variables));
+        FluentBpmnLookups.getTaskService().complete(task.getId(), Maps.parseMap(variables));
     }
 
     @Override
@@ -90,7 +90,7 @@ public class TestProcessInstanceImpl implements TestProcessInstance {
 
     @Override
     public DiagramLayout diagramLayout() {
-        DiagramLayout diagramLayout = TestLookups.getRepositoryService().getProcessDiagramLayout(processInstance().getProcessDefinitionId());
+        DiagramLayout diagramLayout = FluentBpmnLookups.getRepositoryService().getProcessDiagramLayout(processInstance().getProcessDefinitionId());
         assertThat(diagramLayout)
                 .overridingErrorMessage("Fatal error. Could not retrieve diagram layout!")
                 .isNotNull();
@@ -134,22 +134,22 @@ public class TestProcessInstanceImpl implements TestProcessInstance {
     }
 
     @Override
-    public TestProcessInstance start() {
-        actualProcessInstance = TestLookups.getRuntimeService()
+    public FluentBpmnProcessInstance start() {
+        actualProcessInstance = FluentBpmnLookups.getRuntimeService()
                 .startProcessInstanceByKey(processDefinitionKey, processVariables);
         log.info("Started process '" + processDefinitionKey + "' (definition id: '" + actualProcessInstance.getProcessDefinitionId() + "', instance id: '" + actualProcessInstance.getId() + "').");
         return this;
     }
 
     @Override
-    public TestProcessInstanceImpl withVariable(String name, Object value) {
+    public FluentBpmnProcessInstanceImpl withVariable(String name, Object value) {
         assertThat(actualProcessInstance).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
         this.processVariables.put(name, value);
         return this;
     }
 
     @Override
-    public TestProcessInstance withVariables(Map<String, Object> variables) {
+    public FluentBpmnProcessInstance withVariables(Map<String, Object> variables) {
         assertThat(actualProcessInstance).overridingErrorMessage("Process already started. Call start() after having set up all necessary process variables.").isNull();
         for (String name: variables.keySet()) {
             this.processVariables.put(name, variables.get(name));
@@ -159,13 +159,13 @@ public class TestProcessInstanceImpl implements TestProcessInstance {
     }
 
     @Override
-    public TestProcessVariable variable(String variableName) {
-        Object variableValue = TestLookups.getRuntimeService().getVariable(actualProcessInstance.getId(), variableName);
+    public FluentBpmnProcessVariable variable(String variableName) {
+        Object variableValue = FluentBpmnLookups.getRuntimeService().getVariable(actualProcessInstance.getId(), variableName);
 
         assertThat(variableValue)
                 .overridingErrorMessage("Unable to find process variable '%s'", variableName)
                 .isNotNull();
-        return new TestProcessVariable(variableName, variableValue);
+        return new FluentBpmnProcessVariable(variableName, variableValue);
     }
 
     public static class ActivitiTargetActivityReached extends RuntimeException {
