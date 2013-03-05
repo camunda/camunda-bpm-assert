@@ -13,11 +13,8 @@ import java.util.Map;
  * @author martin.schimak@plexiti.com
  */
 public interface TestProcessInstance {
-    List<String> activeActivities(Execution execution);
 
     ProcessInstance getActualProcessInstance();
-
-    String activeActivity(Execution execution);
 
     void claim(Task task, String userId);
 
@@ -46,4 +43,5 @@ public interface TestProcessInstance {
     TestProcessInstance withVariables(Map<String, Object> variables);
 
     TestProcessVariable variable(String variableName);
+
 }

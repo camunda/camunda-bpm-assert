@@ -15,9 +15,7 @@ package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.assertions.ExecutionAssert;
 import com.plexiti.activiti.test.fluent.support.Maps;
-import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.User;
-import org.activiti.engine.identity.UserQuery;
 import org.activiti.engine.repository.DiagramLayout;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ExecutionQuery;
@@ -40,24 +38,12 @@ public class TestProcessInstanceImpl implements TestProcessInstance {
 
     private static Logger log = Logger.getLogger(TestProcessInstanceImpl.class.getName());
 
-    protected static final String ActivitiTargetActivity = "ActivitiTargetActivity";
-
     protected String processDefinitionKey;
-
-    /*
-     * Reference to the Activiti process instance
-     */
     protected ProcessInstance actualProcessInstance;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
-    //protected TaskService taskService = ActivitiRuleHelper.get().getTaskService();
 
     public TestProcessInstanceImpl(String processDefinitionKey) {
         this.processDefinitionKey = processDefinitionKey;
-    }
-
-    @Override
-    public List<String> activeActivities(Execution execution) {
-        return TestLookups.getRuntimeService().getActiveActivityIds(execution.getId());
     }
 
     @Override
@@ -65,29 +51,12 @@ public class TestProcessInstanceImpl implements TestProcessInstance {
         return actualProcessInstance;
     }
 
-    @Override
-    public String activeActivity(Execution execution) {
-        List<String> activeActivities = activeActivities(execution);
-        assertThat(activeActivities)
-                .as("By calling execution() you implicitly assumed that exactly one such object exists.")
-                .hasSize(1);
-        return activeActivities.get(0);
-    }
-
     protected ExecutionQuery activitiExecutionQuery() {
         return TestLookups.getRuntimeService().createExecutionQuery();
     }
 
-    protected GroupQuery activitiGroupQuery() {
-        return TestLookups.getIdentityService().createGroupQuery();
-    }
-
     protected TaskQuery activitiTaskQuery() {
         return TestLookups.getTaskService().createTaskQuery();
-    }
-
-    protected UserQuery activitiUserQuery() {
-        return TestLookups.getIdentityService().createUserQuery();
     }
 
     @Override
@@ -166,7 +135,6 @@ public class TestProcessInstanceImpl implements TestProcessInstance {
 
     @Override
     public TestProcessInstance start() {
-        // processVariables.put(ActivitiTargetActivity, null);
         actualProcessInstance = TestLookups.getRuntimeService()
                 .startProcessInstanceByKey(processDefinitionKey, processVariables);
         log.info("Started process '" + processDefinitionKey + "' (definition id: '" + actualProcessInstance.getProcessDefinitionId() + "', instance id: '" + actualProcessInstance.getId() + "').");
