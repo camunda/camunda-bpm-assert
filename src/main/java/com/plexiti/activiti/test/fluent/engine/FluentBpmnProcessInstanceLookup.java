@@ -1,8 +1,6 @@
 package com.plexiti.activiti.test.fluent.engine;
 
 import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,23 +48,6 @@ public class FluentBpmnProcessInstanceLookup {
                 .hasSize(1);
 
         return definitions.get(0);
-    }
-
-    public static void startProcessInstanceByKey(String processKey, Map<String, Object> processVariables) {
-        // TODO: Assert that a processInstance definition with that key is already deployed
-        FluentBpmnProcessInstance testInstance = new FluentBpmnProcessInstanceImpl(processKey);
-        testInstance.withVariables(processVariables);
-        testInstance.start();
-        getTestProcessInstances().put(processKey, testInstance);
-    }
-
-    public static Task findTaskByTaskId(String taskId) {
-        ProcessInstance pi = processInstance().getDelegate();
-        List<Task> tasks = FluentBpmnLookups.getTaskService().createTaskQuery().processInstanceId(pi.getId()).list();
-        assertThat(tasks.size())
-                .overridingErrorMessage("Unable to find a processTask with id '%s'", taskId)
-                .isEqualTo(1);
-        return tasks.get(0);
     }
 
 }
