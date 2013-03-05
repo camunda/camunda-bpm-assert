@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
-import static com.plexiti.activiti.test.fluent.ActivitiFestConditions.*;
 import static org.mockito.Mockito.*;
 
 import static com.plexiti.activiti.test.fluent.ActivitiFluentTestAssertions.*;
@@ -47,10 +46,10 @@ public class JobAnnouncementTest extends ActivitiFluentTestCase {
                 .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
         );
 		
-		assertThat(process().diagramLayout()).is(containingNode(TASK_DESCRIBE_POSITION));		
-		assertThat(process().diagramLayout()).is(containingNode(TASK_REVIEW_ANNOUNCEMENT));
-		assertThat(process().diagramLayout()).is(containingNode(TASK_CORRECT_ANNOUNCEMENT));
-		assertThat(process().diagramLayout()).is(containingNode(TASK_INITIATE_ANNOUNCEMENT));
+		assertThat(process().diagramLayout()).isContainingNode(TASK_DESCRIBE_POSITION);
+		assertThat(process().diagramLayout()).isContainingNode(TASK_REVIEW_ANNOUNCEMENT);
+		assertThat(process().diagramLayout()).isContainingNode(TASK_CORRECT_ANNOUNCEMENT);
+		assertThat(process().diagramLayout()).isContainingNode(TASK_INITIATE_ANNOUNCEMENT);
 
 		assertThat(process().execution()).isStarted();
 
