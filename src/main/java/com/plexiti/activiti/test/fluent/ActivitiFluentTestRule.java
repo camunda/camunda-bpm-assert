@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent;
 
-import com.plexiti.activiti.test.fluent.engine.TestLookup;
+import com.plexiti.activiti.test.fluent.engine.TestLookups;
 import com.plexiti.activiti.test.fluent.mocking.TestMocks;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -36,7 +36,7 @@ public class ActivitiFluentTestRule implements TestRule {
     }
 
     public void before() {
-        TestLookup.initTest();
+        TestLookups.init(test);
         TestMocks.init(test);
     }
 

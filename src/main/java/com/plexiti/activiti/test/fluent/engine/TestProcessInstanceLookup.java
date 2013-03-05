@@ -18,7 +18,7 @@ public class TestProcessInstanceLookup {
 
     private static ThreadLocal<Map<String, TestProcessInstance>> testProcessInstances = new ThreadLocal<Map<String, TestProcessInstance>>();
 
-    protected static void initTest() {
+    protected static void init(Object junitTest) {
         testProcessInstances.set(null);
     }
 
