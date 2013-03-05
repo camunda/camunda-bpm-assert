@@ -45,21 +45,6 @@ public abstract class ActivitiFluentTestCase extends ActivitiTestCase {
         super.setUp();
 
         /*
-         * We need to be able to reach the Activiti engine services from
-         * the fluent assertion classes later.
-         */
-        ActivitiFluentTestHelper.setUpEngineAndServices(
-                processEngine,
-                repositoryService,
-                runtimeService,
-                taskService,
-                historicDataService,
-                identityService,
-                managementService,
-                formService
-        );
-
-        /*
          * Initialize @Mock annotations and register the mocks
          */
         MockitoAnnotations.initMocks(this);
