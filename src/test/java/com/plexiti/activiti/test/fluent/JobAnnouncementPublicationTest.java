@@ -2,15 +2,17 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
+import com.plexiti.activiti.test.fluent.engine.TestProcessInstance;
 import com.plexiti.helper.Entities;
 import org.activiti.engine.test.Deployment;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
-import static com.plexiti.activiti.test.fluent.ActivitiFluentTestAssertions.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
+
+import static com.plexiti.activiti.test.fluent.ActivitiFluentTests.*;
 
 /**
  *

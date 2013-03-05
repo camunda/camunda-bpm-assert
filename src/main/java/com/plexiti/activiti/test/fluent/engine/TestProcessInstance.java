@@ -11,8 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.plexiti.activiti.test.fluent;
+package com.plexiti.activiti.test.fluent.engine;
 
+import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
 import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;

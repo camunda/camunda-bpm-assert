@@ -1,4 +1,4 @@
-package com.plexiti.activiti.test.fluent;
+package com.plexiti.activiti.test.fluent.engine;
 
 
 import java.io.Serializable;
