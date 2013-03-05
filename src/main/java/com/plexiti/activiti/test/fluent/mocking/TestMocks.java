@@ -15,6 +15,7 @@ package com.plexiti.activiti.test.fluent.mocking;
 
 import org.activiti.engine.test.mock.Mocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import java.lang.reflect.Field;
 import java.util.logging.Logger;
@@ -23,17 +24,22 @@ import java.util.logging.Logger;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class Mockitos {
+public class TestMocks {
 
-	private static Logger log = Logger.getLogger(Mockitos.class.getName());
+	private static Logger log = Logger.getLogger(TestMocks.class.getName());
+
+    public static void init(Object junitTest) {
+        initMockito(junitTest);
+    }
 
     /**
      * FIXME list
      *
      *  - Give a better error when mocked services have been declared as private class members
      */
-	public static void register(Object junitTest)
+	private static void initMockito(Object junitTest)
 	{
+        MockitoAnnotations.initMocks(junitTest);
 		Class<?> clazz = junitTest.getClass();
 		Field[] fields = clazz.getDeclaredFields();
 		for (int i=0; i<fields.length; i++ ) {
@@ -51,7 +57,7 @@ public class Mockitos {
 					log.info("Due to " + (isAnnotated ? "Annotation" : "class name containing expected string '" + classNameContains + "'") + " registered object bound to field '" + key + "' of test class '" + clazz.getSimpleName() + "' as mock associated with key '" + key + "'.");
 					Mocks.register(key, value);
 				} else {
-					log.info("Did not register object bound to field '" + fields[i].getName() + "' of test class '" + clazz.getSimpleName() + "' as mock. Class name does not contain the expected string '" + classNameContains + "'.");
+					log.info("Did not init object bound to field '" + fields[i].getName() + "' of test class '" + clazz.getSimpleName() + "' as mock. Class name does not contain the expected string '" + classNameContains + "'.");
 				}
 			} catch (IllegalAccessException e) {
 				if (isAnnotated) {
