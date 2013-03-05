@@ -32,11 +32,6 @@ public class TestMocks {
         initMockito(junitTest);
     }
 
-    /**
-     * FIXME list
-     *
-     *  - Give a better error when mocked services have been declared as private class members
-     */
 	private static void initMockito(Object junitTest)
 	{
         MockitoAnnotations.initMocks(junitTest);
