@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
+import com.plexiti.activiti.test.fluent.engine.TestLookups;
 import com.plexiti.activiti.test.fluent.engine.TestProcessInstance;
 import org.activiti.engine.runtime.Execution;
 import org.fest.assertions.api.AbstractAssert;
@@ -64,7 +64,7 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
     public ExecutionAssert isWaitingAt(String activityId) {
         isNotNull();
 
-        List<String> activeActivityIds = ActivitiFluentTestHelper.getRuntimeService()
+        List<String> activeActivityIds = TestLookups.getRuntimeService()
                                                                  .getActiveActivityIds(actual.getId());
         Assertions.assertThat(activeActivityIds)
                 .overridingErrorMessage("Expected execution with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s",

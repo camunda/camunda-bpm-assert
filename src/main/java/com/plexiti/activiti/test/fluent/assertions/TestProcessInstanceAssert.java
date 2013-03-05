@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
+import com.plexiti.activiti.test.fluent.engine.TestLookups;
 import com.plexiti.activiti.test.fluent.engine.TestProcessInstance;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ExecutionQuery;
@@ -33,6 +33,6 @@ public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanc
     }
 
     public List<Execution> executions() {
-        ExecutionQuery executionQuery = ActivitiFluentTestHelper.getRuntimeService().createExecutionQuery();
+        ExecutionQuery executionQuery = TestLookups.getRuntimeService().createExecutionQuery();
         return executionQuery.processInstanceId(actual.getActualProcessInstance().getId()).list();
     }}

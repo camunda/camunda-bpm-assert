@@ -13,7 +13,6 @@
  */
 package com.plexiti.activiti.test.fluent.engine;
 
-import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
 import com.plexiti.activiti.test.fluent.assertions.ExecutionAssert;
 import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.User;
@@ -56,7 +55,7 @@ public class TestProcessInstance {
     }
 
     public List<String> activeActivities(Execution execution) {
-        return ActivitiFluentTestHelper.getRuntimeService().getActiveActivityIds(execution.getId());
+        return TestLookups.getRuntimeService().getActiveActivityIds(execution.getId());
     }
 
     public ProcessInstance getActualProcessInstance() {
@@ -72,23 +71,23 @@ public class TestProcessInstance {
     }
 
     protected ExecutionQuery activitiExecutionQuery() {
-        return ActivitiFluentTestHelper.getRuntimeService().createExecutionQuery();
+        return TestLookups.getRuntimeService().createExecutionQuery();
     }
 
     protected GroupQuery activitiGroupQuery() {
-        return ActivitiFluentTestHelper.getIdentityService().createGroupQuery();
+        return TestLookups.getIdentityService().createGroupQuery();
     }
 
     protected TaskQuery activitiTaskQuery() {
-        return ActivitiFluentTestHelper.getTaskService().createTaskQuery();
+        return TestLookups.getTaskService().createTaskQuery();
     }
 
     protected UserQuery activitiUserQuery() {
-        return ActivitiFluentTestHelper.getIdentityService().createUserQuery();
+        return TestLookups.getIdentityService().createUserQuery();
     }
 
     public void claim(Task task, String userId) {
-        ActivitiFluentTestHelper.getTaskService().claim(currentTask().getId(), userId);
+        TestLookups.getTaskService().claim(currentTask().getId(), userId);
     }
 
     public void claim(Task task, User user) {
@@ -96,7 +95,7 @@ public class TestProcessInstance {
     }
 
     public void complete(Task task, Object... variables) {
-        ActivitiFluentTestHelper.getTaskService().complete(task.getId(), parseProcessVariables(variables));
+        TestLookups.getTaskService().complete(task.getId(), parseProcessVariables(variables));
     }
 
     public Task currentTask() {
@@ -112,7 +111,7 @@ public class TestProcessInstance {
     }
 
     public DiagramLayout diagramLayout() {
-        DiagramLayout diagramLayout = ActivitiFluentTestHelper.getRepositoryService().getProcessDiagramLayout(processInstance().getProcessDefinitionId());
+        DiagramLayout diagramLayout = TestLookups.getRepositoryService().getProcessDiagramLayout(processInstance().getProcessDefinitionId());
         assertThat(diagramLayout)
                 .overridingErrorMessage("Fatal error. Could not retrieve diagram layout!")
                 .isNotNull();
@@ -162,7 +161,7 @@ public class TestProcessInstance {
 
     public TestProcessInstance start() {
         // processVariables.put(ActivitiTargetActivity, null);
-        actualProcessInstance = ActivitiFluentTestHelper.getRuntimeService()
+        actualProcessInstance = TestLookups.getRuntimeService()
                 .startProcessInstanceByKey(processDefinitionKey, processVariables);
         log.info("Started process '" + processDefinitionKey + "' (definition id: '" + actualProcessInstance.getProcessDefinitionId() + "', instance id: '" + actualProcessInstance.getId() + "').");
         return this;
@@ -184,7 +183,7 @@ public class TestProcessInstance {
     }
 
     public TestProcessVariable variable(String variableName) {
-        Object variableValue = ActivitiFluentTestHelper.getRuntimeService().getVariable(actualProcessInstance.getId(), variableName);
+        Object variableValue = TestLookups.getRuntimeService().getVariable(actualProcessInstance.getId(), variableName);
 
         assertThat(variableValue)
                 .overridingErrorMessage("Unable to find process variable '%s'", variableName)

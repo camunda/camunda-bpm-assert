@@ -1,6 +1,5 @@
 package com.plexiti.activiti.test.fluent.engine;
 
-import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
@@ -12,7 +11,8 @@ import java.util.Map;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
- * @author martin.schimak@plexiti.com
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class TestProcessInstanceLookup {
 
@@ -49,7 +49,7 @@ public class TestProcessInstanceLookup {
     }
 
     public static ProcessDefinition processDefinition(String processDefinitionName) {
-        List<ProcessDefinition> definitions = ActivitiFluentTestHelper.getRepositoryService().createProcessDefinitionQuery()
+        List<ProcessDefinition> definitions = TestLookups.getRepositoryService().createProcessDefinitionQuery()
                 .processDefinitionName(processDefinitionName).list();
 
         assertThat(definitions)
@@ -69,7 +69,7 @@ public class TestProcessInstanceLookup {
 
     public static Task findTaskByTaskId(String taskId) {
         ProcessInstance pi = process().getActualProcessInstance();
-        List<Task> tasks = ActivitiFluentTestHelper.getTaskService().createTaskQuery().processInstanceId(pi.getId()).list();
+        List<Task> tasks = TestLookups.getTaskService().createTaskQuery().processInstanceId(pi.getId()).list();
         assertThat(tasks.size())
                 .overridingErrorMessage("Unable to find a task with id '%s'", taskId)
                 .isEqualTo(1);

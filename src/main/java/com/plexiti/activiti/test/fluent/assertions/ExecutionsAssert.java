@@ -1,10 +1,7 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
 import org.activiti.engine.runtime.Execution;
-import org.activiti.engine.runtime.ExecutionQuery;
 import org.fest.assertions.api.AbstractAssert;
-import org.fest.assertions.api.Assertions;
 
 import java.util.List;
 
