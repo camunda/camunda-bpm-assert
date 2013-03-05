@@ -55,6 +55,12 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
         return this;
     }
 
+    private static ThreadLocal<String> moveToActivityId = new ThreadLocal<String>();
+
+    public static void setMoveToActivityId(String id) {
+        moveToActivityId.set(id);
+    }
+
     public ExecutionAssert isWaitingAt(String activityId) {
         isNotNull();
 
@@ -65,8 +71,8 @@ public class ExecutionAssert extends AbstractAssert<ExecutionAssert, Execution> 
                                         actual.getId(), activityId, activeActivityIds)
                 .contains(activityId);
 
-        if (activityId.equals(ActivitiFluentTestHelper.getMoveToActivityId())) {
-            ActivitiFluentTestHelper.setMoveToActivityId(null);
+        if (activityId.equals(moveToActivityId.get())) {
+            setMoveToActivityId(null);
             throw new TestProcessInstance.ActivitiTargetActivityReached();
         }
 

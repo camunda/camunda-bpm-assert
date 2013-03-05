@@ -11,8 +11,6 @@ import org.activiti.engine.test.ActivitiRule;
  */
 public class ActivitiFluentTestHelper {
 
-    private static ThreadLocal<String> moveToActivityId = new ThreadLocal<String>();
-
     public static ProcessEngine getProcessEngine() {
         return TestHelper.getProcessEngine("activiti.cfg.xml");
     }
@@ -43,14 +41,6 @@ public class ActivitiFluentTestHelper {
 
     public static FormService getFormService() {
         return getProcessEngine().getFormService();
-    }
-
-    public static String getMoveToActivityId() {
-        return moveToActivityId.get();
-    }
-
-    public static void setMoveToActivityId(String moveToActivityId) {
-        ActivitiFluentTestHelper.moveToActivityId.set(moveToActivityId);
     }
 
 }

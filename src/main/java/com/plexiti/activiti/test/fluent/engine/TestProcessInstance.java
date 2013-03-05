@@ -14,6 +14,7 @@
 package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.ActivitiFluentTestHelper;
+import com.plexiti.activiti.test.fluent.assertions.ExecutionAssert;
 import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.identity.UserQuery;
@@ -137,7 +138,7 @@ public class TestProcessInstance {
 
     public void moveTo(String targetActivity) {
         try {
-            ActivitiFluentTestHelper.setMoveToActivityId(targetActivity);
+            ExecutionAssert.setMoveToActivityId(targetActivity);
             moveAlong();
         } catch (ActivitiTargetActivityReached e) {
         }
