@@ -4,7 +4,9 @@ import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
 import com.plexiti.activiti.test.fluent.engine.TestProcessInstance;
 import com.plexiti.helper.Entities;
+import org.activiti.engine.test.ActivitiRule;
 import org.activiti.engine.test.Deployment;
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -20,8 +22,13 @@ import static com.plexiti.activiti.test.fluent.ActivitiFluentTests.*;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  *
  */
-public class JobAnnouncementPublicationTest extends ActivitiFluentTestCase {
-	
+public class JobAnnouncementPublicationTest {
+
+    @Rule
+    public ActivitiRule activitiRule = new ActivitiRule();
+    @Rule
+    public ActivitiFluentTestRule activitiFluentTestRule = new ActivitiFluentTestRule(this);
+
 	@Mock
     public JobAnnouncementService jobAnnouncementService;
 	@Mock
