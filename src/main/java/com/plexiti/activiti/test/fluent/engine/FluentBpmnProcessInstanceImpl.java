@@ -46,10 +46,6 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
         this.processDefinitionId = processDefinitionId;
     }
 
-    protected FluentBpmnProcessInstanceImpl(ProcessInstance delegate) {
-        this.delegate = delegate;
-    }
-
     @Override
     public String getProcessDefinitionId() {
         return getDelegate() != null ? getDelegate().getProcessDefinitionId() : processDefinitionId;
