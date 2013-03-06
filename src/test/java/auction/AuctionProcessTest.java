@@ -54,8 +54,8 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
                 public Object answer(InvocationOnMock invocation) {
                     auction.setId(1L);
                     newProcessInstance("auction-process")
-                            .withVariable("auctionId", auction.getId())
-                            .start();
+                        .withVariable("auctionId", auction.getId())
+                        .start();
                     return auction.getId();
                 }
             });
@@ -74,8 +74,7 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
 
         auctionService.createAuction(auction);
 
-        assertThat(processInstance()).isStarted();
-        assertThat(processInstance()).isWaitingAt("authorizeAuction");
+        assertThat(processInstance()).isStarted().isWaitingAt("authorizeAuction");
         assertThat(processVariable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
 
         auctionService.authorizeAuction(processTask().getId(), true);
