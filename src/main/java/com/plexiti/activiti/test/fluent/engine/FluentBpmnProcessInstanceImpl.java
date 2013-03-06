@@ -14,7 +14,8 @@
 package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.FluentBpmnTests;
-import com.plexiti.activiti.test.fluent.assertions.ExecutionAssert;
+import com.plexiti.activiti.test.fluent.assertions.ProcessInstanceAssert;
+import com.plexiti.activiti.test.fluent.assertions.TestProcessInstanceAssert;
 import org.camunda.bpm.engine.repository.DiagramLayout;
 import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.Job;
@@ -71,7 +72,7 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
 
     @Override
     public boolean isEnded() {
-        return execution() == null || getDelegate().isEnded();
+        return FluentBpmnLookups.createExecutionQuery().processInstanceId(getDelegate().getId()).list().isEmpty() || getDelegate().isEnded();
     }
 
     @Override
@@ -114,31 +115,6 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
         return FluentBpmnLookups.createJobQuery().list();
     }
 
-    @Override
-    public DiagramLayout diagramLayout() {
-        DiagramLayout diagramLayout = FluentBpmnLookups.getRepositoryService().getProcessDiagramLayout(getDelegate().getProcessDefinitionId());
-        assertThat(diagramLayout)
-                .overridingErrorMessage("Fatal error. Could not retrieve diagram layout!")
-                .isNotNull();
-        return diagramLayout;
-    }
-
-    @Override
-    public Execution execution() {
-        List<Execution> executions = executions();
-        if (executions.size() == 0)
-            return null;
-        assertThat(executions)
-                .as("By calling processExecution() you implicitly assumed that at most one such object exists.")
-                .hasSize(1);
-        return executions.get(0);
-    }
-
-    @Override
-    public List<Execution> executions() {
-        return FluentBpmnLookups.createExecutionQuery().processInstanceId(getDelegate().getId()).list();
-    }
-
     public void moveAlong(FluentBpmnTests.Move move) {
         this.move = move;
     }
@@ -146,9 +122,9 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     @Override
     public void startAndMoveTo(String activity) {
         try {
-            ExecutionAssert.setMoveToActivityId(activity);
+            TestProcessInstanceAssert.setMoveToActivityId(activity);
             move.along();
-        } catch (ExecutionAssert.MoveToActivityIdException e) {
+        } catch (TestProcessInstanceAssert.MoveToActivityIdException e) {
         }
     }
 

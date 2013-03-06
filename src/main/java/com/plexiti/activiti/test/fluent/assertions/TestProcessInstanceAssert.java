@@ -31,7 +31,7 @@ public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanc
                         actual.getId(), activityId, activeActivityIds)
                 .contains(activityId);
 
-        ExecutionAssert.checkForMoveToActivityIdException(activityId);
+        checkForMoveToActivityIdException(activityId);
 
         return this;
     }
@@ -63,6 +63,23 @@ public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanc
                 isFalse();
 
         return this;
+    }
+
+    private static ThreadLocal<String> moveToActivityId = new ThreadLocal<String>();
+
+    public static void setMoveToActivityId(String id) {
+        moveToActivityId.set(id);
+    }
+
+    private static void checkForMoveToActivityIdException(String activityId) {
+        if (activityId.equals(moveToActivityId.get())) {
+            setMoveToActivityId(null);
+            throw new MoveToActivityIdException();
+        }
+    }
+
+    public static class MoveToActivityIdException extends RuntimeException {
+        private static final long serialVersionUID = 2282185191899085294L;
     }
 
 }

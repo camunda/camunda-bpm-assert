@@ -57,23 +57,7 @@ public class FluentBpmnTests extends org.fest.assertions.api.Assertions {
         return FluentBpmnProcessInstanceLookup.processDefinition(processDefinitionId);
     }
 
-    public static DiagramLayout processDiagramLayout() {
-        return FluentBpmnProcessInstanceLookup.processInstance().diagramLayout();
-    }
-
-    public static Execution processExecution() {
-        return FluentBpmnProcessInstanceLookup.processInstance().execution();
-    }
-
     // Assertions
-
-    public static ExecutionAssert assertThat(Execution actual) {
-        return ExecutionAssert.assertThat(actual);
-    }
-
-    public static ExecutionsAssert assertThat(List<Execution> actual) {
-        return ExecutionsAssert.assertThat(actual);
-    }
 
     public static TaskAssert assertThat(Task actual) {
         return TaskAssert.assertThat(actual);

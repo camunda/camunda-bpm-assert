@@ -35,10 +35,4 @@ public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessIns
 
     List<Job> jobs();
 
-    DiagramLayout diagramLayout();
-
-    Execution execution();
-
-    List<Execution> executions();
-
 }
