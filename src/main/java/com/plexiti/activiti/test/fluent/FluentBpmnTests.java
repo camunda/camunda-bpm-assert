@@ -91,10 +91,6 @@ public class FluentBpmnTests extends org.fest.assertions.api.Assertions {
         return ProcessDefinitionAssert.assertThat(actual);
     }
 
-    public static DiagramLayoutAssert assertThat(DiagramLayout actual) {
-        return DiagramLayoutAssert.assertThat(actual);
-    }
-
     public static TestProcessInstanceAssert assertThat(FluentBpmnProcessInstance actual) {
         return TestProcessInstanceAssert.assertThat(actual);
     }
