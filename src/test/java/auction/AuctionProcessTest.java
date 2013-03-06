@@ -45,9 +45,9 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
         final Auction auction = new Auction();
         auction.setName("Cheap Ferrari!");
         auction.setDescription("Ferrari Testarossa on sale!");
-        auction.setEndTime(new Date());
+        auction.setEndTime(new Date()); // TODO show here that the auction ends in the future
 
-        Mocks.register("auction", auction);
+        Mocks.register("auction", auction); // TODO Wrap into a fluent method like e.g. "registerWithName"
 
         when(auctionService.createAuction((Auction) anyObject()))
             .thenAnswer(new Answer() {
@@ -81,7 +81,7 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
 
         assertThat(processInstance()).isWaitingAt("IntermediateCatchEvent_1");
 
-        processJob().execute();
+        processJob().execute(); // TODO show here that the auction is still waiting and then fast forward to auction end and execute another time
 
         assertThat(processInstance()).isWaitingAt("UserTask_2");
 
