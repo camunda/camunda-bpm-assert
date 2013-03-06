@@ -14,10 +14,7 @@
 package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.FluentBpmnTests;
-import com.plexiti.activiti.test.fluent.assertions.ProcessInstanceAssert;
 import com.plexiti.activiti.test.fluent.assertions.TestProcessInstanceAssert;
-import org.camunda.bpm.engine.repository.DiagramLayout;
-import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
