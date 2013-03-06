@@ -113,12 +113,13 @@ public class FluentProcessInstanceImpl implements FluentProcessInstance {
     }
 
     @Override
-    public void startAndMoveTo(String activity) {
+    public FluentProcessInstance startAndMoveTo(String activity) {
         try {
             ProcessInstanceAssert.setMoveToActivityId(activity);
             move.along();
         } catch (ProcessInstanceAssert.MoveToActivityIdException e) {
         }
+        return this;
     }
 
     @Override

@@ -15,19 +15,19 @@ public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, 
 
     FluentProcessInstance start();
 
-    void startAndMoveTo(String activity);
+    FluentProcessInstance startAndMoveTo(String activity);
 
-    FluentProcessInstanceImpl withVariable(String name, Object value);
+    FluentProcessInstance withVariable(String key, Object value);
 
     FluentProcessInstance withVariables(Map<String, Object> variables);
 
-    FluentProcessVariable variable(String variableName);
+    FluentProcessVariable variable(String key);
 
     FluentTask task();
 
     FluentJob job();
 
-    // TODO From here on more "FluentBpmn" interfaces and wrappers have to be implemented
+    // TODO From here on more "Fluent*" interfaces and wrappers have to be implemented
 
     List<Task> tasks();
 
