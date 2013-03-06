@@ -1,30 +1,18 @@
 # Introduction
 
-> **ACHTUNG! The code in this project is in an EARLY DRAFT state. Future releases might brake your tests
-> since the API will definitely evolve. We are following the ["Release Early, Release Often"](http://www.catb.org/~esr/writings/cathedral-bazaar/cathedral-bazaar/ar01s04.html) principle here in order
-> to get feedback from the Activiti developer community. ;-)**
+This library aims at easing testing when developing process applications based on [camunda BPM](http://camunda.org). We reach out to
 
-This library aims at easing the creation of readable and fluent tests when developing process-centric applications based on the [Activiti](http://activiti.org) BPMN process engine.
-This library:
-* makes it easier to mock the services available to your process instance by using a simple @Mock annotation
-
-```java
-...
-/*
- * Make 'jobAnnouncementService' available in JUEL expressions 
- */
-@Mock
-public JobAnnouncementService jobAnnouncementService;
-...
-```
+* ease the readability and maintainability of process model tests
+* make the writing of process model  tests more fluent and more fun
+* make it easy to mock the services available to a process instance
 
 * provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) API so you can focus on your process expert's domain knowledge while writing (and reading!) your tests
 
 ```java
 ...
-assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
-assertThat(process().currentTask()).isAssignedTo(USER_MANAGER);
-process().complete(process().currentTask(), "approved", true);
+assertThat(processInstance()).isWaitingAt("review");
+assertThat(processTask()).isAssignedTo("piggie");
+processTask().complete("approved", true);
 ...
 ```
 
@@ -40,22 +28,32 @@ start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS) {
 ...
 ``` 
 
+In particula we
+
+```java
+...
+@Mock
+public JobAnnouncementService jobAnnouncementService;
+...
+```
+
 This project is a spin-off of [The Job Announcement](https://github.com/plexiti/the-job-announcement-fox), a showcase
 for a business process-centric application based on the [Java EE 6](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
-technology stack and the [camunda fox BPM Platform](http://www.camunda.com/fox). An online version of The Job Announcement can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/) and the source code on [GitHub](https://github.com/plexiti/the-job-announcement-fox).
+technology stack and the [camunda BPM Platform](http://camunda.org). An online version of The Job Announcement can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/) and the source code on [GitHub](https://github.com/plexiti/the-job-announcement-fox).
 
-This project leverages two great testing libraries: [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
-[Mockito](http://code.google.com/p/mockito/).
+This project leverages two great testing libraries:
+* [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
+* [Mockito](http://code.google.com/p/mockito/).
 
 ## Example: Job Announcement Test
 ```java
 ...
-public class JobAnnouncementTest extends ActivitiFluentTest {
-	
-    /*
-     * Mock your services and domain model classes
-     */
-	@Mock
+    @Rule
+    public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+    @Rule
+    public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
+
+    @Mock
     public JobAnnouncementService jobAnnouncementService;
 	@Mock
     public JobAnnouncement jobAnnouncement;
@@ -71,44 +69,43 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 		when(jobAnnouncementService.findRequester(1L)).thenReturn(USER_MANAGER);
 		when(jobAnnouncementService.findEditor(1L)).thenReturn(USER_STAFF);
 
-        /*
-         * Start the process with (optionally) process variables
-         */
-		start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS)
-                .withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
-        );
-		
-		assertThat(process().diagramLayout()).is(containingNode(TASK_DESCRIBE_POSITION));		
-		assertThat(process().diagramLayout()).is(containingNode(TASK_REVIEW_ANNOUNCEMENT));
-		assertThat(process().diagramLayout()).is(containingNode(TASK_CORRECT_ANNOUNCEMENT));
-		assertThat(process().diagramLayout()).is(containingNode(TASK_INITIATE_ANNOUNCEMENT));
+        newProcessInstance(JOBANNOUNCEMENT_PROCESS)
+            .withVariable("jobAnnouncementId", jobAnnouncement.getId())
+            .start();
 
-		assertThat(process().execution()).isStarted();
+		assertThat(processInstance())
+            .isStarted()
+            .isWaitingAt(TASK_DESCRIBE_POSITION);
+		assertThat(processTask())
+            .hasCandidateGroup(ROLE_STAFF)
+            .isUnassigned();
 
-		assertThat(process().execution()).isWaitingAt(TASK_DESCRIBE_POSITION);
-		assertThat(process().currentTask()).hasCandidateGroup(ROLE_STAFF);
-		assertThat(process().currentTask()).isUnassigned();
+		processTask().claim(USER_STAFF);
 
-		process().claim(process().currentTask(), USER_STAFF);
-		
-		assertThat(process().currentTask()).isAssignedTo(USER_STAFF);
+		assertThat(processTask())
+            .isAssignedTo(USER_STAFF);
 
-		process().complete(process().currentTask());
+		processTask().complete();
 
-		assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
-		assertThat(process().currentTask()).isAssignedTo(USER_MANAGER);
+		assertThat(processInstance())
+            .isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
+		assertThat(processTask())
+            .isAssignedTo(USER_MANAGER);
 
-		process().complete(process().currentTask(), "approved", true);
+		processTask().complete("approved", true);
 
-		assertThat(process().execution()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
-		assertThat(process().currentTask()).hasCandidateGroup(ROLE_STAFF);
-		assertThat(process().currentTask()).isUnassigned();
+		assertThat(processInstance())
+            .isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
+		assertThat(processTask())
+            .hasCandidateGroup(ROLE_STAFF)
+            .isUnassigned();
 
-		process().claim(process().currentTask(), USER_STAFF);
-		
-		assertThat(process().currentTask()).isAssignedTo(USER_STAFF);
+		processTask().claim(USER_STAFF);
 
-		process().complete(process().currentTask(), "twitter", true, "facebook", true);
+		assertThat(processTask())
+            .isAssignedTo(USER_STAFF);
+
+		processTask().complete("twitter", true, "facebook", true);
 
         /*
          * Verify expected behavior
@@ -119,8 +116,9 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 		verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 		verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
 
-		assertThat(process().execution()).isFinished();
-		
+		assertThat(processInstance())
+            .isFinished();
+
 		verifyNoMoreInteractions(jobAnnouncementService);
 	}
 
@@ -130,27 +128,29 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 
 		when(jobAnnouncement.getId()).thenReturn(1L);
 
-		start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS) { 
-				public void moveAlong() { 
-					testHappyPath(); 
-				}
-			}
-			.withVariable(Entities.idVariableName(JobAnnouncement.class), jobAnnouncement.getId())
-		).moveTo(TASK_REVIEW_ANNOUNCEMENT);
+        newProcessInstance(JOBANNOUNCEMENT_PROCESS, new Move() {
+            public void along() {
+                testHappyPath();
+            }
+        }).withVariable("jobAnnouncementId", jobAnnouncement.getId())
+        .startAndMoveTo(TASK_REVIEW_ANNOUNCEMENT);
 
-        assertThat(process().execution()).isStarted();
+        assertThat(processInstance())
+            .isStarted()
+            .isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
 
-		assertThat(process().execution()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
+		processTask().complete("approved", false);
 
-		process().complete(process().currentTask(), "approved", false);
+		assertThat(processInstance())
+            .isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
+		assertThat(processTask())
+            .isAssignedTo(USER_STAFF);
 
-		assertThat(process().execution()).isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
-		assertThat(process().currentTask()).isAssignedTo(USER_STAFF);
+        processTask().complete();
+		processTask().complete("approved", true);
 
-		process().complete(process().currentTask());
-		process().complete(process().currentTask(), "approved", true);
-
-		assertThat(process().execution()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
+		assertThat(processInstance())
+            .isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
 
 		verify(jobAnnouncementService, times(2)).findRequester(jobAnnouncement.getId());
 		verify(jobAnnouncementService).findEditor(jobAnnouncement.getId());
@@ -162,21 +162,17 @@ public class JobAnnouncementTest extends ActivitiFluentTest {
 ## Example:  Auction Process Test
 ```java
 ...
-public class AuctionProcessTest extends ActivitiFluentTest {
+public class AuctionProcessTest extends FluentProcessEngineTestCase {
 
     @Mock
     public AuctionService auctionService;
 
-    /*
-     * Added since some of the process expressions use ${auction. ...}
-     */
-    @Mock(name = "auction")
-    public Auction theAuction = new Auction("Auction name", "Auction description", new Date());
+    @Mock
+    public TwitterPublishService twitterPublishService;
 
     @Test
     @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
     public void testProcessDeployment() {
-
        assertThat(processDefinition("Auction Process")).isDeployed();
     }
 
@@ -184,82 +180,57 @@ public class AuctionProcessTest extends ActivitiFluentTest {
     @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
     public void testWalkThroughProcess() throws Exception {
 
-        /*
-         * Set up the test fixtures and expectations
-         */
-        Auction auction = new Auction("Cheap Ferrari!", "Ferrari Testarossa on sale!", new Date());
+        // Set up test fixtures
 
-        /*
-         * Set up the expectations for the auctionService using Mockito
-         */
-        when(auctionService.createAuction(auction))
-             .thenAnswer(new Answer() {
-                 public Object answer(InvocationOnMock invocation) {
-                     Auction auction = (Auction) invocation.getArguments()[0];
+        final Auction auction = new Auction();
+        auction.setName("Cheap Ferrari!");
+        auction.setDescription("Ferrari Testarossa on sale!");
+        auction.setEndTime(new Date()); // TODO show here that the auction ends in the future
 
-                     // Assign an id to the auction
-                     auction.setId(new Long(1));
+        Mocks.register("auction", auction); // TODO Wrap into a fluent method like e.g. "registerWithName"
 
-                     Map<String, Object> processVariables = new HashMap<String, Object>();
-                     processVariables.put("auctionId", auction.getId());
-                     // start the process
-                     startProcessInstanceByKey("auction-process", processVariables);
+        when(auctionService.createAuction((Auction) anyObject()))
+            .thenAnswer(new Answer() {
+                public Object answer(InvocationOnMock invocation) {
+                    auction.setId(1L);
+                    newProcessInstance("auction-process")
+                            .withVariable("auctionId", auction.getId())
+                            .start();
+                    return auction.getId();
+                }
+            });
 
-                     return auction.getId();
-                 }
-             });
+        doAnswer(new Answer() {
+            public Object answer(InvocationOnMock invocation) {
+                auction.setAuthorized(true);
+                processTask().complete();
+                return null;
+            }
+        }).when(auctionService).authorizeAuction(anyString(), anyBoolean());
 
-        /*
-         * Start the test
-         */
-         auctionService.createAuction(auction);
+        when(auctionService.locateHighestBidId(anyLong())).thenReturn(1L);
 
-         /*
-          * The process should have been started from the service implementation
-          */
-         assertThat(process().execution()).isStarted();
+        // Execute the test
 
-         // The process variable "auctionId" must exist
-         assertThat(process().variable("auctionId"))
-                 .exists()
-                 .isDefined()
-                 // The ID of the auction should also have been set!
-                 .asLong().isEqualTo(1);
+        auctionService.createAuction(auction);
 
-         assertThat(process().execution()).isWaitingAt("authorizeAuction");
-         Task authorizeAuctionTask = findTaskByTaskId("authorizeAuction");
-         auctionService.authorizeAuction(authorizeAuctionTask.getId(), true);
+        assertThat(processInstance()).isStarted().isWaitingAt("authorizeAuction");
+        assertThat(processVariable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
 
-         // end complete task 1 ///////////////
+        auctionService.authorizeAuction(processTask().getId(), true);
 
-         // wait for auction end //////////////
+        assertThat(processInstance()).isWaitingAt("IntermediateCatchEvent_1");
 
-         // wait for 6 seconds
-         Thread.sleep(6000);
+        processJob().execute(); // TODO show here that the auction is still waiting and then fast forward to auction end and execute another time
 
-         // end wait for auction end //////////
+        assertThat(processInstance()).isWaitingAt("UserTask_2");
 
-         // complete task 2 ///////////////////
-         ProcessInstance pi = process().getActualProcessInstance();
-         List<Task> tasksAfterTimer = taskService.createTaskQuery().processInstanceId(pi.getId()).list();
-         Assert.assertEquals(1,tasksAfterTimer.size());
+        processTask().complete();
 
-         Task billingAndShippingTask = tasksAfterTimer.get(0);
+        assertThat(processInstance()).isFinished();
 
-         // complete task
-         taskService.complete(billingAndShippingTask.getId());
+    }
 
-         // end complete task 2 ///////////////
-
-         // check if process instance is really ended
-
-         long runningInstancesCount = runtimeService
-                 .createProcessInstanceQuery()
-                 .processInstanceId(pi.getId())
-                 .count();
-
-         Assert.assertEquals(0,runningInstancesCount);
-     }
 }
 ```
 
@@ -271,7 +242,7 @@ To use in your project you will need to add this dependency
 <dependency>
     <groupId>com.plexiti.activiti</groupId>
     <artifactId>activiti-fluent-tests</artifactId>
-    <version>0.3</version>
+    <version>0.4</version>
     <scope>test</scope>
 </dependency>
 ```
