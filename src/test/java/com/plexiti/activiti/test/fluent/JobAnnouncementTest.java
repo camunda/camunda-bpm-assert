@@ -46,35 +46,43 @@ public class JobAnnouncementTest {
             .withVariable("jobAnnouncementId", jobAnnouncement.getId())
             .start();
 
-		assertThat(processDiagramLayout()).isContainingNode(TASK_DESCRIBE_POSITION);
-		assertThat(processDiagramLayout()).isContainingNode(TASK_REVIEW_ANNOUNCEMENT);
-		assertThat(processDiagramLayout()).isContainingNode(TASK_CORRECT_ANNOUNCEMENT);
-		assertThat(processDiagramLayout()).isContainingNode(TASK_INITIATE_ANNOUNCEMENT);
+		assertThat(processDiagramLayout())
+            .isContainingNode(TASK_DESCRIBE_POSITION)
+            .isContainingNode(TASK_REVIEW_ANNOUNCEMENT)
+		    .isContainingNode(TASK_CORRECT_ANNOUNCEMENT)
+		    .isContainingNode(TASK_INITIATE_ANNOUNCEMENT);
 
-		assertThat(processInstance()).isStarted();
-
-		assertThat(processInstance()).isWaitingAt(TASK_DESCRIBE_POSITION);
-		assertThat(processTask()).hasCandidateGroup(ROLE_STAFF);
-		assertThat(processTask()).isUnassigned();
+		assertThat(processInstance())
+            .isStarted()
+            .isWaitingAt(TASK_DESCRIBE_POSITION);
+		assertThat(processTask())
+            .hasCandidateGroup(ROLE_STAFF)
+            .isUnassigned();
 
 		processTask().claim(USER_STAFF);
 		
-		assertThat(processTask()).isAssignedTo(USER_STAFF);
+		assertThat(processTask())
+            .isAssignedTo(USER_STAFF);
 
 		processTask().complete();
 
-		assertThat(processInstance()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
-		assertThat(processTask()).isAssignedTo(USER_MANAGER);
+		assertThat(processInstance())
+            .isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
+		assertThat(processTask())
+            .isAssignedTo(USER_MANAGER);
 
 		processTask().complete("approved", true);
 
-		assertThat(processInstance()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
-		assertThat(processTask()).hasCandidateGroup(ROLE_STAFF);
-		assertThat(processTask()).isUnassigned();
+		assertThat(processInstance())
+            .isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
+		assertThat(processTask())
+            .hasCandidateGroup(ROLE_STAFF)
+            .isUnassigned();
 
 		processTask().claim(USER_STAFF);
 		
-		assertThat(processTask()).isAssignedTo(USER_STAFF);
+		assertThat(processTask())
+            .isAssignedTo(USER_STAFF);
 
 		processTask().complete("twitter", true, "facebook", true);
 
@@ -87,7 +95,8 @@ public class JobAnnouncementTest {
 		verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 		verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
 
-		assertThat(processInstance()).isFinished();
+		assertThat(processInstance())
+            .isFinished();
 		
 		verifyNoMoreInteractions(jobAnnouncementService);
 
@@ -106,19 +115,22 @@ public class JobAnnouncementTest {
         }).withVariable("jobAnnouncementId", jobAnnouncement.getId())
         .startAndMoveTo(TASK_REVIEW_ANNOUNCEMENT);
 
-        assertThat(processInstance()).isStarted();
-
-		assertThat(processInstance()).isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
+        assertThat(processInstance())
+            .isStarted()
+            .isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
 
 		processTask().complete("approved", false);
 
-		assertThat(processInstance()).isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
-		assertThat(processTask()).isAssignedTo(USER_STAFF);
+		assertThat(processInstance())
+            .isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
+		assertThat(processTask())
+            .isAssignedTo(USER_STAFF);
 
         processTask().complete();
 		processTask().complete("approved", true);
 
-		assertThat(processInstance()).isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
+		assertThat(processInstance())
+            .isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
 
 		verify(jobAnnouncementService, times(2)).findRequester(jobAnnouncement.getId());
 		verify(jobAnnouncementService).findEditor(jobAnnouncement.getId());
