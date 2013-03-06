@@ -1,10 +1,10 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import org.activiti.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.fest.assertions.api.AbstractAssert;
 
 /**
- * Fluent assertions for {@link org.activiti.engine.runtime.ProcessInstance}
+ * Fluent assertions for {@link org.camunda.bpm.engine.runtime.ProcessInstance}
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>

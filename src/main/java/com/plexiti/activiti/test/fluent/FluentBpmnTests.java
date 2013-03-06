@@ -2,15 +2,13 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.test.fluent.assertions.*;
 import com.plexiti.activiti.test.fluent.engine.*;
-
-import org.activiti.engine.repository.DiagramLayout;
-import org.activiti.engine.repository.ProcessDefinition;
-import org.activiti.engine.runtime.Execution;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
+import org.camunda.bpm.engine.repository.DiagramLayout;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.Execution;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.Task;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Convenience class to access all fluent Activiti assertions.

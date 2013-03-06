@@ -1,7 +1,7 @@
 package com.plexiti.activiti.test.fluent.engine;
 
-import org.activiti.engine.identity.User;
-import org.activiti.engine.task.Task;
+import org.camunda.bpm.engine.identity.User;
+import org.camunda.bpm.engine.task.Task;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

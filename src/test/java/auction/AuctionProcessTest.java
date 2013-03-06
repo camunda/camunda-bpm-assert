@@ -4,9 +4,8 @@ import com.camunda.showcase.auction.domain.Auction;
 import com.camunda.showcase.auction.service.AuctionService;
 import com.camunda.showcase.auction.service.TwitterPublishService;
 import com.plexiti.activiti.test.fluent.FluentBpmnTestCase;
-import org.activiti.engine.runtime.Job;
-import org.activiti.engine.test.Deployment;
-import org.activiti.engine.test.mock.Mocks;
+import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.engine.test.mock.Mocks;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
@@ -15,7 +14,6 @@ import org.mockito.stubbing.Answer;
 import java.util.Date;
 
 import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
-
 import static org.mockito.Mockito.*;
 
 /**
@@ -54,8 +52,8 @@ public class AuctionProcessTest extends FluentBpmnTestCase {
                 public Object answer(InvocationOnMock invocation) {
                     auction.setId(1L);
                     newProcessInstance("auction-process")
-                        .withVariable("auctionId", auction.getId())
-                        .start();
+                            .withVariable("auctionId", auction.getId())
+                            .start();
                     return auction.getId();
                 }
             });

@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent.engine;
 
-import org.activiti.engine.runtime.Job;
+import org.camunda.bpm.engine.runtime.Job;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

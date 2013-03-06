@@ -2,9 +2,6 @@ package com.plexiti.activiti.test.fluent.assertions;
 
 import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
 import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstance;
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstanceImpl;
-import org.activiti.engine.runtime.Execution;
-import org.activiti.engine.runtime.ExecutionQuery;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 

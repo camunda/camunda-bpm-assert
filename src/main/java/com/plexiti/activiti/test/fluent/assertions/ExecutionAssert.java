@@ -1,14 +1,14 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
 import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
-import org.activiti.engine.runtime.Execution;
+import org.camunda.bpm.engine.runtime.Execution;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 
 import java.util.List;
 
 /**
- * Fluent assertions for {@link org.activiti.engine.runtime.Execution}
+ * Fluent assertions for {@link org.camunda.bpm.engine.runtime.Execution}
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>

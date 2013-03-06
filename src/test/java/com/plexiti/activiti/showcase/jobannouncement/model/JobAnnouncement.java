@@ -1,10 +1,10 @@
 package com.plexiti.activiti.showcase.jobannouncement.model;
 
+import com.plexiti.helper.Strings;
+import org.camunda.bpm.engine.task.Task;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import com.plexiti.helper.Strings;
-import org.activiti.engine.task.Task;
 
 /**
  *

@@ -1,9 +1,9 @@
 package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.support.Maps;
-import org.activiti.engine.identity.User;
-import org.activiti.engine.task.DelegationState;
-import org.activiti.engine.task.Task;
+import org.camunda.bpm.engine.identity.User;
+import org.camunda.bpm.engine.task.DelegationState;
+import org.camunda.bpm.engine.task.Task;
 
 import java.util.Date;
 

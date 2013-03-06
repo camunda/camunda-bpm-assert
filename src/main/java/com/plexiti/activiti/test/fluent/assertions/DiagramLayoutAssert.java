@@ -1,12 +1,12 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
 
-import org.activiti.engine.repository.DiagramLayout;
+import org.camunda.bpm.engine.repository.DiagramLayout;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.core.Condition;
 
 /**
- * Fluent assertions for {@link org.activiti.engine.repository.DiagramLayout}
+ * Fluent assertions for {@link org.camunda.bpm.engine.repository.DiagramLayout}
  *
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  * @author Martin Schimak <martin.schimak@plexiti.com>

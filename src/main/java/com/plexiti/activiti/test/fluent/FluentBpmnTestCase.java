@@ -13,7 +13,7 @@
  */
 package com.plexiti.activiti.test.fluent;
 
-import org.activiti.engine.test.ActivitiTestCase;
+import org.camunda.bpm.engine.test.ProcessEngineTestCase;
 import org.junit.After;
 import org.junit.Before;
 
@@ -21,7 +21,7 @@ import org.junit.Before;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public abstract class FluentBpmnTestCase extends ActivitiTestCase {
+public abstract class FluentBpmnTestCase extends ProcessEngineTestCase {
 
     private FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
 

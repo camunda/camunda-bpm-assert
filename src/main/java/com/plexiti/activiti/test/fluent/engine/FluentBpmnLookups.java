@@ -1,15 +1,15 @@
 package com.plexiti.activiti.test.fluent.engine;
 
 import com.plexiti.activiti.test.fluent.support.Classes;
-import org.activiti.engine.*;
-import org.activiti.engine.identity.UserQuery;
-import org.activiti.engine.impl.test.TestHelper;
-import org.activiti.engine.runtime.ExecutionQuery;
-import org.activiti.engine.runtime.JobQuery;
-import org.activiti.engine.runtime.ProcessInstanceQuery;
-import org.activiti.engine.task.TaskQuery;
-import org.activiti.engine.test.ActivitiRule;
-import org.activiti.engine.test.ActivitiTestCase;
+import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.identity.UserQuery;
+import org.camunda.bpm.engine.impl.test.TestHelper;
+import org.camunda.bpm.engine.runtime.ExecutionQuery;
+import org.camunda.bpm.engine.runtime.JobQuery;
+import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
+import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.ProcessEngineTestCase;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -25,11 +25,11 @@ public class FluentBpmnLookups {
     }
 
     public static ProcessEngine getProcessEngine() {
-        if (testObject.get() instanceof ActivitiTestCase)
-            return TestHelper.getProcessEngine(((ActivitiTestCase) testObject.get()).getConfigurationResource());
+        if (testObject.get() instanceof ProcessEngineTestCase)
+            return TestHelper.getProcessEngine(((ProcessEngineTestCase) testObject.get()).getConfigurationResource());
         else {
             try {
-                return ((ActivitiRule) Classes.getFieldByType(testObject.get().getClass(), ActivitiRule.class).get(testObject.get())).getProcessEngine();
+                return ((ProcessEngineRule) Classes.getFieldByType(testObject.get().getClass(), ProcessEngineRule.class).get(testObject.get())).getProcessEngine();
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }

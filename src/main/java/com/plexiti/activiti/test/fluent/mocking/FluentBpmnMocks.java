@@ -13,7 +13,7 @@
  */
 package com.plexiti.activiti.test.fluent.mocking;
 
-import org.activiti.engine.test.mock.Mocks;
+import org.camunda.bpm.engine.test.mock.Mocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

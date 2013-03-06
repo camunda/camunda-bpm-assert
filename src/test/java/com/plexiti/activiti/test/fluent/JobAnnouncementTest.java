@@ -2,16 +2,15 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
-import org.activiti.engine.test.ActivitiRule;
-import org.activiti.engine.test.Deployment;
+import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
-import static org.mockito.Mockito.*;
-
 import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
+import static org.mockito.Mockito.*;
 
 /**
  *
@@ -22,7 +21,7 @@ import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 public class JobAnnouncementTest {
 
     @Rule
-    public ActivitiRule activitiRule = new ActivitiRule();
+    public ProcessEngineRule activitiRule = new ProcessEngineRule();
     @Rule
     public FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
 
@@ -45,12 +44,6 @@ public class JobAnnouncementTest {
         newProcessInstance(JOBANNOUNCEMENT_PROCESS)
             .withVariable("jobAnnouncementId", jobAnnouncement.getId())
             .start();
-
-		assertThat(processDiagramLayout())
-            .isContainingNode(TASK_DESCRIBE_POSITION)
-            .isContainingNode(TASK_REVIEW_ANNOUNCEMENT)
-		    .isContainingNode(TASK_CORRECT_ANNOUNCEMENT)
-		    .isContainingNode(TASK_INITIATE_ANNOUNCEMENT);
 
 		assertThat(processInstance())
             .isStarted()

@@ -2,17 +2,17 @@ package com.plexiti.activiti.test.fluent;
 
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
 import com.plexiti.activiti.showcase.jobannouncement.service.JobAnnouncementService;
-import org.activiti.engine.test.ActivitiRule;
-import org.activiti.engine.test.Deployment;
+import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 
-import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
+import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.JOBANNOUNCEMENT_PUBLICATION_PROCESS;
+import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE;
+import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
-
-import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 
 /**
  *
@@ -23,7 +23,7 @@ import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
 public class JobAnnouncementPublicationTest {
 
     @Rule
-    public ActivitiRule activitiRule = new ActivitiRule();
+    public ProcessEngineRule activitiRule = new ProcessEngineRule();
     @Rule
     public FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
 

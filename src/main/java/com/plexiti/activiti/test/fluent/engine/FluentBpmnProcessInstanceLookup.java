@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent.engine;
 
-import org.activiti.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
 
 import java.util.HashMap;
 import java.util.List;

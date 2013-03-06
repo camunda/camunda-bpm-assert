@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent.engine;
 
-import org.activiti.engine.runtime.Job;
+import org.camunda.bpm.engine.runtime.Job;
 
 import java.util.Date;
 

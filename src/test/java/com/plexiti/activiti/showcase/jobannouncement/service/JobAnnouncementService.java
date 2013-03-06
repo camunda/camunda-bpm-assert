@@ -1,8 +1,8 @@
 package com.plexiti.activiti.showcase.jobannouncement.service;
 
-import java.util.List;
-
 import com.plexiti.activiti.showcase.jobannouncement.model.JobAnnouncement;
+
+import java.util.List;
 
 /**
  *
