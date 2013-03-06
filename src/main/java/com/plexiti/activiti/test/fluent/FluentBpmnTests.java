@@ -63,10 +63,6 @@ public class FluentBpmnTests extends org.fest.assertions.api.Assertions {
         return TaskAssert.assertThat(actual);
     }
 
-    public static TasksAssert assertThat(List<Task> actual) {
-        return TasksAssert.assertThat(actual);
-    }
-
     public static ProcessInstanceAssert assertThat(ProcessInstance actual) {
         return ProcessInstanceAssert.assertThat(actual);
     }
