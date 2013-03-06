@@ -49,7 +49,7 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
         return FluentProcessInstanceLookup.processInstance().job();
     }
 
-    // TODO From here on more "FluentBpmn" interfaces and wrappers have to be implemented
+    // TODO From here on more "Fluent" interfaces and wrappers have to be implemented
 
     public static ProcessDefinition processDefinition(String processDefinitionId) {
         return FluentProcessInstanceLookup.processDefinition(processDefinitionId);

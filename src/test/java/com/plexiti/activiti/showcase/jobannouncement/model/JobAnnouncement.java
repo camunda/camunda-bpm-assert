@@ -139,7 +139,6 @@ public class JobAnnouncement implements Serializable {
     }
 
     public String getWebsiteUrl() {
-        // TODO Construct correct URL here.
         return "http://the-job-announcement.com/view.jsf?id=" + id;
     }
 
