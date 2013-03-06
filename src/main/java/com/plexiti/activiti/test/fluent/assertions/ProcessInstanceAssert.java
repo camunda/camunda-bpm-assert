@@ -1,7 +1,7 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnProcessInstance;
+import com.plexiti.activiti.test.fluent.engine.FluentLookups;
+import com.plexiti.activiti.test.fluent.engine.FluentProcessInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
@@ -12,20 +12,20 @@ import java.util.List;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanceAssert, ProcessInstance> {
+public class ProcessInstanceAssert extends AbstractAssert<ProcessInstanceAssert, ProcessInstance> {
 
-    protected TestProcessInstanceAssert(FluentBpmnProcessInstance actual) {
-        super(actual, TestProcessInstanceAssert.class);
+    protected ProcessInstanceAssert(FluentProcessInstance actual) {
+        super(actual, ProcessInstanceAssert.class);
     }
 
-    public static TestProcessInstanceAssert assertThat(FluentBpmnProcessInstance actual) {
-        return new TestProcessInstanceAssert(actual);
+    public static ProcessInstanceAssert assertThat(FluentProcessInstance actual) {
+        return new ProcessInstanceAssert(actual);
     }
 
-    public TestProcessInstanceAssert isWaitingAt(String activityId) {
+    public ProcessInstanceAssert isWaitingAt(String activityId) {
         isNotNull();
 
-        List<String> activeActivityIds = FluentBpmnLookups.getRuntimeService()
+        List<String> activeActivityIds = FluentLookups.getRuntimeService()
                 .getActiveActivityIds(actual.getId());
         Assertions.assertThat(activeActivityIds)
                 .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s",
@@ -37,7 +37,7 @@ public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanc
         return this;
     }
 
-    public TestProcessInstanceAssert isFinished() {
+    public ProcessInstanceAssert isFinished() {
         /*
          * TODO: we need to review this
          * If the incomming Execution instance is null we consider the processExecution finished
@@ -56,7 +56,7 @@ public class TestProcessInstanceAssert extends AbstractAssert<TestProcessInstanc
         return this;
     }
 
-    public TestProcessInstanceAssert isStarted() {
+    public ProcessInstanceAssert isStarted() {
         isNotNull();
 
         Assertions.assertThat(actual.isEnded()).

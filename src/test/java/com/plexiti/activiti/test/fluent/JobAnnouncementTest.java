@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
-import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
+import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -23,7 +23,7 @@ public class JobAnnouncementTest {
     @Rule
     public ProcessEngineRule activitiRule = new ProcessEngineRule();
     @Rule
-    public FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
+    public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
 
     @Mock
     public JobAnnouncementService jobAnnouncementService;

@@ -21,9 +21,9 @@ import org.junit.Before;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public abstract class FluentBpmnTestCase extends ProcessEngineTestCase {
+public abstract class FluentProcessEngineTestCase extends ProcessEngineTestCase {
 
-    private FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
+    private FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
 
     @Override @Before
     protected void setUp() throws Exception {

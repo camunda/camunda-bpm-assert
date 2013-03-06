@@ -8,11 +8,11 @@ import java.util.Date;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class FluentBpmnJobImpl implements FluentBpmnJob {
+public class FluentJobImpl implements FluentJob {
 
     private Job delegate;
 
-    protected FluentBpmnJobImpl(Job delegate) {
+    protected FluentJobImpl(Job delegate) {
         this.delegate = delegate;
     }
 
@@ -53,7 +53,7 @@ public class FluentBpmnJobImpl implements FluentBpmnJob {
 
     @Override
     public void execute() {
-        FluentBpmnLookups.getManagementService().executeJob(getId());
+        FluentLookups.getManagementService().executeJob(getId());
     }
 
 }

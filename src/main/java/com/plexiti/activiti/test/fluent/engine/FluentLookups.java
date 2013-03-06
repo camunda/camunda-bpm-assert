@@ -15,13 +15,13 @@ import org.camunda.bpm.engine.test.ProcessEngineTestCase;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class FluentBpmnLookups {
+public class FluentLookups {
 
     private static ThreadLocal testObject = new ThreadLocal();
 
     public static void init(Object testObject) {
-        FluentBpmnLookups.testObject.set(testObject);
-        FluentBpmnProcessInstanceLookup.init(testObject);
+        FluentLookups.testObject.set(testObject);
+        FluentProcessInstanceLookup.init(testObject);
     }
 
     public static ProcessEngine getProcessEngine() {

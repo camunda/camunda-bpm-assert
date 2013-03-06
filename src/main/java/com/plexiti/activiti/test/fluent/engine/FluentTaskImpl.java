@@ -11,11 +11,11 @@ import java.util.Date;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class FluentBpmnTaskImpl implements FluentBpmnTask {
+public class FluentTaskImpl implements FluentTask {
 
     private Task delegate;
 
-    protected FluentBpmnTaskImpl(Task delegate) {
+    protected FluentTaskImpl(Task delegate) {
         this.delegate = delegate;
     }
 
@@ -146,12 +146,12 @@ public class FluentBpmnTaskImpl implements FluentBpmnTask {
 
     @Override
     public void claim(String userId) {
-        FluentBpmnLookups.getTaskService().claim(delegate.getId(), userId);
+        FluentLookups.getTaskService().claim(delegate.getId(), userId);
     }
 
     @Override
     public void complete(Object... variables) {
-        FluentBpmnLookups.getTaskService().complete(delegate.getId(), Maps.parseMap(variables));
+        FluentLookups.getTaskService().complete(delegate.getId(), Maps.parseMap(variables));
     }
 
 }

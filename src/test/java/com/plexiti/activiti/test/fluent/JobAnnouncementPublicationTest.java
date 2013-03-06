@@ -10,7 +10,7 @@ import org.mockito.Mock;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.JOBANNOUNCEMENT_PUBLICATION_PROCESS;
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE;
-import static com.plexiti.activiti.test.fluent.FluentBpmnTests.*;
+import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
@@ -25,7 +25,7 @@ public class JobAnnouncementPublicationTest {
     @Rule
     public ProcessEngineRule activitiRule = new ProcessEngineRule();
     @Rule
-    public FluentBpmnTestRule bpmnFluentTestRule = new FluentBpmnTestRule(this);
+    public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
 
 	@Mock
     public JobAnnouncementService jobAnnouncementService;

@@ -1,7 +1,7 @@
 package com.plexiti.activiti.test.fluent;
 
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
-import com.plexiti.activiti.test.fluent.mocking.FluentBpmnMocks;
+import com.plexiti.activiti.test.fluent.engine.FluentLookups;
+import com.plexiti.activiti.test.fluent.mocking.FluentMocks;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -10,11 +10,11 @@ import org.junit.runners.model.Statement;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class FluentBpmnTestRule implements TestRule {
+public class FluentProcessEngineTestRule implements TestRule {
 
     private Object test;
 
-    public FluentBpmnTestRule(Object test) {
+    public FluentProcessEngineTestRule(Object test) {
         this.test = test;
     }
 
@@ -36,8 +36,8 @@ public class FluentBpmnTestRule implements TestRule {
     }
 
     public void before() {
-        FluentBpmnLookups.init(test);
-        FluentBpmnMocks.init(test);
+        FluentLookups.init(test);
+        FluentMocks.init(test);
     }
 
     public void after() {

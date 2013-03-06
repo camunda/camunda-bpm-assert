@@ -24,9 +24,9 @@ import java.util.logging.Logger;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class FluentBpmnMocks {
+public class FluentMocks {
 
-	private static Logger log = Logger.getLogger(FluentBpmnMocks.class.getName());
+	private static Logger log = Logger.getLogger(FluentMocks.class.getName());
 
     public static void init(Object junitTest) {
         initMockito(junitTest);

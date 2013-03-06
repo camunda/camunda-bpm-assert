@@ -13,8 +13,8 @@
  */
 package com.plexiti.activiti.test.fluent.engine;
 
-import com.plexiti.activiti.test.fluent.FluentBpmnTests;
-import com.plexiti.activiti.test.fluent.assertions.TestProcessInstanceAssert;
+import com.plexiti.activiti.test.fluent.FluentProcessEngineTests;
+import com.plexiti.activiti.test.fluent.assertions.ProcessInstanceAssert;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
@@ -30,16 +30,16 @@ import static org.fest.assertions.api.Assertions.assertThat;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance {
+public class FluentProcessInstanceImpl implements FluentProcessInstance {
 
-    private static Logger log = Logger.getLogger(FluentBpmnProcessInstanceImpl.class.getName());
+    private static Logger log = Logger.getLogger(FluentProcessInstanceImpl.class.getName());
 
     private ProcessInstance delegate;
     protected String processDefinitionId;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
-    protected FluentBpmnTests.Move move = new FluentBpmnTests.Move() { public void along() {} };
+    protected FluentProcessEngineTests.Move move = new FluentProcessEngineTests.Move() { public void along() {} };
 
-    public FluentBpmnProcessInstanceImpl(String processDefinitionId) {
+    public FluentProcessInstanceImpl(String processDefinitionId) {
         this.processDefinitionId = processDefinitionId;
     }
 
@@ -65,7 +65,7 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
 
     @Override
     public boolean isEnded() {
-        return FluentBpmnLookups.createExecutionQuery().processInstanceId(getDelegate().getId()).list().isEmpty() || getDelegate().isEnded();
+        return FluentLookups.createExecutionQuery().processInstanceId(getDelegate().getId()).list().isEmpty() || getDelegate().isEnded();
     }
 
     @Override
@@ -81,63 +81,63 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     }
 
     @Override
-    public FluentBpmnTask task() {
+    public FluentTask task() {
         List<Task> tasks = tasks();
         assertThat(tasks)
                 .as("By calling processTask() you implicitly assumed that exactly one such object exists.")
                 .hasSize(1);
-        return new FluentBpmnTaskImpl(tasks.get(0));
+        return new FluentTaskImpl(tasks.get(0));
     }
 
     @Override
     public List<Task> tasks() {
-        return FluentBpmnLookups.createTaskQuery().list();
+        return FluentLookups.createTaskQuery().list();
     }
 
     @Override
-    public FluentBpmnJob job() {
+    public FluentJob job() {
         List<Job> jobs = jobs();
         assertThat(jobs)
                 .as("By calling processJob() you implicitly assumed that exactly one such object exists.")
                 .hasSize(1);
-        return new FluentBpmnJobImpl(jobs.get(0));
+        return new FluentJobImpl(jobs.get(0));
     }
 
     @Override
     public List<Job> jobs() {
-        return FluentBpmnLookups.createJobQuery().list();
+        return FluentLookups.createJobQuery().list();
     }
 
-    public void moveAlong(FluentBpmnTests.Move move) {
+    public void moveAlong(FluentProcessEngineTests.Move move) {
         this.move = move;
     }
 
     @Override
     public void startAndMoveTo(String activity) {
         try {
-            TestProcessInstanceAssert.setMoveToActivityId(activity);
+            ProcessInstanceAssert.setMoveToActivityId(activity);
             move.along();
-        } catch (TestProcessInstanceAssert.MoveToActivityIdException e) {
+        } catch (ProcessInstanceAssert.MoveToActivityIdException e) {
         }
     }
 
     @Override
-    public FluentBpmnProcessInstance start() {
-        delegate = FluentBpmnLookups.getRuntimeService()
+    public FluentProcessInstance start() {
+        delegate = FluentLookups.getRuntimeService()
                 .startProcessInstanceByKey(processDefinitionId, processVariables);
         log.info("Started processInstance '" + processDefinitionId + "' (definition id: '" + getDelegate().getProcessDefinitionId() + "', instance id: '" + getDelegate().getId() + "').");
         return this;
     }
 
     @Override
-    public FluentBpmnProcessInstanceImpl withVariable(String name, Object value) {
+    public FluentProcessInstanceImpl withVariable(String name, Object value) {
         assertThat(delegate).overridingErrorMessage("Process already started. Call start() after having set up all necessary processInstance variables.").isNull();
         this.processVariables.put(name, value);
         return this;
     }
 
     @Override
-    public FluentBpmnProcessInstance withVariables(Map<String, Object> variables) {
+    public FluentProcessInstance withVariables(Map<String, Object> variables) {
         assertThat(delegate).overridingErrorMessage("Process already started. Call start() after having set up all necessary processInstance variables.").isNull();
         for (String name: variables.keySet()) {
             this.processVariables.put(name, variables.get(name));
@@ -147,13 +147,13 @@ public class FluentBpmnProcessInstanceImpl implements FluentBpmnProcessInstance 
     }
 
     @Override
-    public FluentBpmnProcessVariable variable(String variableName) {
-        Object variableValue = FluentBpmnLookups.getRuntimeService().getVariable(getDelegate().getId(), variableName);
+    public FluentProcessVariable variable(String variableName) {
+        Object variableValue = FluentLookups.getRuntimeService().getVariable(getDelegate().getId(), variableName);
 
         assertThat(variableValue)
                 .overridingErrorMessage("Unable to find processInstance processVariable '%s'", variableName)
                 .isNotNull();
-        return new FluentBpmnProcessVariable(variableName, variableValue);
+        return new FluentProcessVariable(variableName, variableValue);
     }
 
 }

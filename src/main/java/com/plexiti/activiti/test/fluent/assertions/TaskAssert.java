@@ -1,6 +1,6 @@
 package com.plexiti.activiti.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.FluentBpmnLookups;
+import com.plexiti.activiti.test.fluent.engine.FluentLookups;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
@@ -48,7 +48,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
     public TaskAssert hasCandidateGroup(String candidateGroupId) {
         isNotNull();
 
-        TaskService taskService = FluentBpmnLookups.getTaskService();
+        TaskService taskService = FluentLookups.getTaskService();
         TaskQuery query = taskService.createTaskQuery()
                                      .taskId(actual.getId()).taskCandidateGroup(candidateGroupId);
         Assertions.assertThat(query.singleResult())

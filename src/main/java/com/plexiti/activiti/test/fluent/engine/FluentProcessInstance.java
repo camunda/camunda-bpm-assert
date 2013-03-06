@@ -1,7 +1,5 @@
 package com.plexiti.activiti.test.fluent.engine;
 
-import org.camunda.bpm.engine.repository.DiagramLayout;
-import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
@@ -13,21 +11,21 @@ import java.util.Map;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public interface FluentBpmnProcessInstance extends FluentBpmnDelegate<ProcessInstance>, ProcessInstance {
+public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, ProcessInstance {
 
-    FluentBpmnProcessInstance start();
+    FluentProcessInstance start();
 
     void startAndMoveTo(String activity);
 
-    FluentBpmnProcessInstanceImpl withVariable(String name, Object value);
+    FluentProcessInstanceImpl withVariable(String name, Object value);
 
-    FluentBpmnProcessInstance withVariables(Map<String, Object> variables);
+    FluentProcessInstance withVariables(Map<String, Object> variables);
 
-    FluentBpmnProcessVariable variable(String variableName);
+    FluentProcessVariable variable(String variableName);
 
-    FluentBpmnTask task();
+    FluentTask task();
 
-    FluentBpmnJob job();
+    FluentJob job();
 
     // TODO From here on more "FluentBpmn" interfaces and wrappers have to be implemented
 

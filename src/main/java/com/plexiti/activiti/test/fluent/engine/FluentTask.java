@@ -7,7 +7,7 @@ import org.camunda.bpm.engine.task.Task;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public interface FluentBpmnTask extends FluentBpmnDelegate<Task>, Task {
+public interface FluentTask extends FluentDelegate<Task>, Task {
 
     void claim(String userId);
 
