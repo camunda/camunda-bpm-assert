@@ -19,9 +19,14 @@ public class FluentLookups {
 
     private static ThreadLocal testObject = new ThreadLocal();
 
-    public static void init(Object testObject) {
+    public static void before(Object testObject) {
         FluentLookups.testObject.set(testObject);
-        FluentProcessInstanceLookup.init(testObject);
+        FluentProcessInstanceLookup.before(testObject);
+    }
+
+    public static void after(Object testObject) {
+        FluentLookups.testObject.set(null);
+        FluentProcessInstanceLookup.after(testObject);
     }
 
     public static ProcessEngine getProcessEngine() {

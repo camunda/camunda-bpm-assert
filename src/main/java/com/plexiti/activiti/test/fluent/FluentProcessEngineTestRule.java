@@ -36,11 +36,13 @@ public class FluentProcessEngineTestRule implements TestRule {
     }
 
     public void before() {
-        FluentLookups.init(test);
-        FluentMocks.init(test);
+        FluentLookups.before(test);
+        FluentMocks.before(test);
     }
 
     public void after() {
+        FluentMocks.after(test);
+        FluentLookups.after(test);
     }
 
 }

@@ -16,7 +16,9 @@ public class FluentProcessInstanceLookup {
 
     private static ThreadLocal<Map<String, FluentProcessInstance>> testProcessInstances = new ThreadLocal<Map<String, FluentProcessInstance>>();
 
-    protected static void init(Object junitTest) { // TODO Instead of init() introduce a before() and an after() method and move this cleanup code to after()
+    protected static void before(Object junitTest) {}
+
+    protected static void after(Object junitTest) {
         testProcessInstances.set(null);
     }
 

@@ -28,8 +28,12 @@ public class FluentMocks {
 
 	private static Logger log = Logger.getLogger(FluentMocks.class.getName());
 
-    public static void init(Object junitTest) {
+    public static void before(Object junitTest) {
         initMockito(junitTest);
+    }
+
+    public static void after(Object junitTest) {
+        Mocks.reset();
     }
 
 	private static void initMockito(Object junitTest)
@@ -52,7 +56,7 @@ public class FluentMocks {
 					log.info("Due to " + (isAnnotated ? "Annotation" : "class name containing expected string '" + classNameContains + "'") + " registered object bound to field '" + key + "' of test class '" + clazz.getSimpleName() + "' as mock associated with key '" + key + "'.");
 					Mocks.register(key, value);
 				} else {
-					log.info("Did not init object bound to field '" + fields[i].getName() + "' of test class '" + clazz.getSimpleName() + "' as mock. Class name does not contain the expected string '" + classNameContains + "'.");
+					log.info("Did not before object bound to field '" + fields[i].getName() + "' of test class '" + clazz.getSimpleName() + "' as mock. Class name does not contain the expected string '" + classNameContains + "'.");
 				}
 			} catch (IllegalAccessException e) {
 				if (isAnnotated) {
