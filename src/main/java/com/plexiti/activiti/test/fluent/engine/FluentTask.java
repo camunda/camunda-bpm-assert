@@ -9,10 +9,10 @@ import org.camunda.bpm.engine.task.Task;
  */
 public interface FluentTask extends FluentDelegate<Task>, Task {
 
-    void claim(String userId);
+    FluentTask claim(String userId);
 
-    void claim(User user);
+    FluentTask claim(User user);
 
-    void complete(Object... variables);
+    FluentTask complete(Object... variables);
 
 }

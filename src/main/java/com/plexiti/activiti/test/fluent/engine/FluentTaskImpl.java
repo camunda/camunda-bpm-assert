@@ -140,18 +140,21 @@ public class FluentTaskImpl implements FluentTask {
     }
 
     @Override
-    public void claim(User user) {
+    public FluentTask claim(User user) {
         claim(user.getId());
+        return this;
     }
 
     @Override
-    public void claim(String userId) {
+    public FluentTask claim(String userId) {
         FluentLookups.getTaskService().claim(delegate.getId(), userId);
+        return this;
     }
 
     @Override
-    public void complete(Object... variables) {
+    public FluentTask complete(Object... variables) {
         FluentLookups.getTaskService().complete(delegate.getId(), Maps.parseMap(variables));
+        return this;
     }
 
 }
