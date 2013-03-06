@@ -52,8 +52,9 @@ public class FluentJobImpl implements FluentJob {
     }
 
     @Override
-    public void execute() {
+    public FluentJob execute() {
         FluentLookups.getManagementService().executeJob(getId());
+        return this;
     }
 
 }

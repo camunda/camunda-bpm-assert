@@ -8,6 +8,6 @@ import org.camunda.bpm.engine.runtime.Job;
  */
 public interface FluentJob extends FluentDelegate<Job>, Job {
 
-    void execute();
+    FluentJob execute();
 
 }
