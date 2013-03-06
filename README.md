@@ -6,6 +6,8 @@ This library aims at easing testing when developing process applications based o
 * make the writing of process model  tests more fluent and more fun
 * make it easy to mock the services available to a process instance
 
+In particular the library
+
 * provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) API so you can focus on your process expert's domain knowledge while writing (and reading!) your tests
 
 ```java
@@ -20,15 +22,16 @@ processTask().complete("approved", true);
 
 ```java
 ...
-start(new TestProcessInstance(JOBANNOUNCEMENT_PROCESS) { 
-          public void moveAlong() { 
-            testHappyPath(); 
-          }
-      }).moveTo(TASK_REVIEW_ANNOUNCEMENT);
+newProcessInstance("job-announcement", new Move() {
+    public void along() {
+        testHappyPath();
+    }
+}).withVariable("jobAnnouncementId", jobAnnouncement.getId())
+.startAndMoveTo("review");
 ...
 ``` 
 
-In particula we
+* makes it very easy to mock services available to process instance and resolveable by UEL expressions used in its definition. Just use the Mockito @Mock Annotation and you are done.
 
 ```java
 ...
@@ -41,13 +44,15 @@ This project is a spin-off of [The Job Announcement](https://github.com/plexiti/
 for a business process-centric application based on the [Java EE 6](http://www.oracle.com/technetwork/java/javaee/overview/index.html)
 technology stack and the [camunda BPM Platform](http://camunda.org). An online version of The Job Announcement can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/) and the source code on [GitHub](https://github.com/plexiti/the-job-announcement-fox).
 
-This project leverages two great testing libraries:
+This project leverages two great testing libraries
+
 * [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
 * [Mockito](http://code.google.com/p/mockito/).
 
 ## Example: Job Announcement Test
 ```java
-...
+public class JobAnnouncementTest {
+
     @Rule
     public ProcessEngineRule processEngineRule = new ProcessEngineRule();
     @Rule
@@ -159,9 +164,8 @@ This project leverages two great testing libraries:
 }
 ```
 
-## Example:  Auction Process Test
+## Example: Auction Process Test
 ```java
-...
 public class AuctionProcessTest extends FluentProcessEngineTestCase {
 
     @Mock
@@ -185,9 +189,9 @@ public class AuctionProcessTest extends FluentProcessEngineTestCase {
         final Auction auction = new Auction();
         auction.setName("Cheap Ferrari!");
         auction.setDescription("Ferrari Testarossa on sale!");
-        auction.setEndTime(new Date()); // TODO show here that the auction ends in the future
+        auction.setEndTime(new Date());
 
-        Mocks.register("auction", auction); // TODO Wrap into a fluent method like e.g. "registerWithName"
+        Mocks.register("auction", auction);
 
         when(auctionService.createAuction((Auction) anyObject()))
             .thenAnswer(new Answer() {
@@ -221,7 +225,7 @@ public class AuctionProcessTest extends FluentProcessEngineTestCase {
 
         assertThat(processInstance()).isWaitingAt("IntermediateCatchEvent_1");
 
-        processJob().execute(); // TODO show here that the auction is still waiting and then fast forward to auction end and execute another time
+        processJob().execute();
 
         assertThat(processInstance()).isWaitingAt("UserTask_2");
 
