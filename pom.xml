@@ -60,6 +60,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy</artifactId>
+            <version>1.8.6</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-web-6.0</artifactId>
             <version>2.0.0.Final</version>
@@ -83,12 +89,18 @@
               <artifactId>maven-surefire-plugin</artifactId>
               <version>2.13</version>
               <configuration>
+                  <failIfNoTests>true</failIfNoTests>
+                  <trimStackTrace>false</trimStackTrace>
+                  <redirectTestOutputToFile>true</redirectTestOutputToFile>
                   <excludes>
-                      <exclude>org/camunda/bpm/engine/test/**/*.java</exclude>
+                      <exclude>**/event/**/*.java</exclude>
+                      <exclude>**/gateway/*.java</exclude>
+                      <exclude>**/mail/*.java</exclude>
+                      <exclude>**/multiinstance/*.java</exclude>
+                      <exclude>**/parse/*.java</exclude>
+                      <exclude>**/servicetask/*.java</exclude>
+                      <exclude>**/subprocess/*.java</exclude>
                   </excludes>
-                  <includes>
-                      <include>**/usertask/*.java</include>
-                  </includes>
               </configuration>
           </plugin>
         <plugin>
