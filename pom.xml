@@ -93,10 +93,15 @@
                   <trimStackTrace>false</trimStackTrace>
                   <redirectTestOutputToFile>true</redirectTestOutputToFile>
                   <excludes>
-                      <exclude>**/mail/*.java</exclude>
-                      <exclude>**/multiinstance/*.java</exclude>
-                      <exclude>**/parse/*.java</exclude>
                       <exclude>**/servicetask/*.java</exclude>
+                      <!-- These exclusions come directly from the BPM engine maven module pom.xml -->
+                      <exclude>**/*TestCase.java</exclude>
+                      <exclude>**/CompetingJobAcquisitionTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-234 -->
+                      <exclude>**/WSDLImporterTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-315 -->
+                      <exclude>**/JobExecutorTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-427 -->
+                      <exclude>**/HistoricTaskInstanceUpdateTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-485  -->
+                      <exclude>**/RepeatingServiceTaskTest.java</exclude>
+                      <exclude>org/activiti/standalone/**</exclude>
                   </excludes>
               </configuration>
           </plugin>
