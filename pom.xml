@@ -99,7 +99,6 @@
                       <exclude>**/multiinstance/*.java</exclude>
                       <exclude>**/parse/*.java</exclude>
                       <exclude>**/servicetask/*.java</exclude>
-                      <exclude>**/subprocess/*.java</exclude>
                   </excludes>
               </configuration>
           </plugin>
