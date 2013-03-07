@@ -40,6 +40,13 @@
             <version>${fest.assert.version}</version>
             <scope>compile</scope>
         </dependency>
+        <!-- Needed for some engine tests -->
+        <dependency>
+            <groupId>org.subethamail</groupId>
+            <artifactId>subethasmtp-wiser</artifactId>
+            <version>1.2</version>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
@@ -71,6 +78,19 @@
 
     <build>
       <plugins>
+          <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <version>2.13</version>
+              <configuration>
+                  <excludes>
+                      <exclude>org/camunda/bpm/engine/test/**/*.java</exclude>
+                  </excludes>
+                  <includes>
+                      <include>**/usertask/*.java</include>
+                  </includes>
+              </configuration>
+          </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
