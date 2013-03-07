@@ -94,7 +94,6 @@
                   <redirectTestOutputToFile>true</redirectTestOutputToFile>
                   <excludes>
                       <exclude>**/event/**/*.java</exclude>
-                      <exclude>**/gateway/*.java</exclude>
                       <exclude>**/mail/*.java</exclude>
                       <exclude>**/multiinstance/*.java</exclude>
                       <exclude>**/parse/*.java</exclude>
