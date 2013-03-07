@@ -93,7 +93,6 @@
                   <trimStackTrace>false</trimStackTrace>
                   <redirectTestOutputToFile>true</redirectTestOutputToFile>
                   <excludes>
-                      <exclude>**/event/**/*.java</exclude>
                       <exclude>**/mail/*.java</exclude>
                       <exclude>**/multiinstance/*.java</exclude>
                       <exclude>**/parse/*.java</exclude>
