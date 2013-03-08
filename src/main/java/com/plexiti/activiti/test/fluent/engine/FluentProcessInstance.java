@@ -13,6 +13,13 @@ import java.util.Map;
  */
 public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, ProcessInstance {
 
+    /**
+     * Starts a process instance ({@link org.camunda.bpm.engine.runtime.ProcessInstance}).
+     *
+     * @return a fluent {@link FluentProcessInstance} to make assertions against
+     *
+     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance
+     */
     FluentProcessInstance start();
 
     FluentProcessInstance startAndMoveTo(String activity);
