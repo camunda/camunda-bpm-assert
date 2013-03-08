@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
-import com.plexiti.activiti.test.fluent.engine.FluentProcessInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
