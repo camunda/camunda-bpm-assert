@@ -15,12 +15,8 @@ package org.camunda.bpm.engine.test.bpmn.usertask;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
 
@@ -34,6 +30,7 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
     
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("06-07-1986 12:10:00");
 
+    // Start process-instance, passing date that should be used as dueDate as a Date
     newProcessInstance("dueDateExtension")
             .withVariable("dateVariable", date)
             .start();
@@ -49,20 +46,22 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
       // FIME: I would actually prefer currentTask() here instead oc processTask()
     assertThat(processTask()).hasDueDate(date);
   }
-  
+
   @Deployment
   public void testDueDateStringExtension() throws Exception {
-    
-    Map<String, Object> variables = new HashMap<String, Object>();
-    variables.put("dateVariable", "1986-07-06T12:10:00");
-    
-    // Start process-instance, passing date that should be used as dueDate
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("dueDateExtension", variables);
-    
-    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    
-    assertNotNull(task.getDueDate());
+
+    // Start process-instance, passing date that should be used as dueDate as a String
+    newProcessInstance("dueDateExtension")
+        .withVariable("dateVariable", "1986-07-06T12:10:00")
+        .start();
+
+    assertThat(processInstance()).isWaitingAt("theTask");
+    // alternative way of testing the same
+    assertThat(processTask().getName()).isEqualTo("my task");
+    assertThat(processTask().getId()).isEqualTo("theTask");
+
     Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("06-07-1986 12:10:00");
-    assertEquals(date, task.getDueDate());
+    // FIME: I would actually prefer currentTask() here instead oc processTask()
+    assertThat(processTask().getDueDate()).isEqualTo(date);
   }
 }
