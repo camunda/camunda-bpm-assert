@@ -19,10 +19,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
+import com.plexiti.activiti.test.fluent.engine.FluentProcessInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
-
+import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
 
 /**
  * @author Frederik Heremans
@@ -33,16 +34,21 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
   public void testDueDateExtension() throws Exception {
     
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("06-07-1986 12:10:00");
-    Map<String, Object> variables = new HashMap<String, Object>();
-    variables.put("dateVariable", date);
-    
-    // Start process-instance, passing date that should be used as dueDate
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("dueDateExtension", variables);
-    
-    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
-    
-    assertNotNull(task.getDueDate());
-    assertEquals(date, task.getDueDate());
+
+    newProcessInstance("dueDateExtension")
+            .withVariable("dateVariable", date)
+            .start();
+
+    /*
+     * The intent of this code was to retrieve the current task and assert that the task has the correct due date
+     *
+     * Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+     * assertNotNull(task.getDueDate());
+     * assertEquals(date, task.getDueDate());
+     */
+    assertThat(processInstance()).isWaitingAt("theTask");
+      // FIME: I would actually prefer currentTask() here instead oc processTask()
+    assertThat(processTask()).hasDueDate(date);
   }
   
   @Deployment
