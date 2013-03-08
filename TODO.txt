@@ -1,0 +1,33 @@
+(rafa) We need to clarify and support the different ways to start a process instance:
+runtimeService.startProcessInstanceById()
+runtimeService.startProcessInstanceByKey();
+runtimeService.startProcessInstanceByMessage()
+
+
+(rafa) When working with this code
+
+public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
+
+  @Deployment
+  public void testDueDateExtension() throws Exception {
+
+    Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("06-07-1986 12:10:00");
+
+    FluentProcessInstance pi = newProcessInstance("dueDateExtension")
+            .withVariable("dateVariable", date)
+            .start();
+
+    ProcessInstance processInstance = pi.getDelegate();
+    Task task = taskService.createTaskQuery().processInstanceId(processInstance.getId()).singleResult();
+
+    assertNotNull(task.getDueDate());
+    assertEquals(date, task.getDueDate());
+  }
+
+It would be good to have a better name for pi.getDelegate() like pi.getProcessInstance().
+We need to make the decision on whether to check whether the process instance has actually been started and throw an exception otherwise.
+
+
+
+
+
