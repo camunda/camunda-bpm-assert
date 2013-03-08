@@ -7,6 +7,8 @@ import org.camunda.bpm.engine.task.TaskQuery;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 
+import java.util.Date;
+
 /**
  * Fluent assertions for {@link org.camunda.bpm.engine.task.Task}
  *
@@ -51,10 +53,31 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
         TaskService taskService = FluentLookups.getTaskService();
         TaskQuery query = taskService.createTaskQuery()
                                      .taskId(actual.getId()).taskCandidateGroup(candidateGroupId);
+        // FIXME: what happens if there is more than one result. It would throw an exception we need to take care of.
         Assertions.assertThat(query.singleResult())
                 .overridingErrorMessage("Expected processTask '%s' to have '%s' as a candidate group",
                                         actual.getName(), candidateGroupId);
 
+        return this;
+    }
+
+    /**
+     * Assertion on the due date of the {@link org.camunda.bpm.engine.task.Task}.
+     *
+     * @param dueDate the due date
+     *
+     * @return a {@link com.plexiti.activiti.test.fluent.assertions.TaskAssert} that can be further configured before starting the process instance
+     *
+     * @see org.camunda.bpm.engine.task.Task#getDueDate()
+     */
+    public TaskAssert hasDueDate(Date dueDate) {
+        isNotNull();
+        TaskService taskService = FluentLookups.getTaskService();
+        // FIXME: what happens if there is more than one result. It would throw an exception we need to take care of.
+        Task task = taskService.createTaskQuery().taskId(actual.getId()).singleResult();
+        Assertions.assertThat(task)
+                .overridingErrorMessage("Expected task '%s' to have '%s' as due date but has '%s'",
+                        actual.getName(), dueDate, task.getDueDate());
         return this;
     }
 }
