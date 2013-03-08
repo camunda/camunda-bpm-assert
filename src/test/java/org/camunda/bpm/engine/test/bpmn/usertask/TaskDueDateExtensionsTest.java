@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.camunda.bpm.engine.impl.test.PluggableProcessEngineTestCase;
+import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
@@ -27,7 +27,7 @@ import org.camunda.bpm.engine.test.Deployment;
 /**
  * @author Frederik Heremans
  */
-public class TaskDueDateExtensionsTest extends PluggableProcessEngineTestCase {
+public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 
   @Deployment
   public void testDueDateExtension() throws Exception {
