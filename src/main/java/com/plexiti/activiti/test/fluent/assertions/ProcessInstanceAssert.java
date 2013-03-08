@@ -14,11 +14,11 @@ import java.util.List;
  */
 public class ProcessInstanceAssert extends AbstractAssert<ProcessInstanceAssert, ProcessInstance> {
 
-    protected ProcessInstanceAssert(FluentProcessInstance actual) {
+    protected ProcessInstanceAssert(ProcessInstance actual) {
         super(actual, ProcessInstanceAssert.class);
     }
 
-    public static ProcessInstanceAssert assertThat(FluentProcessInstance actual) {
+    public static ProcessInstanceAssert assertThat(ProcessInstance actual) {
         return new ProcessInstanceAssert(actual);
     }
 
