@@ -29,6 +29,9 @@ public class FluentProcessInstanceLookup {
         return processes;
     }
 
+    /**
+     * @see com.plexiti.activiti.test.fluent.FluentProcessEngineTests#newProcessInstance(String)
+     */
     public static FluentProcessInstance newProcessInstance(String processDefinitionId) {
         if (!getTestProcessInstances().containsKey(processDefinitionId)) {
             getTestProcessInstances().put(processDefinitionId, new FluentProcessInstanceImpl(processDefinitionId));

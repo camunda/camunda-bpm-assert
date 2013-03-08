@@ -29,6 +29,17 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
         return fluentBpmnProcessInstance;
     }
 
+    /**
+     * Creates a new {@link FluentProcessInstance} which provides fluent methods to declare
+     * process variables before actually starting a process instance.
+     *
+     * @param processDefinitionId the value of the "id" attribute in the process definition BPMN 2.0 XML file
+     * @return a {@link FluentProcessInstance} that can be further configured before starting the process instance
+     *
+     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance#withVariable(String, Object)
+     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance#withVariables(java.util.Map)
+     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance#start()
+     */
     public static FluentProcessInstance newProcessInstance(String processDefinitionId) {
         return FluentProcessInstanceLookup.newProcessInstance(processDefinitionId);
     }

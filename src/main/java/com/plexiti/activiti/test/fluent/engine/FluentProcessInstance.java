@@ -17,7 +17,17 @@ public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, 
 
     FluentProcessInstance startAndMoveTo(String activity);
 
-    FluentProcessInstance withVariable(String key, Object value);
+    /**
+     * Adds a process variable to a not yet started process instance ({@link FluentProcessInstance}).
+     *
+     * @param name the name of the process variable to define
+     * @param value the value for te process variable
+     *
+     * @return the same {@link FluentProcessInstance} to be further configured and eventually started
+     *
+     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance#withVariables(java.util.Map)
+     */
+    FluentProcessInstance withVariable(String name, Object value);
 
     FluentProcessInstance withVariables(Map<String, Object> variables);
 
