@@ -27,7 +27,7 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 
   @Deployment
   public void testDueDateExtension() throws Exception {
-    
+
     Date date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("06-07-1986 12:10:00");
 
     // Start process-instance, passing date that should be used as dueDate as a Date
@@ -57,11 +57,16 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 
     assertThat(processInstance()).isWaitingAt("theTask");
     // alternative way of testing the same
+    assertThat(processTask()).hasDefinitionKey("theTask");
+    /*
+     * Please note that Task.getId() returns the database id of the task and not the
+     * id of the <usertask id='xxx'> element in that process definition file!
+     */
+    //assertThat(processTask().getId()).isEqualTo("theTask");
     assertThat(processTask().getName()).isEqualTo("my task");
-    assertThat(processTask().getId()).isEqualTo("theTask");
 
     Date date = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("06-07-1986 12:10:00");
-    // FIME: I would actually prefer currentTask() here instead oc processTask()
+    // FIXME: I would actually prefer currentTask() here instead oc processTask()
     assertThat(processTask().getDueDate()).isEqualTo(date);
   }
 }
