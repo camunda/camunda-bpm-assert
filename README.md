@@ -49,6 +49,70 @@ This project leverages two great testing libraries
 * [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
 * [Mockito](http://code.google.com/p/mockito/).
 
+# How to Refactor Your Existing Tests to Use This Library
+
+This library support two unit testing approaches:
+
+## Tests that use the `extends ProcessEngineTest` mechanism
+
+Example:
+
+```java
+...
+public class TaskDueDateExtensionsTest extends ProcessEngineTestCase {
+
+  @Deployment
+  public void testDueDateExtension() throws Exception { ... }
+...
+```
+
+replace `ProcessEngineTestCase` with `FluentProcessEngineTestCase`:
+
+```java
+...
+public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
+
+  @Deployment
+  public void testDueDateExtension() throws Exception { ... }
+...
+```
+NOTE: If you have a setUp() method in your test, make sure the very first thing this method does is `super.setUp()`!
+
+
+## Tests that use `@Rule`
+
+```java
+...
+public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
+
+  @Rule
+  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Test
+  @Deployment
+  public void testMethod() throws Exception { ... }
+...
+```
+
+do as follows:
+
+```java
+...
+public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
+
+  @Rule
+  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Rule
+  public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
+
+  @Test
+  @Deployment
+  public void testMethod() throws Exception { ... }
+...
+```
+
+
 ## Example: Job Announcement Test
 ```java
 public class JobAnnouncementTest {
