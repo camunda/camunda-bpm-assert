@@ -49,6 +49,112 @@ This project leverages two great testing libraries
 * [Fixtures for Easy Software Testing](http://fest.easytesting.org/) and
 * [Mockito](http://code.google.com/p/mockito/).
 
+# How to use this library in your own project
+
+## Greenfield Tests
+
+```java
+...
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.Mock;
+
+import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.*;
+import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
+import static org.mockito.Mockito.*;
+
+public class JobAnnouncementTest {
+
+    @Rule
+    public ProcessEngineRule activitiRule = new ProcessEngineRule();
+
+    @Rule
+    public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
+
+    @Mock
+    public JobAnnouncementService jobAnnouncementService;
+
+	@Test
+	@Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE })
+	public void testHappyPath() {
+	
+	...
+	
+	}
+```
+
+## How to Refactor Your Existing Tests to Use This Library
+
+This library support two unit testing approaches:
+
+## Tests that use the `extends ProcessEngineTest` mechanism
+
+NOTE: is this a legacy approach?
+
+Example:
+
+```java
+...
+public class TaskDueDateExtensionsTest extends ProcessEngineTestCase {
+
+  @Deployment
+  public void testDueDateExtension() throws Exception { ... }
+...
+```
+
+replace `ProcessEngineTestCase` with `FluentProcessEngineTestCase`:
+
+```java
+...
+public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
+
+  @Deployment
+  public void testDueDateExtension() throws Exception { ... }
+...
+```
+NOTE: If you have a setUp() method in your test, make sure the very first thing this method does is `super.setUp()`!
+
+## Tests that use the `@Rule` approach
+
+```java
+...
+public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
+
+  @Rule
+  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Test
+  @Deployment
+  public void testMethod() throws Exception { ... }
+...
+```
+
+do as follows:
+
+```java
+...
+public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
+
+  @Rule
+  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Rule
+  public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
+
+  @Test
+  @Deployment
+  public void testMethod() throws Exception { ... }
+...
+```
+
+# Frequently Asked Questions (FAQs)
+
+## Do you support Arquillian tests?
+
+TODO
+
+# Examples
+
 ## Example: Job Announcement Test
 ```java
 public class JobAnnouncementTest {

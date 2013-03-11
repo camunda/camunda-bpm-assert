@@ -15,43 +15,50 @@ package org.camunda.bpm.engine.test.bpmn.usertask;
 
 import java.util.List;
 
-import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
-import org.camunda.bpm.engine.impl.test.PluggableProcessEngineTestCase;
+import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 
+import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
 
 /**
  * @author Joram Barrez
  */
-public class UserTaskTest extends PluggableProcessEngineTestCase {
+public class UserTaskTest extends FluentProcessEngineTestCase {
   
   @Deployment
   public void testTaskPropertiesNotNull() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
-    
-    Task task = taskService.createTaskQuery().singleResult();
-    assertNotNull(task.getId());
-    assertEquals("my task", task.getName());
-    assertEquals("Very important", task.getDescription());
-    assertTrue(task.getPriority() > 0);
-    assertEquals("kermit", task.getAssignee());
-    assertEquals(processInstance.getId(), task.getProcessInstanceId());
-    assertEquals(processInstance.getId(), task.getExecutionId());
-    assertNotNull(task.getProcessDefinitionId());
-    assertNotNull(task.getTaskDefinitionKey());
-    assertNotNull(task.getCreateTime());
-    
+      newProcessInstance("oneTaskProcess").start();
+
+      assertThat(processTask())
+              .isNotNull()
+              .hasDefinitionKey("theTask")
+              .hasName("my task")
+              .hasDescription("Very important")
+              .isAssignedTo("kermit");
+
+      assertThat(processTask().getPriority()).isGreaterThan(0);
+
+      assertThat(processInstance().getId()).isEqualTo(processTask().getProcessInstanceId());
+      assertThat(processInstance().getId()).isEqualTo(processTask().getExecutionId());
+
+      assertThat(processTask().getProcessDefinitionId()).isNotNull();
+      assertThat(processTask().getTaskDefinitionKey()).isNotNull();
+      assertThat(processTask().getCreateTime()).isNotNull();
+
     // the next test verifies that if an execution creates a task, that no events are created during creation of the task.
-    if (processEngineConfiguration.getHistoryLevel() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
-      assertEquals(0, taskService.getTaskEvents(task.getId()).size());
-    }
+// TODO: processEngineConfiguration is not available in the API so far
+//    if (processEngineConfiguration.getHistoryLevel() >= ProcessEngineConfigurationImpl.HISTORYLEVEL_ACTIVITY) {
+//      assertEquals(0, taskService.getTaskEvents(task.getId()).size());
+//    }
   }
   
   @Deployment
   public void testQuerySortingWithParameter() {
-    ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("oneTaskProcess");
+      // TODO: getDelegate() does not sound very user friendly, maybe getProcessInstance()?
+    ProcessInstance processInstance = newProcessInstance("oneTaskProcess").start().getDelegate();
+      // TODO: what is the intent of this test?
     assertEquals(1, taskService.createTaskQuery().processInstanceId(processInstance.getId()).list().size());
   }
   
@@ -61,6 +68,7 @@ public class UserTaskTest extends PluggableProcessEngineTestCase {
 	  
 	  // start the process
     runtimeService.startProcessInstanceByKey("ForkProcess");
+      // FIXME: how do we do assertions on more than one task, i.e. task lists?
     List<Task> taskList = taskService.createTaskQuery().list();
     assertNotNull(taskList);
     assertEquals(2, taskList.size());
