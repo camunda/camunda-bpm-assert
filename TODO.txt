@@ -27,13 +27,20 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 It would be good to have a better name for pi.getDelegate() like pi.getProcessInstance().
 We need to make the decision on whether to check whether the process instance has actually been started and throw an exception otherwise.
 
+CONCLUSION: you should never need to use the delegate. Exposed for transparency reasons.
+
 (rafa) Currently, FluentLookups and FluentProcessInstanceLookup are exposed to tests. I believe we should hide these lookup classes by exposing them only on a package level.
+
+CONCLUSION: to be done once the code settles down. Check Spring, Hibernate projects of how they do it.
+How do they implement their entry points.
 
 (rafa) Code-assist does not currently work for newProcessInstance, it will resolve to:
 
     FluentProcessInstanceLookup.newProcessInstance()
 
 which is an internal lookup method.
+
+CONCLUSION: to be done when the structure settles down.
 
 (rafa) Give a better error when someone forgets to start a process:
 
