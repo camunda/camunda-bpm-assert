@@ -11,15 +11,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.plexiti.activiti.test.fluent;
+package org.camunda.bpm.engine.test.fluent;
 
 import org.camunda.bpm.engine.test.ProcessEngineTestCase;
 import org.junit.After;
 import org.junit.Before;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public abstract class FluentProcessEngineTestCase extends ProcessEngineTestCase {
 

@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.plexiti.activiti.test.fluent.mocking;
+package org.camunda.bpm.engine.test.fluent.mocking;
 
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.mockito.Mock;
@@ -21,8 +21,8 @@ import java.lang.reflect.Field;
 import java.util.logging.Logger;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class FluentMocks {
 

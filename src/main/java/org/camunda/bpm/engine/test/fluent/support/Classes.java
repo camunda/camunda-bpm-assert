@@ -1,9 +1,9 @@
-package com.plexiti.activiti.test.fluent.support;
+package org.camunda.bpm.engine.test.fluent.support;
 
 import java.lang.reflect.Field;
 
 /**
- * @author martin.schimak@plexiti.com
+ * @author martin.schimak@camunda.com
  */
 public class Classes {
 

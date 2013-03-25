@@ -15,12 +15,12 @@ package org.camunda.bpm.engine.test.bpmn.usertask;
 
 import java.util.List;
 
-import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestCase;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 
-import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.*;
 
 /**
  * @author Joram Barrez

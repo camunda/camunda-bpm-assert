@@ -16,14 +16,14 @@ package org.camunda.bpm.engine.test.bpmn.usertask;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestCase;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 
-import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.assertThat;
-import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.newProcessInstance;
-import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.processTask;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.assertThat;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.newProcessInstance;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.processTask;
 
 /**
  * @author Thilo-Alexander Ginkel

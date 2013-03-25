@@ -16,9 +16,9 @@ package org.camunda.bpm.engine.test.bpmn.usertask;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestCase;
 import org.camunda.bpm.engine.test.Deployment;
-import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.*;
 
 /**
  * @author Frederik Heremans

@@ -1,23 +1,24 @@
-package com.plexiti.activiti.test.fluent;
+package org.camunda.bpm.engine.test.fluent;
 
-import com.plexiti.activiti.test.fluent.assertions.ProcessDefinitionAssert;
-import com.plexiti.activiti.test.fluent.assertions.ProcessInstanceAssert;
-import com.plexiti.activiti.test.fluent.assertions.ProcessVariableAssert;
-import com.plexiti.activiti.test.fluent.assertions.TaskAssert;
-import com.plexiti.activiti.test.fluent.engine.*;
+import org.camunda.bpm.engine.fluent.*;
+import org.camunda.bpm.engine.test.fluent.assertions.ProcessDefinitionAssert;
+import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
+import org.camunda.bpm.engine.test.fluent.assertions.ProcessVariableAssert;
+import org.camunda.bpm.engine.test.fluent.assertions.TaskAssert;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.fluent.*;
 
 /**
  * Convenience class to access all fluent Activiti assertions.
  *
  * In your code use
  *
- *    import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
+ *    import static FluentProcessEngineTests.*;
  *
  *
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions {
 
@@ -36,9 +37,9 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * @param processDefinitionId the value of the "id" attribute in the process definition BPMN 2.0 XML file
      * @return a {@link FluentProcessInstance} that can be further configured before starting the process instance
      *
-     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance#withVariable(String, Object)
-     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance#withVariables(java.util.Map)
-     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance#start()
+     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariable(String, Object)
+     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariables(java.util.Map)
+     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#start()
      */
     public static FluentProcessInstance newProcessInstance(String processDefinitionId) {
         return FluentProcessInstanceLookup.newProcessInstance(processDefinitionId);

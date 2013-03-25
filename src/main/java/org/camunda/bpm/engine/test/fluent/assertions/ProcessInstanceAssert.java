@@ -1,7 +1,6 @@
-package com.plexiti.activiti.test.fluent.assertions;
+package org.camunda.bpm.engine.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.FluentLookups;
-import com.plexiti.activiti.test.fluent.engine.FluentProcessInstance;
+import org.camunda.bpm.engine.fluent.FluentLookups;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
@@ -9,8 +8,8 @@ import org.fest.assertions.api.Assertions;
 import java.util.List;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class ProcessInstanceAssert extends AbstractAssert<ProcessInstanceAssert, ProcessInstance> {
 

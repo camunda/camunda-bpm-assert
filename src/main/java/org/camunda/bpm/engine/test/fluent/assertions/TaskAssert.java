@@ -1,6 +1,6 @@
-package com.plexiti.activiti.test.fluent.assertions;
+package org.camunda.bpm.engine.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.FluentLookups;
+import org.camunda.bpm.engine.fluent.FluentLookups;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
@@ -12,8 +12,8 @@ import java.util.Date;
 /**
  * Fluent assertions for {@link org.camunda.bpm.engine.task.Task}
  *
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
 
@@ -52,7 +52,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
      *
      * @param candidateGroupId the candidate group
      *
-     * @return a {@link com.plexiti.activiti.test.fluent.assertions.TaskAssert} that can be further configured before starting the process instance
+     * @return a {@link TaskAssert} that can be further configured before starting the process instance
      *
      * @see org.camunda.bpm.engine.task.Task
      */
@@ -78,7 +78,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
      *
      * @param dueDate the due date
      *
-     * @return a {@link com.plexiti.activiti.test.fluent.assertions.TaskAssert} that can be further configured before starting the process instance
+     * @return a {@link TaskAssert} that can be further configured before starting the process instance
      *
      * @see org.camunda.bpm.engine.task.Task#getDueDate()
      */
@@ -96,7 +96,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
      *
      * @param key the value of the id attribute in the process definition
      *
-     * @return a {@link com.plexiti.activiti.test.fluent.assertions.TaskAssert} that can be further configured before starting the process instance
+     * @return a {@link TaskAssert} that can be further configured before starting the process instance
      *
      * @see org.camunda.bpm.engine.task.Task#getTaskDefinitionKey()
      */
@@ -117,7 +117,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
      *
      * @param id the task id
      *
-     * @return a {@link com.plexiti.activiti.test.fluent.assertions.TaskAssert} that can be further configured before starting the process instance
+     * @return a {@link TaskAssert} that can be further configured before starting the process instance
      */
     public TaskAssert hasId(String id) {
         isNotNull();
@@ -133,7 +133,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
      *
      * @param name the task name or title
      *
-     * @return a {@link com.plexiti.activiti.test.fluent.assertions.TaskAssert} that can be further configured before starting the process instance
+     * @return a {@link TaskAssert} that can be further configured before starting the process instance
      *
      * @see org.camunda.bpm.engine.task.Task#getName()
      */
@@ -151,7 +151,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
      *
      * @param description the free text description of the task
      *
-     * @return a {@link com.plexiti.activiti.test.fluent.assertions.TaskAssert} that can be further configured before starting the process instance
+     * @return a {@link TaskAssert} that can be further configured before starting the process instance
      *
      * @see org.camunda.bpm.engine.task.Task#getDescription()
      */

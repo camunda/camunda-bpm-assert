@@ -1,6 +1,6 @@
-package com.plexiti.activiti.test.fluent.engine;
+package org.camunda.bpm.engine.fluent;
 
-import com.plexiti.activiti.test.fluent.support.Classes;
+import org.camunda.bpm.engine.test.fluent.support.Classes;
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.identity.UserQuery;
 import org.camunda.bpm.engine.impl.test.TestHelper;
@@ -12,8 +12,8 @@ import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.ProcessEngineTestCase;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class FluentLookups {
 

@@ -3,7 +3,7 @@ package auction;
 import com.camunda.showcase.auction.domain.Auction;
 import com.camunda.showcase.auction.service.AuctionService;
 import com.camunda.showcase.auction.service.TwitterPublishService;
-import com.plexiti.activiti.test.fluent.FluentProcessEngineTestCase;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestCase;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.junit.Test;
@@ -13,12 +13,12 @@ import org.mockito.stubbing.Answer;
 
 import java.util.Date;
 
-import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.*;
 import static org.mockito.Mockito.*;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class AuctionProcessTest extends FluentProcessEngineTestCase {
 

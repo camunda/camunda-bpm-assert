@@ -7,17 +7,18 @@ import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestRule;
 
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.JOBANNOUNCEMENT_PUBLICATION_PROCESS;
 import static com.plexiti.activiti.showcase.jobannouncement.process.ProcessConstants.JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE;
-import static com.plexiti.activiti.test.fluent.FluentProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 /**
  *
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  *
  */
 public class JobAnnouncementPublicationTest {

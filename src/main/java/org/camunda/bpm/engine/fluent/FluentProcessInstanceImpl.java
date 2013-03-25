@@ -11,10 +11,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.plexiti.activiti.test.fluent.engine;
+package org.camunda.bpm.engine.fluent;
 
-import com.plexiti.activiti.test.fluent.FluentProcessEngineTests;
-import com.plexiti.activiti.test.fluent.assertions.ProcessInstanceAssert;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
+import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
@@ -27,8 +27,8 @@ import java.util.logging.Logger;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class FluentProcessInstanceImpl implements FluentProcessInstance {
 

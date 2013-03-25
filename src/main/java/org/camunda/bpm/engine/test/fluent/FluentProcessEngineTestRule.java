@@ -1,14 +1,14 @@
-package com.plexiti.activiti.test.fluent;
+package org.camunda.bpm.engine.test.fluent;
 
-import com.plexiti.activiti.test.fluent.engine.FluentLookups;
-import com.plexiti.activiti.test.fluent.mocking.FluentMocks;
+import org.camunda.bpm.engine.fluent.FluentLookups;
+import org.camunda.bpm.engine.test.fluent.mocking.FluentMocks;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class FluentProcessEngineTestRule implements TestRule {
 

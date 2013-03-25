@@ -1,10 +1,10 @@
-package com.plexiti.activiti.test.fluent.support;
+package org.camunda.bpm.engine.test.fluent.support;
 
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author martin.schimak@plexiti.com
+ * @author martin.schimak@camunda.com
  */
 public class Maps {
 

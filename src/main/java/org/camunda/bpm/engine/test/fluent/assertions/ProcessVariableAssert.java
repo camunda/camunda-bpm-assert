@@ -1,14 +1,14 @@
-package com.plexiti.activiti.test.fluent.assertions;
+package org.camunda.bpm.engine.test.fluent.assertions;
 
-import com.plexiti.activiti.test.fluent.engine.FluentProcessVariable;
+import org.camunda.bpm.engine.fluent.FluentProcessVariable;
 import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 import org.fest.assertions.api.LongAssert;
 import org.fest.assertions.api.StringAssert;
 
 /**
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
- * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
  */
 public class ProcessVariableAssert extends AbstractAssert<ProcessVariableAssert, FluentProcessVariable> {
 

@@ -1,4 +1,4 @@
-package com.plexiti.activiti.test.fluent.engine;
+package org.camunda.bpm.engine.fluent;
 
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, ProcessInstance {
 
@@ -18,7 +18,7 @@ public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, 
      *
      * @return a fluent {@link FluentProcessInstance} to make assertions against
      *
-     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance
+     * @see FluentProcessInstance
      */
     FluentProcessInstance start();
 
@@ -32,7 +32,7 @@ public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, 
      *
      * @return the same {@link FluentProcessInstance} to be further configured and eventually started
      *
-     * @see com.plexiti.activiti.test.fluent.engine.FluentProcessInstance#withVariables(java.util.Map)
+     * @see FluentProcessInstance#withVariables(java.util.Map)
      */
     FluentProcessInstance withVariable(String name, Object value);
 

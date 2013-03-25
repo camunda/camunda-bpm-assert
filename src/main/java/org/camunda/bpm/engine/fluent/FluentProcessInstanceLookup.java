@@ -1,4 +1,4 @@
-package com.plexiti.activiti.test.fluent.engine;
+package org.camunda.bpm.engine.fluent;
 
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 
@@ -9,8 +9,8 @@ import java.util.Map;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@camunda.com>
  */
 public class FluentProcessInstanceLookup {
 
@@ -30,7 +30,7 @@ public class FluentProcessInstanceLookup {
     }
 
     /**
-     * @see com.plexiti.activiti.test.fluent.FluentProcessEngineTests#newProcessInstance(String)
+     * @see org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests#newProcessInstance(String)
      */
     public static FluentProcessInstance newProcessInstance(String processDefinitionId) {
         if (!getTestProcessInstances().containsKey(processDefinitionId)) {
