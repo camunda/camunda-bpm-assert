@@ -8,8 +8,8 @@ import org.fest.assertions.api.Assertions;
 import java.util.List;
 
 /**
- * @author Martin Schimak <martin.schimak@camunda.com>
- * @author Rafael Cordones <rafael.cordones@camunda.com>
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class ProcessInstanceAssert extends AbstractAssert<ProcessInstanceAssert, ProcessInstance> {
 

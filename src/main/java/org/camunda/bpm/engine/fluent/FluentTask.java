@@ -4,8 +4,8 @@ import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.task.Task;
 
 /**
- * @author Martin Schimak <martin.schimak@camunda.com>
- * @author Rafael Cordones <rafael.cordones@camunda.com>
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public interface FluentTask extends FluentDelegate<Task>, Task {
 

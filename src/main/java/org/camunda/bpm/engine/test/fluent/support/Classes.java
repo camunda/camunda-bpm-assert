@@ -3,7 +3,7 @@ package org.camunda.bpm.engine.test.fluent.support;
 import java.lang.reflect.Field;
 
 /**
- * @author martin.schimak@camunda.com
+ * @author martin.schimak@plexiti.com
  */
 public class Classes {
 

@@ -8,8 +8,8 @@ import org.camunda.bpm.engine.task.Task;
 import java.util.Date;
 
 /**
- * @author Martin Schimak <martin.schimak@camunda.com>
- * @author Rafael Cordones <rafael.cordones@camunda.com>
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class FluentTaskImpl implements FluentTask {
 

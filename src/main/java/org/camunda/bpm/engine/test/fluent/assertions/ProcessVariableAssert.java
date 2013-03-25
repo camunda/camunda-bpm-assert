@@ -7,8 +7,8 @@ import org.fest.assertions.api.LongAssert;
 import org.fest.assertions.api.StringAssert;
 
 /**
- * @author Rafael Cordones <rafael.cordones@camunda.com>
- * @author Martin Schimak <martin.schimak@camunda.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Martin Schimak <martin.schimak@plexiti.com>
  */
 public class ProcessVariableAssert extends AbstractAssert<ProcessVariableAssert, FluentProcessVariable> {
 

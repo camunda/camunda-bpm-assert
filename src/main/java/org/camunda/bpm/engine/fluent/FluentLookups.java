@@ -12,8 +12,8 @@ import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.ProcessEngineTestCase;
 
 /**
- * @author Martin Schimak <martin.schimak@camunda.com>
- * @author Rafael Cordones <rafael.cordones@camunda.com>
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class FluentLookups {
 

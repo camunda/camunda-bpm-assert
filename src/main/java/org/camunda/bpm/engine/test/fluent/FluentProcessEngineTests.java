@@ -16,8 +16,8 @@ import org.camunda.bpm.engine.task.Task;
  *    import static FluentProcessEngineTests.*;
  *
  *
- * @author Martin Schimak <martin.schimak@camunda.com>
- * @author Rafael Cordones <rafael.cordones@camunda.com>
+ * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions {
 
