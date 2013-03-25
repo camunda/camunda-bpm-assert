@@ -14,19 +14,19 @@ import static org.fest.assertions.api.Assertions.assertThat;
  */
 public class FluentProcessInstanceLookup {
 
-    private static ThreadLocal<Map<String, FluentProcessInstance>> testProcessInstances = new ThreadLocal<Map<String, FluentProcessInstance>>();
+    private static ThreadLocal<Map<String, FluentProcessInstance>> testProcessInstances;
 
-    protected static void before(Object junitTest) {}
+    protected static void before(Object junitTest) {
+        testProcessInstances = new ThreadLocal<Map<String, FluentProcessInstance>>();
+        testProcessInstances.set(new HashMap<String, FluentProcessInstance>());
+    }
 
     protected static void after(Object junitTest) {
         testProcessInstances.set(null);
     }
 
     protected static Map<String, FluentProcessInstance> getTestProcessInstances() {
-        Map<String, FluentProcessInstance> processes = testProcessInstances.get();
-        if (processes == null)
-            testProcessInstances.set(processes = new HashMap<String, FluentProcessInstance>());
-        return processes;
+        return testProcessInstances.get();
     }
 
     /**
