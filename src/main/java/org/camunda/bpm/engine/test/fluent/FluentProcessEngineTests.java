@@ -7,7 +7,6 @@ import org.camunda.bpm.engine.test.fluent.assertions.ProcessVariableAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.TaskAssert;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.fluent.*;
 
 /**
  * Convenience class to access all fluent Activiti assertions.
@@ -34,15 +33,16 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * Creates a new {@link FluentProcessInstance} which provides fluent methods to declare
      * process variables before actually starting a process instance.
      *
-     * @param processDefinitionId the value of the "id" attribute in the process definition BPMN 2.0 XML file
+     * @param processDefinitionKey the value of the "id" attribute in the process definition BPMN 2.0 XML file
      * @return a {@link FluentProcessInstance} that can be further configured before starting the process instance
+     * @throws IllegalArgumentException in case there is no such process definition deployed with the given key
      *
      * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariable(String, Object)
      * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariables(java.util.Map)
      * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#start()
      */
-    public static FluentProcessInstance newProcessInstance(String processDefinitionId) {
-        return FluentProcessInstanceLookup.newProcessInstance(processDefinitionId);
+    public static FluentProcessInstance newProcessInstance(String processDefinitionKey) {
+        return FluentProcessInstanceLookup.newProcessInstance(processDefinitionKey);
     }
 
     public static FluentProcessInstance processInstance() {

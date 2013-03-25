@@ -35,17 +35,20 @@ public class FluentProcessInstanceImpl implements FluentProcessInstance {
     private static Logger log = Logger.getLogger(FluentProcessInstanceImpl.class.getName());
 
     private ProcessInstance delegate;
-    protected String processDefinitionId;
+    protected String processDefinitionKey;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
     protected FluentProcessEngineTests.Move move = new FluentProcessEngineTests.Move() { public void along() {} };
 
-    public FluentProcessInstanceImpl(String processDefinitionId) {
-        this.processDefinitionId = processDefinitionId;
+    public FluentProcessInstanceImpl(String processDefinitionKey) {
+        this.processDefinitionKey = processDefinitionKey;
+        boolean processDefinitionKeyExists = !FluentLookups.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).list().isEmpty();
+        if (!processDefinitionKeyExists)
+            throw new IllegalArgumentException("Process Definition with processDefinitionKey '" + processDefinitionKey + "' is not deployed.");
     }
 
     @Override
     public String getProcessDefinitionId() {
-        return getDelegate() != null ? getDelegate().getProcessDefinitionId() : processDefinitionId;
+        return getDelegate() != null ? getDelegate().getProcessDefinitionId() : null;
     }
 
     @Override
@@ -125,8 +128,8 @@ public class FluentProcessInstanceImpl implements FluentProcessInstance {
     @Override
     public FluentProcessInstance start() {
         delegate = FluentLookups.getRuntimeService()
-                .startProcessInstanceByKey(processDefinitionId, processVariables);
-        log.info("Started processInstance '" + processDefinitionId + "' (definition id: '" + getDelegate().getProcessDefinitionId() + "', instance id: '" + getDelegate().getId() + "').");
+                .startProcessInstanceByKey(processDefinitionKey, processVariables);
+        log.info("Started processInstance (definition key '" + processDefinitionKey + "', definition id: '" + getDelegate().getProcessDefinitionId() + "', instance id: '" + getDelegate().getId() + "').");
         return this;
     }
 
