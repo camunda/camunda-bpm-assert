@@ -39,11 +39,17 @@ public class FluentProcessInstanceLookup {
         return getTestProcessInstances().get(processDefinitionKey);
     }
 
+    /**
+     * @see org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests#processInstance()
+     */
     public static FluentProcessInstance processInstance() {
-        assertThat(getTestProcessInstances()).hasSize(1);
-        return getTestProcessInstances().values().iterator().next();
+        if (testProcessInstances.get().isEmpty())
+            throw new IllegalStateException("No process instance has been started yet in the context of the current thread. Call newProcessinstance(String) first.");
+        if (testProcessInstances.get().size() > 1)
+            throw new IllegalStateException("More than one process instance has been started in the context of the current thread.");
+        return testProcessInstances.get().values().iterator().next();
     }
-
+    
     public static ProcessDefinition processDefinition(String processDefinitionKey) {
         List<ProcessDefinition> definitions = FluentLookups.getRepositoryService().createProcessDefinitionQuery()
                 .processDefinitionName(processDefinitionKey).list();

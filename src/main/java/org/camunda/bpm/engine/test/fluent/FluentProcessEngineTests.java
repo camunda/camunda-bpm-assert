@@ -15,7 +15,6 @@ import org.camunda.bpm.engine.task.Task;
  *
  *    import static FluentProcessEngineTests.*;
  *
- *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
@@ -45,6 +44,18 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
         return FluentProcessInstanceLookup.newProcessInstance(processDefinitionKey);
     }
 
+    /**
+     * Returns the one and only {@link FluentProcessInstance} started from within and 
+     * bound to the current thread - in case just one such instance has been started.
+     *
+     * @return the one and only {@link FluentProcessInstance} bound to the current thread
+     * @throws IllegalStateException in case no process instance has been started yet in the context of the current thread
+     * @throws IllegalStateException in case more than one process instance has been started in the context of the current thread
+     *
+     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariable(String, Object)
+     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariables(java.util.Map)
+     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#start()
+     */
     public static FluentProcessInstance processInstance() {
         return FluentProcessInstanceLookup.processInstance();
     }
