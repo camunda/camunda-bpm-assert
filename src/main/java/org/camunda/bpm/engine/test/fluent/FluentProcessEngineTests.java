@@ -77,18 +77,6 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
         return FluentProcessInstanceLookup.processInstance(processDefinitionKey);
     }
 
-    public static FluentProcessVariable processVariable(String id) {
-        return FluentProcessInstanceLookup.processInstance().variable(id);
-    }
-
-    public static FluentTask processTask() {
-        return FluentProcessInstanceLookup.processInstance().task();
-    }
-
-    public static FluentJob processJob() {
-        return FluentProcessInstanceLookup.processInstance().job();
-    }
-
     // TODO From here on more "Fluent" interfaces and wrappers have to be implemented
 
     public static ProcessDefinition processDefinition(String processDefinitionId) {

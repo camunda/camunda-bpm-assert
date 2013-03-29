@@ -61,7 +61,7 @@ public class AuctionProcessTest extends FluentProcessEngineTestCase {
         doAnswer(new Answer() {
             public Object answer(InvocationOnMock invocation) {
                 auction.setAuthorized(true);
-                processTask().complete();
+                processInstance().task().complete();
                 return null;
             }
         }).when(auctionService).authorizeAuction(anyString(), anyBoolean());
@@ -73,17 +73,17 @@ public class AuctionProcessTest extends FluentProcessEngineTestCase {
         auctionService.createAuction(auction);
 
         assertThat(processInstance()).isStarted().isWaitingAt("authorizeAuction");
-        assertThat(processVariable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
+        assertThat(processInstance().variable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
 
-        auctionService.authorizeAuction(processTask().getId(), true);
+        auctionService.authorizeAuction(processInstance().task().getId(), true);
 
         assertThat(processInstance()).isWaitingAt("IntermediateCatchEvent_1");
 
-        processJob().execute(); // TODO show here that the auction is still waiting and then fast forward to auction end and execute another time
+        processInstance().job().execute(); // TODO show here that the auction is still waiting and then fast forward to auction end and execute another time
 
         assertThat(processInstance()).isWaitingAt("UserTask_2");
 
-        processTask().complete();
+        processInstance().task().complete();
 
         assertThat(processInstance()).isFinished();
 

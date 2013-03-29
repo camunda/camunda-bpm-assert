@@ -31,21 +31,21 @@ public class UserTaskTest extends FluentProcessEngineTestCase {
   public void testTaskPropertiesNotNull() {
       newProcessInstance("oneTaskProcess").start();
 
-      assertThat(processTask())
+      assertThat(processInstance().task())
               .isNotNull()
               .hasDefinitionKey("theTask")
               .hasName("my task")
               .hasDescription("Very important")
               .isAssignedTo("kermit");
 
-      assertThat(processTask().getPriority()).isGreaterThan(0);
+      assertThat(processInstance().task().getPriority()).isGreaterThan(0);
 
-      assertThat(processInstance().getId()).isEqualTo(processTask().getProcessInstanceId());
-      assertThat(processInstance().getId()).isEqualTo(processTask().getExecutionId());
+      assertThat(processInstance().getId()).isEqualTo(processInstance().task().getProcessInstanceId());
+      assertThat(processInstance().getId()).isEqualTo(processInstance().task().getExecutionId());
 
-      assertThat(processTask().getProcessDefinitionId()).isNotNull();
-      assertThat(processTask().getTaskDefinitionKey()).isNotNull();
-      assertThat(processTask().getCreateTime()).isNotNull();
+      assertThat(processInstance().task().getProcessDefinitionId()).isNotNull();
+      assertThat(processInstance().task().getTaskDefinitionKey()).isNotNull();
+      assertThat(processInstance().task().getCreateTime()).isNotNull();
 
     // the next test verifies that if an execution creates a task, that no events are created during creation of the task.
 // TODO: processEngineConfiguration is not available in the API so far

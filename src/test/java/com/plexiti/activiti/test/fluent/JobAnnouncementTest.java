@@ -49,36 +49,36 @@ public class JobAnnouncementTest {
 		assertThat(processInstance())
             .isStarted()
             .isWaitingAt(TASK_DESCRIBE_POSITION);
-		assertThat(processTask())
+		assertThat(processInstance().task())
             .hasCandidateGroup(ROLE_STAFF)
             .isUnassigned();
 
-		processTask().claim(USER_STAFF);
+        processInstance().task().claim(USER_STAFF);
 		
-		assertThat(processTask())
+		assertThat(processInstance().task())
             .isAssignedTo(USER_STAFF);
 
-		processTask().complete();
+        processInstance().task().complete();
 
 		assertThat(processInstance())
             .isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
-		assertThat(processTask())
+		assertThat(processInstance().task())
             .isAssignedTo(USER_MANAGER);
 
-		processTask().complete("approved", true);
+        processInstance().task().complete("approved", true);
 
 		assertThat(processInstance())
             .isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
-		assertThat(processTask())
+		assertThat(processInstance().task())
             .hasCandidateGroup(ROLE_STAFF)
             .isUnassigned();
 
-		processTask().claim(USER_STAFF);
+        processInstance().task().claim(USER_STAFF);
 		
-		assertThat(processTask())
+		assertThat(processInstance().task())
             .isAssignedTo(USER_STAFF);
 
-		processTask().complete("twitter", true, "facebook", true);
+        processInstance().task().complete("twitter", true, "facebook", true);
 
         /*
          * Verify expected behavior
@@ -113,15 +113,15 @@ public class JobAnnouncementTest {
             .isStarted()
             .isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
 
-		processTask().complete("approved", false);
+        processInstance().task().complete("approved", false);
 
 		assertThat(processInstance())
             .isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
-		assertThat(processTask())
+		assertThat(processInstance().task())
             .isAssignedTo(USER_STAFF);
 
-        processTask().complete();
-		processTask().complete("approved", true);
+        processInstance().task().complete();
+        processInstance().task().complete("approved", true);
 
 		assertThat(processInstance())
             .isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);

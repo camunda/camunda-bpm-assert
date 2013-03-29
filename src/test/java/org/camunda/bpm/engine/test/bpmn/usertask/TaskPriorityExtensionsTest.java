@@ -23,7 +23,7 @@ import org.camunda.bpm.engine.test.Deployment;
 
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.assertThat;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.newProcessInstance;
-import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.processTask;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.*;
 
 /**
  * @author Thilo-Alexander Ginkel
@@ -51,6 +51,6 @@ public class TaskPriorityExtensionsTest extends FluentProcessEngineTestCase {
   @Deployment
   public void testPriorityExtensionString() throws Exception {
      newProcessInstance("taskPriorityExtensionString").start();
-     assertThat(processTask().getPriority()).isEqualTo(42);
+     assertThat(processInstance().task().getPriority()).isEqualTo(42);
   }
 }
