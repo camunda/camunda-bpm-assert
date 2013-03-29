@@ -49,7 +49,16 @@ public class FluentProcessInstanceLookup {
             throw new IllegalStateException("More than one process instance has been started in the context of the current thread.");
         return testProcessInstances.get().values().iterator().next();
     }
-    
+
+    /**
+     * @see org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests#processInstance(String)
+     */
+    public static FluentProcessInstance processInstance(String processDefinitionKey) {
+        if (!getTestProcessInstances().containsKey(processDefinitionKey))
+            throw new IllegalStateException("No such process instance (started with the given processDefinitionKey '" + processDefinitionKey + "') has been started yet in the context of the current thread. Call newProcessinstance(String) first.");
+        return getTestProcessInstances().values().iterator().next();
+    }
+
     public static ProcessDefinition processDefinition(String processDefinitionKey) {
         List<ProcessDefinition> definitions = FluentLookups.getRepositoryService().createProcessDefinitionQuery()
                 .processDefinitionName(processDefinitionKey).list();

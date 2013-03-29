@@ -83,4 +83,27 @@ public class FluentProcessEngineTestsTest {
 
     }
 
+    @Test
+    @Deployment(resources = {processDefinitionResource1})
+    public void testProcessInstance_String_noInstanceBoundToThread() {
+
+        IllegalStateException exception = null;
+        try {
+            processInstance(processDefinitionKey1);
+        } catch (IllegalStateException e) {
+            exception = e;
+        }
+        assertThat(exception).overridingErrorMessage("Expected IllegalStateException to be thrown, but expected event did not occur.").isNotNull();
+
+    }
+
+    @Test
+    @Deployment(resources = {processDefinitionResource1, processDefinitionResource2})
+    public void testProcessInstance__String_atLeastOneInstanceBoundToThread() {
+
+        newProcessInstance(processDefinitionKey1);
+        assertThat(processInstance(processDefinitionKey1)).isNotNull();
+
+    }
+
 }
