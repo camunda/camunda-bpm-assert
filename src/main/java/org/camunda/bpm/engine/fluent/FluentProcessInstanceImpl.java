@@ -13,11 +13,11 @@
  */
 package org.camunda.bpm.engine.fluent;
 
-import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
-import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
+import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,50 +30,50 @@ import static org.fest.assertions.api.Assertions.assertThat;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class FluentProcessInstanceImpl implements FluentProcessInstance {
+public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessInstance> implements FluentProcessInstance {
 
     private static Logger log = Logger.getLogger(FluentProcessInstanceImpl.class.getName());
 
-    private ProcessInstance delegate;
     protected String processDefinitionKey;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
     protected FluentProcessEngineTests.Move move = new FluentProcessEngineTests.Move() { public void along() {} };
 
-    public FluentProcessInstanceImpl(String processDefinitionKey) {
+    public FluentProcessInstanceImpl(FluentProcessEngine engine, String processDefinitionKey) {
+        super(engine, null);
         this.processDefinitionKey = processDefinitionKey;
-        boolean processDefinitionKeyExists = !FluentLookups.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).list().isEmpty();
+        boolean processDefinitionKeyExists = !engine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).list().isEmpty();
         if (!processDefinitionKeyExists)
             throw new IllegalArgumentException("Process Definition with processDefinitionKey '" + processDefinitionKey + "' is not deployed.");
     }
 
     @Override
     public String getProcessDefinitionId() {
-        return getDelegate() != null ? getDelegate().getProcessDefinitionId() : null;
+        return delegate != null ? delegate.getProcessDefinitionId() : null;
     }
 
     @Override
     public String getBusinessKey() {
-        return getDelegate().getBusinessKey();
+        return delegate.getBusinessKey();
     }
 
     @Override
     public boolean isSuspended() {
-        return getDelegate().isSuspended();
+        return delegate.isSuspended();
     }
 
     @Override
     public String getId() {
-        return getDelegate().getId();
+        return delegate.getId();
     }
 
     @Override
     public boolean isEnded() {
-        return FluentLookups.createExecutionQuery().processInstanceId(getDelegate().getId()).list().isEmpty() || getDelegate().isEnded();
+        return engine.getRuntimeService().createExecutionQuery().processInstanceId(delegate.getId()).list().isEmpty() || delegate.isEnded();
     }
 
     @Override
     public String getProcessInstanceId() {
-        return getDelegate().getProcessInstanceId();
+        return delegate.getProcessInstanceId();
     }
 
     @Override
@@ -89,12 +89,12 @@ public class FluentProcessInstanceImpl implements FluentProcessInstance {
         assertThat(tasks)
                 .as("By calling processTask() you implicitly assumed that exactly one such object exists.")
                 .hasSize(1);
-        return new FluentTaskImpl(tasks.get(0));
+        return new FluentTaskImpl(engine, tasks.get(0));
     }
 
     @Override
     public List<Task> tasks() {
-        return FluentLookups.createTaskQuery().list();
+        return engine.getTaskService().createTaskQuery().list();
     }
 
     @Override
@@ -103,12 +103,12 @@ public class FluentProcessInstanceImpl implements FluentProcessInstance {
         assertThat(jobs)
                 .as("By calling processJob() you implicitly assumed that exactly one such object exists.")
                 .hasSize(1);
-        return new FluentJobImpl(jobs.get(0));
+        return new FluentJobImpl(engine, jobs.get(0));
     }
 
     @Override
     public List<Job> jobs() {
-        return FluentLookups.createJobQuery().list();
+        return engine.getManagementService().createJobQuery().list();
     }
 
     public void moveAlong(FluentProcessEngineTests.Move move) {
@@ -127,9 +127,9 @@ public class FluentProcessInstanceImpl implements FluentProcessInstance {
 
     @Override
     public FluentProcessInstance start() {
-        delegate = FluentLookups.getRuntimeService()
+        this.delegate = engine.getRuntimeService()
                 .startProcessInstanceByKey(processDefinitionKey, processVariables);
-        log.info("Started processInstance (definition key '" + processDefinitionKey + "', definition id: '" + getDelegate().getProcessDefinitionId() + "', instance id: '" + getDelegate().getId() + "').");
+        log.info("Started processInstance (definition key '" + processDefinitionKey + "', definition id: '" + delegate.getProcessDefinitionId() + "', instance id: '" + delegate.getId() + "').");
         return this;
     }
 
@@ -152,7 +152,7 @@ public class FluentProcessInstanceImpl implements FluentProcessInstance {
 
     @Override
     public FluentProcessVariable variable(String variableName) {
-        Object variableValue = FluentLookups.getRuntimeService().getVariable(getDelegate().getId(), variableName);
+        Object variableValue = engine.getRuntimeService().getVariable(delegate.getId(), variableName);
 
         assertThat(variableValue)
                 .overridingErrorMessage("Unable to find processInstance processVariable '%s'", variableName)

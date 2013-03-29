@@ -1,10 +1,9 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
-import org.camunda.bpm.engine.fluent.FluentLookups;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 
 import java.util.Date;
@@ -15,14 +14,14 @@ import java.util.Date;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
+public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
-    protected TaskAssert(Task actual) {
-        super(actual, TaskAssert.class);
+    protected TaskAssert(FluentProcessEngine engine, Task actual) {
+        super(engine, actual, TaskAssert.class);
     }
 
-    public static TaskAssert assertThat(Task actual) {
-        return new TaskAssert(actual);
+    public static TaskAssert assertThat(FluentProcessEngine engine, Task actual) {
+        return new TaskAssert(engine, actual);
     }
 
     public TaskAssert isUnassigned() {
@@ -58,7 +57,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
      */
     public TaskAssert hasCandidateGroup(String candidateGroupId) {
         isNotNull();
-        TaskService taskService = FluentLookups.getTaskService();
+        TaskService taskService = engine.getTaskService();
         TaskQuery query = taskService.createTaskQuery()
                                      .taskId(actual.getId()).taskCandidateGroup(candidateGroupId);
         Task task = query.singleResult();
@@ -168,7 +167,7 @@ public class TaskAssert extends AbstractAssert<TaskAssert, Task> {
      * Utility methods
      */
     protected Task findCurrentTaskById(String taskId) {
-        TaskService taskService = FluentLookups.getTaskService();
+        TaskService taskService = engine.getTaskService();
         // FIXME: what happens if there is more than one result. It would throw an exception we need to take care of.
         Task task = taskService.createTaskQuery().taskId(actual.getId()).singleResult();
         return task;

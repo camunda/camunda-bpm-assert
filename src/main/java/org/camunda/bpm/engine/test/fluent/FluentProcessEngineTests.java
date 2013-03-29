@@ -1,12 +1,15 @@
 package org.camunda.bpm.engine.test.fluent;
 
 import org.camunda.bpm.engine.fluent.*;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessDefinitionAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessVariableAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.TaskAssert;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.engine.task.Task;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Convenience class to access all fluent Activiti assertions.
@@ -20,10 +23,31 @@ import org.camunda.bpm.engine.task.Task;
  */
 public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions {
 
+    private static ThreadLocal<FluentProcessEngineTestRule> testRule = new ThreadLocal<FluentProcessEngineTestRule>();
+    private static ThreadLocal<Map<String, FluentProcessInstance>> testProcessInstances = new ThreadLocal<Map<String, FluentProcessInstance>>();
+
+    protected static void before(FluentProcessEngineTestRule testRule) {
+        FluentProcessEngineTests.testRule.set(testRule);
+        FluentProcessEngineTests.testProcessInstances.set(new HashMap<String, FluentProcessInstance>());
+    }
+
+    protected static void after(FluentProcessEngineTestRule testRule) {
+        FluentProcessEngineTests.testRule.set(null);
+        FluentProcessEngineTests.testProcessInstances.set(null);
+    }
+
+    protected static Map<String, FluentProcessInstance> getTestProcessInstances() {
+        return testProcessInstances.get();
+    }
+
+    protected static FluentProcessEngine processEngine() {
+        return testRule.get().getEngine();
+    }
+
     public static interface Move { void along(); }
 
     public static FluentProcessInstance newProcessInstance(String processDefinitionKey, Move move) {
-        FluentProcessInstanceImpl fluentBpmnProcessInstance = (FluentProcessInstanceImpl) FluentProcessInstanceLookup.newProcessInstance(processDefinitionKey);
+        FluentProcessInstanceImpl fluentBpmnProcessInstance = (FluentProcessInstanceImpl) processEngine().getProcessInstanceRepository().newProcessInstance(processDefinitionKey);
         fluentBpmnProcessInstance.moveAlong(move);
         return fluentBpmnProcessInstance;
     }
@@ -41,7 +65,10 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#start()
      */
     public static FluentProcessInstance newProcessInstance(String processDefinitionKey) {
-        return FluentProcessInstanceLookup.newProcessInstance(processDefinitionKey);
+        if (!getTestProcessInstances().containsKey(processDefinitionKey)) {
+            getTestProcessInstances().put(processDefinitionKey, processEngine().getProcessInstanceRepository().newProcessInstance(processDefinitionKey));
+        }
+        return getTestProcessInstances().get(processDefinitionKey);
     }
 
     /**
@@ -56,7 +83,11 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * in the context of the current thread running the test scenario.
      */
     public static FluentProcessInstance processInstance() {
-        return FluentProcessInstanceLookup.processInstance();
+        if (getTestProcessInstances().isEmpty())
+            throw new IllegalStateException("No process instance has been started yet in the context of the current thread. Call newProcessinstance(String) first.");
+        if (getTestProcessInstances().size() > 1)
+            throw new IllegalStateException("More than one process instance has been started in the context of the current thread.");
+        return getTestProcessInstances().values().iterator().next();
     }
 
     /**
@@ -74,7 +105,9 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * test scenario.
      */
     public static FluentProcessInstance processInstance(String processDefinitionKey) {
-        return FluentProcessInstanceLookup.processInstance(processDefinitionKey);
+        if (!getTestProcessInstances().containsKey(processDefinitionKey))
+            throw new IllegalStateException("No such process instance (started with the given processDefinitionKey '" + processDefinitionKey + "') has been started yet in the context of the current thread. Call newProcessinstance(String) first.");
+        return getTestProcessInstances().values().iterator().next();
     }
 
     /**
@@ -86,25 +119,25 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * @throws IllegalArgumentException in case no such process definition was deployed yet.
      */
     public static FluentProcessDefinition processDefinition(String processDefinitionKey) {
-        return FluentProcessDefinitionRepository.processDefinition(processDefinitionKey);
+        return processEngine().getProcessDefinitionRepository().processDefinition(processDefinitionKey);
     }
 
     // Assertions
 
     public static TaskAssert assertThat(Task actual) {
-        return TaskAssert.assertThat(actual);
+        return TaskAssert.assertThat(processEngine(), actual);
     }
 
     public static ProcessDefinitionAssert assertThat(ProcessDefinition actual) {
-        return ProcessDefinitionAssert.assertThat(actual);
+        return ProcessDefinitionAssert.assertThat(processEngine(), actual);
     }
 
     public static ProcessInstanceAssert assertThat(FluentProcessInstance actual) {
-        return ProcessInstanceAssert.assertThat(actual);
+        return ProcessInstanceAssert.assertThat(processEngine(), actual);
     }
 
     public static ProcessVariableAssert assertThat(FluentProcessVariable actual) {
-        return ProcessVariableAssert.assertThat(actual);
+        return ProcessVariableAssert.assertThat(processEngine(), actual);
     }
 
 }

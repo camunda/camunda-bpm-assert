@@ -1,8 +1,8 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
 
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.fest.assertions.api.AbstractAssert;
 
 /**
  * Fluent assertions for {@link org.camunda.bpm.engine.repository.ProcessDefinition}
@@ -10,17 +10,17 @@ import org.fest.assertions.api.AbstractAssert;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessDefinitionAssert extends AbstractAssert<ProcessDefinitionAssert, ProcessDefinition> {
+public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefinitionAssert, ProcessDefinition>  {
 
-    protected ProcessDefinitionAssert(ProcessDefinition actual) {
-        super(actual, ProcessDefinitionAssert.class);
+    protected ProcessDefinitionAssert(FluentProcessEngine engine, ProcessDefinition actual) {
+        super(engine, actual, ProcessDefinitionAssert.class);
     }
 
-    public static ProcessDefinitionAssert assertThat(ProcessDefinition actual) {
-        return new ProcessDefinitionAssert(actual);
+    public static ProcessDefinitionAssert assertThat(FluentProcessEngine engine, ProcessDefinition actual) {
+        return new ProcessDefinitionAssert(engine, actual);
     }
 
     public ProcessDefinitionAssert isDeployed() {
-        return assertThat(actual).isNotNull();
+        return assertThat(engine, actual).isNotNull();
     }
 }

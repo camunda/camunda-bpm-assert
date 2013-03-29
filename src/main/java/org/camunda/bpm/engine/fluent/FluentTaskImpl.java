@@ -1,9 +1,9 @@
 package org.camunda.bpm.engine.fluent;
 
-import org.camunda.bpm.engine.test.fluent.support.Maps;
 import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.task.DelegationState;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.fluent.support.Maps;
 
 import java.util.Date;
 
@@ -11,12 +11,10 @@ import java.util.Date;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class FluentTaskImpl implements FluentTask {
+public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements FluentTask {
 
-    private Task delegate;
-
-    protected FluentTaskImpl(Task delegate) {
-        this.delegate = delegate;
+    protected FluentTaskImpl(FluentProcessEngine engine, Task delegate) {
+        super(engine, delegate);
     }
 
     @Override
@@ -140,6 +138,11 @@ public class FluentTaskImpl implements FluentTask {
     }
 
     @Override
+    public FluentProcessEngine getEngine() {
+        return engine;
+    }
+
+    @Override
     public FluentTask claim(User user) {
         claim(user.getId());
         return this;
@@ -147,13 +150,13 @@ public class FluentTaskImpl implements FluentTask {
 
     @Override
     public FluentTask claim(String userId) {
-        FluentLookups.getTaskService().claim(delegate.getId(), userId);
+        engine.getTaskService().claim(delegate.getId(), userId);
         return this;
     }
 
     @Override
     public FluentTask complete(Object... variables) {
-        FluentLookups.getTaskService().complete(delegate.getId(), Maps.parseMap(variables));
+        engine.getTaskService().complete(delegate.getId(), Maps.parseMap(variables));
         return this;
     }
 

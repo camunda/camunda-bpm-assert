@@ -1,7 +1,7 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentProcessVariable;
-import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 import org.fest.assertions.api.LongAssert;
 import org.fest.assertions.api.StringAssert;
@@ -10,14 +10,14 @@ import org.fest.assertions.api.StringAssert;
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessVariableAssert extends AbstractAssert<ProcessVariableAssert, FluentProcessVariable> {
+public class ProcessVariableAssert extends AbstractProcessAssert<ProcessVariableAssert, FluentProcessVariable> {
 
-    protected ProcessVariableAssert(FluentProcessVariable actual) {
-        super(actual, ProcessVariableAssert.class);
+    protected ProcessVariableAssert(FluentProcessEngine engine, FluentProcessVariable actual) {
+        super(engine, actual, ProcessVariableAssert.class);
     }
 
-    public static ProcessVariableAssert assertThat(FluentProcessVariable actual) {
-        return new ProcessVariableAssert(actual);
+    public static ProcessVariableAssert assertThat(FluentProcessEngine engine, FluentProcessVariable actual) {
+        return new ProcessVariableAssert(engine, actual);
     }
 
     public ProcessVariableAssert exists() {

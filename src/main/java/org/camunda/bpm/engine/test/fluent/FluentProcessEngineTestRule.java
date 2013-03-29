@@ -1,7 +1,12 @@
 package org.camunda.bpm.engine.test.fluent;
 
-import org.camunda.bpm.engine.fluent.FluentLookups;
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
+import org.camunda.bpm.engine.fluent.FluentProcessEngineImpl;
+import org.camunda.bpm.engine.impl.test.TestHelper;
+import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.ProcessEngineTestCase;
 import org.camunda.bpm.engine.test.fluent.mocking.FluentMocks;
+import org.camunda.bpm.engine.test.fluent.support.Classes;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -13,6 +18,7 @@ import org.junit.runners.model.Statement;
 public class FluentProcessEngineTestRule implements TestRule {
 
     private Object test;
+    private FluentProcessEngine engine;
 
     public FluentProcessEngineTestRule(Object test) {
         this.test = test;
@@ -36,13 +42,27 @@ public class FluentProcessEngineTestRule implements TestRule {
     }
 
     public void before() {
-        FluentLookups.before(test);
+        FluentProcessEngineTests.before(this);
         FluentMocks.before(test);
     }
 
     public void after() {
         FluentMocks.after(test);
-        FluentLookups.after(test);
+        FluentProcessEngineTests.after(this);
+    }
+
+    protected FluentProcessEngine getEngine() {
+        if (engine != null) {
+            return engine;
+        } else if (test instanceof ProcessEngineTestCase) {
+            return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
+        } else {
+            try {
+                return engine = new FluentProcessEngineImpl(((ProcessEngineRule) Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test)).getProcessEngine());
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 }

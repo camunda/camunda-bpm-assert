@@ -1,8 +1,7 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
-import org.camunda.bpm.engine.fluent.FluentLookups;
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.fest.assertions.api.AbstractAssert;
 import org.fest.assertions.api.Assertions;
 
 import java.util.List;
@@ -11,20 +10,20 @@ import java.util.List;
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
-public class ProcessInstanceAssert extends AbstractAssert<ProcessInstanceAssert, ProcessInstance> {
+public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstanceAssert, ProcessInstance> {
 
-    protected ProcessInstanceAssert(ProcessInstance actual) {
-        super(actual, ProcessInstanceAssert.class);
+    protected ProcessInstanceAssert(FluentProcessEngine engine, ProcessInstance actual) {
+        super(engine, actual, ProcessInstanceAssert.class);
     }
 
-    public static ProcessInstanceAssert assertThat(ProcessInstance actual) {
-        return new ProcessInstanceAssert(actual);
+    public static ProcessInstanceAssert assertThat(FluentProcessEngine engine, ProcessInstance actual) {
+        return new ProcessInstanceAssert(engine, actual);
     }
 
     public ProcessInstanceAssert isWaitingAt(String activityId) {
         isNotNull();
 
-        List<String> activeActivityIds = FluentLookups.getRuntimeService()
+        List<String> activeActivityIds = engine.getRuntimeService()
                 .getActiveActivityIds(actual.getId());
         Assertions.assertThat(activeActivityIds)
                 .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s",
