@@ -1,12 +1,7 @@
 package org.camunda.bpm.engine.fluent;
 
-import org.camunda.bpm.engine.repository.ProcessDefinition;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
