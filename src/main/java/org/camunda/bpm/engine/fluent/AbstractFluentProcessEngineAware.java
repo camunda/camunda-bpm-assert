@@ -11,8 +11,4 @@ public class AbstractFluentProcessEngineAware {
         this.engine = engine;
     }
 
-    public FluentProcessEngine getEngine() {
-        return engine;
-    }
-    
 }

@@ -133,16 +133,6 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public Task getDelegate() {
-        return delegate;
-    }
-
-    @Override
-    public FluentProcessEngine getEngine() {
-        return engine;
-    }
-
-    @Override
     public FluentTask claim(User user) {
         claim(user.getId());
         return this;
