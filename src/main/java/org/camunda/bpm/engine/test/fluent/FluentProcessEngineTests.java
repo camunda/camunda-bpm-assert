@@ -77,10 +77,16 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
         return FluentProcessInstanceLookup.processInstance(processDefinitionKey);
     }
 
-    // TODO From here on more "Fluent" interfaces and wrappers have to be implemented
-
-    public static ProcessDefinition processDefinition(String processDefinitionId) {
-        return FluentProcessInstanceLookup.processDefinition(processDefinitionId);
+    /**
+     * Returns the latest deployed version of the {@link FluentProcessDefinition} with the given 
+     * processDefinitionKey
+     *
+     * @param processDefinitionKey the value of the "id" attribute in the process definition BPMN 2.0 XML file
+     * @return the latest deployed version of the {@link FluentProcessDefinition} 
+     * @throws IllegalArgumentException in case no such process definition was deployed yet.
+     */
+    public static FluentProcessDefinition processDefinition(String processDefinitionKey) {
+        return FluentProcessDefinitionRepository.processDefinition(processDefinitionKey);
     }
 
     // Assertions

@@ -31,7 +31,7 @@ public class AuctionProcessTest extends FluentProcessEngineTestCase {
     @Test
     @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
     public void testProcessDeployment() {
-       assertThat(processDefinition("Auction Process")).isDeployed();
+       assertThat(processDefinition("auction-process")).isDeployed();
     }
 
     @Test

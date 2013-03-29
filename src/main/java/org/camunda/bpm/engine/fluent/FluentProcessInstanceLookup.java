@@ -59,15 +59,4 @@ public class FluentProcessInstanceLookup {
         return getTestProcessInstances().values().iterator().next();
     }
 
-    public static ProcessDefinition processDefinition(String processDefinitionKey) {
-        List<ProcessDefinition> definitions = FluentLookups.getRepositoryService().createProcessDefinitionQuery()
-                .processDefinitionName(processDefinitionKey).list();
-
-        assertThat(definitions)
-                .overridingErrorMessage("Unable to find a deployed processInstance definition with name '%s'", processDefinitionKey)
-                .hasSize(1);
-
-        return definitions.get(0);
-    }
-
 }

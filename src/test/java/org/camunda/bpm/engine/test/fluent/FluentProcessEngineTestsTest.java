@@ -85,7 +85,7 @@ public class FluentProcessEngineTestsTest {
 
     @Test
     @Deployment(resources = {processDefinitionResource1})
-    public void testProcessDefinition_String_noInstanceBoundToThread() {
+    public void testProcessInstance_String_noInstanceBoundToThread() {
 
         IllegalStateException exception = null;
         try {
@@ -105,5 +105,27 @@ public class FluentProcessEngineTestsTest {
         assertThat(processInstance(processDefinitionKey1)).isNotNull();
 
     }
+
+    @Test
+    public void testProcessDefinition_String_noSuchDefinitionDeployed() {
+
+        IllegalArgumentException exception = null;
+        try {
+            processDefinition(processDefinitionKey1);
+        } catch (IllegalArgumentException e) {
+            exception = e;
+        }
+        assertThat(exception).overridingErrorMessage("Expected IllegalArgumentException to be thrown, but expected event did not occur.").isNotNull();
+
+    }
+
+    @Test
+    @Deployment(resources = {processDefinitionResource1})
+    public void testProcessDefinition__String_DefinitionDeployed() {
+
+        assertThat(processDefinition(processDefinitionKey1)).isNotNull();
+
+    }
+
 
 }
