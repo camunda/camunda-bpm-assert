@@ -92,6 +92,7 @@
                   <failIfNoTests>true</failIfNoTests>
                   <trimStackTrace>false</trimStackTrace>
                   <redirectTestOutputToFile>true</redirectTestOutputToFile>
+                  <argLine>-Xmx256m</argLine>
                   <excludes>
                       <exclude>**/servicetask/*.java</exclude>
                       <!-- These exclusions come directly from the BPM engine maven module pom.xml -->
