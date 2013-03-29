@@ -67,6 +67,7 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * recommended approach to hold those {@link FluentProcessInstance} objects within local test 
      * variables.
      *
+     * @param processDefinitionKey the value of the "id" attribute in the process definition BPMN 2.0 XML file
      * @return the first {@link FluentProcessInstance} bound to the current thread
      * @throws IllegalStateException in case no such process instance (started with the given 
      * processDefinitionKey) has been started yet in the context of the current thread running the 
