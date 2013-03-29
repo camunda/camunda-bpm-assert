@@ -85,7 +85,7 @@ public class FluentProcessEngineTestsTest {
 
     @Test
     @Deployment(resources = {processDefinitionResource1})
-    public void testProcessInstance_String_noInstanceBoundToThread() {
+    public void testProcessDefinition_String_noInstanceBoundToThread() {
 
         IllegalStateException exception = null;
         try {
@@ -98,7 +98,7 @@ public class FluentProcessEngineTestsTest {
     }
 
     @Test
-    @Deployment(resources = {processDefinitionResource1, processDefinitionResource2})
+    @Deployment(resources = {processDefinitionResource1})
     public void testProcessInstance__String_atLeastOneInstanceBoundToThread() {
 
         newProcessInstance(processDefinitionKey1);
