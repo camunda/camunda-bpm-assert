@@ -32,11 +32,11 @@ public class FluentProcessInstanceLookup {
     /**
      * @see org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests#newProcessInstance(String)
      */
-    public static FluentProcessInstance newProcessInstance(String processDefinitionId) {
-        if (!getTestProcessInstances().containsKey(processDefinitionId)) {
-            getTestProcessInstances().put(processDefinitionId, new FluentProcessInstanceImpl(processDefinitionId));
+    public static FluentProcessInstance newProcessInstance(String processDefinitionKey) {
+        if (!getTestProcessInstances().containsKey(processDefinitionKey)) {
+            getTestProcessInstances().put(processDefinitionKey, new FluentProcessInstanceImpl(processDefinitionKey));
         }
-        return getTestProcessInstances().get(processDefinitionId);
+        return getTestProcessInstances().get(processDefinitionKey);
     }
 
     public static FluentProcessInstance processInstance() {
@@ -44,12 +44,12 @@ public class FluentProcessInstanceLookup {
         return getTestProcessInstances().values().iterator().next();
     }
 
-    public static ProcessDefinition processDefinition(String processDefinitionId) {
+    public static ProcessDefinition processDefinition(String processDefinitionKey) {
         List<ProcessDefinition> definitions = FluentLookups.getRepositoryService().createProcessDefinitionQuery()
-                .processDefinitionName(processDefinitionId).list();
+                .processDefinitionName(processDefinitionKey).list();
 
         assertThat(definitions)
-                .overridingErrorMessage("Unable to find a deployed processInstance definition with name '%s'", processDefinitionId)
+                .overridingErrorMessage("Unable to find a deployed processInstance definition with name '%s'", processDefinitionKey)
                 .hasSize(1);
 
         return definitions.get(0);
