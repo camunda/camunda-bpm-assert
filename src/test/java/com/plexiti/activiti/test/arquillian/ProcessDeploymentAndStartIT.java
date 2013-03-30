@@ -26,7 +26,7 @@ public class ProcessDeploymentAndStartIT {
       .goOffline()
       .loadMetadataFromPom("pom.xml");
 
-    return ShrinkWrap.create(WebArchive.class, "process-smoke-test.war")
+    return ShrinkWrap.create(WebArchive.class, "process-deployment-and-start-test.war")
       .addAsLibraries(resolver.artifact("org.camunda.bpm:camunda-engine-cdi").resolveAsFiles())
       .addAsLibraries(resolver.artifact("org.camunda.bpm.javaee:camunda-ejb-client").resolveAsFiles())
 
