@@ -75,6 +75,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.camunda.bpm.javaee</groupId>
+            <artifactId>camunda-ejb-client</artifactId>
+            <version>${camunda-bpm.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <!-- Java EE 6 Specification -->
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-web-6.0</artifactId>
