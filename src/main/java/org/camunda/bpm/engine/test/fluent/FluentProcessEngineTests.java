@@ -78,7 +78,7 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
     public static interface Move { void along(); }
 
     public static FluentProcessInstance newProcessInstance(String processDefinitionKey, Move move) {
-        FluentProcessInstanceImpl fluentBpmnProcessInstance = (FluentProcessInstanceImpl) processEngine().getProcessInstanceRepository().newProcessInstance(processDefinitionKey);
+        FluentProcessInstanceImpl fluentBpmnProcessInstance = (FluentProcessInstanceImpl) newProcessInstance(processDefinitionKey);
         fluentBpmnProcessInstance.moveAlong(move);
         return fluentBpmnProcessInstance;
     }
@@ -92,7 +92,6 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * @throws IllegalArgumentException in case there is no such process definition deployed with the given key
      *
      * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariable(String, Object)
-     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariables(java.util.Map)
      * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#start()
      */
     public static FluentProcessInstance newProcessInstance(String processDefinitionKey) {

@@ -1,11 +1,6 @@
 package org.camunda.bpm.engine.fluent;
 
-import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.task.Task;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -14,40 +9,71 @@ import java.util.Map;
 public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, ProcessInstance {
 
     /**
-     * Starts a process instance ({@link org.camunda.bpm.engine.runtime.ProcessInstance}).
-     *
-     * @return a fluent {@link FluentProcessInstance} to make assertions against
-     *
-     * @see FluentProcessInstance
+     * Start a process instance ({@link org.camunda.bpm.engine.runtime.ProcessInstance}).
+     * @return the started {@link FluentProcessInstance} to make assertions against
      */
     FluentProcessInstance start();
 
-    FluentProcessInstance startAndMoveTo(String activity);
+    /**
+     * Starts a process instance ({@link org.camunda.bpm.engine.runtime.ProcessInstance}) and move 
+     * it to a certain activityId by making use of another, already implemented test method which 
+     * moves the process from a real start event along a path until it arrives at the given activity:
+     * 
+     *  newProcessInstance("jobAnnouncement", new Move() {
+     *      public void along() {
+     *          testHappyPath();
+     *      }
+     *  }).withVariable("jobAnnouncementId", jobAnnouncement.getId())
+     *  .startAndMoveTo("review");
+     *
+     * @param activityId the id of the activity until which the execution of the other test method 
+     *                   should move the process.
+     * @return the started {@link FluentProcessInstance} to make assertions against
+     * @throws IllegalArgumentException in case the process never arrived at the given activityId.
+     */
+    FluentProcessInstance startAndMoveTo(String activityId);
 
     /**
-     * Adds a process variable to a not yet started process instance ({@link FluentProcessInstance}).
+     * Sets a process withVariable for ({@link FluentProcessInstance}).
      *
-     * @param name the name of the process variable to define
-     * @param value the value for te process variable
      *
-     * @return the same {@link FluentProcessInstance} to be further configured and eventually started
+     * @param name the name of the process withVariable to define
+     * @param value the value for te process withVariable
      *
-     * @see FluentProcessInstance#withVariables(java.util.Map)
+     * @return the same {@link FluentProcessInstance}
      */
-    FluentProcessInstance withVariable(String name, Object value);
+     FluentProcessInstance withVariable(String name, Object value);
 
-    FluentProcessInstance withVariables(Map<String, Object> variables);
+    /**
+     * Retrieves a specific process withVariable from ({@link FluentProcessInstance}).
+     *
+     * @param name the name of the process withVariable which needs to be accessed.
+     *
+     * @return the process withVariable
+     * @throws IllegalArgumentException in case such a process withVariable does not exist.
+     */
+    FluentProcessVariable variable(String name);
 
-    FluentProcessVariable variable(String key);
-
+    /**
+     * Returns the one and maximum one {@link FluentTask} currently waiting to be completed 
+     * in the context of this {@link FluentProcessInstance}.
+     *
+     * @return the one and only {@link FluentTask} currently waiting to be completed or 
+     * null in case no such task is currently waiting.
+     * @throws IllegalStateException in case more than one task is currently waiting to be 
+     * completed in the context of this {@link FluentProcessInstance}.
+     */
     FluentTask task();
 
+    /**
+     * Returns the one and maximum one {@link FluentJob} currently waiting to be executed in 
+     * the context of this {@link FluentProcessInstance}.
+     *
+     * @return the one and only {@link FluentJob} currently waiting to be executed or
+     * null in case no such job is currently waiting.
+     * @throws IllegalStateException in case more than one job is currently waiting to be 
+     * executed in the context of this {@link FluentProcessInstance}.
+     */
     FluentJob job();
-
-    // TODO From here on more "Fluent*" interfaces and wrappers have to be implemented
-
-    List<Task> tasks();
-
-    List<Job> jobs();
 
 }

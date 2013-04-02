@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:activiti="http://activiti.org/bpmn"
+  targetNamespace="Examples">
+
+    <process id="FluentProcessInstanceTest.2">
+          <startEvent id="theStart" name="Start"></startEvent>
+          <sequenceFlow id="flow1" name="" sourceRef="theStart" targetRef="theFork"></sequenceFlow>    
+          <parallelGateway id="theFork" name="Parallel Gateway"></parallelGateway>
+          <sequenceFlow id="flow2" name="" sourceRef="theFork" targetRef="theUserTask1"></sequenceFlow>
+          <sequenceFlow id="flow3" name="" sourceRef="theFork" targetRef="theUserTask2"></sequenceFlow>
+          <userTask id="theUserTask1" name="Simple User Task 1"></userTask>
+          <userTask id="theUserTask2" name="Simple User Task 2"></userTask>
+          <sequenceFlow id="flow5" name="" sourceRef="theUserTask1" targetRef="theEnd1"></sequenceFlow>
+          <sequenceFlow id="flow4" name="" sourceRef="theUserTask2" targetRef="theEnd2"></sequenceFlow>
+          <endEvent id="theEnd1" name="End1"></endEvent>
+          <endEvent id="theEnd2" name="End2"></endEvent>
+    </process>
+
+</definitions>
