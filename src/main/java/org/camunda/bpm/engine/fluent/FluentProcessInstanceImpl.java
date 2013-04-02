@@ -94,7 +94,7 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
 
     @Override
     public List<Task> tasks() {
-        return engine.getTaskService().createTaskQuery().list();
+        return engine.getTaskService().createTaskQuery().processInstanceId(getProcessInstanceId()).list();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
 
     @Override
     public List<Job> jobs() {
-        return engine.getManagementService().createJobQuery().list();
+        return engine.getManagementService().createJobQuery().processInstanceId(getProcessInstanceId()).list();
     }
 
     public void moveAlong(FluentProcessEngineTests.Move move) {
