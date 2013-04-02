@@ -40,9 +40,9 @@ public class JobAnnouncementPublicationTest {
 		when(jobAnnouncement.getId()).thenReturn(1L);
 
         newProcessInstance(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
-			.withVariable("jobAnnouncementId", jobAnnouncement.getId())
-			.withVariable("twitter", false)
-			.withVariable("facebook", false)
+			.setVariable("jobAnnouncementId", jobAnnouncement.getId())
+			.setVariable("twitter", false)
+			.setVariable("facebook", false)
 		.start();
 		
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
@@ -60,9 +60,9 @@ public class JobAnnouncementPublicationTest {
 	public void testPublishAlsoOnTwitter() {
 		
 		newProcessInstance(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
-			.withVariable("jobAnnouncementId", jobAnnouncement.getId())
-			.withVariable("twitter", true)
-			.withVariable("facebook", false)
+			.setVariable("jobAnnouncementId", jobAnnouncement.getId())
+			.setVariable("twitter", true)
+			.setVariable("facebook", false)
 		.start();
 
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
@@ -80,9 +80,9 @@ public class JobAnnouncementPublicationTest {
 	public void testPublishAlsoOnFacebook() {
 
         newProcessInstance(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
-			.withVariable("jobAnnouncementId", jobAnnouncement.getId())
-			.withVariable("twitter", false)
-			.withVariable("facebook", true)
+			.setVariable("jobAnnouncementId", jobAnnouncement.getId())
+			.setVariable("twitter", false)
+			.setVariable("facebook", true)
 		.start();
 
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
@@ -100,9 +100,9 @@ public class JobAnnouncementPublicationTest {
 	public void testPublishAlsoOnFacebookAndTwitter() {
 
         newProcessInstance(JOBANNOUNCEMENT_PUBLICATION_PROCESS)
-			.withVariable("jobAnnouncementId", jobAnnouncement.getId())
-			.withVariable("facebook", true)
-			.withVariable("twitter", true)
+			.setVariable("jobAnnouncementId", jobAnnouncement.getId())
+			.setVariable("facebook", true)
+			.setVariable("twitter", true)
 		.start();
 
 		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());

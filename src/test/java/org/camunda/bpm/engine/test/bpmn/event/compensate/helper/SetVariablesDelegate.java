@@ -33,7 +33,7 @@ public class SetVariablesDelegate implements JavaDelegate {
   public void execute(DelegateExecution execution) throws Exception {
     Object nrOfCompletedInstances = execution.getVariableLocal("nrOfCompletedInstances");    
     variablesMap.put(nrOfCompletedInstances, lastInt);    
-    execution.setVariableLocal("variable", lastInt);    
+    execution.setVariableLocal("getVariable", lastInt);    
     lastInt++;
   }
 

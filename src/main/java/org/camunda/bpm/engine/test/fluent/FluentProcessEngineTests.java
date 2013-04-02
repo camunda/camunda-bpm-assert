@@ -91,7 +91,7 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      * @return a {@link FluentProcessInstance} that can be further configured before starting the process instance
      * @throws IllegalArgumentException in case there is no such process definition deployed with the given key
      *
-     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#withVariable(String, Object)
+     * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#setVariable(String, Object)
      * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#start()
      */
     public static FluentProcessInstance newProcessInstance(String processDefinitionKey) {

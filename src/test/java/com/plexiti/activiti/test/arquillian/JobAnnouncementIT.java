@@ -29,7 +29,7 @@ public class JobAnnouncementIT {
 
     long jobAnnouncementId = 1L;
     newProcessInstance(JOBANNOUNCEMENT_PROCESS)
-      .withVariable("jobAnnouncementId", jobAnnouncementId)
+      .setVariable("jobAnnouncementId", jobAnnouncementId)
       .start();
     System.out.println("Started process instance id " + jobAnnouncementId);
 

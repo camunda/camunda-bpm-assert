@@ -43,7 +43,7 @@ public class JobAnnouncementTest {
 		when(jobAnnouncementService.findEditor(1L)).thenReturn(USER_STAFF);
 
         newProcessInstance(JOBANNOUNCEMENT_PROCESS)
-            .withVariable("jobAnnouncementId", jobAnnouncement.getId())
+            .setVariable("jobAnnouncementId", jobAnnouncement.getId())
             .start();
 
 		assertThat(processInstance())
@@ -106,7 +106,7 @@ public class JobAnnouncementTest {
             public void along() {
                 testHappyPath();
             }
-        }).withVariable("jobAnnouncementId", jobAnnouncement.getId())
+        }).setVariable("jobAnnouncementId", jobAnnouncement.getId())
         .startAndMoveTo(TASK_REVIEW_ANNOUNCEMENT);
 
         assertThat(processInstance())

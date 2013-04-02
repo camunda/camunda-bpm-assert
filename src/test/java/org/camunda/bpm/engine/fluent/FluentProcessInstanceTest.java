@@ -95,9 +95,9 @@ public class FluentProcessInstanceTest {
 
         FluentProcessInstance processInstance =
                 newProcessInstance(processDefinitionKey1)
-                    .withVariable("theKey", "theValue");
+                    .setVariable("theKey", "theValue");
 
-        assertThat(processInstance.variable("theKey"))
+        assertThat(processInstance.getVariable("theKey"))
                 .isNotNull()
                 .isDefined()
                 .asString()
@@ -108,7 +108,7 @@ public class FluentProcessInstanceTest {
         assertThat(processInstance)
                 .isStarted();
 
-        assertThat(processInstance.variable("theKey"))
+        assertThat(processInstance.getVariable("theKey"))
                 .isNotNull()
                 .isDefined()
                 .asString()
@@ -123,13 +123,13 @@ public class FluentProcessInstanceTest {
                 newProcessInstance(processDefinitionKey1)
                         .start();
 
-        processInstance.withVariable("theKey", "theValue");
+        processInstance.setVariable("theKey", "theValue");
 
         assertThat(processInstance)
                 .isNotNull()
                 .isStarted();
 
-        assertThat(processInstance.variable("theKey"))
+        assertThat(processInstance.getVariable("theKey"))
                 .isNotNull()
                 .isDefined()
                 .asString()
@@ -145,9 +145,9 @@ public class FluentProcessInstanceTest {
                 newProcessInstance(processDefinitionKey1)
                         .start();
 
-        processInstance.withVariable("theKey", "theValue");
+        processInstance.setVariable("theKey", "theValue");
 
-        assertThat(processInstance.variable("theKey"))
+        assertThat(processInstance.getVariable("theKey"))
                 .isNotNull()
                 .isDefined()
                 .asString()
@@ -163,11 +163,11 @@ public class FluentProcessInstanceTest {
                 newProcessInstance(processDefinitionKey1)
                         .start();
 
-        processInstance.withVariable("theKey", "theValue");
+        processInstance.setVariable("theKey", "theValue");
 
         IllegalArgumentException exception = null;
         try {
-            processInstance.variable("theNonExistingKey");
+            processInstance.getVariable("theNonExistingKey");
         } catch (IllegalArgumentException e) {
             exception = e;
         }
@@ -223,7 +223,7 @@ public class FluentProcessInstanceTest {
     public void testJob_noJobWaitingInANotYetStartedInstance() {
 
         FluentProcessInstance instance2 = newProcessInstance(processDefinitionKey3)
-            .withVariable("dueDate", new Date());
+            .setVariable("dueDate", new Date());
 
         assertThat(instance2.job()).isNull();
         
@@ -245,7 +245,7 @@ public class FluentProcessInstanceTest {
     public void testJob_singleJobWaiting() {
 
         newProcessInstance(processDefinitionKey3)
-            .withVariable("dueDate", new Date())
+            .setVariable("dueDate", new Date())
             .start()
         ;
 
@@ -260,7 +260,7 @@ public class FluentProcessInstanceTest {
         IllegalStateException exception = null;
         try {
             newProcessInstance(processDefinitionKey4)
-                .withVariable("dueDate", new Date())
+                .setVariable("dueDate", new Date())
                 .start();
             processInstance()
                     .job();

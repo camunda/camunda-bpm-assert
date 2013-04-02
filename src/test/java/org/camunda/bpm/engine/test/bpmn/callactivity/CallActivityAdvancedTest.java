@@ -72,7 +72,7 @@ public class CallActivityAdvancedTest extends PluggableProcessEngineTestCase {
     assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
 
     // Completing the task continues the process which leads to calling the
-    // subprocess. The sub process we want to call is passed in as a variable
+    // subprocess. The sub process we want to call is passed in as a getVariable
     // into this task
     taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess");
     taskService.complete(taskBeforeSubProcess.getId());
@@ -155,7 +155,7 @@ public class CallActivityAdvancedTest extends PluggableProcessEngineTestCase {
 	    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
 
 	    // Completing the task continues the process which leads to calling the
-	    // subprocess. The sub process we want to call is passed in as a variable
+	    // subprocess. The sub process we want to call is passed in as a getVariable
 	    // into this task
 	    taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess");
 	    taskService.complete(taskBeforeSubProcess.getId());
@@ -180,7 +180,7 @@ public class CallActivityAdvancedTest extends PluggableProcessEngineTestCase {
 	    assertEquals("Task before subprocess", taskBeforeSubProcess.getName());
 
 	    // Completing the task continues the process which leads to calling the
-	    // subprocess. The sub process we want to call is passed in as a variable
+	    // subprocess. The sub process we want to call is passed in as a getVariable
 	    // into this task
 	    taskService.setVariable(taskBeforeSubProcess.getId(), "simpleSubProcessExpression", "simpleSubProcess2");
 	    taskService.complete(taskBeforeSubProcess.getId());
@@ -242,7 +242,7 @@ public class CallActivityAdvancedTest extends PluggableProcessEngineTestCase {
     
     runtimeService.setVariable(taskBeforeSubProcess.getProcessInstanceId(), "subVariable", "Hello from sub process.");
 
-    // super variable is unchanged
+    // super getVariable is unchanged
     assertEquals("Hello from the super process.", runtimeService.getVariable(processInstance.getId(), "superVariable"));
         
     // Completing this task ends the subprocess which leads to a task in the super process

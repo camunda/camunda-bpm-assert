@@ -52,7 +52,7 @@ public class AuctionProcessTest extends FluentProcessEngineTestCase {
                 public Object answer(InvocationOnMock invocation) {
                     auction.setId(1L);
                     newProcessInstance("auction-process")
-                            .withVariable("auctionId", auction.getId())
+                            .setVariable("auctionId", auction.getId())
                             .start();
                     return auction.getId();
                 }
@@ -73,7 +73,7 @@ public class AuctionProcessTest extends FluentProcessEngineTestCase {
         auctionService.createAuction(auction);
 
         assertThat(processInstance()).isStarted().isWaitingAt("authorizeAuction");
-        assertThat(processInstance().variable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
+        assertThat(processInstance().getVariable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
 
         auctionService.authorizeAuction(processInstance().task().getId(), true);
 

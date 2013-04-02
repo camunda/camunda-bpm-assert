@@ -23,7 +23,7 @@ public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, 
      *      public void along() {
      *          testHappyPath();
      *      }
-     *  }).withVariable("jobAnnouncementId", jobAnnouncement.getId())
+     *  }).setVariable("jobAnnouncementId", jobAnnouncement.getId())
      *  .startAndMoveTo("review");
      *
      * @param activityId the id of the activity until which the execution of the other test method 
@@ -34,25 +34,24 @@ public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, 
     FluentProcessInstance startAndMoveTo(String activityId);
 
     /**
-     * Sets a process withVariable for ({@link FluentProcessInstance}).
+     * Sets a process getVariable for ({@link FluentProcessInstance}).
      *
-     *
-     * @param name the name of the process withVariable to define
-     * @param value the value for te process withVariable
+     * @param name the name of the process variable to define
+     * @param value the value for te process variable
      *
      * @return the same {@link FluentProcessInstance}
      */
-     FluentProcessInstance withVariable(String name, Object value);
+     FluentProcessInstance setVariable(String name, Object value);
 
     /**
-     * Retrieves a specific process withVariable from ({@link FluentProcessInstance}).
+     * Retrieves a specific process variable from ({@link FluentProcessInstance}).
      *
-     * @param name the name of the process withVariable which needs to be accessed.
+     * @param name the name of the process variable which needs to be accessed.
      *
-     * @return the process withVariable
-     * @throws IllegalArgumentException in case such a process withVariable does not exist.
+     * @return the process setVariable
+     * @throws IllegalArgumentException in case such a process variable does not exist.
      */
-    FluentProcessVariable variable(String name);
+    FluentProcessVariable getVariable(String name);
 
     /**
      * Returns the one and maximum one {@link FluentTask} currently waiting to be completed 

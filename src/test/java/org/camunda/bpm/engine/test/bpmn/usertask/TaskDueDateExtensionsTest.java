@@ -32,7 +32,7 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 
     // Start process-instance, passing date that should be used as dueDate as a Date
     newProcessInstance("dueDateExtension")
-            .withVariable("dateVariable", date)
+            .setVariable("dateVariable", date)
             .start();
 
     /*
@@ -52,7 +52,7 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 
     // Start process-instance, passing date that should be used as dueDate as a String
     newProcessInstance("dueDateExtension")
-        .withVariable("dateVariable", "1986-07-06T12:10:00")
+        .setVariable("dateVariable", "1986-07-06T12:10:00")
         .start();
 
     assertThat(processInstance()).isWaitingAt("theTask");

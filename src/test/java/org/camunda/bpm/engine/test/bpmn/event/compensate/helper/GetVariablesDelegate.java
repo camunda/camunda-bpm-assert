@@ -26,9 +26,9 @@ public class GetVariablesDelegate implements JavaDelegate {
   public void execute(DelegateExecution execution) throws Exception {
     Object nrOfCompletedInstances = execution.getVariable("nrOfCompletedInstances");    
     Integer variable = SetVariablesDelegate.variablesMap.get(nrOfCompletedInstances);
-    Object variableLocal = execution.getVariable("variable");
+    Object variableLocal = execution.getVariable("getVariable");
     if(!variableLocal.equals(variable)) {
-      throw new ProcessEngineException("wrong variable passed in to compensation handler");
+      throw new ProcessEngineException("wrong getVariable passed in to compensation handler");
     }
   }
 

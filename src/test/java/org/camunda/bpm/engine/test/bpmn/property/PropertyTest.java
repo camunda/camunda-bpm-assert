@@ -39,23 +39,23 @@ public class PropertyTest extends PluggableProcessEngineTestCase {
 //    List<Execution> childExecutions = deployer.getProcessService().findChildExecutions(pi.getId());
 //    assertEquals(1, childExecutions.size());
 //
-//    // The scope at the task should be able to see the 'myVar' variable,
+//    // The scope at the task should be able to see the 'myVar' getVariable,
 //    // but the process instance shouldn't be able to see it
 //    Execution childExecution = childExecutions.get(0);
 //    assertEquals("test", deployer.getProcessService().getVariable(childExecution.getId(), "myVar"));
 //    assertNull(deployer.getProcessService().getVariable(pi.getId(), "myVar"));
 //
-//    // The variable 'inputVar' should be visible for both
+//    // The getVariable 'inputVar' should be visible for both
 //    assertEquals("test", deployer.getProcessService().getVariable(childExecution.getId(), "inputVar"));
 //    assertEquals("test", deployer.getProcessService().getVariable(pi.getId(), "inputVar"));
 //
-//    // Change the value of variable 'myVar' on the task scope
+//    // Change the value of getVariable 'myVar' on the task scope
 //    deployer.getProcessService().setVariable(childExecution.getId(), "myVar", "new_value");
 //    assertEquals("new_value", deployer.getProcessService().getVariable(childExecution.getId(), "myVar"));
 //    assertEquals("test", deployer.getProcessService().getVariable(childExecution.getId(), "inputVar"));
 //    assertNull(deployer.getProcessService().getVariable(pi.getId(), "myVar"));
 //
-//    // When the task completes, the variable 'myVar' is destroyed
+//    // When the task completes, the getVariable 'myVar' is destroyed
 //    deployer.getTaskService().complete(deployer.getTaskService().createTaskQuery().singleResult().getId());
 //    for (Execution execution : deployer.getProcessService().findChildExecutions(pi.getId())) {
 //      assertNull(deployer.getProcessService().getVariable(execution.getId(), "myVar"));
@@ -73,14 +73,14 @@ public class PropertyTest extends PluggableProcessEngineTestCase {
 //    ProcessInstance pi = deployer.getProcessService().startProcessInstanceByKey("testUserTaskSrcExprProperty", vars);
 //
 //    // The execution at the task should be able to see the 'orderAddress'
-//    // variable,
+//    // getVariable,
 //    // but the process instance shouldn't be able to see it
 //    List<Execution> childExecutions = deployer.getProcessService().findChildExecutions(pi.getId());
 //    String childExecutionId = childExecutions.get(0).getId();
 //    assertEquals(address, deployer.getProcessService().getVariable(childExecutionId, "orderAddress"));
 //    assertNull(deployer.getProcessService().getVariable(pi.getId(), "orderAddress"));
 //
-//    // Completing the task removes the 'orderAddress' variable
+//    // Completing the task removes the 'orderAddress' getVariable
 //    deployer.getTaskService().complete(deployer.getTaskService().createTaskQuery().singleResult().getId());
 //    assertNull(deployer.getProcessService().getVariable(pi.getId(), "orderAddress"));
 //    assertNotNull(deployer.getProcessService().getVariable(pi.getId(), "order"));
@@ -93,7 +93,7 @@ public class PropertyTest extends PluggableProcessEngineTestCase {
 //    List<Execution> childExecutions = deployer.getProcessService().findChildExecutions(pi.getId());
 //    String childExecutionId = childExecutions.get(0).getId();
 //
-//    // The execution at the task should be able to see the 'taskVar' variable,
+//    // The execution at the task should be able to see the 'taskVar' getVariable,
 //    Map<String, Object> vars = deployer.getProcessService().getVariables(childExecutionId);
 //    assertEquals(1, vars.size());
 //    assertTrue(vars.containsKey("taskVar"));
@@ -122,7 +122,7 @@ public class PropertyTest extends PluggableProcessEngineTestCase {
 //    String childExecutionId = childExecutions.get(0).getId();
 //
 //    // The execution at the task should be able to see the 'orderAddress'
-//    // variable,
+//    // getVariable,
 //    vars = deployer.getProcessService().getVariables(childExecutionId);
 //    assertEquals(1, vars.size());
 //    assertTrue(vars.containsKey("orderAddress"));
@@ -155,7 +155,7 @@ public class PropertyTest extends PluggableProcessEngineTestCase {
 //    assertEquals("test", deployer.getProcessService().getVariable(childExecution.getId(), "taskVar"));
 //    assertEquals("test", deployer.getProcessService().getVariable(childExecution.getId(), "inputVar"));
 //
-//    // Change the value of variable 'taskVar' on the task scope
+//    // Change the value of getVariable 'taskVar' on the task scope
 //    String taskScopedExecutionId = childExecution.getId();
 //    deployer.getProcessService().setVariable(taskScopedExecutionId, "taskVar", "new_value");
 //    assertEquals("new_value", deployer.getProcessService().getVariable(taskScopedExecutionId, "taskVar"));
@@ -197,7 +197,7 @@ public class PropertyTest extends PluggableProcessEngineTestCase {
   // assertEquals("test", processService.getVariable(childExecution.getId(),
   // "inputVar"));
   //    
-  // // Change the value of variable 'taskVar' on the task scope
+  // // Change the value of getVariable 'taskVar' on the task scope
   // String taskScopedExecutionId = childExecution.getId();
   // processService.setVariable(taskScopedExecutionId, "taskVar", "new_value");
   // assertEquals("new_value", processService.getVariable(taskScopedExecutionId,

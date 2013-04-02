@@ -39,7 +39,7 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTestCase {
 
     public void execute(DelegateExecution execution) throws Exception {
       Variable v = new Variable();
-      execution.setVariable("variable", v);
+      execution.setVariable("getVariable", v);
       v.value = "delegate1";
     }
     
@@ -48,7 +48,7 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTestCase {
   public static class Delegate2 implements JavaDelegate {
 
     public void execute(DelegateExecution execution) throws Exception {
-      Variable v = (Variable) execution.getVariable("variable");
+      Variable v = (Variable) execution.getVariable("getVariable");
       synchronized (ServiceTaskVariablesTest.class) {
         // we expect this to be 'true'
         isNullInDelegate2 = (v.value != null && v.value.equals("delegate1"));         
@@ -61,7 +61,7 @@ public class ServiceTaskVariablesTest extends PluggableProcessEngineTestCase {
   public static class Delegate3 implements JavaDelegate {
 
     public void execute(DelegateExecution execution) throws Exception {
-      Variable v = (Variable) execution.getVariable("variable");
+      Variable v = (Variable) execution.getVariable("getVariable");
       synchronized (ServiceTaskVariablesTest.class) {
         // we expect this to be 'true' as well
         isNullInDelegate3 = (v.value != null && v.value.equals("delegate2"));  

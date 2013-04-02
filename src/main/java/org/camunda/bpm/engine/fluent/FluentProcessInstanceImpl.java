@@ -138,7 +138,7 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
     }
 
     @Override
-    public FluentProcessInstance withVariable(String name, Object value) {
+    public FluentProcessInstance setVariable(String name, Object value) {
         if (delegate == null)
             this.processVariables.put(name, value);
         else
@@ -147,7 +147,7 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
     }
 
     @Override
-    public FluentProcessVariable variable(String name) {
+    public FluentProcessVariable getVariable(String name) {
         Object value = delegate != null ? engine.getRuntimeService().getVariable(getId(), name) : processVariables.get(name);
         if (value == null)
             throw new IllegalArgumentException("Unable to find processVariable '" + name + "'");
