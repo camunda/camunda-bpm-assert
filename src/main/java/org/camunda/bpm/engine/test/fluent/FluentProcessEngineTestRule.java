@@ -1,5 +1,8 @@
 package org.camunda.bpm.engine.test.fluent;
 
+import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.ProcessEngineException;
+import org.camunda.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentProcessEngineImpl;
 import org.camunda.bpm.engine.impl.test.TestHelper;
@@ -54,13 +57,19 @@ public class FluentProcessEngineTestRule implements TestRule {
     protected FluentProcessEngine getEngine() {
         if (engine != null) {
             return engine;
-        } else if (test instanceof ProcessEngineTestCase) {
-            return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
         } else {
             try {
-                return engine = new FluentProcessEngineImpl(((ProcessEngineRule) Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test)).getProcessEngine());
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
+                ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
+                return new FluentProcessEngineImpl(processEngine);
+            } catch (ProcessEngineException e) {}
+            if (test instanceof ProcessEngineTestCase) {
+                return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
+            } else {
+                try {
+                    return engine = new FluentProcessEngineImpl(((ProcessEngineRule) Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test)).getProcessEngine());
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
