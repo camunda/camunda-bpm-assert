@@ -385,34 +385,6 @@ public class AuctionProcessTest extends FluentProcessEngineTestCase {
 }
 ```
 
-# Using it in your own project
-
-To use in your project you will need to add this dependency
-
-```xml
-<dependency>
-    <groupId>com.plexiti.activiti</groupId>
-    <artifactId>activiti-fluent-tests</artifactId>
-    <version>0.4</version>
-    <scope>test</scope>
-</dependency>
-```
-and this repository to your pom.xml
-
-```xml
-<repository>
-    <id>plexiti-public-releases</id>
-    <name>plexiti Public Releases Repository</name>
-    <url>http://repository.plexiti.com/content/repositories/releases/</url>
-    <releases>
-        <enabled>true</enabled>
-    </releases>
-    <snapshots>
-        <enabled>false</enabled>
-    </snapshots>
-</repository>
-```
-
 # Feedback
 
 Suggestions, pull requests, ... you name it... are very welcome!
