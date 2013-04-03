@@ -83,9 +83,13 @@ public class JobAnnouncementTest {
 
 ## How to Refactor Your Existing Tests to Use This Library
 
-This library supports the two existing approaches to set up your unit tests:
+This library supports three existing approaches to set up and execute your tests:
 
-## Tests that use the `extends ProcessEngineTest` mechanism
+* the jUnit `extends ProcessEngineTest` mechanism
+* the jUnit `@Rule` mechanism
+* the @RunWith(Arquillian.class) to test within a container
+
+## Tests that use the jUnit `extends ProcessEngineTest` mechanism
 
 Example:
 
@@ -110,7 +114,7 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 ```
 NOTE: If you have a setUp() method in your test, make sure the very first thing this method does is `super.setUp()`!
 
-## Tests that use the `@Rule` approach
+## Tests that use the jUnit `@Rule` mechanism
 
 ```java
 ...
@@ -143,11 +147,49 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 ...
 ```
 
-# Frequently Asked Questions (FAQs)
+## Tests that use the Arquillian framework to test within a container
 
-## Do you support Arquillian tests?
+```java
+...
+@RunWith(Arquillian.class)
+public class JobAnnouncementIT {
 
-TODO
+    @Deployment
+    public static WebArchive createDeployment() {
+        MavenDependencyResolver resolver = DependencyResolvers.use(MavenDependencyResolver.class)
+            .goOffline()
+            .loadMetadataFromPom("pom.xml");
+
+        return ShrinkWrap.create(WebArchive.class, finalName)
+            .addAsLibraries(resolver.artifact("org.camunda.bpm:camunda-engine-cdi").resolveAsFiles())
+            .addAsLibraries(resolver.artifact("org.camunda.bpm.javaee:camunda-ejb-client").resolveAsFiles())
+            .addAsWebResource("META-INF/processes.xml", "WEB-INF/classes/META-INF/processes.xml");
+    }
+
+    @Test
+    public void testMethod() throws Exception { ... }
+...
+```
+
+do as follows:
+
+@RunWith(Arquillian.class)
+public class JobAnnouncementIT {
+
+    @Deployment
+    public static WebArchive createDeployment() {
+        return prepareDeployment("job-announcement-test.war")
+            .addAsResource("com/plexiti/activiti/showcase/jobannouncement/process/job-announcement.bpmn")
+            .addAsResource("com/plexiti/activiti/showcase/jobannouncement/process/job-announcement-publication.bpmn");
+    }
+
+    @Rule
+    public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
+
+    @Test
+    public void testMethod() throws Exception { ... }
+...
+```
 
 # Examples
 
