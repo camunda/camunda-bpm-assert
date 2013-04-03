@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.plexiti.activiti</groupId>
-    <artifactId>activiti-fluent-tests</artifactId>
+    <groupId>org.camunda.bpm</groupId>
+    <artifactId>camunda-fluent-tests</artifactId>
     <version>0.4-SNAPSHOT</version>
 
     <packaging>jar</packaging>
@@ -197,9 +197,9 @@
     </repositories>
 
     <scm>
-        <connection>scm:git:git@github.com:plexiti/activiti-fluent-tests.git</connection>
-        <url>scm:git:git@github.com:plexiti/activiti-fluent-tests.git</url>
-        <developerConnection>scm:git:git@github.com:plexiti/activiti-fluent-tests.git</developerConnection>
+        <connection>scm:git:git@github.com:plexiti/camunda-bpm-fluent-tests.git</connection>
+        <url>scm:git:git@github.com:plexiti/camunda-bpm-fluent-tests.git</url>
+        <developerConnection>scm:git:git@github.com:plexiti/camunda-bpm-fluent-tests.git</developerConnection>
     </scm>
 
 </project>
