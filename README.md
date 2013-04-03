@@ -85,11 +85,11 @@ public class JobAnnouncementTest {
 
 This library supports three existing approaches to set up and execute your tests:
 
-* the jUnit `extends ProcessEngineTest` mechanism
-* the jUnit `@Rule` mechanism
+* the JUnit `extends ProcessEngineTest` mechanism
+* the JUnit `@Rule` mechanism
 * the @RunWith(Arquillian.class) to test within a container
 
-## Tests that use the jUnit `extends ProcessEngineTest` mechanism
+## Tests that use the JUnit `extends ProcessEngineTest` mechanism
 
 Example:
 
@@ -114,7 +114,7 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 ```
 NOTE: If you have a setUp() method in your test, make sure the very first thing this method does is `super.setUp()`!
 
-## Tests that use the jUnit `@Rule` mechanism
+## Tests that use the JUnit `@Rule` mechanism
 
 ```java
 ...
