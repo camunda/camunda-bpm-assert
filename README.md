@@ -173,6 +173,8 @@ public class JobAnnouncementIT {
 
 do as follows:
 
+```java
+...
 @RunWith(Arquillian.class)
 public class JobAnnouncementIT {
 
@@ -195,6 +197,7 @@ public class JobAnnouncementIT {
 
 ## Example: Job Announcement Test
 ```java
+...
 public class JobAnnouncementTest {
 
     @Rule
