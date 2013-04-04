@@ -1,6 +1,6 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
-import org.camunda.bpm.engine.fluent.FluentProcessEngine;
+import org.camunda.bpm.engine.ProcessEngine;
 import org.fest.assertions.api.AbstractAssert;
 
 /**
@@ -8,9 +8,9 @@ import org.fest.assertions.api.AbstractAssert;
  */
 public class AbstractProcessAssert<S extends AbstractProcessAssert<S,A>, A> extends AbstractAssert<S, A> {
 
-    protected FluentProcessEngine engine;
+    protected ProcessEngine engine;
 
-    public AbstractProcessAssert(FluentProcessEngine engine, A actual, Class<?> selfType) {
+    public AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {
         super(actual, selfType);
         this.engine = engine;
     }

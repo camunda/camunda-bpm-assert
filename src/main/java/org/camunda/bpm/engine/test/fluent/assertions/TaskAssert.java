@@ -1,7 +1,7 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
 import org.camunda.bpm.engine.TaskService;
-import org.camunda.bpm.engine.fluent.FluentProcessEngine;
+import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 import org.fest.assertions.api.Assertions;
@@ -16,11 +16,11 @@ import java.util.Date;
  */
 public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
-    protected TaskAssert(FluentProcessEngine engine, Task actual) {
+    protected TaskAssert(ProcessEngine engine, Task actual) {
         super(engine, actual, TaskAssert.class);
     }
 
-    public static TaskAssert assertThat(FluentProcessEngine engine, Task actual) {
+    public static TaskAssert assertThat(ProcessEngine engine, Task actual) {
         return new TaskAssert(engine, actual);
     }
 
