@@ -91,6 +91,9 @@ This library supports three existing approaches to set up and execute your tests
 
 ## Tests that use the JUnit `extends ProcessEngineTest` mechanism
 
+1. Add static import for FluentProcessEngineTests.*;
+1. Replace class your test class inherits from with FluentProcessEngineTestCase
+
 Example:
 
 ```java
@@ -115,6 +118,9 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 NOTE: If you have a setUp() method in your test, make sure the very first thing this method does is `super.setUp()`!
 
 ## Tests that use the JUnit `@Rule` mechanism
+
+1. Add static import for FluentProcessEngineTests.*;
+1. Add a FluentProcessEngineTestRule to your test class
 
 ```java
 ...
@@ -148,6 +154,10 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 ```
 
 ## Tests that use the Arquillian framework to test within a container
+
+1. Add static import for FluentProcessEngineTests.*;
+1. Add a FluentProcessEngineTestRule to your test class
+1. Optionally consider to make use of convenience method FluentProcessEngineTests.prepareDeployment() 
 
 ```java
 ...
