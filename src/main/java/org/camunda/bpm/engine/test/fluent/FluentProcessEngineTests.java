@@ -2,6 +2,7 @@ package org.camunda.bpm.engine.test.fluent;
 
 import org.camunda.bpm.engine.fluent.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.ProcessEngineTestCase;
@@ -162,7 +163,7 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
         return ProcessDefinitionAssert.assertThat(processEngine(), actual);
     }
 
-    public static ProcessInstanceAssert assertThat(FluentProcessInstance actual) {
+    public static ProcessInstanceAssert assertThat(ProcessInstance actual) {
         return ProcessInstanceAssert.assertThat(processEngine(), actual);
     }
 
