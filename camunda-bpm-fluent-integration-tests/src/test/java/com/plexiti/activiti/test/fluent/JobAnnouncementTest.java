@@ -106,8 +106,8 @@ public class JobAnnouncementTest {
             public void along() {
                 testHappyPath();
             }
-        }).setVariable("jobAnnouncementId", jobAnnouncement.getId())
-        .startAndMoveTo(TASK_REVIEW_ANNOUNCEMENT);
+        }, TASK_REVIEW_ANNOUNCEMENT).setVariable("jobAnnouncementId", jobAnnouncement.getId())
+        .startAndMove();
 
         assertThat(processInstance())
             .isStarted()

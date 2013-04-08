@@ -47,10 +47,11 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
         return testRule.get().getEngine();
     }
 
-    public static interface Move { void along(); }
+    public static interface Move extends FluentProcessInstance.Move {}
 
-    public static FluentProcessInstance newProcessInstance(String processDefinitionKey, Move move) {
+    public static FluentProcessInstance newProcessInstance(String processDefinitionKey, Move move, String targetActivityId) {
         FluentProcessInstanceImpl fluentBpmnProcessInstance = (FluentProcessInstanceImpl) newProcessInstance(processDefinitionKey);
+        ProcessInstanceAssert.setMoveToActivityId(targetActivityId);
         fluentBpmnProcessInstance.moveAlong(move);
         return fluentBpmnProcessInstance;
     }

@@ -8,6 +8,12 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
  */
 public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, ProcessInstance {
 
+    public static interface Move { 
+    
+        void along(); 
+    
+    }
+
     /**
      * Start a process instance ({@link org.camunda.bpm.engine.runtime.ProcessInstance}).
      * @return the started {@link FluentProcessInstance} to make assertions against
@@ -16,22 +22,21 @@ public interface FluentProcessInstance extends FluentDelegate<ProcessInstance>, 
 
     /**
      * Starts a process instance ({@link org.camunda.bpm.engine.runtime.ProcessInstance}) and move 
-     * it to a certain activityId by making use of another, already implemented test method which 
-     * moves the process from a real start event along a path until it arrives at the given activity:
+     * it along another, already implemented test method which moves the process from a real 
+     * instantiation along a path until it arrives at a given activity:
      * 
      *  newProcessInstance("jobAnnouncement", new Move() {
      *      public void along() {
      *          testHappyPath();
      *      }
-     *  }).setVariable("jobAnnouncementId", jobAnnouncement.getId())
-     *  .startAndMoveTo("review");
+     *  }, "review")
+     *  .setVariable("jobAnnouncementId", jobAnnouncement.getId())
+     *  .startAndMove();
      *
-     * @param activityId the id of the activity until which the execution of the other test method 
-     *                   should move the process.
      * @return the started {@link FluentProcessInstance} to make assertions against
      * @throws IllegalArgumentException in case the process never arrived at the given activityId.
      */
-    FluentProcessInstance startAndMoveTo(String activityId);
+    FluentProcessInstance startAndMove();
 
     /**
      * Sets a process getVariable for ({@link FluentProcessInstance}).

@@ -16,15 +16,11 @@ package org.camunda.bpm.engine.fluent;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
-import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -36,7 +32,7 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
 
     protected String processDefinitionKey;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
-    protected FluentProcessEngineTests.Move move = new FluentProcessEngineTests.Move() { public void along() {} };
+    protected FluentProcessInstance.Move move = new FluentProcessInstance.Move() { public void along() {} };
 
     public FluentProcessInstanceImpl(FluentProcessEngine engine, String processDefinitionKey) {
         super(engine, null);
@@ -112,21 +108,20 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
         return null;
     }
 
-    public void moveAlong(FluentProcessEngineTests.Move move) {
+    public void moveAlong(FluentProcessInstance.Move move) {
         this.move = move;
     }
 
     @Override
-    public FluentProcessInstance startAndMoveTo(String activityId) {
-        ProcessInstanceAssert.MoveToActivityIdException ex = null;
+    public FluentProcessInstance startAndMove() {
+        Throwable expected = null;
         try {
-            ProcessInstanceAssert.setMoveToActivityId(activityId);
             move.along();
-        } catch (ProcessInstanceAssert.MoveToActivityIdException e) {
-            ex = e;
+        } catch (Throwable t) {
+            expected = t;
         }
-        if (ex == null)
-            throw new IllegalArgumentException("Process could not be moved to activityId '" + activityId + "'. It never arrived at the given activityId.");
+        if (expected == null)
+            throw new IllegalArgumentException("Process could not be moved to the given activityId.");
         return this;
     }
 
