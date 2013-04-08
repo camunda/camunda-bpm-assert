@@ -1,3 +1,5 @@
+*Heads up! We have submitted this project to the camunda BPM incubation space. You can follow the conversation on the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev)*
+
 # Introduction
 
 This library aims at easing testing when developing process applications based on [camunda BPM](http://camunda.org). We reach out to
