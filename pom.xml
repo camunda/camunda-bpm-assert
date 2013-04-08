@@ -114,29 +114,6 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.13</version>
-                <configuration>
-                    <failIfNoTests>true</failIfNoTests>
-                    <trimStackTrace>false</trimStackTrace>
-                    <redirectTestOutputToFile>true</redirectTestOutputToFile>
-                    <excludes>
-                        <exclude>**/servicetask/*.java</exclude>
-                        <!-- exclude integration tests -->
-                        <exclude>**/*IT.java</exclude>
-                        <!-- These exclusions come directly from the BPM engine maven module pom.xml -->
-                        <exclude>**/*TestCase.java</exclude>
-                        <exclude>**/CompetingJobAcquisitionTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-234 -->
-                        <exclude>**/WSDLImporterTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-315 -->
-                        <exclude>**/JobExecutorTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-427 -->
-                        <exclude>**/HistoricTaskInstanceUpdateTest.java</exclude> <!-- http://jira.codehaus.org/browse/ACT-485  -->
-                        <exclude>**/RepeatingServiceTaskTest.java</exclude>
-                        <exclude>org/activiti/standalone/**</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>2.14</version>
                 <!-- Will default to execute all *IT.java tests -->
@@ -167,11 +144,6 @@
                         <exclude>org/activiti/standalone/**</exclude>
                     </excludes>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.0</version>
             </plugin>
         </plugins>
 
