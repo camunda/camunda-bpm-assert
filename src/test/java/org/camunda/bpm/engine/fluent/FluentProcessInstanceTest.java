@@ -54,8 +54,8 @@ public class FluentProcessInstanceTest {
                     public void along() {
                         testStart_Ok();
                     }
-                })
-                .startAndMoveTo("theTask");
+                }, "theTask")
+                .startAndMove();
 
         assertThat(processInstance)
                 .isNotNull()
@@ -76,8 +76,8 @@ public class FluentProcessInstanceTest {
                         public void along() {
                             testStart_Ok();
                         }
-                    })
-                    .startAndMoveTo("theNonExistingTask");
+                    }, "theNonExistingTask")
+                    .startAndMove();
         } catch (IllegalArgumentException e) {
             exception = e;
         }
