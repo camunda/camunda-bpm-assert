@@ -13,19 +13,6 @@
 
     <packaging>jar</packaging>
 
-    <properties>
-        <camunda-bpm.version>7.0.0-SNAPSHOT</camunda-bpm.version>
-        <fest.assert.version>2.0M9</fest.assert.version>
-        <junit.version>4.11</junit.version>
-        <mockito.version>1.9.5</mockito.version>
-        <h2.version>1.3.162</h2.version>
-
-        <!-- Avoid the message "[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!" -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Avoid the message "[WARNING] Using platform encoding (UTF-8 actually) ... also for the failsafe plugin -->
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.camunda.bpm.incubation</groupId>
@@ -116,13 +103,13 @@
             <groupId>org.jboss.arquillian.junit</groupId>
             <artifactId>arquillian-junit-container</artifactId>
             <version>1.0.3.Final</version>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.jboss.as</groupId>
             <artifactId>jboss-as-arquillian-container-remote</artifactId>
             <version>7.1.3.Final</version>
-            <scope>provided</scope>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
