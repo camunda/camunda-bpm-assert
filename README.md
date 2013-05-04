@@ -138,6 +138,8 @@ public class JobAnnouncementTest {
 	}
 ```
 
+For the full test check [here](https://github.com/plexiti/the-job-announcement/blob/master/src/test/java/com/plexiti/camunda/bpm/showcase/jobannouncement/process/JobAnnouncementTest.java).
+
 ## How to Refactor Your Existing Tests to Use This Library
 
 This library supports three existing approaches to set up and execute your tests:
@@ -146,7 +148,7 @@ This library supports three existing approaches to set up and execute your tests
 * the JUnit `@Rule` mechanism
 * the `@RunWith(Arquillian.class)` to test within a container
 
-## Tests that use the JUnit `extends ProcessEngineTest` mechanism
+### Tests that use the JUnit `extends ProcessEngineTest` mechanism
 
 1. Add static import for `FluentProcessEngineTests.*`;
 1. Replace class your test class inherits from with `FluentProcessEngineTestCase`
@@ -175,7 +177,9 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 
 **IMPORTANT**: If you have a `setUp()` method in your test, make sure the very first thing this method does is `super.setUp()`!
 
-## Tests that use the JUnit `@Rule` mechanism
+For the full test check [here](https://github.com/camunda/camunda-bpm-fluent-testing/blob/master/camunda-bpm-fluent-integration-tests/src/test/java/org/camunda/bpm/engine/test/bpmn/usertask/TaskDueDateExtensionsTest.java).
+
+### Tests that use the JUnit `@Rule` mechanism
 
 1. Add static import for `FluentProcessEngineTests.*`;
 1. Add a `FluentProcessEngineTestRule` to your test class
@@ -211,7 +215,7 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 ...
 ```
 
-## Tests that use the Arquillian framework to test within a container
+### Tests that use the Arquillian framework to test within a container
 
 1. Add static import for `FluentProcessEngineTests.*`;
 1. Add a `FluentProcessEngineTestRule` to your test class
@@ -220,22 +224,17 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 ```java
 ...
 @RunWith(Arquillian.class)
-public class JobAnnouncementIT {
+public class ProcessDeploymentAndStartIT {
 
     @Deployment
     public static WebArchive createDeployment() {
-        MavenDependencyResolver resolver = DependencyResolvers.use(MavenDependencyResolver.class)
-            .goOffline()
-            .loadMetadataFromPom("pom.xml");
-
-        return ShrinkWrap.create(WebArchive.class, finalName)
-            .addAsLibraries(resolver.artifact("org.camunda.bpm:camunda-engine-cdi").resolveAsFiles())
-            .addAsLibraries(resolver.artifact("org.camunda.bpm.javaee:camunda-ejb-client").resolveAsFiles())
-            .addAsWebResource("META-INF/processes.xml", "WEB-INF/classes/META-INF/processes.xml");
+		...
     }
 
     @Test
-    public void testMethod() throws Exception { ... }
+    public void testDeploymentAndStartInstance() throws Exception { 
+    	...
+    }
 ...
 ```
 
@@ -243,23 +242,36 @@ do as follows:
 
 ```java
 ...
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.*;
+...
 @RunWith(Arquillian.class)
-public class JobAnnouncementIT {
+public class ProcessDeploymentAndStartIT {
 
     @Deployment
     public static WebArchive createDeployment() {
-        return prepareDeployment("job-announcement-test.war")
-            .addAsResource("com/plexiti/activiti/showcase/jobannouncement/process/job-announcement.bpmn")
-            .addAsResource("com/plexiti/activiti/showcase/jobannouncement/process/job-announcement-publication.bpmn");
+    	...
+        // add camunda BPM fluent testing dependency
+        .addAsLibraries(resolver.artifact("org.camunda.bpm.incubation:camunda-bpm-fluent-engine-api").resolveAsFiles())
+        .addAsLibraries(resolver.artifact("org.camunda.bpm.incubation:camunda-bpm-fluent-assertions").resolveAsFiles())
+		...
     }
 
     @Rule
     public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
 
     @Test
-    public void testMethod() throws Exception { ... }
+    public void testDeploymentAndStartInstance() throws InterruptedException {
+      newProcessInstance(JOBANNOUNCEMENT_PROCESS).start();
+      assertThat(processInstance()).isStarted();
+      System.out.println("Started process instance with id " + processInstance().getId());
+
+      assertThat(processInstance()).isWaitingAt(TASK_DESCRIBE_POSITION);
+    }
 ...
 ```
+
+For the full test check [here](https://github.com/plexiti/the-job-announcement/blob/master/src/test/java/com/plexiti/camunda/bpm/showcase/jobannouncement/process/ProcessDeploymentAndStartIT.java).
+
 
 # Projects using this library
 
