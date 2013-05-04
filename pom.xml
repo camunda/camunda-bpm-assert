@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.camunda.bpm.incubation</groupId>
-    <artifactId>camunda-bpm-fluent-tests</artifactId>
+    <artifactId>camunda-bpm-fluent-testing</artifactId>
     <version>0.4-SNAPSHOT</version>
 
     <packaging>pom</packaging>
