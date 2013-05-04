@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <camunda-bpm.version>7.0.0-SNAPSHOT</camunda-bpm.version>
+        <camunda-bpm.version>7.0.0-alpha3</camunda-bpm.version>
         <fest.assert.version>2.0M9</fest.assert.version>
         <junit.version>4.11</junit.version>
         <mockito.version>1.9.5</mockito.version>
