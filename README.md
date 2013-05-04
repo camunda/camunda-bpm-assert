@@ -1,26 +1,44 @@
-*We have submitted this project to the camunda BPM incubation space. You can follow the conversation on the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev).*
+**NOTE:** This project is part of the [camunda BPM incubation space](https://github.com/camunda/camunda-bpm-incubation). You can check the presentation of this project [camunda BPM dev list](https://groups.google.com/forum/#!msg/camunda-bpm-dev/m8VDRnZe55A/YsZ2QwnFOPcJ). Questions, issues, ideas, feedback, … are greatly appreciated and should be made the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev) list.
 
 # Introduction
 
-This library aims at easing testing when developing process applications based on [camunda BPM](http://camunda.org). We reach out to
+This library aims at improving test creation **and maintenance** when developing process applications based on [the camunda BPM platform](http://camunda.org). Specifically, it focuses on the following aspects:
 
 * ease the readability and maintainability of process model tests
-* make the writing of process model tests more fluent and more fun
+* make the creation of process model tests more fluent and, thus more fun!
 * make it easy to mock the services available to a process instance
 
 In particular the library
 
-* provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) API so you can focus on your process expert's domain knowledge while writing (and reading!) your tests
+* provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) API so you can focus on your process expert's domain knowledge while writing (and reading!) your tests:
 
 ```java
 ...
 assertThat(processInstance()).isWaitingAt("review");
 assertThat(processInstance().task()).isAssignedTo("piggie");
+processInstance().task().claim(USER_STAFF);
 processInstance().task().complete("approved", true);
 ...
 ```
 
-* allows you to directly "jump" to a specific process activity by fast-forwarding along an execution path of another test scenario
+* makes it very easy to mock services available to process instance and resolveable by UEL expressions used in its definition. Just use the [Mockito](http://code.google.com/p/mockito/) `@Mock` annotation and use the Mockito fluent API to define and verify your expectations:
+
+```java
+...
+@Mock
+public JobAnnouncementService jobAnnouncementService;
+@Mock
+public JobAnnouncement jobAnnouncement;
+...
+when(jobAnnouncementService.findRequester(1L)).thenReturn(USER_MANAGER);
+when(jobAnnouncementService.findEditor(1L)).thenReturn(USER_STAFF);
+...
+verify(jobAnnouncementService, times(2)).findRequester(jobAnnouncement.getId());
+verify(jobAnnouncementService).findEditor(jobAnnouncement.getId());
+verifyNoMoreInteractions(jobAnnouncementService);
+```
+
+* allows you to directly "jump" to a specific process activity by fast-forwarding along an execution path of another test scenario:
 
 ```java
 ...
@@ -29,20 +47,11 @@ newProcessInstance("job-announcement", new Move() {
         testHappyPath();
     }
 }).setVariable("jobAnnouncementId", jobAnnouncement.getId())
-.startAndMoveTo("review");
+  .startAndMoveTo("review");
 ...
 ``` 
 
-* makes it very easy to mock services available to process instance and resolveable by UEL expressions used in its definition. Just use the Mockito @Mock Annotation and you are done.
-
-```java
-...
-@Mock
-public JobAnnouncementService jobAnnouncementService;
-...
-```
-
-This project is a spin-off of [The Job Announcement](https://github.com/plexiti/the-job-announcement-fox), a showcase for a business process-centric application based on the [Java EE 6](http://www.oracle.com/technetwork/java/javaee/overview/index.html) technology stack and the [camunda BPM Platform](http://camunda.org). An online version of The Job Announcement can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/) and the source code on [GitHub](https://github.com/plexiti/the-job-announcement-fox).
+This project is a spin-off of [The Job Announcement](https://github.com/plexiti/the-job-announcement), a showcase for a business process-centric application based on the [Java EE 6](http://www.oracle.com/technetwork/java/javaee/overview/index.html) technology stack and the [camunda BPM Platform](http://camunda.org). An online version of The Job Announcement can be found at [http://the-job-announcement.com/](http://the-job-announcement.com/) and the source code on [GitHub](https://github.com/plexiti/the-job-announcement).
 
 This project leverages two great testing libraries
 
@@ -51,7 +60,57 @@ This project leverages two great testing libraries
 
 # How to use this library in your own project
 
+## Changes to your project's pom.xml
+
+Declare the camunda BPM repository and make sure you also add the `<updatePolicy>` element so maven always downloads the latest SNAPSHOT: 
+
+```xml
+<repositories>
+	<repository>
+		<id>camunda-bpm-nexus</id>
+		<name>camunda-bpm-nexus</name>
+		<url>https://app.camunda.com/nexus/content/groups/public</url>
+		<snapshots>
+			<updatePolicy>always</updatePolicy>
+		</snapshots>
+	</repository>
+</repositories>
+...
+```
+
+Add the following test dependencies:
+
+```xml
+<dependency>
+    <groupId>org.camunda.bpm.incubation</groupId>
+    <artifactId>camunda-bpm-fluent-assertions</artifactId>
+    <version>0.4-SNAPSHOT</version>
+    <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.camunda.bpm.incubation</groupId>
+    <artifactId>camunda-bpm-fluent-engine-api</artifactId>
+    <version>0.4-SNAPSHOT</version>
+    <scope>test</scope>
+</dependency>
+```
+
+**IMPORTANT**: since Maven uses [the "nearest" dependency resolution strategy by default](http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html), you should make sure that **if you declare JUnit in your project's POM, you should use at least `junit:junit:4.9`**, i.e.:
+
+```xml
+<dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.9</version>
+    <scope>test</scope>
+</dependency>
+```
+
+The reason is that this library leverages the [org.junit.rules.TestRule](https://github.com/junit-team/junit/blob/master/src/main/java/org/junit/rules/TestRule.java) interface introduced in JUnit 4.9.
+
 ## Greenfield Tests
+
+If you are creating a new test from scratch then this is the recommended approach:
 
 ```java
 ...
@@ -67,19 +126,15 @@ public class JobAnnouncementTest {
 
     @Rule
     public ProcessEngineRule activitiRule = new ProcessEngineRule();
-
     @Rule
     public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
-
     @Mock
     public JobAnnouncementService jobAnnouncementService;
 
 	@Test
 	@Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE })
 	public void testHappyPath() {
-	
-	...
-	
+		...
 	}
 ```
 
@@ -89,12 +144,12 @@ This library supports three existing approaches to set up and execute your tests
 
 * the JUnit `extends ProcessEngineTest` mechanism
 * the JUnit `@Rule` mechanism
-* the @RunWith(Arquillian.class) to test within a container
+* the `@RunWith(Arquillian.class)` to test within a container
 
 ## Tests that use the JUnit `extends ProcessEngineTest` mechanism
 
-1. Add static import for FluentProcessEngineTests.*;
-1. Replace class your test class inherits from with FluentProcessEngineTestCase
+1. Add static import for `FluentProcessEngineTests.*`;
+1. Replace class your test class inherits from with `FluentProcessEngineTestCase`
 
 Example:
 
@@ -117,12 +172,13 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
   public void testDueDateExtension() throws Exception { ... }
 ...
 ```
-NOTE: If you have a setUp() method in your test, make sure the very first thing this method does is `super.setUp()`!
+
+**IMPORTANT**: If you have a `setUp()` method in your test, make sure the very first thing this method does is `super.setUp()`!
 
 ## Tests that use the JUnit `@Rule` mechanism
 
-1. Add static import for FluentProcessEngineTests.*;
-1. Add a FluentProcessEngineTestRule to your test class
+1. Add static import for `FluentProcessEngineTests.*`;
+1. Add a `FluentProcessEngineTestRule` to your test class
 
 ```java
 ...
@@ -157,9 +213,9 @@ public class TaskDueDateExtensionsTest extends FluentProcessEngineTestCase {
 
 ## Tests that use the Arquillian framework to test within a container
 
-1. Add static import for FluentProcessEngineTests.*;
-1. Add a FluentProcessEngineTestRule to your test class
-1. Optionally consider to make use of convenience method FluentProcessEngineTests.prepareDeployment() 
+1. Add static import for `FluentProcessEngineTests.*`;
+1. Add a `FluentProcessEngineTestRule` to your test class
+1. **Optionally** consider to make use of convenience method `FluentProcessEngineTests.prepareDeployment()` 
 
 ```java
 ...
@@ -205,198 +261,12 @@ public class JobAnnouncementIT {
 ...
 ```
 
-# Examples
+# Projects using this library
 
-## Example: Job Announcement Test
-```java
-...
-public class JobAnnouncementTest {
+The following opens source projects are using the camunda BPM fluent testing library:
 
-    @Rule
-    public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-    @Rule
-    public FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
-
-    @Mock
-    public JobAnnouncementService jobAnnouncementService;
-	@Mock
-    public JobAnnouncement jobAnnouncement;
-
-	@Test
-	@Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE, JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
-	public void testHappyPath() {
-
-        /*
-         * Stub service and domain model methods
-         */
-		when(jobAnnouncement.getId()).thenReturn(1L);
-		when(jobAnnouncementService.findRequester(1L)).thenReturn(USER_MANAGER);
-		when(jobAnnouncementService.findEditor(1L)).thenReturn(USER_STAFF);
-
-        newProcessInstance(JOBANNOUNCEMENT_PROCESS)
-            .setVariable("jobAnnouncementId", jobAnnouncement.getId())
-            .start();
-
-		assertThat(processInstance())
-            .isStarted()
-            .isWaitingAt(TASK_DESCRIBE_POSITION);
-		assertThat(processInstance().task())
-            .hasCandidateGroup(ROLE_STAFF)
-            .isUnassigned();
-
-		processInstance().task().claim(USER_STAFF);
-
-		assertThat(processInstance().task())
-            .isAssignedTo(USER_STAFF);
-
-		processInstance().task().complete();
-
-		assertThat(processInstance())
-            .isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
-		assertThat(processInstance().task())
-            .isAssignedTo(USER_MANAGER);
-
-		processInstance().task().complete("approved", true);
-
-		assertThat(processInstance())
-            .isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
-		assertThat(processInstance().task())
-            .hasCandidateGroup(ROLE_STAFF)
-            .isUnassigned();
-
-		processInstance().task().claim(USER_STAFF);
-
-		assertThat(processInstance().task())
-            .isAssignedTo(USER_STAFF);
-
-		processInstance().task().complete("twitter", true, "facebook", true);
-
-        /*
-         * Verify expected behavior
-         */
-		verify(jobAnnouncementService).findRequester(jobAnnouncement.getId());
-		verify(jobAnnouncementService).postToWebsite(jobAnnouncement.getId());
-		verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
-		verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
-		verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
-
-		assertThat(processInstance())
-            .isFinished();
-
-		verifyNoMoreInteractions(jobAnnouncementService);
-	}
-
-	@Test
-    @Deployment(resources = { JOBANNOUNCEMENT_PROCESS_RESOURCE, JOBANNOUNCEMENT_PUBLICATION_PROCESS_RESOURCE })
-	public void testPositionDescriptionNeedsToBeCorrectedPath() {
-
-		when(jobAnnouncement.getId()).thenReturn(1L);
-
-        newProcessInstance(JOBANNOUNCEMENT_PROCESS, new Move() {
-            public void along() {
-                testHappyPath();
-            }
-        }).setVariable("jobAnnouncementId", jobAnnouncement.getId())
-        .startAndMoveTo(TASK_REVIEW_ANNOUNCEMENT);
-
-        assertThat(processInstance())
-            .isStarted()
-            .isWaitingAt(TASK_REVIEW_ANNOUNCEMENT);
-
-		processInstance().task().complete("approved", false);
-
-		assertThat(processInstance())
-            .isWaitingAt(TASK_CORRECT_ANNOUNCEMENT);
-		assertThat(processInstance().task())
-            .isAssignedTo(USER_STAFF);
-
-        processInstance().task().complete();
-		processInstance().task().complete("approved", true);
-
-		assertThat(processInstance())
-            .isWaitingAt(TASK_INITIATE_ANNOUNCEMENT);
-
-		verify(jobAnnouncementService, times(2)).findRequester(jobAnnouncement.getId());
-		verify(jobAnnouncementService).findEditor(jobAnnouncement.getId());
-		verifyNoMoreInteractions(jobAnnouncementService);
-	}
-}
-```
-
-## Example: Auction Process Test
-```java
-public class AuctionProcessTest extends FluentProcessEngineTestCase {
-
-    @Mock
-    public AuctionService auctionService;
-
-    @Mock
-    public TwitterPublishService twitterPublishService;
-
-    @Test
-    @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
-    public void testProcessDeployment() {
-       assertThat(processDefinition("Auction Process")).isDeployed();
-    }
-
-    @Test
-    @Deployment(resources = { "com/camunda/showcase/auction/auction-process.bpmn" })
-    public void testWalkThroughProcess() throws Exception {
-
-        // Set up test fixtures
-
-        final Auction auction = new Auction();
-        auction.setName("Cheap Ferrari!");
-        auction.setDescription("Ferrari Testarossa on sale!");
-        auction.setEndTime(new Date());
-
-        Mocks.register("auction", auction);
-
-        when(auctionService.createAuction((Auction) anyObject()))
-            .thenAnswer(new Answer() {
-                public Object answer(InvocationOnMock invocation) {
-                    auction.setId(1L);
-                    newProcessInstance("auction-process")
-                            .setVariable("auctionId", auction.getId())
-                            .start();
-                    return auction.getId();
-                }
-            });
-
-        doAnswer(new Answer() {
-            public Object answer(InvocationOnMock invocation) {
-                auction.setAuthorized(true);
-                processInstance().task().complete();
-                return null;
-            }
-        }).when(auctionService).authorizeAuction(anyString(), anyBoolean());
-
-        when(auctionService.locateHighestBidId(anyLong())).thenReturn(1L);
-
-        // Execute the test
-
-        auctionService.createAuction(auction);
-
-        assertThat(processInstance()).isStarted().isWaitingAt("authorizeAuction");
-        assertThat(processInstance().getVariable("auctionId")).exists().isDefined().asLong().isEqualTo(1);
-
-        auctionService.authorizeAuction(processInstance().task().getId(), true);
-
-        assertThat(processInstance()).isWaitingAt("IntermediateCatchEvent_1");
-
-        processInstance().job().execute();
-
-        assertThat(processInstance()).isWaitingAt("UserTask_2");
-
-        processInstance().task().complete();
-
-        assertThat(processInstance()).isFinished();
-
-    }
-
-}
-```
+* **The Job Announcement**: [https://github.com/plexiti/the-job-announcement](https://github.com/plexiti/the-job-announcement) 
 
 # Feedback
 
-Suggestions, pull requests, ... you name it... are very welcome!
+Suggestions, pull requests, ... you name it... are very welcome! Meet us on the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev) list.
