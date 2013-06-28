@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.camunda.bpm.incubation</groupId>
         <artifactId>camunda-bpm-fluent-testing</artifactId>
-        <version>0.4-SNAPSHOT</version>
+        <version>0.4</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>org.camunda.bpm.incubation</groupId>
             <artifactId>camunda-bpm-fluent-engine-api</artifactId>
-            <version>0.4-SNAPSHOT</version>
+            <version>0.4</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

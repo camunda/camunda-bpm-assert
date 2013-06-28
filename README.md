@@ -84,13 +84,13 @@ Add the following test dependencies:
 <dependency>
     <groupId>org.camunda.bpm.incubation</groupId>
     <artifactId>camunda-bpm-fluent-assertions</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4</version>
     <scope>test</scope>
 </dependency>
 <dependency>
     <groupId>org.camunda.bpm.incubation</groupId>
     <artifactId>camunda-bpm-fluent-engine-api</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.4</version>
     <scope>test</scope>
 </dependency>
 ```
