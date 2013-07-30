@@ -61,7 +61,7 @@
                 <version>2.4.1</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <tagNameFormat>${project.version}</tagNameFormat>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
                     <useReleaseProfile>true</useReleaseProfile>
                     <preparationGoals>clean verify</preparationGoals>
                     <releaseProfiles>release</releaseProfiles>
