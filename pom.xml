@@ -65,7 +65,6 @@
                     <tagNameFormat>@{project.version}</tagNameFormat>
                     <useReleaseProfile>true</useReleaseProfile>
                     <preparationGoals>clean verify</preparationGoals>
-                    <releaseProfiles>release</releaseProfiles>
                     <goals>deploy</goals>
                 </configuration>
             </plugin>
