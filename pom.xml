@@ -4,7 +4,7 @@
 
     <groupId>org.camunda.bpm.incubation</groupId>
     <artifactId>camunda-bpm-fluent-testing</artifactId>
-    <version>0.4</version>
+    <version>0.5-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -51,7 +51,7 @@
         <connection>scm:git:git@github.com:camunda/camunda-bpm-fluent-testing.git</connection>
         <url>scm:git:git@github.com:camunda/camunda-bpm-fluent-testing.git</url>
         <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-fluent-testing.git</developerConnection>
-      <tag>0.4</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <build>
