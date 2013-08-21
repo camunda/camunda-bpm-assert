@@ -95,11 +95,11 @@ public class SimpleDeploymentTest {
 	public void shouldStartAndRunAutomatically() {
 
 		// given
-		glue.startSimpleProcess();
-
-		// when
 		glue.loadContractData(true);
 		glue.processAutomatically(false);
+
+		// when
+		glue.startSimpleProcess();
 
 		// then
 		glue.assertEndEvent(Elements.EVENT_CONTRACT_PROCESSED);
