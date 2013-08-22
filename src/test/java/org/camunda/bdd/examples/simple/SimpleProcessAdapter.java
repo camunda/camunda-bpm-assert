@@ -9,7 +9,6 @@ public class SimpleProcessAdapter {
 	public boolean loadContractData() {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
-
 	public void processContract() {
 		throw new UnsupportedOperationException("Not implemented yet");
 	}
