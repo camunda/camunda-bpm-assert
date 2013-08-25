@@ -1,18 +1,13 @@
 package org.camunda.bdd.examples.simple.steps;
 
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.*;
 
 import javax.inject.Inject;
 
-import org.camunda.bdd.examples.simple.SimpleProcessAdapter;
 import org.camunda.bdd.examples.simple.SimpleProcess.Elements;
-import org.camunda.bpm.engine.history.HistoricActivityInstance;
+import org.camunda.bdd.examples.simple.SimpleProcessAdapter;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.test.CamundaSupport;
-import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.BeforeScenario;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
