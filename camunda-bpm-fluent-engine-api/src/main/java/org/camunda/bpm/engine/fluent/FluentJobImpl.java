@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class FluentJobImpl extends AbstractFluentDelegate<Job> implements FluentJob {
 
-    protected FluentJobImpl(FluentProcessEngine engine, Job delegate) {
+    protected FluentJobImpl(final FluentProcessEngine engine, final Job delegate) {
         super(engine, delegate);
     }
 
@@ -48,6 +48,11 @@ public class FluentJobImpl extends AbstractFluentDelegate<Job> implements Fluent
     public FluentJob execute() {
         engine.getManagementService().executeJob(getId());
         return this;
+    }
+
+    @Override
+    public String getDeploymentId() {
+        return delegate.getDeploymentId();
     }
 
 }

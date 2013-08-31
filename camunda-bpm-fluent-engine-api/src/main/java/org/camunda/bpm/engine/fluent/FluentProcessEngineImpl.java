@@ -11,7 +11,7 @@ public class FluentProcessEngineImpl extends AbstractFluentDelegate<ProcessEngin
     private FluentProcessDefinitionRepository processDefinitionRepository;
     private FluentProcessInstanceRepository processInstanceRepository;
 
-    public FluentProcessEngineImpl(ProcessEngine delegate) {
+    public FluentProcessEngineImpl(final ProcessEngine delegate) {
         super(null, delegate);
         this.engine = this;
         this.processDefinitionRepository = new FluentProcessDefinitionRepositoryImpl(this);
@@ -72,5 +72,10 @@ public class FluentProcessEngineImpl extends AbstractFluentDelegate<ProcessEngin
     public FluentProcessInstanceRepository getProcessInstanceRepository() {
         return processInstanceRepository;
     }
-    
+
+    @Override
+    public AuthorizationService getAuthorizationService() {
+        return delegate.getAuthorizationService();
+    }
+
 }

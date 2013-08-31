@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements FluentTask {
 
-    protected FluentTaskImpl(FluentProcessEngine engine, Task delegate) {
+    protected FluentTaskImpl(final FluentProcessEngine engine, final Task delegate) {
         super(engine, delegate);
     }
 
@@ -28,7 +28,7 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public void setName(String name) {
+    public void setName(final String name) {
         delegate.setName(name);
     }
 
@@ -38,7 +38,7 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         delegate.setDescription(description);
     }
 
@@ -48,7 +48,7 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public void setPriority(int priority) {
+    public void setPriority(final int priority) {
         delegate.setPriority(priority);
     }
 
@@ -58,7 +58,7 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public void setOwner(String owner) {
+    public void setOwner(final String owner) {
         delegate.setOwner(owner);
     }
 
@@ -68,7 +68,7 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public void setAssignee(String assignee) {
+    public void setAssignee(final String assignee) {
         delegate.setAssignee(assignee);
     }
 
@@ -78,7 +78,7 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public void setDelegationState(DelegationState delegationState) {
+    public void setDelegationState(final DelegationState delegationState) {
         delegate.setDelegationState(delegationState);
     }
 
@@ -113,17 +113,17 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(final Date dueDate) {
         delegate.setDueDate(dueDate);
     }
 
     @Override
-    public void delegate(String userId) {
+    public void delegate(final String userId) {
         delegate.delegate(userId);
     }
 
     @Override
-    public void setParentTaskId(String parentTaskId) {
+    public void setParentTaskId(final String parentTaskId) {
         delegate.setParentTaskId(parentTaskId);
     }
 
@@ -133,21 +133,26 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
     }
 
     @Override
-    public FluentTask claim(User user) {
+    public FluentTask claim(final User user) {
         claim(user.getId());
         return this;
     }
 
     @Override
-    public FluentTask claim(String userId) {
+    public FluentTask claim(final String userId) {
         engine.getTaskService().claim(delegate.getId(), userId);
         return this;
     }
 
     @Override
-    public FluentTask complete(Object... variables) {
+    public FluentTask complete(final Object... variables) {
         engine.getTaskService().complete(delegate.getId(), Maps.parseMap(variables));
         return this;
+    }
+
+    @Override
+    public boolean isSuspended() {
+        return delegate.isSuspended();
     }
 
 }
