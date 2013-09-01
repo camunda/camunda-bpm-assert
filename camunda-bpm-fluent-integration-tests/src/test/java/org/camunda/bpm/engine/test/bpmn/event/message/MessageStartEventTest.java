@@ -92,12 +92,12 @@ public class MessageStartEventTest extends PluggableProcessEngineTestCase {
         assertEquals(2, newProcessDefinitions.size());
         for (final ProcessDefinition processDefinition : newProcessDefinitions) {
             if (processDefinition.getVersion() == 1) {
-                for (final EventSubscriptionEntity subscription : newEventSubscriptions) {
-                    assertFalse(subscription.getConfiguration().equals(processDefinition.getId()));
+                for (final EventSubscription subscription : newEventSubscriptions) {
+                    assertFalse(((EventSubscriptionEntity)subscription).getConfiguration().equals(processDefinition.getId()));
                 }
             } else {
-                for (final EventSubscriptionEntity subscription : newEventSubscriptions) {
-                    assertTrue(subscription.getConfiguration().equals(processDefinition.getId()));
+                for (final EventSubscription subscription : newEventSubscriptions) {
+                    assertTrue(((EventSubscriptionEntity)subscription).getConfiguration().equals(processDefinition.getId()));
                 }
             }
         }

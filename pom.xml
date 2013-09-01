@@ -10,13 +10,13 @@
 
     <properties>
       <java.version>1.6</java.version>
-        <camunda-bpm.version>7.0.0-SNAPSHOT</camunda-bpm.version>
-        <fest.assert.version>2.0M9</fest.assert.version>
-        <!-- Minimum required JUnit required version since we are using org.junit.rules.TestRule -->
-        <junit.version>[4.9]</junit.version>
-        <mockito.version>1.9.5</mockito.version>
-	<hamcrest.version>1.3</hamcrest.version>
-        <h2.version>1.3.162</h2.version>
+      <camunda-bpm.version>7.0.0-Final</camunda-bpm.version>
+      <fest.assert.version>2.0M9</fest.assert.version>
+      <!-- Minimum required JUnit required version since we are using org.junit.rules.TestRule -->
+      <junit.version>[4.9]</junit.version>
+      <mockito.version>1.9.5</mockito.version>
+      <hamcrest.version>1.3</hamcrest.version>
+      <h2.version>1.3.162</h2.version>
 	
         <!-- Avoid the message "[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!" -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,7 +28,7 @@
     <modules>
         <module>camunda-bpm-fluent-engine-api</module>
         <module>camunda-bpm-fluent-assertions</module>
-        <module>camunda-bpm-fluent-integration-tests</module>
+        <!--<module>camunda-bpm-fluent-integration-tests</module>-->
     </modules>
 
     <repositories>
