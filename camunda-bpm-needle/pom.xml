@@ -1,0 +1,128 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+
+    <artifactId>camunda-bpm-needle</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <groupId>org.camunda.bpm.incubation</groupId>
+        <artifactId>camunda-bpm-testing</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <needle-mockito.version>1.0</needle-mockito.version>
+        <junit-mockito.version>1.0</junit-mockito.version>
+        <camunda.version>7.0.0-final</camunda.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.holisticon.toolbox</groupId>
+            <artifactId>needle-mockito</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.camunda.bpm.incubation</groupId>
+            <artifactId>camunda-bpm-fluent-assertions</artifactId>
+            <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.mockito</groupId>
+                    <artifactId>mockito-all</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.incubation</groupId>
+            <artifactId>camunda-bpm-fluent-engine-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <!-- process engine -->
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine</artifactId>
+            <version>${camunda.version}</version>
+        </dependency>
+        <dependency>
+            <!-- client for Java EE application server integration -->
+            <groupId>org.camunda.bpm.javaee</groupId>
+            <artifactId>camunda-ejb-client</artifactId>
+            <version>${camunda.version}</version>
+        </dependency>
+        <dependency>
+            <!-- CDI integration -->
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-cdi</artifactId>
+            <version>${camunda.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>14.0.1</version>
+        </dependency>
+
+
+        <dependency>
+            <!-- Java EE 6 Specification -->
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-web-6.0</artifactId>
+            <type>pom</type>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xalan</artifactId>
+                    <groupId>org.apache.xalan</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+    </dependencies>
+
+
+
+    <developers>
+        <developer>
+            <name>Jan Galinski</name>
+            <organization>Holisticon AG</organization>
+            <organizationUrl>http://holisticon.de</organizationUrl>
+        </developer>
+        <developer>
+            <name>Simon Zambrovski</name>
+            <organization>Holisticon AG</organization>
+            <organizationUrl>http://holisticon.de</organizationUrl>
+        </developer>
+    </developers>
+</project>
