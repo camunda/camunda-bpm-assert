@@ -17,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <needle-mockito.version>1.0</needle-mockito.version>
         <junit-mockito.version>1.0</junit-mockito.version>
-        <camunda.version>7.0.0-final</camunda.version>
+        <camunda.version>7.0.0-Final</camunda.version>
     </properties>
 
     <dependencies>
