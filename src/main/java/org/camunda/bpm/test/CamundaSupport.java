@@ -58,9 +58,9 @@ public class CamundaSupport {
    * @param processModelResources
    *          process definition file (BPMN)
    */
-  public void deploy(String... processModelResources) {
+  public void deploy(final String... processModelResources) {
     final DeploymentBuilder deploymentBuilder = processEngine.getRepositoryService().createDeployment();
-    for (String resource : processModelResources) {
+    for (final String resource : processModelResources) {
       deploymentBuilder.addClasspathResource(resource);
     }
     this.deploymentIds.add(deploymentBuilder.deploy().getId());
@@ -71,7 +71,7 @@ public class CamundaSupport {
    * Cleans up resources.
    */
   public void undeploy() {
-    for (String deploymentId : deploymentIds) {
+    for (final String deploymentId : deploymentIds) {
       processEngine.getRepositoryService().deleteDeployment(deploymentId, true);
     }
     Mocks.reset();
@@ -90,7 +90,7 @@ public class CamundaSupport {
   public ProcessInstance startProcessInstanceByKey(final String processDefinitionKey, final Map<String, Object> variables) {
     checkArgument(processDefinitionKey != null, "processDefinitionKey must not be null!");
 
-    FluentProcessInstance instance = FluentProcessEngineTests.newProcessInstance(processDefinitionKey);
+    final FluentProcessInstance instance = FluentProcessEngineTests.newProcessInstance(processDefinitionKey);
     if (variables != null) {
       instance.setVariables(variables);
     }
@@ -194,7 +194,7 @@ public class CamundaSupport {
    * 
    * @param values
    */
-  public void completeTask(Object... values) {
+  public void completeTask(final Object... values) {
     FluentProcessEngineTests.processInstance().task().complete(values);
   }
 
@@ -209,7 +209,7 @@ public class CamundaSupport {
    *          default value, if parsing fails.
    * @return true, if negation not found.
    */
-  public boolean parseStatement(final String negation, final String value, final boolean defaultValue) {
+  public static boolean parseStatement(final String negation, final String value, final boolean defaultValue) {
     if (value != null) {
       return !value.contains(negation);
     }

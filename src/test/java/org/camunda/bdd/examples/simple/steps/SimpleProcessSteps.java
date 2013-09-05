@@ -1,5 +1,6 @@
 package org.camunda.bdd.examples.simple.steps;
 
+import static org.camunda.bpm.test.CamundaSupport.parseStatement;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -10,7 +11,6 @@ import org.camunda.bdd.examples.simple.SimpleProcess.Events;
 import org.camunda.bdd.examples.simple.SimpleProcess.Variables;
 import org.camunda.bdd.examples.simple.SimpleProcessAdapter;
 import org.camunda.bpm.engine.delegate.BpmnError;
-import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.engine.test.mock.RegisterMock;
 import org.camunda.bpm.test.CamundaSupport;
 import org.jbehave.core.annotations.AfterScenario;
@@ -45,13 +45,13 @@ public class SimpleProcessSteps {
 
   @Given("the contract $verb automatically processible")
   public void loadContractDataAutomatically(final String verb) {
-    final boolean processingPossible = support.parseStatement("not", verb, false);
+    final boolean processingPossible = parseStatement("not", verb, false);
     when(simpleProcessAdapter.loadContractData()).thenReturn(processingPossible);
   }
 
   @Given("the contract processing $verb")
   public void processingAutomatically(final String verb) {
-    final boolean withErrors = support.parseStatement("succeeds", verb, false);
+    final boolean withErrors = parseStatement("succeeds", verb, false);
     if (withErrors) {
       doThrow(new BpmnError(Events.ERROR_PROCESS_AUTOMATICALLY_FAILED)).when(simpleProcessAdapter).processContract();
     }
@@ -74,7 +74,7 @@ public class SimpleProcessSteps {
 
   @When("the contract is processed $withoutErrors")
   public void processManuallys(final String withoutErrors) {
-    final boolean hasErrors = !support.parseStatement("with errors", withoutErrors, false);
+    final boolean hasErrors = !parseStatement("with errors", withoutErrors, false);
     support.completeTask(Variables.ARE_PROCESSING_ERRORS_PRESENT, Boolean.valueOf(hasErrors));
   }
 }
