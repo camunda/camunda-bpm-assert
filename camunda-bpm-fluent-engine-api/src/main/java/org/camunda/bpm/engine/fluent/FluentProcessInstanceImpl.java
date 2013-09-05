@@ -2,9 +2,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,10 +14,12 @@ package org.camunda.bpm.engine.fluent;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.fluent.support.Maps;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 /**
@@ -32,12 +32,18 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
 
     protected String processDefinitionKey;
     protected Map<String, Object> processVariables = new HashMap<String, Object>();
-    protected FluentProcessInstance.Move move = new FluentProcessInstance.Move() { public void along() {} };
+    protected FluentProcessInstance.Move move = new FluentProcessInstance.Move() {
 
-    public FluentProcessInstanceImpl(FluentProcessEngine engine, String processDefinitionKey) {
+        @Override
+        public void along() {
+        }
+    };
+
+    public FluentProcessInstanceImpl(final FluentProcessEngine engine, final String processDefinitionKey) {
         super(engine, null);
         this.processDefinitionKey = processDefinitionKey;
-        boolean processDefinitionKeyExists = !engine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).list().isEmpty();
+        final boolean processDefinitionKeyExists = !engine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey)
+                .list().isEmpty();
         if (!processDefinitionKeyExists)
             throw new IllegalArgumentException("Process Definition with processDefinitionKey '" + processDefinitionKey + "' is not deployed.");
     }
@@ -64,7 +70,8 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
 
     @Override
     public boolean isEnded() {
-        return delegate != null && engine.getRuntimeService().createExecutionQuery().processInstanceId(delegate.getId()).list().isEmpty() || delegate.isEnded();
+        return delegate != null && engine.getRuntimeService().createExecutionQuery().processInstanceId(delegate.getId()).list().isEmpty()
+                || delegate.isEnded();
     }
 
     @Override
@@ -82,33 +89,30 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
     @Override
     public FluentTask task() {
         if (delegate != null) {
-            List<Task> tasks = engine.getTaskService().createTaskQuery().processInstanceId(getProcessInstanceId()).list();
+            final List<Task> tasks = engine.getTaskService().createTaskQuery().processInstanceId(getProcessInstanceId()).list();
             if (tasks.size() > 1)
-                throw new IllegalStateException
-                        ("By calling task() you implicitly assumed that maximum one user task is currently waiting to be completed in the context " +
-                                "of this process instance. But instead " + tasks.size() + " tasks are currently waiting to be completed.");
-            if (tasks.size() == 1)
-                return new FluentTaskImpl(engine, tasks.get(0));
+                throw new IllegalStateException(
+                        "By calling task() you implicitly assumed that maximum one user task is currently waiting to be completed in the context "
+                                + "of this process instance. But instead " + tasks.size() + " tasks are currently waiting to be completed.");
+            if (tasks.size() == 1) return new FluentTaskImpl(engine, tasks.get(0));
         }
         return null;
     }
-    
 
     @Override
     public FluentJob job() {
         if (delegate != null) {
-            List<Job> jobs = engine.getManagementService().createJobQuery().processInstanceId(getProcessInstanceId()).list();
+            final List<Job> jobs = engine.getManagementService().createJobQuery().processInstanceId(getProcessInstanceId()).list();
             if (jobs.size() > 1)
-                throw new IllegalStateException
-                    ("By calling job() you implicitly assumed that maximum one job is currently waiting to be executed in the context " +
-                        "of this process instance. But instead " + jobs.size() + " jobs are currently waiting to be executed.");
-            if (jobs.size() == 1) 
-                return new FluentJobImpl(engine, jobs.get(0));
-            }
+                throw new IllegalStateException(
+                        "By calling job() you implicitly assumed that maximum one job is currently waiting to be executed in the context "
+                                + "of this process instance. But instead " + jobs.size() + " jobs are currently waiting to be executed.");
+            if (jobs.size() == 1) return new FluentJobImpl(engine, jobs.get(0));
+        }
         return null;
     }
 
-    public void moveAlong(FluentProcessInstance.Move move) {
+    public void moveAlong(final FluentProcessInstance.Move move) {
         this.move = move;
     }
 
@@ -117,36 +121,47 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
         Throwable expected = null;
         try {
             move.along();
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             expected = t;
         }
-        if (expected == null)
-            throw new IllegalArgumentException("Process could not be moved to the given activityId.");
+        if (expected == null) throw new IllegalArgumentException("Process could not be moved to the given activityId.");
         return this;
     }
 
     @Override
     public FluentProcessInstance start() {
         this.delegate = engine.getRuntimeService().startProcessInstanceByKey(processDefinitionKey, processVariables);
-        log.info("Started processInstance (definition key '" + processDefinitionKey + "', definition id: '" + delegate.getProcessDefinitionId() + "', instance id: '" + delegate.getId() + "').");
+        log.info("Started processInstance (definition key '" + processDefinitionKey + "', definition id: '" + delegate.getProcessDefinitionId()
+                + "', instance id: '" + delegate.getId() + "').");
         return this;
     }
 
     @Override
-    public FluentProcessInstance setVariable(String name, Object value) {
-        if (delegate == null)
-            this.processVariables.put(name, value);
+    public FluentProcessInstance setVariable(final String name, final Object value) {
+        if (delegate == null) this.processVariables.put(name, value);
         else
             engine.getRuntimeService().setVariable(getId(), name, value);
         return this;
     }
 
     @Override
-    public FluentProcessVariable getVariable(String name) {
-        Object value = delegate != null ? engine.getRuntimeService().getVariable(getId(), name) : processVariables.get(name);
-        if (value == null)
-            throw new IllegalArgumentException("Unable to find processVariable '" + name + "'");
+    public FluentProcessVariable getVariable(final String name) {
+        final Object value = delegate != null ? engine.getRuntimeService().getVariable(getId(), name) : processVariables.get(name);
+        if (value == null) throw new IllegalArgumentException("Unable to find processVariable '" + name + "'");
         return new FluentProcessVariableImpl(name, value);
+    }
+
+    @Override
+    public FluentProcessInstance setVariables(final Object... variables) {
+        return setVariables(Maps.parseMap(variables));
+    }
+
+    @Override
+    public FluentProcessInstance setVariables(final Map<String, Object> variables) {
+        for (final Entry<String, Object> variable : variables.entrySet()) {
+            setVariable(variable.getKey(), variable.getValue());
+        }
+        return this;
     }
 
 }
