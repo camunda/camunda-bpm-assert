@@ -42,24 +42,18 @@ public class SimpleProcessSteps {
     Mockito.reset(simpleProcessAdapter);
   }
 
-  @Given("the contract is automatically processible")
-  public void loadContractDataAutomatically() {
-    loadContractData(true);
+  @Given("the contract $verb automatically processible")
+  public void loadContractDataAutomatically(final String verb) {
+    final boolean processingPossible = support.parseStatement("not", verb, false);
+    when(simpleProcessAdapter.loadContractData()).thenReturn(processingPossible);
   }
 
-  @Given("the contract is not automatically processible")
-  public void loadContractDataNotAutomatically() {
-    loadContractData(false);
-  }
-
-  @Given("the contract processing succeeds")
-  public void processingSucceeds() {
-    processAutomatically(false);
-  }
-
-  @Given("the contract processing fails")
-  public void processingFails() {
-    processAutomatically(true);
+  @Given("the contract processing $verb")
+  public void processingAutomatically(final String verb) {
+    final boolean withErrors = support.parseStatement("succeeds", verb, false);
+    if (withErrors) {
+      doThrow(new BpmnError(Events.ERROR_PROCESS_AUTOMATICALLY_FAILED)).when(simpleProcessAdapter).processContract();
+    }
   }
 
   @Then("the contract is loaded")
@@ -72,28 +66,14 @@ public class SimpleProcessSteps {
     support.assertActivityVisitedOnce(Elements.SERVICE_PROCESS_CONTRACT_AUTOMATICALLY);
   }
 
-  public void loadContractData(final boolean isAutomatically) {
-    when(simpleProcessAdapter.loadContractData()).thenReturn(isAutomatically);
-  }
-
-  @Then("contract processing is cancelled")
+  @Then("the contract processing is cancelled")
   public void cancelledProcessing() {
     support.assertActivityVisitedOnce(Elements.SERVICE_CANCEL_PROCESSING);
   }
 
-  public void processAutomatically(final boolean withErrors) {
-    if (withErrors) {
-      doThrow(new BpmnError(Events.ERROR_PROCESS_AUTOMATICALLY_FAILED)).when(simpleProcessAdapter).processContract();
-    }
-  }
-
-  @When("contract is processed manually")
-  public void processManuallyWithSucess() {
-    support.completeTask(Variables.ARE_PROCESSING_ERRORS_PRESENT, Boolean.FALSE);
-  }
-
-  @When("contract is processed manually with errors")
-  public void processManuallyWithErrors() {
-    support.completeTask(Variables.ARE_PROCESSING_ERRORS_PRESENT, Boolean.TRUE);
+  @When("the contract is processed $withoutErrors")
+  public void processManuallys(final String withoutErrors) {
+    final boolean hasErrors = !support.parseStatement("with errors", withoutErrors, false);    
+    support.completeTask(Variables.ARE_PROCESSING_ERRORS_PRESENT, Boolean.valueOf(hasErrors));
   }
 }

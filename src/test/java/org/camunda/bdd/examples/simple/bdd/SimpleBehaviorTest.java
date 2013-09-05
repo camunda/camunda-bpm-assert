@@ -1,4 +1,4 @@
-package org.camunda.bdd.examples.simple;
+package org.camunda.bdd.examples.simple.bdd;
 
 import static org.jbehave.core.io.CodeLocations.codeLocationFromPath;
 

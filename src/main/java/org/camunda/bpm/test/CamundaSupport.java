@@ -198,4 +198,22 @@ public class CamundaSupport {
     FluentProcessEngineTests.processInstance().task().complete(values);
   }
 
+  /**
+   * Parses the verb and maps it to a boolean decision.
+   * 
+   * @param negation
+   *          a way how the verb is negated. (e.G. not)
+   * @param value
+   *          part of text containing the verb in regular or negated form.
+   * @param defaultValue
+   *          default value, if parsing fails.
+   * @return true, if negation not found.
+   */
+  public boolean parseStatement(final String negation, final String value, final boolean defaultValue) {
+    if (value != null) {
+      return !value.contains(negation);
+    }
+    return defaultValue;
+  }
+
 }

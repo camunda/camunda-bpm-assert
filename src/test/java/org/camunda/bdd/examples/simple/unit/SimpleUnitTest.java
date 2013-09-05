@@ -1,14 +1,20 @@
-package org.camunda.bdd.examples.simple;
+package org.camunda.bdd.examples.simple.unit;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import javax.inject.Inject;
 
+import org.camunda.bdd.examples.simple.SimpleProcess;
+import org.camunda.bdd.examples.simple.SimpleProcessAdapter;
+import org.camunda.bdd.examples.simple.SimpleProcess.Elements;
 import org.camunda.bdd.examples.simple.SimpleProcess.Events;
+import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
+import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.mock.Mocks;
@@ -32,18 +38,21 @@ public class SimpleUnitTest {
 
   class Glue {
 
+    private String processInstanceId;
+
     public void loadContractData(final boolean isAutomatically) {
       when(simpleProcessAdapter.loadContractData()).thenReturn(isAutomatically);
     }
 
     public void startSimpleProcess() {
-      final ProcessInstance startProcessInstance = processEngine.startProcessInstanceByKey(SimpleProcess.PROCESS);
-      assertNotNull(startProcessInstance);
+      final ProcessInstance processInstance = processEngine.startProcessInstanceByKey(SimpleProcess.PROCESS);
+      assertNotNull(processInstance);
+      processInstanceId = processInstance.getProcessInstanceId();
     }
 
     public void processAutomatically(final boolean withErrors) {
       if (withErrors) {
-        // simulate error event.
+        doThrow(new BpmnError(Events.ERROR_PROCESS_AUTOMATICALLY_FAILED)).when(simpleProcessAdapter).processContract();
       }
     }
 
@@ -69,6 +78,12 @@ public class SimpleUnitTest {
     private void assertEndEvent(final String name) {
       assertActivityVisitedOnce(name);
       processEngine.assertNoMoreRunningInstances();
+    }
+
+    public void waitsInManualProcessing() {
+      final Execution execution = processEngine.getRuntimeService().createExecutionQuery().processInstanceId(processInstanceId)
+          .activityId(Elements.TASK_PROCESS_MANUALLY).singleResult();
+      assertNotNull(execution);
     }
 
   }
@@ -100,4 +115,34 @@ public class SimpleUnitTest {
     // then
     glue.assertEndEvent(Events.EVENT_CONTRACT_PROCESSED);
   }
+
+  @Test
+  @Deployment(resources = SimpleProcess.BPMN)
+  public void shouldStartAndWaitForManual() {
+
+    // given
+    glue.loadContractData(false);
+
+    // when
+    glue.startSimpleProcess();
+
+    // then
+    glue.waitsInManualProcessing();
+  }
+
+  @Test
+  @Deployment(resources = SimpleProcess.BPMN)
+  public void shouldStartProcessAutomaticallyAndWaitForManual() {
+
+    // given
+    glue.loadContractData(true);
+    glue.processAutomatically(true);
+
+    // when
+    glue.startSimpleProcess();
+
+    // then
+    glue.waitsInManualProcessing();
+  }
+
 }
