@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="Definitions_1" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
+    <bpmn2:participant id="credit_application" name="Credit application" processRef="process_credit_application"/>
+  </bpmn2:collaboration>
+  <bpmn2:process id="process_credit_application" activiti:candidateStarterGroups="admin,frontoffice" name="Credit application" isExecutable="true">
+    <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
+      <bpmn2:lane id="lane_kundencenter" name="Customer service">
+        <bpmn2:flowNodeRef>sub_enter_credit_data</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>start_credit_application</bpmn2:flowNodeRef>
+      </bpmn2:lane>
+      <bpmn2:lane id="lane_backoffice" name="Backoffice">
+        <bpmn2:flowNodeRef>service_calculate_statement_of_costs</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>gateway_is_credit_application_approved</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service_check_if_manual_inspection_is_required</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>gateway_require_manual_inspection</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>task_show_applicationdata</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service_save_application_data_2</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>end_credit_application_is_approved</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>gateway_join_antrag_genehmigt</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>end_credit_application_is_not_approved</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service_check_if_credit_application_is_approved</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>task_inspect_credit_application</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service_calculate_credit_approval</bpmn2:flowNodeRef>
+      </bpmn2:lane>
+    </bpmn2:laneSet>
+    <bpmn2:subProcess id="sub_enter_credit_data" name="Enter credit data">
+      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_18</bpmn2:outgoing>
+      <bpmn2:startEvent id="start_daten_erfassen">
+        <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
+      </bpmn2:startEvent>
+      <bpmn2:sequenceFlow id="SequenceFlow_13" sourceRef="start_daten_erfassen" targetRef="task_enter_customer_data"/>
+      <bpmn2:userTask id="task_enter_customer_data" activiti:candidateGroups="admin,frontoffice" activiti:formKey="task_enter_customer_data" name="Enter customer data">
+        <bpmn2:extensionElements/>
+        <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
+        <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+      </bpmn2:userTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_14" sourceRef="task_enter_customer_data" targetRef="service_save_customer_data"/>
+      <bpmn2:serviceTask id="service_save_customer_data" activiti:expression="#{creditApplicationService.saveCustomerData()}" name="Save customer data">
+        <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
+        <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
+      </bpmn2:serviceTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_15" sourceRef="service_save_customer_data" targetRef="task_enter_application_data"/>
+      <bpmn2:userTask id="task_enter_application_data" activiti:candidateGroups="admin,frontoffice" activiti:formKey="task_enter_application_data" name="Enter application data">
+        <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+        <bpmn2:outgoing>SequenceFlow_16</bpmn2:outgoing>
+      </bpmn2:userTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_16" sourceRef="task_enter_application_data" targetRef="service_save_application_data"/>
+      <bpmn2:serviceTask id="service_save_application_data" activiti:expression="#{creditApplicationService.saveApplicationData()}" name="Save application data">
+        <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
+        <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
+      </bpmn2:serviceTask>
+      <bpmn2:sequenceFlow id="SequenceFlow_17" sourceRef="service_save_application_data" targetRef="end_daten_erfassen"/>
+      <bpmn2:endEvent id="end_daten_erfassen">
+        <bpmn2:incoming>SequenceFlow_17</bpmn2:incoming>
+      </bpmn2:endEvent>
+    </bpmn2:subProcess>
+    <bpmn2:sequenceFlow id="SequenceFlow_18" name="" sourceRef="sub_enter_credit_data" targetRef="service_calculate_statement_of_costs"/>
+    <bpmn2:serviceTask id="service_calculate_statement_of_costs" activiti:expression="#{financialService.calculateStatementOfCosts()}" name="Calculate statement of costs">
+      <bpmn2:incoming>SequenceFlow_18</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="service_calculate_statement_of_costs" targetRef="service_calculate_credit_approval"/>
+    <bpmn2:startEvent id="start_credit_application" name="customer&#xD;&#xA;wants credit">
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" sourceRef="start_credit_application" targetRef="sub_enter_credit_data"/>
+    <bpmn2:exclusiveGateway id="gateway_is_credit_application_approved" name="Is credit application approved?" default="SequenceFlow_is_credit_application_approved_no">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_is_credit_application_approved_yes</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_is_credit_application_approved_no</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_is_credit_application_approved_yes" name="Yes" sourceRef="gateway_is_credit_application_approved" targetRef="end_credit_application_is_approved">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">#{isCreditApplicationApproved}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_is_credit_application_approved_no" name="No" sourceRef="gateway_is_credit_application_approved" targetRef="end_credit_application_is_not_approved"/>
+    <bpmn2:serviceTask id="service_check_if_manual_inspection_is_required" activiti:expression="#{financialService.checkIfManualInspectionIsRequired()}" activiti:resultVariable="isManualInspection" name="Check if manual inspection is required">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="service_check_if_manual_inspection_is_required" targetRef="gateway_require_manual_inspection"/>
+    <bpmn2:exclusiveGateway id="gateway_require_manual_inspection" name="Require manual&#xD;&#xA;inspection?" default="SequenceFlow_require_manual_inspection_no">
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_require_manual_inspection_no</bpmn2:outgoing>
+      <bpmn2:outgoing>require_manual_inspection_yes</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_require_manual_inspection_no" name="No" sourceRef="gateway_require_manual_inspection" targetRef="task_show_applicationdata"/>
+    <bpmn2:sequenceFlow id="require_manual_inspection_yes" name="Yes" sourceRef="gateway_require_manual_inspection" targetRef="task_inspect_credit_application">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">#{isManualInspection}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:userTask id="task_show_applicationdata" activiti:formKey="antragsdaten_anzeigen" activiti:candidateGroups="admin,backoffice" name="Show application data (Info)">
+      <bpmn2:extensionElements/>
+      <bpmn2:incoming>SequenceFlow_require_manual_inspection_no</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="task_show_applicationdata" targetRef="gateway_join_antrag_genehmigt"/>
+    <bpmn2:serviceTask id="service_save_application_data_2" activiti:expression="#{creditApplicationService.saveApplicationData()}" name="Save application data">
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="service_save_application_data_2" targetRef="gateway_join_antrag_genehmigt"/>
+    <bpmn2:endEvent id="end_credit_application_is_approved" name="Credit application is approved">
+      <bpmn2:incoming>SequenceFlow_is_credit_application_approved_yes</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:exclusiveGateway id="gateway_join_antrag_genehmigt">
+      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_11</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="gateway_join_antrag_genehmigt" targetRef="service_check_if_credit_application_is_approved"/>
+    <bpmn2:endEvent id="end_credit_application_is_not_approved" name="Credit application is not approved">
+      <bpmn2:incoming>SequenceFlow_is_credit_application_approved_no</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:serviceTask id="service_check_if_credit_application_is_approved" activiti:expression="#{financialService.checkIfCreditApplicationIsApproved()}" activiti:resultVariable="isCreditApplicationApproved" name="Check if credit application is approved">
+      <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="service_check_if_credit_application_is_approved" targetRef="gateway_is_credit_application_approved"/>
+    <bpmn2:userTask id="task_inspect_credit_application" activiti:candidateGroups="admin,backoffice" activiti:formKey="antrag_genehmigen" name="Inspect credit application">
+      <bpmn2:incoming>require_manual_inspection_yes</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="task_inspect_credit_application" targetRef="service_save_application_data_2"/>
+    <bpmn2:serviceTask id="service_calculate_credit_approval" activiti:expression="#{financialService.calculateCreditApproval()}" name="Calculate credit approval">
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="service_calculate_credit_approval" targetRef="service_check_if_manual_inspection_is_required"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Collaboration Diagram">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="credit_application" isHorizontal="true">
+        <dc:Bounds height="677.0" width="1633.0" x="24.0" y="24.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_StartEvent_1" bpmnElement="start_credit_application">
+        <dc:Bounds height="36.0" width="36.0" x="108.0" y="147.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="40.0" width="85.0" x="84.0" y="188.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_EndEvent_1" bpmnElement="end_credit_application_is_approved">
+        <dc:Bounds height="36.0" width="36.0" x="1341.0" y="372.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_1">
+          <dc:Bounds height="23.0" width="197.0" x="1380.0" y="379.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_is_credit_application_approved_yes" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="BPMNShape_EndEvent_1">
+        <di:waypoint xsi:type="dc:Point" x="1225.0" y="458.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1225.0" y="390.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1341.0" y="390.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="23.0" width="31.0" x="1223.0" y="396.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_2" bpmnElement="lane_kundencenter" isHorizontal="true">
+        <dc:Bounds height="313.0" width="1603.0" x="54.0" y="24.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_Lane_4" bpmnElement="lane_backoffice" isHorizontal="true">
+        <dc:Bounds height="365.0" width="1603.0" x="54.0" y="336.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_4" bpmnElement="task_inspect_credit_application">
+        <dc:Bounds height="80.0" width="100.0" x="684.0" y="556.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_2" bpmnElement="gateway_is_credit_application_approved" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="1200.0" y="458.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="23.0" width="202.0" x="1249.0" y="473.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="end_credit_application_is_not_approved">
+        <dc:Bounds height="36.0" width="36.0" x="1341.0" y="545.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="23.0" width="221.0" x="1380.0" y="552.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_is_credit_application_approved_no" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="1225.0" y="508.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1225.0" y="563.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1341.0" y="563.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="23.0" width="24.0" x="1244.0" y="563.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_SubProcess_3" bpmnElement="sub_enter_credit_data" isExpanded="true">
+        <dc:Bounds height="193.0" width="817.0" x="192.0" y="68.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_14" bpmnElement="SequenceFlow_12" sourceElement="BPMNShape_StartEvent_1" targetElement="_BPMNShape_SubProcess_3">
+        <di:waypoint xsi:type="dc:Point" x="144.0" y="165.0"/>
+        <di:waypoint xsi:type="dc:Point" x="192.0" y="165.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="156.0" y="165.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="start_daten_erfassen">
+        <dc:Bounds height="36.0" width="36.0" x="224.0" y="145.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="242.0" y="186.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_6" bpmnElement="task_enter_customer_data">
+        <dc:Bounds height="80.0" width="100.0" x="310.0" y="123.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_15" bpmnElement="SequenceFlow_13" sourceElement="_BPMNShape_StartEvent_3" targetElement="_BPMNShape_UserTask_6">
+        <di:waypoint xsi:type="dc:Point" x="260.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="310.0" y="163.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="285.0" y="163.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_4" bpmnElement="service_save_customer_data">
+        <dc:Bounds height="80.0" width="100.0" x="460.0" y="123.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="SequenceFlow_14" sourceElement="_BPMNShape_UserTask_6" targetElement="_BPMNShape_ServiceTask_4">
+        <di:waypoint xsi:type="dc:Point" x="410.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="460.0" y="163.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="435.0" y="163.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_7" bpmnElement="task_enter_application_data">
+        <dc:Bounds height="80.0" width="100.0" x="610.0" y="123.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_17" bpmnElement="SequenceFlow_15" sourceElement="_BPMNShape_ServiceTask_4" targetElement="_BPMNShape_UserTask_7">
+        <di:waypoint xsi:type="dc:Point" x="560.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="610.0" y="163.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="585.0" y="163.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_5" bpmnElement="service_save_application_data">
+        <dc:Bounds height="80.0" width="100.0" x="760.0" y="123.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_18" bpmnElement="SequenceFlow_16" sourceElement="_BPMNShape_UserTask_7" targetElement="_BPMNShape_ServiceTask_5">
+        <di:waypoint xsi:type="dc:Point" x="710.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="760.0" y="163.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="735.0" y="163.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_4" bpmnElement="end_daten_erfassen">
+        <dc:Bounds height="36.0" width="36.0" x="910.0" y="145.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="928.0" y="186.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_19" bpmnElement="SequenceFlow_17" sourceElement="_BPMNShape_ServiceTask_5" targetElement="_BPMNShape_EndEvent_4">
+        <di:waypoint xsi:type="dc:Point" x="860.0" y="163.0"/>
+        <di:waypoint xsi:type="dc:Point" x="910.0" y="163.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="885.0" y="163.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_20" bpmnElement="SequenceFlow_18" sourceElement="_BPMNShape_SubProcess_3" targetElement="_BPMNShape_ServiceTask_6">
+        <di:waypoint xsi:type="dc:Point" x="1008.0" y="164.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1093.0" y="164.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1093.0" y="291.0"/>
+        <di:waypoint xsi:type="dc:Point" x="131.0" y="291.0"/>
+        <di:waypoint xsi:type="dc:Point" x="131.0" y="484.0"/>
+        <di:waypoint xsi:type="dc:Point" x="180.0" y="484.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="954.0" y="210.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_6" bpmnElement="service_calculate_statement_of_costs">
+        <dc:Bounds height="80.0" width="100.0" x="180.0" y="444.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_7" bpmnElement="service_save_application_data_2">
+        <dc:Bounds height="80.0" width="100.0" x="852.0" y="556.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_8" bpmnElement="service_check_if_manual_inspection_is_required">
+        <dc:Bounds height="80.0" width="100.0" x="444.0" y="444.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_3" bpmnElement="gateway_require_manual_inspection" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="588.0" y="458.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="40.0" width="120.0" x="553.0" y="420.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_ServiceTask_8" targetElement="_BPMNShape_ExclusiveGateway_3">
+        <di:waypoint xsi:type="dc:Point" x="544.0" y="484.0"/>
+        <di:waypoint xsi:type="dc:Point" x="588.0" y="483.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="569.0" y="483.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_require_manual_inspection_no" sourceElement="_BPMNShape_ExclusiveGateway_3" targetElement="_BPMNShape_UserTask_8">
+        <di:waypoint xsi:type="dc:Point" x="638.0" y="483.0"/>
+        <di:waypoint xsi:type="dc:Point" x="768.0" y="484.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="23.0" width="24.0" x="648.0" y="486.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="require_manual_inspection_yes" sourceElement="_BPMNShape_ExclusiveGateway_3" targetElement="_BPMNShape_UserTask_4">
+        <di:waypoint xsi:type="dc:Point" x="613.0" y="508.0"/>
+        <di:waypoint xsi:type="dc:Point" x="613.0" y="596.0"/>
+        <di:waypoint xsi:type="dc:Point" x="684.0" y="596.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="23.0" width="31.0" x="638.0" y="517.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_ServiceTask_6" targetElement="_BPMNShape_ServiceTask_10">
+        <di:waypoint xsi:type="dc:Point" x="280.0" y="484.0"/>
+        <di:waypoint xsi:type="dc:Point" x="315.0" y="484.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="247.0" y="516.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_8" bpmnElement="task_show_applicationdata">
+        <dc:Bounds height="80.0" width="100.0" x="768.0" y="444.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_4" bpmnElement="gateway_join_antrag_genehmigt" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="972.0" y="458.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="1078.0" y="395.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="SequenceFlow_8" sourceElement="_BPMNShape_UserTask_4" targetElement="_BPMNShape_ServiceTask_7">
+        <di:waypoint xsi:type="dc:Point" x="784.0" y="596.0"/>
+        <di:waypoint xsi:type="dc:Point" x="852.0" y="596.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="775.0" y="520.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_21" bpmnElement="SequenceFlow_9" sourceElement="_BPMNShape_ServiceTask_7" targetElement="_BPMNShape_ExclusiveGateway_4">
+        <di:waypoint xsi:type="dc:Point" x="952.0" y="596.0"/>
+        <di:waypoint xsi:type="dc:Point" x="997.0" y="596.0"/>
+        <di:waypoint xsi:type="dc:Point" x="997.0" y="508.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1114.0" y="560.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_22" bpmnElement="SequenceFlow_10" sourceElement="_BPMNShape_UserTask_8" targetElement="_BPMNShape_ExclusiveGateway_4">
+        <di:waypoint xsi:type="dc:Point" x="868.0" y="484.0"/>
+        <di:waypoint xsi:type="dc:Point" x="972.0" y="483.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="859.0" y="408.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_23" bpmnElement="SequenceFlow_11" sourceElement="_BPMNShape_ExclusiveGateway_4" targetElement="_BPMNShape_ServiceTask_9">
+        <di:waypoint xsi:type="dc:Point" x="1022.0" y="483.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1066.0" y="483.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1024.0" y="406.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_9" bpmnElement="service_check_if_credit_application_is_approved">
+        <dc:Bounds height="80.0" width="100.0" x="1066.0" y="443.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_ServiceTask_9" targetElement="_BPMNShape_ExclusiveGateway_2">
+        <di:waypoint xsi:type="dc:Point" x="1166.0" y="483.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1200.0" y="483.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1180.0" y="483.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_10" bpmnElement="service_calculate_credit_approval">
+        <dc:Bounds height="80.0" width="100.0" x="315.0" y="444.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ServiceTask_10" targetElement="_BPMNShape_ServiceTask_8">
+        <di:waypoint xsi:type="dc:Point" x="415.0" y="484.0"/>
+        <di:waypoint xsi:type="dc:Point" x="444.0" y="484.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
