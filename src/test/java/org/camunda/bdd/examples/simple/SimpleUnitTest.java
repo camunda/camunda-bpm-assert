@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import javax.inject.Inject;
 
-import org.camunda.bdd.examples.simple.SimpleProcess.Elements;
+import org.camunda.bdd.examples.simple.SimpleProcess.Events;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
@@ -95,6 +95,6 @@ public class SimpleUnitTest {
         glue.startSimpleProcess();
 
         // then
-        glue.assertEndEvent(Elements.EVENT_CONTRACT_PROCESSED);
+        glue.assertEndEvent(Events.EVENT_CONTRACT_PROCESSED);
     }
 }

@@ -1,11 +1,12 @@
 package org.camunda.bpm.test;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,12 +17,11 @@ import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.impl.test.TestHelper;
 import org.camunda.bpm.engine.impl.util.ClockUtil;
 import org.camunda.bpm.engine.repository.DeploymentBuilder;
-import org.camunda.bpm.engine.runtime.Execution;
-import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier;
+import org.hamcrest.collection.IsEmptyCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -142,7 +142,7 @@ public class CamundaSupport {
 	public static CamundaSupport getInstance() {
 		if (instance == null) {
 			instance = new CamundaSupport();
-			logger.info("Camunda Support created.");
+			logger.debug("Camunda Support created.");
 		}
 		return instance;
 	}
@@ -174,16 +174,7 @@ public class CamundaSupport {
 	 * @return process variables.
 	 */
 	public Map<String, Object> getProcessVariables() {
-		final ExecutionQuery eQuery = getProcessEngine().getRuntimeService().createExecutionQuery().processInstanceId(getProcessInstance().getId());
-		final Execution execution;
-		if (eQuery.count() == 1) {
-			execution = eQuery.singleResult();
-		} else {
-			// hack
-			execution = eQuery.list().get(0);
-		}
-		assertNotNull(execution);
-		return getProcessEngine().getRuntimeService().getVariables(execution.getId());
+		return getProcessVariables();
 	}
 
 	/**
@@ -193,11 +184,17 @@ public class CamundaSupport {
 	 *            activity name.
 	 */
 	public void assertActivityVisitedOnce(final String id) {
-		final HistoricActivityInstance singleResult = getProcessEngine().getHistoryService().createHistoricActivityInstanceQuery().finished().activityId(id)
-				.singleResult();
-		assertThat("activity '" + id + "' not found!", singleResult, notNullValue());
+		final List<HistoricActivityInstance> visits = getProcessEngine().getHistoryService().createHistoricActivityInstanceQuery().finished().activityId(id)
+				.list();
+		assertThat("activity '" + id + "' not found!", visits, notNullValue());
+		assertThat("activity '" + id + "' not found!", visits, not(IsEmptyCollection.empty()));
 	}
 
+	/**
+	 * finishes a task.
+	 * 
+	 * @param values
+	 */
 	public void completeTask(Object... values) {
 		FluentProcessEngineTests.processInstance().task().complete(values);
 	}
