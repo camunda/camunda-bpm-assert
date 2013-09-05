@@ -27,14 +27,14 @@ import org.junit.runner.RunWith;
 @UsingNeedle(provider = { CamundaSupportInjectionProvider.class })
 public class SimpleBehaviorTest extends InjectableEmbedder {
 
-    @Override
-    @Test
-    public void run() {
-        injectedEmbedder().runStoriesAsPaths(storyPaths());
-    }
+  @Override
+  @Test
+  public void run() {
+    injectedEmbedder().runStoriesAsPaths(storyPaths());
+  }
 
-    protected List<String> storyPaths() {
-        return new StoryFinder().findPaths(codeLocationFromPath("src/test/resources"), "**/*.story", "");
-    }
+  protected List<String> storyPaths() {
+    return new StoryFinder().findPaths(codeLocationFromPath("src/test/resources"), "**/*.story", "");
+  }
 
 }

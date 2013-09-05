@@ -35,168 +35,167 @@ import com.google.common.collect.Sets;
  */
 public class CamundaSupport {
 
-	/**
-	 * Singleton instance.
-	 */
-	private static CamundaSupport instance;
+  /**
+   * Singleton instance.
+   */
+  private static CamundaSupport instance;
 
-	private static final Logger logger = LoggerFactory.getLogger(CamundaSupport.class);
-	private final Set<String> deploymentIds = Sets.newHashSet();
-	private ProcessEngine processEngine;
-	private Date startTime;
+  private static final Logger logger = LoggerFactory.getLogger(CamundaSupport.class);
+  private final Set<String> deploymentIds = Sets.newHashSet();
+  private ProcessEngine processEngine;
+  private Date startTime;
 
-	/**
-	 * Private constructor to avoid direct instantiation.
-	 */
-	private CamundaSupport() {
-		this.processEngine = TestHelper.getProcessEngine(CamundaInstancesSupplier.CAMUNDA_CONFIG_RESOURCE);
-	}
+  /**
+   * Private constructor to avoid direct instantiation.
+   */
+  private CamundaSupport() {
+    this.processEngine = TestHelper.getProcessEngine(CamundaInstancesSupplier.CAMUNDA_CONFIG_RESOURCE);
+  }
 
-	/**
-	 * Checks deployment of the process definition.
-	 * 
-	 * @param processModelResources
-	 *            process definition file (BPMN)
-	 */
-	public void deploy(String... processModelResources) {
-		final DeploymentBuilder deploymentBuilder = processEngine.getRepositoryService().createDeployment();
-		for (String resource : processModelResources) {
-			deploymentBuilder.addClasspathResource(resource);
-		}
-		this.deploymentIds.add(deploymentBuilder.deploy().getId());
-		getStartTime();
-	}
+  /**
+   * Checks deployment of the process definition.
+   * 
+   * @param processModelResources
+   *          process definition file (BPMN)
+   */
+  public void deploy(String... processModelResources) {
+    final DeploymentBuilder deploymentBuilder = processEngine.getRepositoryService().createDeployment();
+    for (String resource : processModelResources) {
+      deploymentBuilder.addClasspathResource(resource);
+    }
+    this.deploymentIds.add(deploymentBuilder.deploy().getId());
+    getStartTime();
+  }
 
-	/**
-	 * Cleans up resources.
-	 */
-	public void undeploy() {
-		for (String deploymentId : deploymentIds) {
-			processEngine.getRepositoryService().deleteDeployment(deploymentId, true);
-		}
-		Mocks.reset();
-	}
+  /**
+   * Cleans up resources.
+   */
+  public void undeploy() {
+    for (String deploymentId : deploymentIds) {
+      processEngine.getRepositoryService().deleteDeployment(deploymentId, true);
+    }
+    Mocks.reset();
+  }
 
-	/**
-	 * Starts process by process definition key with given payload.
-	 * 
-	 * @param processDefinitionKey
-	 *            process definition keys.
-	 * @param variables
-	 *            maps of initial payload variables.
-	 * @return process instance
-	 * @see RuntimeService#startProcessInstanceByKey(String, Map)
-	 */
-	public ProcessInstance startProcessInstanceByKey(final String processDefinitionKey, final Map<String, Object> variables) {
-		checkArgument(processDefinitionKey != null, "processDefinitionKey must not be null!");
+  /**
+   * Starts process by process definition key with given payload.
+   * 
+   * @param processDefinitionKey
+   *          process definition keys.
+   * @param variables
+   *          maps of initial payload variables.
+   * @return process instance
+   * @see RuntimeService#startProcessInstanceByKey(String, Map)
+   */
+  public ProcessInstance startProcessInstanceByKey(final String processDefinitionKey, final Map<String, Object> variables) {
+    checkArgument(processDefinitionKey != null, "processDefinitionKey must not be null!");
 
-		FluentProcessInstance instance = FluentProcessEngineTests.newProcessInstance(processDefinitionKey);
-		if (variables != null) {
-			instance.setVariables(variables);
-		}
-		return instance.start().getDelegate();
-	}
+    FluentProcessInstance instance = FluentProcessEngineTests.newProcessInstance(processDefinitionKey);
+    if (variables != null) {
+      instance.setVariables(variables);
+    }
+    return instance.start().getDelegate();
+  }
 
-	/**
-	 * Starts process by process definition key.
-	 * 
-	 * @param processDefinitionKey
-	 *            process definition keys.
-	 * @return process instance
-	 */
-	public ProcessInstance startProcessInstanceByKey(final String processDefinitionKey) {
-		return startProcessInstanceByKey(processDefinitionKey, null);
-	}
+  /**
+   * Starts process by process definition key.
+   * 
+   * @param processDefinitionKey
+   *          process definition keys.
+   * @return process instance
+   */
+  public ProcessInstance startProcessInstanceByKey(final String processDefinitionKey) {
+    return startProcessInstanceByKey(processDefinitionKey, null);
+  }
 
-	/**
-	 * Retrieves the process instance.
-	 * 
-	 * @return running process instance.
-	 */
-	public ProcessInstance getProcessInstance() {
-		return FluentProcessEngineTests.processInstance();
-	}
+  /**
+   * Retrieves the process instance.
+   * 
+   * @return running process instance.
+   */
+  public ProcessInstance getProcessInstance() {
+    return FluentProcessEngineTests.processInstance();
+  }
 
-	/**
-	 * Sets time.
-	 * 
-	 * @param currentTime
-	 *            sets current time in the engine
-	 */
-	public void setCurrentTime(final Date currentTime) {
-		ClockUtil.setCurrentTime(currentTime);
-	}
+  /**
+   * Sets time.
+   * 
+   * @param currentTime
+   *          sets current time in the engine
+   */
+  public void setCurrentTime(final Date currentTime) {
+    ClockUtil.setCurrentTime(currentTime);
+  }
 
-	/**
-	 * Resets process engine clock.
-	 */
-	public void resetClock() {
-		ClockUtil.reset();
-	}
+  /**
+   * Resets process engine clock.
+   */
+  public void resetClock() {
+    ClockUtil.reset();
+  }
 
-	/**
-	 * Retrieves camunda support instance.
-	 * 
-	 * @return singleton instance.
-	 */
-	public static CamundaSupport getInstance() {
-		if (instance == null) {
-			instance = new CamundaSupport();
-			logger.debug("Camunda Support created.");
-		}
-		return instance;
-	}
+  /**
+   * Retrieves camunda support instance.
+   * 
+   * @return singleton instance.
+   */
+  public static CamundaSupport getInstance() {
+    if (instance == null) {
+      instance = new CamundaSupport();
+      logger.debug("Camunda Support created.");
+    }
+    return instance;
+  }
 
-	/**
-	 * Retrieves activiti process engine.
-	 * 
-	 * @return process engine.
-	 */
-	public ProcessEngine getProcessEngine() {
-		return processEngine;
-	}
+  /**
+   * Retrieves activiti process engine.
+   * 
+   * @return process engine.
+   */
+  public ProcessEngine getProcessEngine() {
+    return processEngine;
+  }
 
-	/**
-	 * Retrieves start time.
-	 * 
-	 * @return time of deployment.
-	 */
-	public Date getStartTime() {
-		if (this.startTime == null) {
-			this.startTime = new Date();
-		}
-		return this.startTime;
-	}
+  /**
+   * Retrieves start time.
+   * 
+   * @return time of deployment.
+   */
+  public Date getStartTime() {
+    if (this.startTime == null) {
+      this.startTime = new Date();
+    }
+    return this.startTime;
+  }
 
-	/**
-	 * Retrieves process variables of running instance.
-	 * 
-	 * @return process variables.
-	 */
-	public Map<String, Object> getProcessVariables() {
-		return getProcessVariables();
-	}
+  /**
+   * Retrieves process variables of running instance.
+   * 
+   * @return process variables.
+   */
+  public Map<String, Object> getProcessVariables() {
+    return getProcessVariables();
+  }
 
-	/**
-	 * Checks historic execution.
-	 * 
-	 * @param id
-	 *            activity name.
-	 */
-	public void assertActivityVisitedOnce(final String id) {
-		final List<HistoricActivityInstance> visits = getProcessEngine().getHistoryService().createHistoricActivityInstanceQuery().finished().activityId(id)
-				.list();
-		assertThat("activity '" + id + "' not found!", visits, notNullValue());
-		assertThat("activity '" + id + "' not found!", visits, not(IsEmptyCollection.empty()));
-	}
+  /**
+   * Checks historic execution.
+   * 
+   * @param id
+   *          activity name.
+   */
+  public void assertActivityVisitedOnce(final String id) {
+    final List<HistoricActivityInstance> visits = getProcessEngine().getHistoryService().createHistoricActivityInstanceQuery().finished().activityId(id).list();
+    assertThat("activity '" + id + "' not found!", visits, notNullValue());
+    assertThat("activity '" + id + "' not found!", visits, not(IsEmptyCollection.empty()));
+  }
 
-	/**
-	 * finishes a task.
-	 * 
-	 * @param values
-	 */
-	public void completeTask(Object... values) {
-		FluentProcessEngineTests.processInstance().task().complete(values);
-	}
+  /**
+   * finishes a task.
+   * 
+   * @param values
+   */
+  public void completeTask(Object... values) {
+    FluentProcessEngineTests.processInstance().task().complete(values);
+  }
 
 }
