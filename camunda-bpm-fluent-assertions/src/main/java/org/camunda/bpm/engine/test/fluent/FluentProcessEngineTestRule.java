@@ -21,11 +21,10 @@ import org.junit.runners.model.Statement;
 public class FluentProcessEngineTestRule implements TestRule {
 
     private Object test;
-    private FluentProcessEngine engine;
+    private FluentProcessEngine engine = null;
 
     public FluentProcessEngineTestRule(final Object test) {
         this.test = test;
-        engine = getEngine();
     }
 
     @Override
@@ -47,7 +46,7 @@ public class FluentProcessEngineTestRule implements TestRule {
     }
 
     public void before() {
-        FluentProcessEngineTests.before(engine);
+        FluentProcessEngineTests.before(getEngine());
         FluentMocks.before(test);
     }
 
@@ -64,18 +63,23 @@ public class FluentProcessEngineTestRule implements TestRule {
                 final ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
                 return new FluentProcessEngineImpl(processEngine);
             } catch (final ProcessEngineException e) {
+                // fallthrough
             }
             if (test instanceof ProcessEngineTestCase) {
                 return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase)test).getConfigurationResource()));
             } else {
                 try {
-                    return engine = new FluentProcessEngineImpl(((ProcessEngineRule)Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(
-                            test)).getProcessEngine());
+                    ProcessEngineRule processEngineRule = (ProcessEngineRule)Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test);
+                    if (processEngineRule == null) {
+                        // TODO default config name only
+                        processEngineRule = new ProcessEngineRule();
+                    }
+
+                    return engine = new FluentProcessEngineImpl(processEngineRule.getProcessEngine());
                 } catch (final IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
             }
         }
     }
-
 }
