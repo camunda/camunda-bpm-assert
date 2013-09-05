@@ -23,11 +23,17 @@
             <artifactId>camunda-bpm-needle</artifactId>
             <version>${camunda-bpm-needle.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.jbehave</groupId>
             <artifactId>jbehave-needle</artifactId>
             <version>${jbehave.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>jbehave-junit-runner</artifactId>
+            <version>1.0.1</version>
         </dependency>
 
     </dependencies>

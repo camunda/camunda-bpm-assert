@@ -59,7 +59,7 @@
     <bpmn2:sequenceFlow id="flow_is_processed_yes" name="Yes" sourceRef="exclusive_is_processed" targetRef="ExclusiveGateway_2"/>
     <bpmn2:boundaryEvent id="event_processing_error" name="Processing&#xD;&#xA;error&#xD;&#xA;occured" attachedToRef="service_process_contract_automatically">
       <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
-      <bpmn2:errorEventDefinition id="ErrorEventDefinition_1"/>
+      <bpmn2:errorEventDefinition id="ErrorEventDefinition_1" errorRef="Error_1"/>
     </bpmn2:boundaryEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="event_processing_error" targetRef="task_process_contract_manually"/>
     <bpmn2:serviceTask id="service_cancel_contract_processing" activiti:expression="#{simpleProcessAdapter.cancelProcessing()}" name="Cancel&#xD;&#xA;contract&#xD;&#xA;processing">
@@ -68,6 +68,7 @@
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="service_cancel_contract_processing" targetRef="event_processing_cancelled"/>
   </bpmn2:process>
+  <bpmn2:error id="Error_1" errorCode="errorProcessAutomaticallyFailed" name="errorProcessAutomaticallyFailed"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_2">
       <bpmndi:BPMNShape id="_BPMNShape_Participant_2" bpmnElement="simple_process" isHorizontal="true">

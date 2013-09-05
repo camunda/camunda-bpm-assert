@@ -16,64 +16,63 @@ import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Generic Camunda Steps.
- * 
  * @author Simon Zambrovski, Holisticon AG.
  */
 public class CamundaSteps {
 
-	private static final Logger LOG = LoggerFactory.getLogger(CamundaSteps.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CamundaSteps.class);
 
-	@Inject
-	private CamundaSupport support;
+    @Inject
+    private CamundaSupport support;
 
-	/**
-	 * Clean up all resources.
-	 */
-	@AfterScenario
-	public void cleanUp() {
-		LOG.info("Cleaning up.");
-		Mocks.reset();
-		support.undeploy();
-		support.resetClock();
-	}
+    /**
+     * Clean up all resources.
+     */
+    @AfterScenario
+    public void cleanUp() {
+        LOG.info("Cleaning up.");
+        Mocks.reset();
+        support.undeploy();
+        support.resetClock();
+    }
 
-	@Given("the process definition \"$processDefinition\"")
-	public void deployProcess(final String processDefinition) {
-		support.deploy(processDefinition);
-	}
+    @Given("the process definition \"$processDefinition\"")
+    public void deployProcess(final String processDefinition) {
+        support.deploy(processDefinition);
+    }
 
-	@When("the process \"$processKey\" is started")
-	public void startSimpleProcess(final String processKey) {
-		final ProcessInstance processInstance = support.startProcessInstanceByKey(processKey);
-		assertNotNull(processInstance);
-	}
+    @When("the process \"$processKey\" is started")
+    public void startSimpleProcess(final String processKey) {
+        final ProcessInstance processInstance = support.startProcessInstanceByKey(processKey);
+        assertNotNull(processInstance);
+    }
 
-	/**
-	 * Process is finished.
-	 */
-	@Then("the process is finished")
-	public void processIsFinished() {
-		assertThat(support.getProcessEngine().getRuntimeService().createProcessInstanceQuery().active().count(), is(0L));
-		LOG.info("Process finished.");
-	}
+    /**
+     * Process is finished.
+     */
+    @Then("the process is finished")
+    public void processIsFinished() {
+        assertThat(support.getProcessEngine().getRuntimeService().createProcessInstanceQuery().active().count(), is(0L));
+        LOG.info("Process finished.");
+    }
 
-	/**
-	 * Process step reached.
-	 * 
-	 * @param stepName
-	 *            name of the step to reach.
-	 */
-	@Then("the step \"$stepName\" is reached")
-	@When("the step \"$stepName\" is reached")
-	public void stepIsReached(String stepName) {
-		final Execution execution = support.getProcessEngine().getRuntimeService().createExecutionQuery()
-				.processInstanceId(support.getProcessInstance().getId()).activityId(stepName).singleResult();
-		assertNotNull(execution);
-		LOG.info("Step reached {}", stepName);
-	}
+    /**
+     * Process step reached.
+     * @param activityId
+     *        name of the step to reach.
+     */
+    @Then("the step \"$activityId\" is reached")
+    @When("the step \"$activityId\" is reached")
+    public void stepIsReached(final String activityId) {
+        final Execution execution = support.getProcessEngine().getRuntimeService().createExecutionQuery()
+                .processInstanceId(support.getProcessInstance().getId()).activityId(activityId).singleResult();
+        assertNotNull(execution);
+        LOG.info("Step reached {}", activityId);
+    }
 }
