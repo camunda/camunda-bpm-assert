@@ -24,5 +24,10 @@
             <artifactId>camunda-engine</artifactId>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>de.holisticon.dependencies</groupId>
+            <artifactId>junit-mockito</artifactId>
+            <type>pom</type>
+        </dependency>
     </dependencies>
 </project>

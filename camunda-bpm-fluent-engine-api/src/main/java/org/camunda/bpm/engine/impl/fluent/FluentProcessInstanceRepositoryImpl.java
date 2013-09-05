@@ -1,4 +1,9 @@
-package org.camunda.bpm.engine.fluent;
+package org.camunda.bpm.engine.impl.fluent;
+
+import org.camunda.bpm.engine.fluent.AbstractFluentProcessEngineAware;
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
+import org.camunda.bpm.engine.fluent.FluentProcessInstance;
+import org.camunda.bpm.engine.fluent.FluentProcessInstanceRepository;
 
 
 /**

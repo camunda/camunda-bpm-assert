@@ -1,6 +1,10 @@
-package org.camunda.bpm.engine.fluent;
+package org.camunda.bpm.engine.impl.fluent;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.fluent.AbstractFluentDelegate;
+import org.camunda.bpm.engine.fluent.FluentProcessDefinitionRepository;
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
+import org.camunda.bpm.engine.fluent.FluentProcessInstanceRepository;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -13,7 +17,6 @@ public class FluentProcessEngineImpl extends AbstractFluentDelegate<ProcessEngin
 
     public FluentProcessEngineImpl(final ProcessEngine delegate) {
         super(null, delegate);
-        this.engine = this;
         this.processDefinitionRepository = new FluentProcessDefinitionRepositoryImpl(this);
         this.processInstanceRepository = new FluentProcessInstanceRepositoryImpl(this);
     }

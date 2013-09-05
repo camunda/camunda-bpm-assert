@@ -1,5 +1,8 @@
-package org.camunda.bpm.engine.fluent;
+package org.camunda.bpm.engine.impl.fluent;
 
+import org.camunda.bpm.engine.fluent.AbstractFluentDelegate;
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
+import org.camunda.bpm.engine.fluent.FluentTask;
 import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.task.DelegationState;
 import org.camunda.bpm.engine.task.Task;

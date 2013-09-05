@@ -9,8 +9,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.camunda.bpm.engine.fluent;
+package org.camunda.bpm.engine.impl.fluent;
 
+import org.camunda.bpm.engine.fluent.AbstractFluentDelegate;
+import org.camunda.bpm.engine.fluent.FluentJob;
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
+import org.camunda.bpm.engine.fluent.FluentProcessInstance;
+import org.camunda.bpm.engine.fluent.FluentProcessVariable;
+import org.camunda.bpm.engine.fluent.FluentTask;
+import org.camunda.bpm.engine.fluent.FluentProcessInstance.Move;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
@@ -138,9 +145,11 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
 
     @Override
     public FluentProcessInstance setVariable(final String name, final Object value) {
-        if (delegate == null) this.processVariables.put(name, value);
-        else
+        if (delegate == null) {
+            this.processVariables.put(name, value);
+        } else {
             engine.getRuntimeService().setVariable(getId(), name, value);
+        }
         return this;
     }
 

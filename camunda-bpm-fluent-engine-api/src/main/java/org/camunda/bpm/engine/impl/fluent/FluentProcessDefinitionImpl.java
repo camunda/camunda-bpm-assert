@@ -1,5 +1,8 @@
-package org.camunda.bpm.engine.fluent;
+package org.camunda.bpm.engine.impl.fluent;
 
+import org.camunda.bpm.engine.fluent.AbstractFluentDelegate;
+import org.camunda.bpm.engine.fluent.FluentProcessDefinition;
+import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 
 /**

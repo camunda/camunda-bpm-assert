@@ -4,7 +4,7 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.cdi.impl.util.ProgrammaticBeanLookup;
 import org.camunda.bpm.engine.fluent.FluentProcessEngine;
-import org.camunda.bpm.engine.fluent.FluentProcessEngineImpl;
+import org.camunda.bpm.engine.impl.fluent.FluentProcessEngineImpl;
 import org.camunda.bpm.engine.impl.test.TestHelper;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.ProcessEngineTestCase;

@@ -28,7 +28,6 @@
 
         <!-- Minimum required JUnit required version since we are using org.junit.rules.TestRule -->
 
-        <h2.version>1.3.162</h2.version>
         <version.slf4j>1.7.2</version.slf4j>
         <version.guava>14.0.1</version.guava>
         <version.commons-lang3>3.1</version.commons-lang3>
@@ -41,6 +40,7 @@
         <version.hamcrest>1.3</version.hamcrest>
         <version.fest-assert>2.0M9</version.fest-assert>
         <version.needle-mockito>1.0</version.needle-mockito>
+        <version.junit-mockito>1.0</version.junit-mockito>
     </properties>
 
     <dependencyManagement>
@@ -109,6 +109,12 @@
                 <artifactId>needle-mockito</artifactId>
                 <version>${version.needle-mockito}</version>
             </dependency>
+            <dependency>
+                <groupId>de.holisticon.dependencies</groupId>
+                <artifactId>junit-mockito</artifactId>
+                <version>${version.junit-mockito}</version>
+                <type>pom</type>
+            </dependency>
 
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -150,6 +156,11 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

@@ -1,4 +1,6 @@
-package org.camunda.bpm.engine.fluent;
+package org.camunda.bpm.engine.impl.fluent;
+
+import org.camunda.bpm.engine.fluent.FluentProcessVariable;
 
 
 /**
