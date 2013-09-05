@@ -17,7 +17,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <needle-mockito.version>1.0</needle-mockito.version>
         <junit-mockito.version>1.0</junit-mockito.version>
-        <camunda.version>7.0.0-final</camunda.version>
+        <camunda.version>7.0.0-Final</camunda.version>
     </properties>
 
     <dependencies>
@@ -58,19 +58,19 @@
             <!-- process engine -->
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
-            <version>${camunda.version}</version>
+            <version>${camunda-bpm.version}</version>
         </dependency>
         <dependency>
             <!-- client for Java EE application server integration -->
             <groupId>org.camunda.bpm.javaee</groupId>
             <artifactId>camunda-ejb-client</artifactId>
-            <version>${camunda.version}</version>
+            <version>${camunda-bpm.version}</version>
         </dependency>
         <dependency>
             <!-- CDI integration -->
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine-cdi</artifactId>
-            <version>${camunda.version}</version>
+            <version>${camunda-bpm.version}</version>
         </dependency>
 
         <dependency>
