@@ -5,6 +5,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.format;
+import static org.camunda.bpm.engine.test.mock.RegisterMockTestRule.registerMockTestRule;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -38,6 +39,7 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.IdentityLink;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestRule;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
 import org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
@@ -103,6 +105,8 @@ public class ProcessEngineNeedleRule extends FluentProcessEngineTestRule impleme
         .addProvider(injectionProviders.toArray(new InjectionProvider<?>[injectionProviders.size()])) //
         .build();
 
+    final RuleChain needleWithRegisterMocks = RuleChain.outerRule(needleTestRule).around(registerMockTestRule(testInstance));
+
     // combine activiti and needle rules
     this.ruleChain = RuleChain.outerRule(new TestRule() {
 
@@ -110,7 +114,7 @@ public class ProcessEngineNeedleRule extends FluentProcessEngineTestRule impleme
       public Statement apply(final Statement statement, final Description description) {
         return ProcessEngineNeedleRule.super.apply(statement, description);
       }
-    }).around(processEngineTestWatcher).around(needleTestRule);
+    }).around(processEngineTestWatcher).around(needleWithRegisterMocks);
   }
 
   @Override
@@ -125,12 +129,14 @@ public class ProcessEngineNeedleRule extends FluentProcessEngineTestRule impleme
 
   @Override
   public void before() {
-    super.before();
+    FluentProcessEngineTests.before(getEngine());
+    // does not use FluentMocks, use needle
   }
 
   @Override
   public void after() {
-    super.after();
+    // no need to rest Mocks, this is done in RegisterMockTestRule
+    FluentProcessEngineTests.after();
   }
 
   @Override

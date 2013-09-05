@@ -3,21 +3,48 @@ package org.camunda.bpm.engine.test.mock;
 // CHECKSTYLE:OFF test class
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.apache.commons.lang3.StringUtils.uncapitalize;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-import org.junit.Test;
+import javax.inject.Named;
 
 /**
- * TODO move to base.bpm.camunda.test
+ * Helper for {@link Mocks#register(String, Object)}.
  * 
  * @author Jan Galinski, Holisticon AG
  */
 public class RegisterMock {
+
+  /**
+   * Registers mocks via {@link Mocks#register(String, Object)} for all
+   * attributes with Named-types.
+   * 
+   * @param instance
+   *          instance whos fields are registered (maybe Junit test or jbehave
+   *          steps).
+   */
+  public static void registerMocksForFields(final Object instance) {
+    for (final Field field : instance.getClass().getDeclaredFields()) {
+      final Class<?> type = field.getType();
+
+      if (type.isAnnotationPresent(Named.class)) {
+        field.setAccessible(true);
+        try {
+          final Object value = field.get(instance);
+          if (value != null) {
+            register(resolveName(type), value);
+          }
+        } catch (final IllegalArgumentException e) {
+          // fallthrough
+        } catch (final IllegalAccessException e) {
+          // fallthrough
+        }
+      }
+
+    }
+  }
 
   public static void register(final String name, final Object instance) {
     Mocks.register(name, instance);
@@ -35,15 +62,12 @@ public class RegisterMock {
     }
   }
 
-  private static final class FirstListener {
-
-    public static final String NAME = "firstListener";
-  }
-
-  private static final class SecondListener {
-  }
-
-  private static String resolveName(final Class<?> type) {
+  /**
+   * @param type
+   *          named class
+   * @return named value for juel expr
+   */
+  public static String resolveName(final Class<?> type) {
     checkArgument(type != null, "type must not be null!");
 
     String name = null;
@@ -57,12 +81,6 @@ public class RegisterMock {
     }
 
     return name != null ? name : uncapitalize(type.getSimpleName());
-
   }
 
-  @Test
-  public void shouldResolveNAME() throws Exception {
-    assertThat(resolveName(FirstListener.class), is(FirstListener.NAME));
-    assertThat(resolveName(SecondListener.class), is("secondListener"));
-  }
 }
