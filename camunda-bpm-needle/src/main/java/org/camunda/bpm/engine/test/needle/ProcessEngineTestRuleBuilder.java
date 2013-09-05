@@ -1,6 +1,6 @@
 package org.camunda.bpm.engine.test.needle;
 
-import static org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier.CAMUNDA_NEEDLE_CONFIG_RESOURCE;
+import static org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier.CAMUNDA_CONFIG_RESOURCE;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -14,7 +14,7 @@ import de.akquinet.jbosscc.needle.injection.InjectionProvider;
 public class ProcessEngineTestRuleBuilder implements Builder<ProcessEngineNeedleRule> {
 
     private final Object testInstance;
-    private String configFile = CAMUNDA_NEEDLE_CONFIG_RESOURCE;
+    private String configFile = CAMUNDA_CONFIG_RESOURCE;
     private final Set<InjectionProvider<?>> injectionProviders = Sets.newHashSet();
 
     public ProcessEngineTestRuleBuilder(final Object testInstance) {

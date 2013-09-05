@@ -27,7 +27,7 @@ import de.holisticon.toolbox.needle.provider.InjectionProviderInstancesSupplier;
 public class CamundaInstancesSupplier implements InjectionProviderInstancesSupplier, ProcessEngine {
 
     public static CamundaInstancesSupplier camundaInstancesSupplier() {
-        return camundaInstancesSupplier(CAMUNDA_NEEDLE_CONFIG_RESOURCE);
+        return camundaInstancesSupplier(CAMUNDA_CONFIG_RESOURCE);
     }
 
     /**
@@ -40,7 +40,7 @@ public class CamundaInstancesSupplier implements InjectionProviderInstancesSuppl
         return new CamundaInstancesSupplier(TestHelper.getProcessEngine(configurationResource));
     }
 
-    public static final String CAMUNDA_NEEDLE_CONFIG_RESOURCE = "camunda-needle.cfg.xml";
+    public static final String CAMUNDA_CONFIG_RESOURCE = "camunda.cfg.xml";
 
     private final Set<InjectionProvider<?>> providers = Sets.newHashSet();
     /**
