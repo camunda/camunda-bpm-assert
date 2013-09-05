@@ -23,14 +23,16 @@ public class FluentProcessEngineTestRule implements TestRule {
     private Object test;
     private FluentProcessEngine engine;
 
-    public FluentProcessEngineTestRule(Object test) {
+    public FluentProcessEngineTestRule(final Object test) {
         this.test = test;
+        engine = getEngine();
     }
 
     @Override
-    public Statement apply(final Statement statement, Description description) {
+    public Statement apply(final Statement statement, final Description description) {
 
         return new Statement() {
+
             @Override
             public void evaluate() throws Throwable {
                 before();
@@ -45,13 +47,13 @@ public class FluentProcessEngineTestRule implements TestRule {
     }
 
     public void before() {
-        FluentProcessEngineTests.before(this);
+        FluentProcessEngineTests.before(engine);
         FluentMocks.before(test);
     }
 
     public void after() {
         FluentMocks.after(test);
-        FluentProcessEngineTests.after(this);
+        FluentProcessEngineTests.after();
     }
 
     protected FluentProcessEngine getEngine() {
@@ -59,15 +61,17 @@ public class FluentProcessEngineTestRule implements TestRule {
             return engine;
         } else {
             try {
-                ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
+                final ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
                 return new FluentProcessEngineImpl(processEngine);
-            } catch (ProcessEngineException e) {}
+            } catch (final ProcessEngineException e) {
+            }
             if (test instanceof ProcessEngineTestCase) {
-                return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
+                return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase)test).getConfigurationResource()));
             } else {
                 try {
-                    return engine = new FluentProcessEngineImpl(((ProcessEngineRule) Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test)).getProcessEngine());
-                } catch (IllegalAccessException e) {
+                    return engine = new FluentProcessEngineImpl(((ProcessEngineRule)Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(
+                            test)).getProcessEngine());
+                } catch (final IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
             }
