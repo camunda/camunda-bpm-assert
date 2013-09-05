@@ -31,6 +31,7 @@ public class SimpleProcess {
     public static enum Elements {
         ;
 
+        public static final String TASK_PROCESS_MANUALLY = "task_process_contract_manually";
         public static final String EVENT_CONTRACT_PROCESSED = "event_contract_processed";
         public static final String SERVICE_LOAD_CONTRACT_DATA = "service_load_contract_data";
         public static final String SERVICE_PROCESS_CONTRACT_AUTOMATICALLY = "service_process_contract_automatically";

@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.impl.test.TestHelper;
 import org.camunda.bpm.engine.impl.util.ClockUtil;
@@ -18,7 +19,9 @@ import org.camunda.bpm.engine.repository.DeploymentBuilder;
 import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
 import org.camunda.bpm.engine.test.mock.Mocks;
+import org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,11 +36,6 @@ import com.google.common.collect.Sets;
 public class CamundaSupport {
 
 	/**
-	 * Configuration name.
-	 */
-	private static final String CONFIG_RESOURCE = "camunda-needle.cfg.xml";
-
-	/**
 	 * Singleton instance.
 	 */
 	private static CamundaSupport instance;
@@ -45,14 +43,13 @@ public class CamundaSupport {
 	private static final Logger logger = LoggerFactory.getLogger(CamundaSupport.class);
 	private final Set<String> deploymentIds = Sets.newHashSet();
 	private ProcessEngine processEngine;
-	private ProcessInstance processInstance;
 	private Date startTime;
 
 	/**
 	 * Private constructor to avoid direct instantiation.
 	 */
 	private CamundaSupport() {
-		this.processEngine = TestHelper.getProcessEngine(CONFIG_RESOURCE);
+		this.processEngine = TestHelper.getProcessEngine(CamundaInstancesSupplier.CAMUNDA_CONFIG_RESOURCE);
 	}
 
 	/**
@@ -92,14 +89,12 @@ public class CamundaSupport {
 	 */
 	public ProcessInstance startProcessInstanceByKey(final String processDefinitionKey, final Map<String, Object> variables) {
 		checkArgument(processDefinitionKey != null, "processDefinitionKey must not be null!");
-		final RuntimeService runtimeService = getProcessEngine().getRuntimeService();
-		if (variables == null) {
-			setProcessInstance(runtimeService.startProcessInstanceByKey(processDefinitionKey));
-		} else {
-			setProcessInstance(runtimeService.startProcessInstanceByKey(processDefinitionKey, variables));
-		}
 
-		return getProcessInstance();
+		FluentProcessInstance instance = FluentProcessEngineTests.newProcessInstance(processDefinitionKey);
+		if (variables != null) {
+			instance.setVariables(variables);
+		}
+		return instance.start().getDelegate();
 	}
 
 	/**
@@ -119,17 +114,7 @@ public class CamundaSupport {
 	 * @return running process instance.
 	 */
 	public ProcessInstance getProcessInstance() {
-		return processInstance;
-	}
-
-	/**
-	 * Sets running process instance.
-	 * 
-	 * @param processInstance
-	 *            instance to set.
-	 */
-	public void setProcessInstance(final ProcessInstance processInstance) {
-		this.processInstance = processInstance;
+		return FluentProcessEngineTests.processInstance();
 	}
 
 	/**
@@ -189,7 +174,7 @@ public class CamundaSupport {
 	 * @return process variables.
 	 */
 	public Map<String, Object> getProcessVariables() {
-		final ExecutionQuery eQuery = getProcessEngine().getRuntimeService().createExecutionQuery().processInstanceId(processInstance.getId());
+		final ExecutionQuery eQuery = getProcessEngine().getRuntimeService().createExecutionQuery().processInstanceId(getProcessInstance().getId());
 		final Execution execution;
 		if (eQuery.count() == 1) {
 			execution = eQuery.singleResult();
@@ -204,13 +189,17 @@ public class CamundaSupport {
 	/**
 	 * Checks historic execution.
 	 * 
-	 * @param name
+	 * @param id
 	 *            activity name.
 	 */
-	public void assertActivityVisitedOnce(final String name) {
-		final HistoricActivityInstance singleResult = getProcessEngine().getHistoryService().createHistoricActivityInstanceQuery().finished().activityId(name)
+	public void assertActivityVisitedOnce(final String id) {
+		final HistoricActivityInstance singleResult = getProcessEngine().getHistoryService().createHistoricActivityInstanceQuery().finished().activityId(id)
 				.singleResult();
-		assertThat("activity '" + name + "' not found!", singleResult, notNullValue());
+		assertThat("activity '" + id + "' not found!", singleResult, notNullValue());
+	}
+
+	public void completeTask(Object... values) {
+		FluentProcessEngineTests.processInstance().task().complete(values);
 	}
 
 }

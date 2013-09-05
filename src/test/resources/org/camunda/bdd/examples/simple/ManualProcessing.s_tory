@@ -1,0 +1,5 @@
+Scenario: Manual processing
+
+Meta: @cleanup false
+GivenStories: org/camunda/bdd/examples/simple/ManualFallback.story
+When contract is processed manually
