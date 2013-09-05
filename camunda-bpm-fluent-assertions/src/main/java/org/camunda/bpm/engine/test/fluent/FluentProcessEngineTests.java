@@ -1,13 +1,16 @@
 package org.camunda.bpm.engine.test.fluent;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentProcessDefinition;
 import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.fluent.FluentProcessVariable;
+import org.camunda.bpm.engine.impl.fluent.FluentDeploymentImpl;
 import org.camunda.bpm.engine.impl.fluent.FluentProcessEngineImpl;
 import org.camunda.bpm.engine.impl.fluent.FluentProcessInstanceImpl;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
@@ -29,19 +32,25 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
 
     private static ThreadLocal<FluentProcessEngine> fluentProcessEngineLocal = new ThreadLocal<FluentProcessEngine>();
     private static ThreadLocal<Map<String, FluentProcessInstance>> testProcessInstancesLocal = new ThreadLocal<Map<String, FluentProcessInstance>>();
+    private static ThreadLocal<Set<String>> deploymentIdsLocal = new ThreadLocal<Set<String>>();
 
     public static void before(final FluentProcessEngine fluentProcessEngine) {
-        FluentProcessEngineTests.fluentProcessEngineLocal.set(fluentProcessEngine);
-        FluentProcessEngineTests.testProcessInstancesLocal.set(new HashMap<String, FluentProcessInstance>());
+        fluentProcessEngineLocal.set(fluentProcessEngine);
+        testProcessInstancesLocal.set(new HashMap<String, FluentProcessInstance>());
+        deploymentIdsLocal.set(new HashSet<String>());
     }
 
     public static void before(final ProcessEngine processEngine) {
         before(new FluentProcessEngineImpl(processEngine));
     }
 
+    /**
+     * Reset all threadlocal variables to <code>null</code>.
+     */
     public static void after() {
-        FluentProcessEngineTests.fluentProcessEngineLocal.set(null);
-        FluentProcessEngineTests.testProcessInstancesLocal.set(null);
+        fluentProcessEngineLocal.set(null);
+        testProcessInstancesLocal.set(null);
+        deploymentIdsLocal.set(null);
     }
 
     protected static Map<String, FluentProcessInstance> getTestProcessInstances() {
@@ -125,6 +134,17 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
      */
     public static FluentProcessDefinition processDefinition(final String processDefinitionKey) {
         return processEngine().getProcessDefinitionRepository().processDefinition(processDefinitionKey);
+    }
+
+    /**
+     * Deploys given BPMN files in classpath.
+     * @param classPathResources vararg list of bpmn file-paths.
+     * @return the deployment id
+     */
+    public static String deploy(final String... classPathResources) {
+        final String deploymentId = new FluentDeploymentImpl(processEngine()).deploy();
+        deploymentIdsLocal.get().add(deploymentId);
+        return deploymentId;
     }
 
     // Assertions
