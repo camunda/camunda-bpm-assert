@@ -1,9 +1,11 @@
 package org.camunda.bpm.needle;
 
+import static org.camunda.bpm.engine.test.SetVariablesOnDelegateExecutionAnswer.doSetVariablesOnExecute;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -12,7 +14,6 @@ import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.bpm.engine.guard.GuardSupport;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
@@ -67,23 +68,36 @@ public class ProcessEngineNeedleRuleTest {
 
     @Test
     @Deployment(resources = PROCESS_FILE)
-    public void shouldDeployAndRunTestProcess() {
+    public void shouldDeployAndRunTestProcess() throws Exception {
         Mocks.register("serviceTask", javaDelegate);
         final String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
         final List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
+
+        doSetVariablesOnExecute(javaDelegate, "world", 8L);
 
         logger.info("deployed resources: " + deploymentResources);
 
         // starts the process, activates task "wait"
         logger.debug("start process:" + PROCESS_KEY);
-        runtimeService.startProcessInstanceByKey(PROCESS_KEY, GuardSupport.MAP_SKIP_GUARDS);
+        runtimeService.startProcessInstanceByKey(PROCESS_KEY, mapFor("foo", 1L));
 
         // find and complete task "wait", process is finished
         final Task task = taskService.createTaskQuery().singleResult();
         logger.debug("completing task: " + task.getName());
-        taskService.complete(task.getId());
+        final HashMap<String, Object> mapFor = mapFor("bar", Boolean.TRUE);
+        mapFor.put("hello", 0L);
+        taskService.complete(task.getId(), mapFor);
 
         // verify no more instances running
         assertThat(runtimeService.createProcessInstanceQuery().list(), is(new IsEmptyCollection<ProcessInstance>()));
+    }
+
+    private HashMap<String, Object> mapFor(final String key, final Object value) {
+        return new HashMap<String, Object>() {
+
+            {
+                put(key, value);
+            }
+        };
     }
 }

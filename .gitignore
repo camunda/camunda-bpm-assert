@@ -3,7 +3,10 @@ target
 *.ipr
 *.iws
 .idea
+# eclipse
 .classpath
 .project
 .settings
+# OSX
 .DS_Store
+Icon\r\r
