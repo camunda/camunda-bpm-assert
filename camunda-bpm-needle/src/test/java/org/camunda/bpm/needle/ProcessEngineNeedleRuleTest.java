@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,6 +16,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.engine.test.fluent.support.Maps;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.engine.test.needle.ProcessEngineNeedleRule;
 import org.hamcrest.collection.IsEmptyCollection;
@@ -79,25 +79,15 @@ public class ProcessEngineNeedleRuleTest {
 
         // starts the process, activates task "wait"
         logger.debug("start process:" + PROCESS_KEY);
-        runtimeService.startProcessInstanceByKey(PROCESS_KEY, mapFor("foo", 1L));
+        runtimeService.startProcessInstanceByKey(PROCESS_KEY, Maps.parseMap("foo", 1L));
 
         // find and complete task "wait", process is finished
         final Task task = taskService.createTaskQuery().singleResult();
         logger.debug("completing task: " + task.getName());
-        final HashMap<String, Object> mapFor = mapFor("bar", Boolean.TRUE);
-        mapFor.put("hello", 0L);
-        taskService.complete(task.getId(), mapFor);
+        taskService.complete(task.getId(), Maps.parseMap("bar", Boolean.TRUE, "hello", 0L));
 
         // verify no more instances running
         assertThat(runtimeService.createProcessInstanceQuery().list(), is(new IsEmptyCollection<ProcessInstance>()));
     }
 
-    private HashMap<String, Object> mapFor(final String key, final Object value) {
-        return new HashMap<String, Object>() {
-
-            {
-                put(key, value);
-            }
-        };
-    }
 }

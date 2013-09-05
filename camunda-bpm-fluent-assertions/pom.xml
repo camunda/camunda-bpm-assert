@@ -17,48 +17,27 @@
         <dependency>
             <groupId>org.camunda.bpm.incubation</groupId>
             <artifactId>camunda-bpm-fluent-engine-api</artifactId>
-            <version>${project.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine</artifactId>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine-cdi</artifactId>
-            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <exclusions>
-                <!-- hamcrest comes with extra dependency -->
-                <exclusion>
-                    <groupId>org.hamcrest</groupId>
-                    <artifactId>hamcrest-core</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
-            <version>${hamcrest.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>1.9.5</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert-core</artifactId>
-            <version>${fest.assert.version}</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
