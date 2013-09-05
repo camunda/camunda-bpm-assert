@@ -147,6 +147,13 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
         return deploymentId;
     }
 
+    /**
+     * @return all deployment Ids in current thread
+     */
+    public static Set<String> getDeploymentIds() {
+        return deploymentIdsLocal.get();
+    }
+
     // Assertions
 
     public static TaskAssert assertThat(final Task actual) {
