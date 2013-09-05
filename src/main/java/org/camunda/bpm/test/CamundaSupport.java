@@ -210,10 +210,7 @@ public class CamundaSupport {
    * @return true, if negation not found.
    */
   public static boolean parseStatement(final String negation, final String value, final boolean defaultValue) {
-    if (value != null) {
-      return !value.contains(negation);
-    }
-    return defaultValue;
+    return (value != null) ? !value.contains(negation) : defaultValue;
   }
 
 }
