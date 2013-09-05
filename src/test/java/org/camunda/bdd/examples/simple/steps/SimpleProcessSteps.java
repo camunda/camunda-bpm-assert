@@ -11,6 +11,7 @@ import org.camunda.bdd.examples.simple.SimpleProcess.Variables;
 import org.camunda.bdd.examples.simple.SimpleProcessAdapter;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.test.mock.Mocks;
+import org.camunda.bpm.engine.test.mock.RegisterMock;
 import org.camunda.bpm.test.CamundaSupport;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeScenario;
@@ -34,7 +35,7 @@ public class SimpleProcessSteps {
 
   @BeforeScenario
   public void initMocks() {
-    Mocks.register(SimpleProcessAdapter.NAME, simpleProcessAdapter);
+    RegisterMock.registerMocksForFields(this);
   }
 
   @AfterScenario
@@ -73,7 +74,7 @@ public class SimpleProcessSteps {
 
   @When("the contract is processed $withoutErrors")
   public void processManuallys(final String withoutErrors) {
-    final boolean hasErrors = !support.parseStatement("with errors", withoutErrors, false);    
+    final boolean hasErrors = !support.parseStatement("with errors", withoutErrors, false);
     support.completeTask(Variables.ARE_PROCESSING_ERRORS_PRESENT, Boolean.valueOf(hasErrors));
   }
 }
