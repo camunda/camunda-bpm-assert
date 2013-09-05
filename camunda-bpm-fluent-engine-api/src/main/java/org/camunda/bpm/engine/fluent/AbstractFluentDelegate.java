@@ -5,16 +5,16 @@ package org.camunda.bpm.engine.fluent;
  */
 public class AbstractFluentDelegate<D> extends AbstractFluentProcessEngineAware implements FluentDelegate<D> {
 
-    protected D delegate;
+  protected D delegate;
 
-    protected AbstractFluentDelegate(FluentProcessEngine engine, D delegate) {
-        super(engine);
-        this.delegate = delegate;
-    }
+  protected AbstractFluentDelegate(FluentProcessEngine engine, D delegate) {
+    super(engine);
+    this.delegate = delegate;
+  }
 
-    @Override
-    public D getDelegate() {
-        return delegate;
-    }
+  @Override
+  public D getDelegate() {
+    return delegate;
+  }
 
 }

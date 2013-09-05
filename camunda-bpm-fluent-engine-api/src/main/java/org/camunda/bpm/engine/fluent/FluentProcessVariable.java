@@ -5,7 +5,8 @@ package org.camunda.bpm.engine.fluent;
  */
 public interface FluentProcessVariable {
 
-    String getName();
-    Object getValue();
+  String getName();
+
+  Object getValue();
 
 }

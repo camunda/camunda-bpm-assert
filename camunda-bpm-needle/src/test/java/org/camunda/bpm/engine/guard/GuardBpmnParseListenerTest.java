@@ -21,84 +21,84 @@ import com.google.common.collect.Maps;
 @SuppressWarnings("serial")
 public class GuardBpmnParseListenerTest {
 
-    private static final String BPMN_FILE = "test-process.bpmn";
+  private static final String BPMN_FILE = "test-process.bpmn";
 
-    private static final String PROCESS_KEY = "test-process";
+  private static final String PROCESS_KEY = "test-process";
 
-    @Rule
-    public final ProcessEngineNeedleRule processEngine = ProcessEngineNeedleRule.fluentNeedleRule(this).build();
+  @Rule
+  public final ProcessEngineNeedleRule processEngine = ProcessEngineNeedleRule.fluentNeedleRule(this).build();
 
-    @Rule
-    public final ExpectedException thrown = ExpectedException.none();
+  @Rule
+  public final ExpectedException thrown = ExpectedException.none();
 
-    private final Map<String, Object> variables = Maps.newHashMap();
+  private final Map<String, Object> variables = Maps.newHashMap();
 
-    @Test
-    @Deployment(resources = BPMN_FILE)
-    public void shouldRunWithAutomaticGuards() {
-        Mocks.register("serviceTask", new JavaDelegate() {
+  @Test
+  @Deployment(resources = BPMN_FILE)
+  public void shouldRunWithAutomaticGuards() {
+    Mocks.register("serviceTask", new JavaDelegate() {
 
-            @Override
-            public void execute(final DelegateExecution execution) throws Exception {
-                execution.setVariable("world", Boolean.TRUE);
-            }
-        });
+      @Override
+      public void execute(final DelegateExecution execution) throws Exception {
+        execution.setVariable("world", Boolean.TRUE);
+      }
+    });
 
-        variables.put("foo", Boolean.TRUE);
+    variables.put("foo", Boolean.TRUE);
 
-        processEngine.startProcessInstanceByKey(PROCESS_KEY, variables);
+    processEngine.startProcessInstanceByKey(PROCESS_KEY, variables);
 
-        variables.put("bar", Boolean.FALSE);
-        variables.put("hello", Boolean.FALSE);
-        processEngine.completeTask(variables);
-        processEngine.assertNoMoreRunningInstances();
+    variables.put("bar", Boolean.FALSE);
+    variables.put("hello", Boolean.FALSE);
+    processEngine.completeTask(variables);
+    processEngine.assertNoMoreRunningInstances();
+  }
+
+  @Test
+  @Deployment(resources = BPMN_FILE)
+  public void shouldFailWhenFooIsNotSetOnStart() {
+    thrown.expect(ProcessEngineException.class);
+    thrown.expectMessage("'foo'");
+    processEngine.startProcessInstanceByKey(PROCESS_KEY);
+  }
+
+  @Test
+  @Deployment(resources = BPMN_FILE)
+  public void shouldFailWhenBarIsNotSetInUserTask() {
+
+    thrown.expect(ProcessEngineException.class);
+    thrown.expectMessage("'bar'");
+
+    variables.put("foo", Boolean.TRUE);
+
+    processEngine.startProcessInstanceByKey(PROCESS_KEY, variables);
+    processEngine.completeTask();
+  }
+
+  public static class ExampleTaskGuard extends TaskGuard {
+
+    @Override
+    public void checkPostcondions(final DelegateExecution execution) throws IllegalStateException {
+      checkIsSet(execution, "bar");
     }
 
-    @Test
-    @Deployment(resources = BPMN_FILE)
-    public void shouldFailWhenFooIsNotSetOnStart() {
-        thrown.expect(ProcessEngineException.class);
-        thrown.expectMessage("'foo'");
-        processEngine.startProcessInstanceByKey(PROCESS_KEY);
+    @Override
+    public void checkPreconditions(final DelegateExecution execution) throws IllegalStateException {
+      checkIsSet(execution, "foo");
+    }
+  }
+
+  public static class ExampleActivityGuard extends ActivityGuard {
+
+    @Override
+    public void checkPreconditions(final DelegateExecution execution) throws IllegalStateException {
+      checkIsSet(execution, "hello");
     }
 
-    @Test
-    @Deployment(resources = BPMN_FILE)
-    public void shouldFailWhenBarIsNotSetInUserTask() {
-
-        thrown.expect(ProcessEngineException.class);
-        thrown.expectMessage("'bar'");
-
-        variables.put("foo", Boolean.TRUE);
-
-        processEngine.startProcessInstanceByKey(PROCESS_KEY, variables);
-        processEngine.completeTask();
+    @Override
+    public void checkPostcondions(final DelegateExecution execution) throws IllegalStateException {
+      checkIsSet(execution, "world");
     }
 
-    public static class ExampleTaskGuard extends TaskGuard {
-
-        @Override
-        public void checkPostcondions(final DelegateExecution execution) throws IllegalStateException {
-            checkIsSet(execution, "bar");
-        }
-
-        @Override
-        public void checkPreconditions(final DelegateExecution execution) throws IllegalStateException {
-            checkIsSet(execution, "foo");
-        }
-    }
-
-    public static class ExampleActivityGuard extends ActivityGuard {
-
-        @Override
-        public void checkPreconditions(final DelegateExecution execution) throws IllegalStateException {
-            checkIsSet(execution, "hello");
-        }
-
-        @Override
-        public void checkPostcondions(final DelegateExecution execution) throws IllegalStateException {
-            checkIsSet(execution, "world");
-        }
-
-    }
+  }
 }

@@ -15,60 +15,65 @@ import org.junit.rules.TestRule;
 
 /**
  * Combined interface of {@link ProcessEngine} and {@link TestRule}.
+ * 
  * @author Jan Galinski, Holisticon AG (jan.galinski@holisticon.de)
  */
 interface ProcessEngineTestRule extends TestRule, ProcessEngine {
 
-    /**
-     * Sets current toime of in memory engine. Use to test timers etc.
-     * @param currentTime time to set
-     */
-    void setCurrentTime(Date currentTime);
+  /**
+   * Sets current toime of in memory engine. Use to test timers etc.
+   * 
+   * @param currentTime
+   *          time to set
+   */
+  void setCurrentTime(Date currentTime);
 
-    /**
-     * Provide deployment id after deploying with @Deployment-annotation.
-     * @return current deployment id
-     */
-    String getDeploymentId();
+  /**
+   * Provide deployment id after deploying with @Deployment-annotation.
+   * 
+   * @return current deployment id
+   */
+  String getDeploymentId();
 
-    /**
-     * Get the process engine.
-     * @return the process engine
-     */
-    ProcessEngine getProcessEngine();
+  /**
+   * Get the process engine.
+   * 
+   * @return the process engine
+   */
+  ProcessEngine getProcessEngine();
 
-    @Override
-    TaskService getTaskService();
+  @Override
+  TaskService getTaskService();
 
-    @Override
-    HistoryService getHistoryService();
+  @Override
+  HistoryService getHistoryService();
 
-    @Override
-    IdentityService getIdentityService();
+  @Override
+  IdentityService getIdentityService();
 
-    @Override
-    ManagementService getManagementService();
+  @Override
+  ManagementService getManagementService();
 
-    @Override
-    String getName();
+  @Override
+  String getName();
 
-    @Override
-    RepositoryService getRepositoryService();
+  @Override
+  RepositoryService getRepositoryService();
 
-    @Override
-    RuntimeService getRuntimeService();
+  @Override
+  RuntimeService getRuntimeService();
 
-    @Override
-    FormService getFormService();
+  @Override
+  FormService getFormService();
 
-    @Override
-    AuthorizationService getAuthorizationService();
+  @Override
+  AuthorizationService getAuthorizationService();
 
-    /**
-     * @deprecated The rule does not allow closing the engine directly.
-     * @see org.camunda.bpm.engine.ProcessEngine#close()
-     */
-    @Override
-    @Deprecated
-    void close();
+  /**
+   * @deprecated The rule does not allow closing the engine directly.
+   * @see org.camunda.bpm.engine.ProcessEngine#close()
+   */
+  @Override
+  @Deprecated
+  void close();
 }

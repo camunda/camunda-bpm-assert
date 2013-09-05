@@ -30,64 +30,64 @@ import de.akquinet.jbosscc.needle.annotation.ObjectUnderTest;
 
 public class ProcessEngineNeedleRuleTest {
 
-    public static class A {
+  public static class A {
 
-    }
+  }
 
-    private static final String PROCESS_KEY = "test-process";
-    private static final String PROCESS_FILE = PROCESS_KEY + ".bpmn";
+  private static final String PROCESS_KEY = "test-process";
+  private static final String PROCESS_FILE = PROCESS_KEY + ".bpmn";
 
-    private final Logger logger = LoggerFactory.getLogger(ProcessEngineNeedleRule.class);
+  private final Logger logger = LoggerFactory.getLogger(ProcessEngineNeedleRule.class);
 
-    @Rule
-    public final ProcessEngineNeedleRule processEngineNeedleRule = ProcessEngineNeedleRule.fluentNeedleRule(this).build();
+  @Rule
+  public final ProcessEngineNeedleRule processEngineNeedleRule = ProcessEngineNeedleRule.fluentNeedleRule(this).build();
 
-    @Inject
-    private RepositoryService repositoryService;
+  @Inject
+  private RepositoryService repositoryService;
 
-    @Inject
-    private RuntimeService runtimeService;
+  @Inject
+  private RuntimeService runtimeService;
 
-    @Inject
-    private TaskService taskService;
+  @Inject
+  private TaskService taskService;
 
-    @Mock
-    private JavaDelegate javaDelegate;
+  @Mock
+  private JavaDelegate javaDelegate;
 
-    @ObjectUnderTest
-    private A a;
+  @ObjectUnderTest
+  private A a;
 
-    @Test
-    public void shouldInitMocksAndServices() throws Exception {
-        assertNotNull(a);
-        assertNotNull(runtimeService);
-        assertNotNull(taskService);
-        assertNotNull(javaDelegate);
-        assertNotNull(repositoryService);
-    }
+  @Test
+  public void shouldInitMocksAndServices() throws Exception {
+    assertNotNull(a);
+    assertNotNull(runtimeService);
+    assertNotNull(taskService);
+    assertNotNull(javaDelegate);
+    assertNotNull(repositoryService);
+  }
 
-    @Test
-    @Deployment(resources = PROCESS_FILE)
-    public void shouldDeployAndRunTestProcess() throws Exception {
-        Mocks.register("serviceTask", javaDelegate);
-        final String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
-        final List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
+  @Test
+  @Deployment(resources = PROCESS_FILE)
+  public void shouldDeployAndRunTestProcess() throws Exception {
+    Mocks.register("serviceTask", javaDelegate);
+    final String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
+    final List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
 
-        doSetVariablesOnExecute(javaDelegate, "world", 8L);
+    doSetVariablesOnExecute(javaDelegate, "world", 8L);
 
-        logger.info("deployed resources: " + deploymentResources);
+    logger.info("deployed resources: " + deploymentResources);
 
-        // starts the process, activates task "wait"
-        logger.debug("start process:" + PROCESS_KEY);
-        runtimeService.startProcessInstanceByKey(PROCESS_KEY, Maps.parseMap("foo", 1L));
+    // starts the process, activates task "wait"
+    logger.debug("start process:" + PROCESS_KEY);
+    runtimeService.startProcessInstanceByKey(PROCESS_KEY, Maps.parseMap("foo", 1L));
 
-        // find and complete task "wait", process is finished
-        final Task task = taskService.createTaskQuery().singleResult();
-        logger.debug("completing task: " + task.getName());
-        taskService.complete(task.getId(), Maps.parseMap("bar", Boolean.TRUE, "hello", 0L));
+    // find and complete task "wait", process is finished
+    final Task task = taskService.createTaskQuery().singleResult();
+    logger.debug("completing task: " + task.getName());
+    taskService.complete(task.getId(), Maps.parseMap("bar", Boolean.TRUE, "hello", 0L));
 
-        // verify no more instances running
-        assertThat(runtimeService.createProcessInstanceQuery().list(), is(new IsEmptyCollection<ProcessInstance>()));
-    }
+    // verify no more instances running
+    assertThat(runtimeService.createProcessInstanceQuery().list(), is(new IsEmptyCollection<ProcessInstance>()));
+  }
 
 }

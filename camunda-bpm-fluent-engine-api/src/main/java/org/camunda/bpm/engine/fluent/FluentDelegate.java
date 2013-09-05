@@ -6,6 +6,6 @@ package org.camunda.bpm.engine.fluent;
  */
 public interface FluentDelegate<D> {
 
-    D getDelegate();
+  D getDelegate();
 
 }

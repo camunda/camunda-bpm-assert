@@ -24,28 +24,28 @@ import org.mockito.stubbing.Answer;
 
 public class FluentApiTest {
 
-    @Rule
-    public final ProcessEngineNeedleRule processEngineNeedleRule = ProcessEngineNeedleRule.fluentNeedleRule(this).build();
+  @Rule
+  public final ProcessEngineNeedleRule processEngineNeedleRule = ProcessEngineNeedleRule.fluentNeedleRule(this).build();
 
-    @Inject
-    private JavaDelegate delegate;
+  @Inject
+  private JavaDelegate delegate;
 
-    @Test
-    @Deployment(resources = "test-process.bpmn")
-    public void testName() throws Exception {
+  @Test
+  @Deployment(resources = "test-process.bpmn")
+  public void testName() throws Exception {
 
-        assertNotNull(delegate);
-        Mocks.register("serviceTask", delegate);
+    assertNotNull(delegate);
+    Mocks.register("serviceTask", delegate);
 
-        doSetVariablesOnExecute(delegate, "world", 1L);
+    doSetVariablesOnExecute(delegate, "world", 1L);
 
-        final FluentProcessInstance newProcessInstance = newProcessInstance("test-process").setVariable("foo", Boolean.TRUE).start();
-        assertThat(newProcessInstance.task()).isUnassigned();
-        final FluentTask taskWait = processInstance().task().claim("admin");
-        // assertThat(taskWait).isAssignedTo("admin").hasName("Wait");
+    final FluentProcessInstance newProcessInstance = newProcessInstance("test-process").setVariable("foo", Boolean.TRUE).start();
+    assertThat(newProcessInstance.task()).isUnassigned();
+    final FluentTask taskWait = processInstance().task().claim("admin");
+    // assertThat(taskWait).isAssignedTo("admin").hasName("Wait");
 
-        taskWait.complete("bar", Boolean.FALSE, "hello", "jan");
-        assertThat(processInstance()).isFinished();
-    }
+    taskWait.complete("bar", Boolean.FALSE, "hello", "jan");
+    assertThat(processInstance()).isFinished();
+  }
 
 }

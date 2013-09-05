@@ -23,18 +23,20 @@ import org.junit.Before;
  */
 public abstract class FluentProcessEngineTestCase extends ProcessEngineTestCase {
 
-    private FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
+  private FluentProcessEngineTestRule bpmnFluentTestRule = new FluentProcessEngineTestRule(this);
 
-    @Override @Before
-    protected void setUp() throws Exception {
-        super.setUp();
-        bpmnFluentTestRule.before();
-    }
+  @Override
+  @Before
+  protected void setUp() throws Exception {
+    super.setUp();
+    bpmnFluentTestRule.before();
+  }
 
-    @Override @After
-    public void tearDown() throws Exception {
-        super.tearDown();
-        bpmnFluentTestRule.after();
-    }
+  @Override
+  @After
+  public void tearDown() throws Exception {
+    super.tearDown();
+    bpmnFluentTestRule.after();
+  }
 
 }

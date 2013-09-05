@@ -14,21 +14,21 @@ import org.camunda.bpm.engine.delegate.TaskListener;
  */
 public class TaskGuard implements TaskListener, Guard, Serializable {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Override
-	public void checkPostcondions(final DelegateExecution execution) throws IllegalStateException {
-		// intentionally empty
-	}
+  @Override
+  public void checkPostcondions(final DelegateExecution execution) throws IllegalStateException {
+    // intentionally empty
+  }
 
-	@Override
-	public void checkPreconditions(final DelegateExecution execution) throws IllegalStateException {
-		// intentionally empty
-	}
+  @Override
+  public void checkPreconditions(final DelegateExecution execution) throws IllegalStateException {
+    // intentionally empty
+  }
 
-	@Override
-	public void notify(final DelegateTask delegateTask) {
-		GuardSupport.dispatch(this, delegateTask.getEventName(), delegateTask.getExecution());
-	}
+  @Override
+  public void notify(final DelegateTask delegateTask) {
+    GuardSupport.dispatch(this, delegateTask.getEventName(), delegateTask.getExecution());
+  }
 
 }

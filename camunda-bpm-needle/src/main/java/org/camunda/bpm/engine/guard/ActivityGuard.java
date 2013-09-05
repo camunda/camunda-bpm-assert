@@ -13,21 +13,21 @@ import org.camunda.bpm.engine.delegate.ExecutionListener;
  */
 public abstract class ActivityGuard implements ExecutionListener, Serializable, Guard {
 
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	@Override
-	public void checkPostcondions(final DelegateExecution execution) throws IllegalStateException {
-		// intentionally empty
-	}
+  @Override
+  public void checkPostcondions(final DelegateExecution execution) throws IllegalStateException {
+    // intentionally empty
+  }
 
-	@Override
-	public void checkPreconditions(final DelegateExecution execution) throws IllegalStateException {
-		// intentionally empty
-	}
+  @Override
+  public void checkPreconditions(final DelegateExecution execution) throws IllegalStateException {
+    // intentionally empty
+  }
 
-	@Override
-	public void notify(final DelegateExecution delegateExecution) throws Exception {
-		GuardSupport.dispatch(this, delegateExecution.getEventName(), delegateExecution);
-	}
+  @Override
+  public void notify(final DelegateExecution delegateExecution) throws Exception {
+    GuardSupport.dispatch(this, delegateExecution.getEventName(), delegateExecution);
+  }
 
 }

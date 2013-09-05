@@ -5,10 +5,10 @@ package org.camunda.bpm.engine.fluent;
  */
 public class AbstractFluentProcessEngineAware {
 
-    protected final FluentProcessEngine engine;
+  protected final FluentProcessEngine engine;
 
-    protected AbstractFluentProcessEngineAware(final FluentProcessEngine engine) {
-        this.engine = engine;
-    }
+  protected AbstractFluentProcessEngineAware(final FluentProcessEngine engine) {
+    this.engine = engine;
+  }
 
 }

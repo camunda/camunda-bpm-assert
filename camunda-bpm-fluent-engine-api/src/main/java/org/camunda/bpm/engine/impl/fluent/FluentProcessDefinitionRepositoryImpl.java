@@ -11,23 +11,20 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
  */
 public class FluentProcessDefinitionRepositoryImpl extends AbstractFluentProcessEngineAware implements FluentProcessDefinitionRepository {
 
-    protected FluentProcessDefinitionRepositoryImpl(FluentProcessEngine engine) {
-        super(engine);
-    }
+  protected FluentProcessDefinitionRepositoryImpl(FluentProcessEngine engine) {
+    super(engine);
+  }
 
-    /**
-     * @see org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests#processDefinition(String)
-     */
-    @Override
-    public FluentProcessDefinition processDefinition(String processDefinitionKey) {
-        ProcessDefinition definition =
-                engine.getRepositoryService().createProcessDefinitionQuery()
-                        .processDefinitionKey(processDefinitionKey)
-                        .latestVersion()
-                        .singleResult();
-        if (definition == null)
-            throw new IllegalArgumentException("No such process definition (with the given processDefinitionKey '" + processDefinitionKey + "') is deployed.");
-        return new FluentProcessDefinitionImpl(engine, definition);
-    }
+  /**
+   * @see org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests#processDefinition(String)
+   */
+  @Override
+  public FluentProcessDefinition processDefinition(String processDefinitionKey) {
+    ProcessDefinition definition = engine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).latestVersion()
+        .singleResult();
+    if (definition == null)
+      throw new IllegalArgumentException("No such process definition (with the given processDefinitionKey '" + processDefinitionKey + "') is deployed.");
+    return new FluentProcessDefinitionImpl(engine, definition);
+  }
 
 }

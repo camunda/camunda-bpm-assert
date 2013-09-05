@@ -13,27 +13,27 @@ import de.akquinet.jbosscc.needle.injection.InjectionProvider;
 
 public class ProcessEngineTestRuleBuilder implements Builder<ProcessEngineNeedleRule> {
 
-    private final Object testInstance;
-    private String configFile = CAMUNDA_CONFIG_RESOURCE;
-    private final Set<InjectionProvider<?>> injectionProviders = Sets.newHashSet();
+  private final Object testInstance;
+  private String configFile = CAMUNDA_CONFIG_RESOURCE;
+  private final Set<InjectionProvider<?>> injectionProviders = Sets.newHashSet();
 
-    public ProcessEngineTestRuleBuilder(final Object testInstance) {
-        this.testInstance = testInstance;
-    }
+  public ProcessEngineTestRuleBuilder(final Object testInstance) {
+    this.testInstance = testInstance;
+  }
 
-    public ProcessEngineTestRuleBuilder withConfig(final String configFile) {
-        this.configFile = configFile;
-        return this;
-    }
+  public ProcessEngineTestRuleBuilder withConfig(final String configFile) {
+    this.configFile = configFile;
+    return this;
+  }
 
-    public ProcessEngineTestRuleBuilder addInjectionProvider(final InjectionProvider<?>... injectionProviders) {
-        this.injectionProviders.addAll(Arrays.asList(injectionProviders));
-        return this;
-    }
+  public ProcessEngineTestRuleBuilder addInjectionProvider(final InjectionProvider<?>... injectionProviders) {
+    this.injectionProviders.addAll(Arrays.asList(injectionProviders));
+    return this;
+  }
 
-    @Override
-    public ProcessEngineNeedleRule build() {
-        return new ProcessEngineNeedleRule(testInstance, configFile, injectionProviders);
-    }
+  @Override
+  public ProcessEngineNeedleRule build() {
+    return new ProcessEngineNeedleRule(testInstance, configFile, injectionProviders);
+  }
 
 }

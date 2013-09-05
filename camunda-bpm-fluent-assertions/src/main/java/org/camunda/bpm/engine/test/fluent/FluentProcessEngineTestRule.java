@@ -20,66 +20,66 @@ import org.junit.runners.model.Statement;
  */
 public class FluentProcessEngineTestRule implements TestRule {
 
-    private Object test;
-    private FluentProcessEngine engine = null;
+  private Object test;
+  private FluentProcessEngine engine = null;
 
-    public FluentProcessEngineTestRule(final Object test) {
-        this.test = test;
-    }
+  public FluentProcessEngineTestRule(final Object test) {
+    this.test = test;
+  }
 
-    @Override
-    public Statement apply(final Statement statement, final Description description) {
+  @Override
+  public Statement apply(final Statement statement, final Description description) {
 
-        return new Statement() {
+    return new Statement() {
 
-            @Override
-            public void evaluate() throws Throwable {
-                before();
-                try {
-                    statement.evaluate();
-                } finally {
-                    after();
-                }
-            }
-        };
-
-    }
-
-    public void before() {
-        FluentProcessEngineTests.before(getEngine());
-        FluentMocks.before(test);
-    }
-
-    public void after() {
-        FluentMocks.after(test);
-        FluentProcessEngineTests.after();
-    }
-
-    protected FluentProcessEngine getEngine() {
-        if (engine != null) {
-            return engine;
-        } else {
-            try {
-                final ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
-                return new FluentProcessEngineImpl(processEngine);
-            } catch (final ProcessEngineException e) {
-                // fallthrough
-            }
-            if (test instanceof ProcessEngineTestCase) {
-                return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase)test).getConfigurationResource()));
-            } else {
-                try {
-                    ProcessEngineRule processEngineRule = (ProcessEngineRule)Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test);
-                    if (processEngineRule == null) {
-                        // TODO default config name only
-                        processEngineRule = new ProcessEngineRule();
-                    }
-
-                    return engine = new FluentProcessEngineImpl(processEngineRule.getProcessEngine());
-                } catch (final IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+      @Override
+      public void evaluate() throws Throwable {
+        before();
+        try {
+          statement.evaluate();
+        } finally {
+          after();
         }
+      }
+    };
+
+  }
+
+  public void before() {
+    FluentProcessEngineTests.before(getEngine());
+    FluentMocks.before(test);
+  }
+
+  public void after() {
+    FluentMocks.after(test);
+    FluentProcessEngineTests.after();
+  }
+
+  protected FluentProcessEngine getEngine() {
+    if (engine != null) {
+      return engine;
+    } else {
+      try {
+        final ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
+        return new FluentProcessEngineImpl(processEngine);
+      } catch (final ProcessEngineException e) {
+        // fallthrough
+      }
+      if (test instanceof ProcessEngineTestCase) {
+        return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
+      } else {
+        try {
+          ProcessEngineRule processEngineRule = (ProcessEngineRule) Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test);
+          if (processEngineRule == null) {
+            // TODO default config name only
+            processEngineRule = new ProcessEngineRule();
+          }
+
+          return engine = new FluentProcessEngineImpl(processEngineRule.getProcessEngine());
+        } catch (final IllegalAccessException e) {
+          throw new RuntimeException(e);
+        }
+      }
     }
+  }
 }

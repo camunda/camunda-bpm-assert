@@ -14,53 +14,55 @@ import org.junit.Test;
 
 /**
  * TODO move to base.bpm.camunda.test
+ * 
  * @author Jan Galinski, Holisticon AG
  */
 public class RegisterMock {
 
-    public static void register(final String name, final Object instance) {
-        Mocks.register(name, instance);
+  public static void register(final String name, final Object instance) {
+    Mocks.register(name, instance);
+  }
+
+  public static void register(final Class<?>... types) {
+    for (final Class<?> type : types) {
+      register(resolveName(type), mock(type));
+    }
+  }
+
+  public static void register(final Object... instances) {
+    for (final Object instance : instances) {
+      Mocks.register(resolveName(instance.getClass()), instance);
+    }
+  }
+
+  private static final class FirstListener {
+
+    public static final String NAME = "firstListener";
+  }
+
+  private static final class SecondListener {
+  }
+
+  private static String resolveName(final Class<?> type) {
+    checkArgument(type != null, "type must not be null!");
+
+    String name = null;
+    try {
+      final Field declaredField = type.getDeclaredField("NAME");
+      if (Modifier.isStatic(declaredField.getModifiers()) && Modifier.isFinal(declaredField.getModifiers())) {
+        name = (String) declaredField.get(type.getClass());
+      }
+    } catch (final Exception e) {
+      // ignore
     }
 
-    public static void register(final Class<?>... types) {
-        for (final Class<?> type : types) {
-            register(resolveName(type), mock(type));
-        }
-    }
+    return name != null ? name : uncapitalize(type.getSimpleName());
 
-    public static void register(final Object... instances) {
-        for (final Object instance : instances) {
-            Mocks.register(resolveName(instance.getClass()), instance);
-        }
-    }
+  }
 
-    private static final class FirstListener {
-
-        public static final String NAME = "firstListener";
-    }
-
-    private static final class SecondListener {}
-
-    private static String resolveName(final Class<?> type) {
-        checkArgument(type != null, "type must not be null!");
-
-        String name = null;
-        try {
-            final Field declaredField = type.getDeclaredField("NAME");
-            if (Modifier.isStatic(declaredField.getModifiers()) && Modifier.isFinal(declaredField.getModifiers())) {
-                name = (String)declaredField.get(type.getClass());
-            }
-        } catch (final Exception e) {
-            // ignore
-        }
-
-        return name != null ? name : uncapitalize(type.getSimpleName());
-
-    }
-
-    @Test
-    public void shouldResolveNAME() throws Exception {
-        assertThat(resolveName(FirstListener.class), is(FirstListener.NAME));
-        assertThat(resolveName(SecondListener.class), is("secondListener"));
-    }
+  @Test
+  public void shouldResolveNAME() throws Exception {
+    assertThat(resolveName(FirstListener.class), is(FirstListener.NAME));
+    assertThat(resolveName(SecondListener.class), is("secondListener"));
+  }
 }

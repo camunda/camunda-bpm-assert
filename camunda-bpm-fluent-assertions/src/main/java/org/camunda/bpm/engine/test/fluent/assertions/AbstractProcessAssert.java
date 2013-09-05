@@ -6,13 +6,13 @@ import org.fest.assertions.api.AbstractAssert;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class AbstractProcessAssert<S extends AbstractProcessAssert<S,A>, A> extends AbstractAssert<S, A> {
+public class AbstractProcessAssert<S extends AbstractProcessAssert<S, A>, A> extends AbstractAssert<S, A> {
 
-    protected ProcessEngine engine;
+  protected ProcessEngine engine;
 
-    public AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {
-        super(actual, selfType);
-        this.engine = engine;
-    }
+  public AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {
+    super(actual, selfType);
+    this.engine = engine;
+  }
 
 }

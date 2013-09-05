@@ -10,26 +10,28 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
  */
 public interface Guard {
 
-	/**
-	 * Will be called on start. <br />
-	 * Intended usage of this method is to check variables required for task execution.
-	 * 
-	 * @param execution
-	 *            delegate execution.
-	 * @throws IllegalStateException
-	 *             on all errors
-	 */
-	void checkPreconditions(final DelegateExecution execution) throws IllegalStateException;
+  /**
+   * Will be called on start. <br />
+   * Intended usage of this method is to check variables required for task
+   * execution.
+   * 
+   * @param execution
+   *          delegate execution.
+   * @throws IllegalStateException
+   *           on all errors
+   */
+  void checkPreconditions(final DelegateExecution execution) throws IllegalStateException;
 
-	/**
-	 * Will be called on end. <br />
-	 * Intended usage of this method is to check variables changed during task execution.
-	 * 
-	 * @param execution
-	 *            delegate execution.
-	 * @throws IllegalStateException
-	 *             on all errors
-	 */
-	void checkPostcondions(final DelegateExecution execution) throws IllegalStateException;
+  /**
+   * Will be called on end. <br />
+   * Intended usage of this method is to check variables changed during task
+   * execution.
+   * 
+   * @param execution
+   *          delegate execution.
+   * @throws IllegalStateException
+   *           on all errors
+   */
+  void checkPostcondions(final DelegateExecution execution) throws IllegalStateException;
 
 }

@@ -18,29 +18,29 @@ import org.junit.Test;
 
 public class FluentDeploymentTest {
 
-    @Rule
-    public final ProcessEngineRule processEngineRule = new ProcessEngineRule();
+  @Rule
+  public final ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-    private FluentDeployment fluentDeployment;
+  private FluentDeployment fluentDeployment;
 
-    @Before
-    public void setUp() throws Exception {
-        fluentDeployment = new FluentDeploymentImpl(new FluentProcessEngineImpl(processEngineRule.getProcessEngine()));
-    }
+  @Before
+  public void setUp() throws Exception {
+    fluentDeployment = new FluentDeploymentImpl(new FluentProcessEngineImpl(processEngineRule.getProcessEngine()));
+  }
 
-    @Test
-    public void shouldDeploySimpleProcess() {
-        final String deploymentId = fluentDeployment.name("foo").addClasspathResource("SimpleProcessTest.bpmn")
-                .addClasspathResource("OtherSimpleProcessTest.bpmn").deploy();
-        assertNotNull(deploymentId);
-        final Deployment deployment = processEngineRule.getRepositoryService().createDeploymentQuery().deploymentId(deploymentId).singleResult();
-        assertNotNull(deployment);
-        assertThat(deployment.getName(), is("foo"));
-        assertTrue(deployment.getDeploymentTime().before(new Date()));
-    }
+  @Test
+  public void shouldDeploySimpleProcess() {
+    final String deploymentId = fluentDeployment.name("foo").addClasspathResource("SimpleProcessTest.bpmn").addClasspathResource("OtherSimpleProcessTest.bpmn")
+        .deploy();
+    assertNotNull(deploymentId);
+    final Deployment deployment = processEngineRule.getRepositoryService().createDeploymentQuery().deploymentId(deploymentId).singleResult();
+    assertNotNull(deployment);
+    assertThat(deployment.getName(), is("foo"));
+    assertTrue(deployment.getDeploymentTime().before(new Date()));
+  }
 
-    @Test(expected = ProcessEngineException.class)
-    public void shouldFailForNonExistingFile() throws Exception {
-        fluentDeployment.addClasspathResource("foo").deploy();
-    }
+  @Test(expected = ProcessEngineException.class)
+  public void shouldFailForNonExistingFile() throws Exception {
+    fluentDeployment.addClasspathResource("foo").deploy();
+  }
 }
