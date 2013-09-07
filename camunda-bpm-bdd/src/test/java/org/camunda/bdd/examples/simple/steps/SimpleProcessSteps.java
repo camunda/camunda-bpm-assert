@@ -6,9 +6,9 @@ import static org.mockito.Mockito.when;
 
 import javax.inject.Inject;
 
-import org.camunda.bdd.examples.simple.SimpleProcess.Elements;
-import org.camunda.bdd.examples.simple.SimpleProcess.Events;
-import org.camunda.bdd.examples.simple.SimpleProcess.Variables;
+import org.camunda.bdd.examples.simple.SimpleProcessConstants.Elements;
+import org.camunda.bdd.examples.simple.SimpleProcessConstants.Events;
+import org.camunda.bdd.examples.simple.SimpleProcessConstants.Variables;
 import org.camunda.bdd.examples.simple.SimpleProcessAdapter;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.test.mock.RegisterMock;

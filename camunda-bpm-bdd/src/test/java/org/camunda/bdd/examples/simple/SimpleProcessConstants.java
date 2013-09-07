@@ -5,7 +5,7 @@ package org.camunda.bdd.examples.simple;
  * 
  * @author Simon Zambrovski, Holisticon AG.
  */
-public class SimpleProcess {
+public class SimpleProcessConstants {
 
   /**
    * Name and location of process definition.

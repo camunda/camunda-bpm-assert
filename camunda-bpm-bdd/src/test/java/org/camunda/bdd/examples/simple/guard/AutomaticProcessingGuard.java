@@ -1,7 +1,7 @@
 package org.camunda.bdd.examples.simple.guard;
 
 import static org.camunda.bpm.engine.guard.GuardSupport.checkIsSet;
-import org.camunda.bdd.examples.simple.SimpleProcess.Variables;
+import org.camunda.bdd.examples.simple.SimpleProcessConstants.Variables;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.guard.ActivityGuard;
 
