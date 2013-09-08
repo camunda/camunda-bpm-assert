@@ -41,6 +41,7 @@ import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestRule;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
 import org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier;
+import org.junit.rules.ExternalResource;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -62,7 +63,7 @@ import de.holisticon.toolbox.needle.NeedleTestRuleBuilder;
  * 
  * @author Jan Galinski, Holisticon AG (jan.galinski@holisticon.de)
  */
-public class ProcessEngineNeedleRule extends FluentProcessEngineTestRule implements ProcessEngineTestRule {
+public class ProcessEngineNeedleRule extends ExternalResource implements ProcessEngineTestRule {
 
   public static ProcessEngineTestRuleBuilder fluentNeedleRule(final Object testInstance) {
     return new ProcessEngineTestRuleBuilder(testInstance);
@@ -91,7 +92,6 @@ public class ProcessEngineNeedleRule extends FluentProcessEngineTestRule impleme
   private ProcessInstance processInstance;
 
   ProcessEngineNeedleRule(final Object testInstance, final String configurationResource, final Set<InjectionProvider<?>> injectionProviders) {
-    super(testInstance);
 
     // initialize processEngine
     final CamundaInstancesSupplier camundaInstancesSupplier = CamundaInstancesSupplier.camundaInstancesSupplier(configurationResource);
@@ -99,6 +99,8 @@ public class ProcessEngineNeedleRule extends FluentProcessEngineTestRule impleme
     // activate activiti rull
     this.processEngineTestWatcher = new ProcessEngineTestWatcher(camundaInstancesSupplier.getProcessEngine());
     this.fluentProcessEngine = new FluentProcessEngineImpl(camundaInstancesSupplier.getProcessEngine());
+
+    final FluentProcessEngineTestRule fluentProcessEngineTestRule = new FluentProcessEngineTestRule(testInstance);
 
     // create needle rule with camunda supplier and additional providers
     final NeedleTestRule needleTestRule = NeedleTestRuleBuilder.needleTestRule(testInstance).addSupplier(camundaInstancesSupplier) //
@@ -108,13 +110,7 @@ public class ProcessEngineNeedleRule extends FluentProcessEngineTestRule impleme
     final RuleChain needleWithRegisterMocks = RuleChain.outerRule(needleTestRule).around(registerMockTestRule(testInstance));
 
     // combine activiti and needle rules
-    this.ruleChain = RuleChain.outerRule(new TestRule() {
-
-      @Override
-      public Statement apply(final Statement statement, final Description description) {
-        return ProcessEngineNeedleRule.super.apply(statement, description);
-      }
-    }).around(processEngineTestWatcher).around(needleWithRegisterMocks);
+    this.ruleChain = RuleChain.outerRule(fluentProcessEngineTestRule).around(processEngineTestWatcher).around(needleWithRegisterMocks);
   }
 
   @Override
@@ -139,7 +135,6 @@ public class ProcessEngineNeedleRule extends FluentProcessEngineTestRule impleme
     FluentProcessEngineTests.after();
   }
 
-  @Override
   protected FluentProcessEngine getEngine() {
     return fluentProcessEngine;
   }

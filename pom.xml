@@ -19,6 +19,7 @@
         <module>camunda-bpm-fluent-engine-api</module>
         <module>camunda-bpm-fluent-assertions</module>
         <module>camunda-bpm-needle</module>
+        <module>camunda-bpm-bdd</module>
         <!--<module>camunda-bpm-fluent-integration-tests</module> -->
     </modules>
 

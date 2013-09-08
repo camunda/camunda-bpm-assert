@@ -45,6 +45,24 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
   }
 
   /**
+   * @see #before(FluentProcessEngine)
+   * @param fluentProcessEngineTestRule
+   */
+  @Deprecated
+  public static void before(final FluentProcessEngineTestRule fluentProcessEngineTestRule) {
+    before(fluentProcessEngineTestRule.getEngine());
+  }
+
+  /**
+   * @see #after()
+   * @param unused
+   */
+  @Deprecated
+  public static void after(final FluentProcessEngineTestRule unused) {
+    after();
+  }
+
+  /**
    * Reset all threadlocal variables to <code>null</code>.
    */
   public static void after() {

@@ -11,23 +11,22 @@
  */
 package org.camunda.bpm.engine.impl.fluent;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.logging.Logger;
+
 import org.camunda.bpm.engine.fluent.AbstractFluentDelegate;
 import org.camunda.bpm.engine.fluent.FluentJob;
 import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.fluent.FluentProcessVariable;
 import org.camunda.bpm.engine.fluent.FluentTask;
-import org.camunda.bpm.engine.fluent.FluentProcessInstance.Move;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.fluent.support.Maps;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

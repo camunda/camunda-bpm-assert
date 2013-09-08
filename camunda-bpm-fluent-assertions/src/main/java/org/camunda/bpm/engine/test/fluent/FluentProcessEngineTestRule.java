@@ -58,28 +58,30 @@ public class FluentProcessEngineTestRule implements TestRule {
   protected FluentProcessEngine getEngine() {
     if (engine != null) {
       return engine;
+    }
+
+    try {
+      return engine = new FluentProcessEngineImpl(ProgrammaticBeanLookup.lookup(ProcessEngine.class));
+    } catch (final ProcessEngineException e) {
+      // fallthrough
+    }
+    if (test instanceof ProcessEngineTestCase) {
+      return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
     } else {
+      ProcessEngineRule processEngineRule = null;
+
       try {
-        final ProcessEngine processEngine = ProgrammaticBeanLookup.lookup(ProcessEngine.class);
-        return new FluentProcessEngineImpl(processEngine);
-      } catch (final ProcessEngineException e) {
+        processEngineRule = (ProcessEngineRule) Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test);
+      } catch (final Exception e) {
         // fallthrough
       }
-      if (test instanceof ProcessEngineTestCase) {
-        return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
-      } else {
-        try {
-          ProcessEngineRule processEngineRule = (ProcessEngineRule) Classes.getFieldByType(test.getClass(), ProcessEngineRule.class).get(test);
-          if (processEngineRule == null) {
-            // TODO default config name only
-            processEngineRule = new ProcessEngineRule();
-          }
-
-          return engine = new FluentProcessEngineImpl(processEngineRule.getProcessEngine());
-        } catch (final IllegalAccessException e) {
-          throw new RuntimeException(e);
-        }
+      if (processEngineRule == null) {
+        // TODO default config name only
+        processEngineRule = new ProcessEngineRule();
       }
+
+      return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(processEngineRule.getConfigurationResource()));
     }
+
   }
 }

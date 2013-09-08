@@ -3,6 +3,7 @@ package org.camunda.bpm.engine.test.mock;
 import static org.camunda.bpm.engine.test.mock.RegisterMock.resolveName;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -48,4 +49,5 @@ public class RegisterMockTest {
     assertThat("'NoBean registered'", Mocks.get("noBean"), nullValue());
 
   }
+
 }
