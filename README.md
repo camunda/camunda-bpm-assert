@@ -282,3 +282,5 @@ The following opens source projects are using the camunda BPM fluent testing lib
 # Feedback
 
 Suggestions, pull requests, ... you name it... are very welcome! Meet us on the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev) list.
+
+* [Project history on ohloh.com](https://www.ohloh.net/p/camunda-bpm-testing/)
