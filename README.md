@@ -2,6 +2,8 @@
 You can check the presentation of this project [camunda BPM dev list](https://groups.google.com/forum/#!msg/camunda-bpm-dev/m8VDRnZe55A/YsZ2QwnFOPcJ). 
 Questions, issues, ideas, feedback, … are greatly appreciated and should be made the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev) list.
 
+**NOTE:** Currently, this project relies on a snapshot version of JBehave-3.9. 
+
 # Introduction
 
 This project aims at improving test creation **and maintenance** when developing process applications based on [the camunda BPM platform](http://camunda.org). 
