@@ -8,10 +8,10 @@ import static org.mockito.Mockito.when;
 
 import javax.inject.Inject;
 
-import org.camunda.bdd.examples.simple.SimpleProcess;
+import org.camunda.bdd.examples.simple.SimpleProcessConstants;
 import org.camunda.bdd.examples.simple.SimpleProcessAdapter;
-import org.camunda.bdd.examples.simple.SimpleProcess.Elements;
-import org.camunda.bdd.examples.simple.SimpleProcess.Events;
+import org.camunda.bdd.examples.simple.SimpleProcessConstants.Elements;
+import org.camunda.bdd.examples.simple.SimpleProcessConstants.Events;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.runtime.Execution;
@@ -45,7 +45,7 @@ public class SimpleUnitTest {
     }
 
     public void startSimpleProcess() {
-      final ProcessInstance processInstance = processEngine.startProcessInstanceByKey(SimpleProcess.PROCESS);
+      final ProcessInstance processInstance = processEngine.startProcessInstanceByKey(SimpleProcessConstants.PROCESS);
       assertNotNull(processInstance);
       processInstanceId = processInstance.getProcessInstanceId();
     }
@@ -96,13 +96,13 @@ public class SimpleUnitTest {
   }
 
   @Test
-  @Deployment(resources = SimpleProcess.BPMN)
+  @Deployment(resources = SimpleProcessConstants.BPMN)
   public void shouldDeploy() {
     // nothing to do.
   }
 
   @Test
-  @Deployment(resources = SimpleProcess.BPMN)
+  @Deployment(resources = SimpleProcessConstants.BPMN)
   public void shouldStartAndRunAutomatically() {
 
     // given
@@ -117,7 +117,7 @@ public class SimpleUnitTest {
   }
 
   @Test
-  @Deployment(resources = SimpleProcess.BPMN)
+  @Deployment(resources = SimpleProcessConstants.BPMN)
   public void shouldStartAndWaitForManual() {
 
     // given
@@ -131,7 +131,7 @@ public class SimpleUnitTest {
   }
 
   @Test
-  @Deployment(resources = SimpleProcess.BPMN)
+  @Deployment(resources = SimpleProcessConstants.BPMN)
   public void shouldStartProcessAutomaticallyAndWaitForManual() {
 
     // given
