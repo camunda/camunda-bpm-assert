@@ -21,7 +21,7 @@
 		<module>camunda-bpm-fluent-engine-api</module>
         <module>camunda-bpm-fest-assertions</module>
         <module>camunda-bpm-needle</module>
-        <module>camunda-bpm-jbehave</module>
+        <!--<module>camunda-bpm-jbehave</module> -->
         <!--<module>camunda-bpm-fluent-integration-tests</module> -->
     </modules>
 
