@@ -17,19 +17,16 @@
 
     <modules>
         <module>camunda-bpm-testing-core</module>
-	    <module>camunda-bpm-testing-examples</module>
-	    <module>camunda-bpm-fluent-engine-api</module>
+	<module>camunda-bpm-testing-examples</module>
+	<module>camunda-bpm-fluent-engine-api</module>
         <module>camunda-bpm-fest-assertions</module>
         <module>camunda-bpm-needle</module>
         <module>camunda-bpm-jbehave</module>
         <module>camunda-bpm-fluent-integration-tests</module>
     </modules>
 
-
     <properties>
         <version.camunda-bpm>7.0.0-Final</version.camunda-bpm>
-
-        <!-- Minimum required JUnit required version since we are using org.junit.rules.TestRule -->
 
         <version.slf4j>1.7.2</version.slf4j>
         <version.guava>14.0.1</version.guava>
@@ -41,7 +38,7 @@
         <!-- test tools -->
         <version.mockito>1.9.5</version.mockito>
         <version.hamcrest>1.3</version.hamcrest>
-        <version.fest-assert>2.0M9</version.fest-assert>
+        <version.fest-assert>2.0M10</version.fest-assert>
         <version.needle-mockito>1.0</version.needle-mockito>
         <version.junit-mockito>1.0</version.junit-mockito>
     </properties>
