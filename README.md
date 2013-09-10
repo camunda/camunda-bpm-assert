@@ -26,7 +26,7 @@ This project provides a tool set for different testing approaches. This starts w
 | **camunda-bpm-testing-examples** | shared examples for demonstrating different testing strategies and techniques. |
 | **camunda-bpm-jbehave** | is a basis for writing behaviour specifications and test process up-front of implementation and later after integration |
 | **camunda-bpm-fluent-engine-api** | provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) Camunda BPM API so you can focus on your process expert's domain knowledge while writing and reading your tests |
-| **caumnda-bpm-fest-assertions** | provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) convenience methods, matchers and assertions for testing. |
+| **camunda-bpm-fest-assertions** | provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) convenience methods, matchers and assertions for testing. |
 | **camunda-bpm-needle** | is offering an integration to Needle Mocking provider framework, which eases the use of Mocking Frameworks in Camunda tests and helps to test components with Dependency Injection. |
 
 Suggestions, pull requests, ... you name it... are very welcome! Meet us on the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev) list.
