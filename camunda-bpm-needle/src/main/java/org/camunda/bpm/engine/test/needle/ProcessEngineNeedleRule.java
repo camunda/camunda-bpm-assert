@@ -422,7 +422,7 @@ public class ProcessEngineNeedleRule extends ExternalResource implements Process
 
   @Override
   public String getName() {
-    return null;
+    return getProcessEngine().getName();
   }
 
   @Override

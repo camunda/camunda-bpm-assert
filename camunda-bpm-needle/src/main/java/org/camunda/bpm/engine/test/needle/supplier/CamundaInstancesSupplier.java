@@ -13,6 +13,8 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.impl.ProcessEngineImpl;
+import org.camunda.bpm.engine.impl.interceptor.CommandExecutor;
 import org.camunda.bpm.engine.impl.test.TestHelper;
 
 import com.google.common.collect.Sets;
@@ -65,6 +67,7 @@ public class CamundaInstancesSupplier implements InjectionProviderInstancesSuppl
     providers.add(providerFor(getIdentityService()));
     providers.add(providerFor(getManagementService()));
     providers.add(providerFor(getAuthorizationService()));
+    providers.add(providerFor(getCommandExecutor()));
   }
 
   @Override
@@ -128,6 +131,10 @@ public class CamundaInstancesSupplier implements InjectionProviderInstancesSuppl
   @Override
   public AuthorizationService getAuthorizationService() {
     return processEngine.getAuthorizationService();
+  }
+
+  public CommandExecutor getCommandExecutor() {
+    return ((ProcessEngineImpl) getProcessEngine()).getProcessEngineConfiguration().getCommandExecutorSchemaOperations();
   }
 
 }
