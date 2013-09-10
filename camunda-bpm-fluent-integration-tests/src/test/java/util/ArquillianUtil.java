@@ -19,7 +19,7 @@ public class ArquillianUtil {
       .addAsLibraries(resolver.artifact("org.camunda.bpm:camunda-engine-cdi").resolveAsFiles())
       .addAsLibraries(resolver.artifact("org.camunda.bpm.javaee:camunda-ejb-client").resolveAsFiles())
       .addAsLibraries(resolver.artifact("org.easytesting:fest-assert-core").resolveAsFiles())
-      .addAsLibraries(resolver.artifact("org.mockito:mockito-all").resolveAsFiles())
+      .addAsLibraries(resolver.artifact("org.mockito:mockito-core").resolveAsFiles())
         // TODO Once the fluent testing is available via maven then we will just need to add a line here
       .addPackage("org.camunda.bpm.engine.fluent")
       .addPackage("org.camunda.bpm.engine.test.fluent")

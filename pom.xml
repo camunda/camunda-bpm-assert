@@ -17,12 +17,12 @@
 
     <modules>
         <module>camunda-bpm-testing-core</module>
-		<module>camunda-bpm-testing-examples</module>
-		<module>camunda-bpm-fluent-engine-api</module>
+	    <module>camunda-bpm-testing-examples</module>
+	    <module>camunda-bpm-fluent-engine-api</module>
         <module>camunda-bpm-fest-assertions</module>
         <module>camunda-bpm-needle</module>
         <module>camunda-bpm-jbehave</module>
-        <!--<module>camunda-bpm-fluent-integration-tests</module> -->
+        <module>camunda-bpm-fluent-integration-tests</module>
     </modules>
 
 
@@ -193,6 +193,7 @@
         <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-fluent-testing.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
+
     <build>
         <defaultGoal>clean install</defaultGoal>
         <plugins>
@@ -217,6 +218,21 @@
                 </configuration>
             </plugin>
         </plugins>
+
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-surefire-plugin</artifactId>
+              <version>2.16</version>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-failsafe-plugin</artifactId>
+              <version>2.16</version>
+            </plugin>
+          </plugins>
+        </pluginManagement>
     </build>
 
     <distributionManagement>
