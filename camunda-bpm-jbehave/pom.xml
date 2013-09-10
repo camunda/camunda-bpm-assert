@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.incubation</groupId>
-            <artifactId>camunda-bpm-fluent-assertions</artifactId>
+            <artifactId>camunda-bpm-fest-assertions</artifactId>
         </dependency>
 
         <dependency>
