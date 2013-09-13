@@ -1,6 +1,5 @@
 package org.camunda.bpm.engine.test.mock;
 
-// CHECKSTYLE:OFF test class
 import static com.google.common.base.Preconditions.checkArgument;
 import static org.apache.commons.lang3.StringUtils.uncapitalize;
 import static org.mockito.Mockito.mock;

@@ -1,14 +1,15 @@
 package org.camunda.bpm.engine.impl.fluent;
 
+import static org.camunda.bpm.engine.fluent.support.ProcessVariableMaps.parseMap;
+
+import java.util.Date;
+
 import org.camunda.bpm.engine.fluent.AbstractFluentDelegate;
 import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentTask;
 import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.task.DelegationState;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.test.fluent.support.Maps;
-
-import java.util.Date;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -149,7 +150,7 @@ public class FluentTaskImpl extends AbstractFluentDelegate<Task> implements Flue
 
   @Override
   public FluentTask complete(final Object... variables) {
-    engine.getTaskService().complete(delegate.getId(), Maps.parseMap(variables));
+    engine.getTaskService().complete(delegate.getId(), parseMap(variables));
     return this;
   }
 

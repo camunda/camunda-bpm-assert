@@ -14,7 +14,6 @@ public class RegisterMockTestRule extends ExternalResource {
 
   private RegisterMockTestRule(final Object testInstance) {
     this.testInstance = testInstance;
-
   }
 
   @Override

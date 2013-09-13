@@ -17,8 +17,8 @@
 
     <modules>
         <module>camunda-bpm-testing-core</module>
-	<module>camunda-bpm-testing-examples</module>
-	<module>camunda-bpm-fluent-engine-api</module>
+        <module>camunda-bpm-testing-examples</module>
+        <module>camunda-bpm-fluent-engine-api</module>
         <module>camunda-bpm-fest-assertions</module>
         <module>camunda-bpm-needle</module>
         <module>camunda-bpm-jbehave</module>
@@ -45,10 +45,16 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- camunda bpm testing -->
             <dependency>
                 <groupId>org.camunda.bpm.incubation</groupId>
                 <artifactId>camunda-bpm-fluent-engine-api</artifactId>
+                <version>${project.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <!-- camunda bpm testing -->
+            <dependency>
+                <groupId>org.camunda.bpm.incubation</groupId>
+                <artifactId>camunda-bpm-testing-core</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>
@@ -150,6 +156,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
@@ -217,18 +227,18 @@
         </plugins>
 
         <pluginManagement>
-          <plugins>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-surefire-plugin</artifactId>
-              <version>2.16</version>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-failsafe-plugin</artifactId>
-              <version>2.16</version>
-            </plugin>
-          </plugins>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.16</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>2.16</version>
+                </plugin>
+            </plugins>
         </pluginManagement>
     </build>
 

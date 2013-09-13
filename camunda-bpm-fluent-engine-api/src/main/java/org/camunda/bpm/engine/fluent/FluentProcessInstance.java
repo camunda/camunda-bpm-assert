@@ -3,7 +3,6 @@ package org.camunda.bpm.engine.fluent;
 import java.util.Map;
 
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.test.fluent.support.Maps;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

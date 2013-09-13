@@ -1,5 +1,7 @@
 package org.camunda.bpm.engine.impl.fluent;
 
+import java.util.Map.Entry;
+
 import org.camunda.bpm.engine.fluent.FluentProcessVariable;
 
 /**
@@ -9,9 +11,9 @@ import org.camunda.bpm.engine.fluent.FluentProcessVariable;
 public class FluentProcessVariableImpl implements FluentProcessVariable {
 
   private final String name;
-  private Object value;
+  private final Object value;
 
-  protected FluentProcessVariableImpl(String name, Object value) {
+  protected FluentProcessVariableImpl(final String name, final Object value) {
     this.name = name;
     this.value = value;
   }
@@ -24,6 +26,27 @@ public class FluentProcessVariableImpl implements FluentProcessVariable {
   @Override
   public Object getValue() {
     return value;
+  }
+
+  @Override
+  public Entry<String, Object> getDelegate() {
+    return new Entry<String, Object>() {
+
+      @Override
+      public Object setValue(final Object value) {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public Object getValue() {
+        return value;
+      }
+
+      @Override
+      public String getKey() {
+        return name;
+      }
+    };
   }
 
 }

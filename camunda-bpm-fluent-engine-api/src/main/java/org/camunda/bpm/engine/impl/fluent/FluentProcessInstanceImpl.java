@@ -26,7 +26,7 @@ import org.camunda.bpm.engine.fluent.FluentTask;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.test.fluent.support.Maps;
+import static org.camunda.bpm.engine.fluent.support.ProcessVariableMaps.parseMap;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -163,7 +163,7 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
 
   @Override
   public FluentProcessInstance setVariables(final Object... variables) {
-    return setVariables(Maps.parseMap(variables));
+    return setVariables(parseMap(variables));
   }
 
   @Override

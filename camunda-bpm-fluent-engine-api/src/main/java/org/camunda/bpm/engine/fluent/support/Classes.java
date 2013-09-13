@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent.support;
+package org.camunda.bpm.engine.fluent.support;
 
 import java.lang.reflect.Field;
 
