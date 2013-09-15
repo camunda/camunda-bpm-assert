@@ -12,6 +12,7 @@ import java.util.Map;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.camunda.bpm.engine.fluent.support.ProcessVariableMaps;
 
 public final class FluentJavaDelegateMock implements JavaDelegate {
 
@@ -33,6 +34,10 @@ public final class FluentJavaDelegateMock implements JavaDelegate {
    */
   public static JavaDelegate getRegisteredDelegate(final String key) {
     return (JavaDelegate) Mocks.get(key);
+  }
+
+  public void onExecutionSetProcessVariables(final Object... variables) {
+    onExecutionSetProcessVariables(ProcessVariableMaps.parseMap(variables));
   }
 
   public void onExecutionSetProcessVariables(final Map<String, Object> variables) {

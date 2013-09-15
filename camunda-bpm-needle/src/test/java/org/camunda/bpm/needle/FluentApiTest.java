@@ -1,27 +1,16 @@
 package org.camunda.bpm.needle;
 
-import static org.camunda.bpm.engine.test.SetVariablesOnDelegateExecutionAnswer.doSetVariablesOnExecute;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.assertThat;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.newProcessInstance;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.processInstance;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
+import static org.camunda.bpm.engine.test.mock.FluentJavaDelegateMock.registerMockDelegate;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.fluent.FluentTask;
 import org.camunda.bpm.engine.test.Deployment;
-import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.engine.test.needle.ProcessEngineNeedleRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 public class FluentApiTest {
 
@@ -30,25 +19,11 @@ public class FluentApiTest {
   @Rule
   public final ProcessEngineNeedleRule processEngineNeedleRule = ProcessEngineNeedleRule.fluentNeedleRule(this).build();
 
-  @Named
-  public static class ServiceTask implements JavaDelegate {
-
-    @Override
-    public void execute(final DelegateExecution execution) throws Exception {
-
-    }
-
-  }
-
-  @Inject
-  private ServiceTask delegate;
-
   @Test
   @Deployment(resources = BPMN_FILE)
   public void testName() throws Exception {
-    assertNotNull(delegate);
 
-    doSetVariablesOnExecute(delegate, "world", 1L);
+    registerMockDelegate("serviceTask").onExecutionSetProcessVariables("world", 1L);
 
     final FluentProcessInstance newProcessInstance = newProcessInstance(PROCESS_KEY).setVariable("foo", Boolean.TRUE).start();
     assertThat(newProcessInstance.task()).isUnassigned();

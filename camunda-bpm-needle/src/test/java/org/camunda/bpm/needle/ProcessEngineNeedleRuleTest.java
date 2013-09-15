@@ -1,6 +1,6 @@
 package org.camunda.bpm.needle;
 
-import static org.camunda.bpm.engine.test.SetVariablesOnDelegateExecutionAnswer.doSetVariablesOnExecute;
+import static org.camunda.bpm.engine.test.mock.FluentJavaDelegateMock.registerMockDelegate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -12,12 +12,10 @@ import javax.inject.Inject;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.fluent.support.Maps;
-import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.engine.test.needle.ProcessEngineNeedleRule;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Rule;
@@ -25,7 +23,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.akquinet.jbosscc.needle.annotation.Mock;
 import de.akquinet.jbosscc.needle.annotation.ObjectUnderTest;
 
 public class ProcessEngineNeedleRuleTest {
@@ -51,9 +48,6 @@ public class ProcessEngineNeedleRuleTest {
   @Inject
   private TaskService taskService;
 
-  @Mock
-  private JavaDelegate javaDelegate;
-
   @ObjectUnderTest
   private A a;
 
@@ -62,18 +56,15 @@ public class ProcessEngineNeedleRuleTest {
     assertNotNull(a);
     assertNotNull(runtimeService);
     assertNotNull(taskService);
-    assertNotNull(javaDelegate);
     assertNotNull(repositoryService);
   }
 
   @Test
   @Deployment(resources = PROCESS_FILE)
   public void shouldDeployAndRunTestProcess() throws Exception {
-    Mocks.register("serviceTask", javaDelegate);
+    registerMockDelegate("serviceTask").onExecutionSetProcessVariables("world", 8L);
     final String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     final List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
-
-    doSetVariablesOnExecute(javaDelegate, "world", 8L);
 
     logger.info("deployed resources: " + deploymentResources);
 
