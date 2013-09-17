@@ -12,10 +12,10 @@ import javax.inject.Inject;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.fluent.support.ProcessVariableMaps;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
-import org.camunda.bpm.engine.test.fluent.support.Maps;
 import org.camunda.bpm.engine.test.needle.ProcessEngineNeedleRule;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Rule;
@@ -70,12 +70,12 @@ public class ProcessEngineNeedleRuleTest {
 
     // starts the process, activates task "wait"
     logger.debug("start process:" + PROCESS_KEY);
-    runtimeService.startProcessInstanceByKey(PROCESS_KEY, Maps.parseMap("foo", 1L));
+    runtimeService.startProcessInstanceByKey(PROCESS_KEY, ProcessVariableMaps.parseMap("foo", 1L));
 
     // find and complete task "wait", process is finished
     final Task task = taskService.createTaskQuery().singleResult();
     logger.debug("completing task: " + task.getName());
-    taskService.complete(task.getId(), Maps.parseMap("bar", Boolean.TRUE, "hello", 0L));
+    taskService.complete(task.getId(), ProcessVariableMaps.parseMap("bar", Boolean.TRUE, "hello", 0L));
 
     // verify no more instances running
     assertThat(runtimeService.createProcessInstanceQuery().list(), is(new IsEmptyCollection<ProcessInstance>()));
