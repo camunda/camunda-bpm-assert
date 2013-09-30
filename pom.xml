@@ -22,11 +22,12 @@
         <module>camunda-bpm-fest-assertions</module>
         <module>camunda-bpm-needle</module>
         <module>camunda-bpm-jbehave</module>
-        <module>camunda-bpm-fluent-integration-tests</module>
+        <!--<module>camunda-bpm-fluent-integration-tests</module>-->
     </modules>
 
     <properties>
-        <version.camunda-bpm>7.0.0-Final</version.camunda-bpm>
+        <camunda-bpm.version>7.0.0-Final</camunda-bpm.version>
+        <camunda-bpm-data.version>1.0.0-SNAPSHOT</camunda-bpm-data.version>
 
         <version.slf4j>1.7.2</version.slf4j>
         <version.guava>14.0.1</version.guava>
@@ -70,34 +71,40 @@
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>
+            <dependency>
+                <groupId>org.camunda.bpm.incubation</groupId>
+                <artifactId>camunda-bpm-data</artifactId>
+                <version>${camunda-bpm-data.version}</version>
+                <scope>compile</scope>
+            </dependency>
 
             <!-- camunda bpm platform -->
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
                 <artifactId>camunda-engine</artifactId>
-                <version>${version.camunda-bpm}</version>
+                <version>${camunda-bpm.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
                 <artifactId>camunda-engine-cdi</artifactId>
-                <version>${version.camunda-bpm}</version>
+                <version>${camunda-bpm.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.camunda.bpm.javaee</groupId>
                 <artifactId>camunda-ejb-client</artifactId>
-                <version>${version.camunda-bpm}</version>
+                <version>${camunda-bpm.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
                 <artifactId>camunda-engine-spring</artifactId>
-                <version>${version.camunda-bpm}</version>
+                <version>${camunda-bpm.version}</version>
                 <scope>provided</scope>
             </dependency>
             <!-- <dependency> <groupId>org.camunda.bpm.identity</groupId> <artifactId>camunda-identity-ldap</artifactId> 
-                <version>${version.camunda-bpm}</version> </dependency> -->
+                <version>${camunda-bpm.version}</version> </dependency> -->
 
             <dependency>
                 <groupId>com.google.guava</groupId>

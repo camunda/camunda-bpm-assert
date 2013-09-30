@@ -15,6 +15,10 @@
     <dependencies>
         <dependency>
             <groupId>org.camunda.bpm.incubation</groupId>
+            <artifactId>camunda-bpm-data</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm.incubation</groupId>
             <artifactId>camunda-bpm-testing-core</artifactId>
         </dependency>
         <dependency>

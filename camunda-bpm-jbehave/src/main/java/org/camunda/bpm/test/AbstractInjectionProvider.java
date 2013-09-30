@@ -12,11 +12,8 @@ import de.akquinet.jbosscc.needle.injection.InjectionTargetInformation;
  */
 public abstract class AbstractInjectionProvider<T> implements InjectionProvider<T> {
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public boolean verify(InjectionTargetInformation target) {
+  public boolean verify(final InjectionTargetInformation target) {
     return target.getType().isAssignableFrom(getType());
   }
 
@@ -27,17 +24,11 @@ public abstract class AbstractInjectionProvider<T> implements InjectionProvider<
    */
   public abstract Class<T> getType();
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
   public abstract T getInjectedObject(Class<?> type);
 
-  /**
-   * {@inheritDoc}
-   */
   @Override
-  public Object getKey(InjectionTargetInformation target) {
+  public Object getKey(final InjectionTargetInformation target) {
     return target.getType().getCanonicalName();
   }
 

@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
 
     <artifactId>camunda-bpm-jbehave</artifactId>
     <parent>
@@ -12,13 +12,13 @@
     </parent>
 
     <packaging>jar</packaging>
-    
+
     <properties>
         <jbehave.version>3.9-SNAPSHOT</jbehave.version>
     </properties>
 
     <dependencies>
-    <dependency>
+        <dependency>
             <groupId>org.camunda.bpm.incubation</groupId>
             <artifactId>camunda-bpm-testing-core</artifactId>
         </dependency>
@@ -26,9 +26,13 @@
             <groupId>org.camunda.bpm.incubation</groupId>
             <artifactId>camunda-bpm-needle</artifactId>
         </dependency>
-	<dependency>
-          <groupId>org.camunda.bpm</groupId>
-          <artifactId>camunda-engine-cdi</artifactId>
+        <dependency>
+            <groupId>org.camunda.bpm.incubation</groupId>
+            <artifactId>camunda-bpm-data</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine-cdi</artifactId>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm.incubation</groupId>

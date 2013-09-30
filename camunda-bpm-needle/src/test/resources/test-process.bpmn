@@ -13,17 +13,11 @@
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="service_do_it" targetRef="EndEvent_1"/>
-    <bpmn2:dataObject id="DataObject_1" name="foo"/>
-    <bpmn2:dataObject id="DataObject_2" name="hello"/>
     <bpmn2:userTask id="task_wait" name="Wait">
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="task_wait" targetRef="service_do_it"/>
-    <bpmn2:association id="Association_2" sourceRef="DataObject_1" targetRef="StartEvent_1"/>
-    <bpmn2:association id="Association_3" sourceRef="DataObject_1" targetRef="task_wait"/>
-    <bpmn2:association id="Association_4" sourceRef="task_wait" targetRef="DataObject_2"/>
-    <bpmn2:association id="Association_5" sourceRef="DataObject_2" targetRef="service_do_it"/>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="test-process">
@@ -59,34 +53,6 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_ServiceTask_5" targetElement="BPMNShape_2">
         <di:waypoint xsi:type="dc:Point" x="539.0" y="118.0"/>
         <di:waypoint xsi:type="dc:Point" x="612.0" y="118.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_DataObject_2" bpmnElement="DataObject_1">
-        <dc:Bounds height="50.0" width="36.0" x="156.0" y="240.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="17.0" width="21.0" x="164.0" y="295.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_Association_2" bpmnElement="Association_2" sourceElement="_BPMNShape_DataObject_2" targetElement="BPMNShape_1">
-        <di:waypoint xsi:type="dc:Point" x="164.0" y="240.0"/>
-        <di:waypoint xsi:type="dc:Point" x="125.0" y="136.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_Association_3" bpmnElement="Association_3" sourceElement="_BPMNShape_DataObject_2" targetElement="BPMNShape_UserTask_1">
-        <di:waypoint xsi:type="dc:Point" x="192.0" y="247.0"/>
-        <di:waypoint xsi:type="dc:Point" x="294.0" y="143.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_DataObject_3" bpmnElement="DataObject_2">
-        <dc:Bounds height="50.0" width="36.0" x="372.0" y="252.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="17.0" width="70.0" x="355.0" y="307.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_Association_4" bpmnElement="Association_4" sourceElement="BPMNShape_UserTask_1" targetElement="_BPMNShape_DataObject_3">
-        <di:waypoint xsi:type="dc:Point" x="330.0" y="143.0"/>
-        <di:waypoint xsi:type="dc:Point" x="379.0" y="252.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_Association_5" bpmnElement="Association_5" sourceElement="_BPMNShape_DataObject_3" targetElement="_BPMNShape_ServiceTask_5">
-        <di:waypoint xsi:type="dc:Point" x="405.0" y="252.0"/>
-        <di:waypoint xsi:type="dc:Point" x="469.0" y="143.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
