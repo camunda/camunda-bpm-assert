@@ -45,6 +45,14 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
         }
     };
 
+    public FluentProcessInstanceImpl(final FluentProcessEngine engine) {
+        super(engine, null);
+    }
+
+    public FluentProcessInstanceImpl(final FluentProcessEngine engine, final ProcessInstance delegate) {
+        super(engine, delegate);
+    }
+
     public FluentProcessInstanceImpl(final FluentProcessEngine engine, final String processDefinitionKey) {
         super(engine, null);
         this.processDefinitionKey = processDefinitionKey;
