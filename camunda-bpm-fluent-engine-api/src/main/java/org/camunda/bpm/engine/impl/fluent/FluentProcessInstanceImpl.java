@@ -34,144 +34,147 @@ import static org.camunda.bpm.engine.fluent.support.ProcessVariableMaps.parseMap
  */
 public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessInstance> implements FluentProcessInstance {
 
-  private static Logger log = Logger.getLogger(FluentProcessInstanceImpl.class.getName());
+    private static Logger log = Logger.getLogger(FluentProcessInstanceImpl.class.getName());
 
-  protected String processDefinitionKey;
-  protected Map<String, Object> processVariables = new HashMap<String, Object>();
-  protected FluentProcessInstance.Move move = new FluentProcessInstance.Move() {
+    protected String processDefinitionKey;
+    protected Map<String, Object> processVariables = new HashMap<String, Object>();
+    protected FluentProcessInstance.Move move = new FluentProcessInstance.Move() {
+
+        @Override
+        public void along() {
+        }
+    };
+
+    public FluentProcessInstanceImpl(final FluentProcessEngine engine, final String processDefinitionKey) {
+        super(engine, null);
+        this.processDefinitionKey = processDefinitionKey;
+        final boolean processDefinitionKeyExists = !engine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey)
+                .list().isEmpty();
+        if (!processDefinitionKeyExists)
+            throw new IllegalArgumentException("Process Definition with processDefinitionKey '" + processDefinitionKey + "' is not deployed.");
+    }
 
     @Override
-    public void along() {
+    public String getProcessDefinitionId() {
+        return delegate != null ? delegate.getProcessDefinitionId() : null;
     }
-  };
 
-  public FluentProcessInstanceImpl(final FluentProcessEngine engine, final String processDefinitionKey) {
-    super(engine, null);
-    this.processDefinitionKey = processDefinitionKey;
-    final boolean processDefinitionKeyExists = !engine.getRepositoryService().createProcessDefinitionQuery().processDefinitionKey(processDefinitionKey).list()
-        .isEmpty();
-    if (!processDefinitionKeyExists)
-      throw new IllegalArgumentException("Process Definition with processDefinitionKey '" + processDefinitionKey + "' is not deployed.");
-  }
-
-  @Override
-  public String getProcessDefinitionId() {
-    return delegate != null ? delegate.getProcessDefinitionId() : null;
-  }
-
-  @Override
-  public String getBusinessKey() {
-    return delegate.getBusinessKey();
-  }
-
-  @Override
-  public boolean isSuspended() {
-    return delegate.isSuspended();
-  }
-
-  @Override
-  public String getId() {
-    return delegate.getId();
-  }
-
-  @Override
-  public boolean isEnded() {
-    return delegate != null && engine.getRuntimeService().createExecutionQuery().processInstanceId(delegate.getId()).list().isEmpty() || delegate.isEnded();
-  }
-
-  @Override
-  public String getProcessInstanceId() {
-    return delegate.getProcessInstanceId();
-  }
-
-  @Override
-  public ProcessInstance getDelegate() {
-    if (delegate == null)
-      throw new IllegalStateException("Process instance not yet started. You cannot access that method before starting the processInstance instance.");
-    return delegate;
-  }
-
-  @Override
-  public FluentTask task() {
-    if (delegate != null) {
-      final List<Task> tasks = engine.getTaskService().createTaskQuery().processInstanceId(getProcessInstanceId()).list();
-      if (tasks.size() > 1)
-        throw new IllegalStateException(
-            "By calling task() you implicitly assumed that maximum one user task is currently waiting to be completed in the context "
-                + "of this process instance. But instead " + tasks.size() + " tasks are currently waiting to be completed.");
-      if (tasks.size() == 1)
-        return new FluentTaskImpl(engine, tasks.get(0));
+    @Override
+    public String getBusinessKey() {
+        return delegate.getBusinessKey();
     }
-    return null;
-  }
 
-  @Override
-  public FluentJob job() {
-    if (delegate != null) {
-      final List<Job> jobs = engine.getManagementService().createJobQuery().processInstanceId(getProcessInstanceId()).list();
-      if (jobs.size() > 1)
-        throw new IllegalStateException("By calling job() you implicitly assumed that maximum one job is currently waiting to be executed in the context "
-            + "of this process instance. But instead " + jobs.size() + " jobs are currently waiting to be executed.");
-      if (jobs.size() == 1)
-        return new FluentJobImpl(engine, jobs.get(0));
+    @Override
+    public boolean isSuspended() {
+        return delegate.isSuspended();
     }
-    return null;
-  }
 
-  public void moveAlong(final FluentProcessInstance.Move move) {
-    this.move = move;
-  }
-
-  @Override
-  public FluentProcessInstance startAndMove() {
-    Throwable expected = null;
-    try {
-      move.along();
-    } catch (final Throwable t) {
-      expected = t;
+    @Override
+    public boolean isActive() {
+        return !isSuspended() && !isEnded();
     }
-    if (expected == null)
-      throw new IllegalArgumentException("Process could not be moved to the given activityId.");
-    return this;
-  }
 
-  @Override
-  public FluentProcessInstance start() {
-    this.delegate = engine.getRuntimeService().startProcessInstanceByKey(processDefinitionKey, processVariables);
-    log.info("Started processInstance (definition key '" + processDefinitionKey + "', definition id: '" + delegate.getProcessDefinitionId()
-        + "', instance id: '" + delegate.getId() + "').");
-    return this;
-  }
-
-  @Override
-  public FluentProcessInstance setVariable(final String name, final Object value) {
-    if (delegate == null) {
-      this.processVariables.put(name, value);
-    } else {
-      engine.getRuntimeService().setVariable(getId(), name, value);
+    @Override
+    public String getId() {
+        return delegate.getId();
     }
-    return this;
-  }
 
-  @Override
-  public FluentProcessVariable getVariable(final String name) {
-    final Object value = delegate != null ? engine.getRuntimeService().getVariable(getId(), name) : processVariables.get(name);
-    if (value == null)
-      throw new IllegalArgumentException("Unable to find processVariable '" + name + "'");
-    return new FluentProcessVariableImpl(name, value);
-  }
-
-  @Override
-  public FluentProcessInstance setVariables(final Object... variables) {
-    return setVariables(parseMap(variables));
-  }
-
-  @Override
-  public FluentProcessInstance setVariables(final Map<String, Object> variables) {
-    for (final Entry<String, Object> variable : variables.entrySet()) {
-      setVariable(variable.getKey(), variable.getValue());
+    @Override
+    public boolean isEnded() {
+        return delegate != null && engine.getRuntimeService().createExecutionQuery().processInstanceId(delegate.getId()).list().isEmpty()
+                || delegate.isEnded();
     }
-    return this;
-  }
+
+    @Override
+    public String getProcessInstanceId() {
+        return delegate.getProcessInstanceId();
+    }
+
+    @Override
+    public ProcessInstance getDelegate() {
+        if (delegate == null)
+            throw new IllegalStateException("Process instance not yet started. You cannot access that method before starting the processInstance instance.");
+        return delegate;
+    }
+
+    @Override
+    public FluentTask task() {
+        if (delegate != null) {
+            final List<Task> tasks = engine.getTaskService().createTaskQuery().processInstanceId(getProcessInstanceId()).list();
+            if (tasks.size() > 1)
+                throw new IllegalStateException(
+                        "By calling task() you implicitly assumed that maximum one user task is currently waiting to be completed in the context "
+                                + "of this process instance. But instead " + tasks.size() + " tasks are currently waiting to be completed.");
+            if (tasks.size() == 1) return new FluentTaskImpl(engine, tasks.get(0));
+        }
+        return null;
+    }
+
+    @Override
+    public FluentJob job() {
+        if (delegate != null) {
+            final List<Job> jobs = engine.getManagementService().createJobQuery().processInstanceId(getProcessInstanceId()).list();
+            if (jobs.size() > 1)
+                throw new IllegalStateException(
+                        "By calling job() you implicitly assumed that maximum one job is currently waiting to be executed in the context "
+                                + "of this process instance. But instead " + jobs.size() + " jobs are currently waiting to be executed.");
+            if (jobs.size() == 1) return new FluentJobImpl(engine, jobs.get(0));
+        }
+        return null;
+    }
+
+    public void moveAlong(final FluentProcessInstance.Move move) {
+        this.move = move;
+    }
+
+    @Override
+    public FluentProcessInstance startAndMove() {
+        Throwable expected = null;
+        try {
+            move.along();
+        } catch (final Throwable t) {
+            expected = t;
+        }
+        if (expected == null) throw new IllegalArgumentException("Process could not be moved to the given activityId.");
+        return this;
+    }
+
+    @Override
+    public FluentProcessInstance start() {
+        this.delegate = engine.getRuntimeService().startProcessInstanceByKey(processDefinitionKey, processVariables);
+        log.info("Started processInstance (definition key '" + processDefinitionKey + "', definition id: '" + delegate.getProcessDefinitionId()
+                + "', instance id: '" + delegate.getId() + "').");
+        return this;
+    }
+
+    @Override
+    public FluentProcessInstance setVariable(final String name, final Object value) {
+        if (delegate == null) {
+            this.processVariables.put(name, value);
+        } else {
+            engine.getRuntimeService().setVariable(getId(), name, value);
+        }
+        return this;
+    }
+
+    @Override
+    public FluentProcessVariable getVariable(final String name) {
+        final Object value = delegate != null ? engine.getRuntimeService().getVariable(getId(), name) : processVariables.get(name);
+        if (value == null) throw new IllegalArgumentException("Unable to find processVariable '" + name + "'");
+        return new FluentProcessVariableImpl(name, value);
+    }
+
+    @Override
+    public FluentProcessInstance setVariables(final Object... variables) {
+        return setVariables(parseMap(variables));
+    }
+
+    @Override
+    public FluentProcessInstance setVariables(final Map<String, Object> variables) {
+        for (final Entry<String, Object> variable : variables.entrySet()) {
+            setVariable(variable.getKey(), variable.getValue());
+        }
+        return this;
+    }
 
 }
