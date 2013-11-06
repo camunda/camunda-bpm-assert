@@ -5,6 +5,7 @@ import static org.camunda.bpm.engine.test.function.NameForType.juelNameFor;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -61,4 +62,10 @@ public class ExpressionsTest {
     assertThat(juelNameFor(NoBean.class), is("noBean"));
   }
 
+  @Test
+  public void shouldRegisterMocksForMultipleClasses() throws Exception {
+    registerMockInstances(FirstListener.class, SecondListener.class);
+    assertNotNull(getRegistered(FirstListener.class));
+    assertNotNull(getRegistered(SecondListener.class));
+  }
 }

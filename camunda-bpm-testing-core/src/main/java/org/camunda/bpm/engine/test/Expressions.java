@@ -105,7 +105,7 @@ public final class Expressions {
    * @param types
    *          collection of types to mock and register
    */
-  public static <T> void registerMockInstances(final Class<T>... types) {
+  public static void registerMockInstances(final Class<?>... types) {
     checkArgument(types != null, "types must not be null!");
     registerMockInstances(newArrayList(types));
   }
@@ -116,8 +116,8 @@ public final class Expressions {
    * @param types
    *          collection of types to mock and register
    */
-  public static <T> void registerMockInstances(final Collection<Class<T>> types) {
-    for (final Class<T> type : types) {
+  public static void registerMockInstances(final Collection<Class<?>> types) {
+    for (final Class<?> type : types) {
       registerMockInstance(type);
     }
   }
