@@ -62,7 +62,6 @@
 	</repositories>
 
 	<build>
-	<!-- 
 		<plugins>
 			<plugin>
 				<groupId>org.jbehave</groupId>
@@ -70,14 +69,68 @@
 				<version>3.8</version>
 				<executions>
 					<execution>
+						<id>run-stories-with-annotated-embedder</id>
 						<phase>integration-test</phase>
+						<configuration>
+							<scope>test</scope>
+							<includes>
+								<include>**/*BehaviorTest.java</include>
+							</includes>
+							<ignoreFailureInStories>true</ignoreFailureInStories>
+							<ignoreFailureInView>false</ignoreFailureInView>
+						</configuration>
 						<goals>
-							<goal>unpack-view-resources</goal>
+							<goal>run-stories-with-annotated-embedder</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-jbehave-site-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<overwriteReleases>false</overwriteReleases>
+							<overwriteSnapshots>true</overwriteSnapshots>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.jbehave.site</groupId>
+									<artifactId>jbehave-site-resources</artifactId>
+									<version>3.1.1</version>
+									<type>zip</type>
+									<outputDirectory> ${project.build.directory}/jbehave/view</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>unpack-jbehave-reports-resources</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<overwriteReleases>false</overwriteReleases>
+							<overwriteSnapshots>true</overwriteSnapshots>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.jbehave</groupId>
+									<artifactId>jbehave-core</artifactId>
+									<version>3.1.2</version>
+									<outputDirectory>${project.build.directory}/jbehave/view</outputDirectory>
+									<includes>**\/*.css,**\/*.ftl,**\/*.js</includes>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
-	 -->
 	</build>
 </project>
