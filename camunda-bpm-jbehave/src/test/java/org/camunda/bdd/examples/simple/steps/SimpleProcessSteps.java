@@ -46,7 +46,7 @@ public class SimpleProcessSteps {
   @Given("the contract $verb automatically processible")
   public void loadContractDataAutomatically(final String verb) {
     final boolean processingPossible = parseStatement("not", verb, false);
-    when(simpleProcessAdapter.loadContractData()).thenReturn(processingPossible);
+    when(simpleProcessAdapter.loadContractData()).thenReturn(true);
   }
 
   @Given("the contract processing $verb")

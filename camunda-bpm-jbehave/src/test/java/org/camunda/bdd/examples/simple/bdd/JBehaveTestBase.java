@@ -23,9 +23,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(NeedleAnnotatedEmbedderRunner.class)
-@UsingEmbedder(embedder = Embedder.class, generateViewAfterStories = true, ignoreFailureInStories = false, ignoreFailureInView = true, verboseFailures = true)
+@UsingEmbedder(embedder = Embedder.class, generateViewAfterStories = true, ignoreFailureInStories = true, ignoreFailureInView = true, verboseFailures = true)
 @Configure(stepMonitor = PrintStreamStepMonitor.class, pendingStepStrategy = FailingUponPendingStep.class, stepdocReporter = PrintStreamStepdocReporter.class, storyReporterBuilder = SimpleBehaviorTest.RichReporterBuilder.class)
 public abstract class JBehaveTestBase extends InjectableEmbedder {
+
+  private static final boolean REPORT_FAILURE_TRACE = false;
+  private static final boolean COMPRESS_FAILURE_TRACE = true;
 
   /**
    * Retrieves the location of the stories. <br>
@@ -60,7 +63,8 @@ public abstract class JBehaveTestBase extends InjectableEmbedder {
      * Constructs the builder.
      */
     public RichReporterBuilder() {
-      withDefaultFormats().withViewResources(getViewResources()).withFormats(CONSOLE, HTML, XML).withFailureTrace(true).withFailureTraceCompression(true);
+      withDefaultFormats().withViewResources(getViewResources()).withFormats(CONSOLE, HTML, XML).withFailureTrace(REPORT_FAILURE_TRACE)
+          .withFailureTraceCompression(COMPRESS_FAILURE_TRACE);
     }
 
     /**
