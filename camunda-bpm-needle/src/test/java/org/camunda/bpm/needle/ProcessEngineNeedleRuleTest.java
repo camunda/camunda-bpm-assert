@@ -1,6 +1,5 @@
 package org.camunda.bpm.needle;
 
-import static org.camunda.bpm.engine.test.mock.FluentJavaDelegateMock.registerMockDelegate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -16,6 +15,7 @@ import org.camunda.bpm.engine.fluent.support.ProcessVariableMaps;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.engine.test.Expressions;
 import org.camunda.bpm.engine.test.needle.ProcessEngineNeedleRule;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Rule;
@@ -62,7 +62,7 @@ public class ProcessEngineNeedleRuleTest {
   @Test
   @Deployment(resources = PROCESS_FILE)
   public void shouldDeployAndRunTestProcess() throws Exception {
-    registerMockDelegate("serviceTask").onExecutionSetProcessVariables("world", 8L);
+    Expressions.registerMockJavaDelegate("serviceTask").onExecutionSetVariables("world", 8L);
     final String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     final List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
 

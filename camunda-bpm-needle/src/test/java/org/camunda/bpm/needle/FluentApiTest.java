@@ -3,11 +3,11 @@ package org.camunda.bpm.needle;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.assertThat;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.newProcessInstance;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.processInstance;
-import static org.camunda.bpm.engine.test.mock.FluentJavaDelegateMock.registerMockDelegate;
 
 import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.fluent.FluentTask;
 import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.engine.test.Expressions;
 import org.camunda.bpm.engine.test.needle.ProcessEngineNeedleRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class FluentApiTest {
   @Deployment(resources = BPMN_FILE)
   public void testName() throws Exception {
 
-    registerMockDelegate("serviceTask").onExecutionSetProcessVariables("world", 1L);
+    Expressions.registerMockJavaDelegate("serviceTask").onExecutionSetVariables("world", 1L);
 
     final FluentProcessInstance newProcessInstance = newProcessInstance(PROCESS_KEY).setVariable("foo", Boolean.TRUE).start();
     assertThat(newProcessInstance.task()).isUnassigned();

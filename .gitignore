@@ -7,6 +7,6 @@ target
 .classpath
 .project
 .settings
+.checkstyle
 # OSX
 .DS_Store
-Icon\r\r

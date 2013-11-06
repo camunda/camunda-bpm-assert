@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.mock;
 
+import org.camunda.bpm.engine.test.Expressions;
 import org.junit.rules.ExternalResource;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -22,7 +23,7 @@ public class RegisterMockTestRule extends ExternalResource {
 
       @Override
       public void evaluate() throws Throwable {
-        RegisterMock.registerMocksForFields(testInstance);
+        Expressions.registerMockInstancesForFields(testInstance);
         base.evaluate();
       }
     };

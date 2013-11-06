@@ -11,7 +11,7 @@ import org.camunda.bdd.examples.simple.SimpleProcessConstants.Elements;
 import org.camunda.bdd.examples.simple.SimpleProcessConstants.Events;
 import org.camunda.bdd.examples.simple.SimpleProcessConstants.Variables;
 import org.camunda.bpm.engine.delegate.BpmnError;
-import org.camunda.bpm.engine.test.mock.RegisterMock;
+import org.camunda.bpm.engine.test.Expressions;
 import org.camunda.bpm.test.CamundaSupport;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeScenario;
@@ -35,7 +35,7 @@ public class SimpleProcessSteps {
 
   @BeforeScenario
   public void initMocks() {
-    RegisterMock.registerMocksForFields(this);
+    Expressions.registerInstance(SimpleProcessAdapter.NAME, simpleProcessAdapter);
   }
 
   @AfterScenario

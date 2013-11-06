@@ -54,7 +54,7 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
   }
 
   /**
-   * @see #after()
+   * @deprated see {@link #after()}
    * @param unused
    */
   @Deprecated
@@ -184,7 +184,6 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
   public static String deploy(final String... classPathResources) {
     final String deploymentId = new FluentDeploymentImpl(processEngine()).deploy();
     deploymentIdsLocal.get().add(deploymentId);
-    System.out.println("===========================>" + getDeploymentIds());
     return deploymentId;
   }
 
