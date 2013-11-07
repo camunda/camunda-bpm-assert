@@ -1,11 +1,15 @@
 package org.camunda.bpm.engine.test;
 
-import static org.camunda.bpm.engine.test.Expressions.*;
+import static org.camunda.bpm.engine.test.Expressions.getRegistered;
+import static org.camunda.bpm.engine.test.Expressions.registerInstance;
+import static org.camunda.bpm.engine.test.Expressions.registerMockInstance;
+import static org.camunda.bpm.engine.test.Expressions.registerMockInstances;
+import static org.camunda.bpm.engine.test.Expressions.reset;
 import static org.camunda.bpm.engine.test.function.NameForType.juelNameFor;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +44,7 @@ public class ExpressionsTest {
     assertThat(got, is(instance));
   }
 
-  @Test
+  @Test(expected = IllegalStateException.class)
   public void shouldResetExpressions() throws Exception {
     registerInstance("a", new FirstListener());
     assertThat(getRegistered("a"), notNullValue());

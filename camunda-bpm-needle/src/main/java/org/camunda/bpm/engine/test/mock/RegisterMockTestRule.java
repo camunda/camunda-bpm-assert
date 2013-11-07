@@ -23,7 +23,7 @@ public class RegisterMockTestRule extends ExternalResource {
 
       @Override
       public void evaluate() throws Throwable {
-        Expressions.registerMockInstancesForFields(testInstance);
+        Expressions.registerInstancesForFields(testInstance);
         base.evaluate();
       }
     };

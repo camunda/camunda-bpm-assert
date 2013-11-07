@@ -1,17 +1,17 @@
 package org.camunda.bpm.engine.test;
 
 import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.camunda.bpm.engine.test.function.CreateInstance.mockInstance;
 import static org.camunda.bpm.engine.test.function.CreateInstance.newInstanceByDefaultConstructor;
 import static org.camunda.bpm.engine.test.function.NameForType.juelNameFor;
+import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
-
-import javax.inject.Named;
 
 import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -29,22 +29,40 @@ public final class Expressions {
 
   private static final Logger LOG = LoggerFactory.getLogger(Expressions.class);
 
+  /**
+   * @deprecated moved to
+   *             {@link DelegateExpressions#registerMockJavaDelegate(String)}
+   * @param name
+   *          the registered name
+   * @return the registered instance
+   */
+  @Deprecated
   public static FluentJavaDelegateMock registerMockJavaDelegate(final String name) {
-    final FluentJavaDelegateMock delegateMock = new FluentJavaDelegateMock();
-    registerInstance(name, delegateMock.getMock());
-    return delegateMock;
+    return DelegateExpressions.registerJavaDelegateMock(name);
   }
 
+  /**
+   * @deprecated moved to
+   *             {@link DelegateExpressions#registerMockJavaDelegate(String)}
+   * @param name
+   *          the registered name
+   * @return the registered instance
+   */
+  @Deprecated
   public static FluentExecutionListenerMock registerMockExecutionListener(final String name) {
-    final FluentExecutionListenerMock delegateMock = new FluentExecutionListenerMock();
-    registerInstance(name, delegateMock.getMock());
-    return delegateMock;
+    return DelegateExpressions.registerExecutionListenerMock(name);
   }
 
+  /**
+   * @deprecated moved to
+   *             {@link DelegateExpressions#registerMockJavaDelegate(String)}
+   * @param name
+   *          the registered name
+   * @return the registered instance
+   */
+  @Deprecated
   public static FluentTaskListenerMock registerMockTaskListener(final String name) {
-    final FluentTaskListenerMock delegateMock = new FluentTaskListenerMock();
-    registerInstance(name, delegateMock.getMock());
-    return delegateMock;
+    return DelegateExpressions.registerTaskListenerMock(name);
   }
 
   /**
@@ -68,21 +86,18 @@ public final class Expressions {
    *          instance whos fields are registered (maybe Junit test or jbehave
    *          steps).
    */
-  public static void registerMockInstancesForFields(final Object instance) {
+  public static void registerInstancesForFields(final Object instance) {
     checkArgument(instance != null, "instance must not be null!");
     for (final Field field : instance.getClass().getDeclaredFields()) {
-      if (field.getType().isAnnotationPresent(Named.class)) {
-        field.setAccessible(true);
-        try {
-          final Object value = field.get(instance);
-          if (value != null) {
-            registerInstance(value);
-          }
-        } catch (final Exception e) {
-          // fallthrough
+      field.setAccessible(true);
+      try {
+        final Object value = field.get(instance);
+        if (value != null) {
+          registerInstance(juelNameFor(field.getType()), value);
         }
+      } catch (final Exception e) {
+        // fallthrough
       }
-
     }
   }
 
@@ -210,17 +225,43 @@ public final class Expressions {
    */
   @SuppressWarnings("unchecked")
   public static <T> T getRegistered(final String name) {
-    return (T) Mocks.get(name);
+    final T mock = (T) Mocks.get(name);
+    checkState(mock != null, "no instance registered for name=" + name);
+    return mock;
   }
 
+  /**
+   * @deprecated moved to
+   *             {@link DelegateExpressions#getRegisteredJavaDelegate(String)}
+   * @param name
+   *          the registered name
+   * @return the registered instance
+   */
+  @Deprecated
   public static JavaDelegate getRegisteredJavaDelegate(final String name) {
-    return getRegistered(name);
+    return DelegateExpressions.getRegisteredJavaDelegate(name);
   }
 
+  /**
+   * @deprecated moved to
+   *             {@link DelegateExpressions#getRegisteredExecutionListener(String)}
+   * @param name
+   *          the registered name
+   * @return the registered instance
+   */
+  @Deprecated
   public static ExecutionListener getRegisteredExecutionListener(final String name) {
-    return getRegistered(name);
+    return DelegateExpressions.getRegisteredExecutionListener(name);
   }
 
+  /**
+   * @deprecated moved to
+   *             {@link DelegateExpressions#getRegisteredTaskListener(String)}
+   * @param name
+   *          the registered name
+   * @return the registered instance
+   */
+  @Deprecated
   public static TaskListener getRegisteredTaskListener(final String name) {
     return getRegistered(name);
   }
