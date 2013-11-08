@@ -8,7 +8,6 @@ import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.camunda.bpm.engine.test.function.CreateInstance.mockInstance;
 import static org.camunda.bpm.engine.test.function.CreateInstance.newInstanceByDefaultConstructor;
 import static org.camunda.bpm.engine.test.function.NameForType.juelNameFor;
-import static org.junit.Assert.assertNotNull;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -25,6 +24,10 @@ import org.camunda.bpm.engine.test.mock.Mocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Util class that deleagtes to {@link Mocks#register(String, Object)} and
+ * {@link Mocks#get(Object)} in atype-safe way.
+ */
 public final class Expressions {
 
   private static final Logger LOG = LoggerFactory.getLogger(Expressions.class);

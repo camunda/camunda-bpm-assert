@@ -2,6 +2,7 @@ package org.camunda.bpm.engine.test;
 
 import static org.camunda.bpm.engine.test.Expressions.getRegistered;
 import static org.camunda.bpm.engine.test.Expressions.registerInstance;
+import static org.camunda.bpm.engine.test.function.NameForType.juelNameFor;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.DelegateTask;
@@ -43,12 +44,46 @@ public final class DelegateExpressions {
     return getRegistered(name);
   }
 
+  /**
+   * @see #getRegisteredJavaDelegate(String)
+   * @param javaDelegateType
+   *          type to get the name from
+   * @return the registered {@link JavaDelegate}
+   */
+  public static JavaDelegate getRegisteredJavaDelegate(final Class<JavaDelegate> javaDelegateType) {
+    return getRegisteredJavaDelegate(juelNameFor(javaDelegateType));
+  }
+
+  /**
+   * @see #getRegisteredExecutionListener(String)
+   * @param executionListernerType
+   *          type to get the name from
+   * @return the registered {@link ExecutionListener}
+   */
+  public static ExecutionListener getRegisteredExecutionListener(final Class<ExecutionListener> executionListernerType) {
+    return getRegisteredExecutionListener(juelNameFor(executionListernerType));
+  }
+
   public static ExecutionListener getRegisteredExecutionListener(final String name) {
     return getRegistered(name);
   }
 
+  /**
+   * @see #getRegisteredTaskListener(String)
+   * @param taskListenerType
+   *          type to get the name from
+   * @return the registered {@link TaskListener}
+   */
+  public static TaskListener getRegisteredTaskListener(final Class<TaskListener> taskListenerType) {
+    return getRegistered(juelNameFor(taskListenerType));
+  }
+
   public static TaskListener getRegisteredTaskListener(final String name) {
     return getRegistered(name);
+  }
+
+  public static MockitoVerification<DelegateExecution> verifyJavaDelegate(final Class<? extends JavaDelegate> javaDelegateType) {
+    return verifyJavaDelegate(getRegisteredJavaDelegate(juelNameFor(javaDelegateType)));
   }
 
   public static MockitoVerification<DelegateExecution> verifyJavaDelegate(final String name) {
@@ -59,12 +94,20 @@ public final class DelegateExpressions {
     return new JavaDelegateVerification(javaDelegateMock);
   }
 
+  public static MockitoVerification<DelegateExecution> verifyExecutionListener(final Class<? extends ExecutionListener> executionListenerType) {
+    return verifyExecutionListener(getRegisteredExecutionListener(juelNameFor(executionListenerType)));
+  }
+
   public static MockitoVerification<DelegateExecution> verifyExecutionListener(final String name) {
     return verifyExecutionListener(getRegisteredExecutionListener(name));
   }
 
   public static MockitoVerification<DelegateExecution> verifyExecutionListener(final ExecutionListener executionListenerMock) {
     return new ExecutionListenerVerification(executionListenerMock);
+  }
+
+  public static MockitoVerification<DelegateTask> verifyTaskListener(final Class<? extends TaskListener> taskListenerType) {
+    return verifyTaskListener(getRegisteredTaskListener(juelNameFor(taskListenerType)));
   }
 
   public static MockitoVerification<DelegateTask> verifyTaskListener(final String name) {
