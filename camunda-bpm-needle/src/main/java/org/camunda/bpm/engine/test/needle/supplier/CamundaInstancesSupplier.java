@@ -10,6 +10,7 @@ import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.ManagementService;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.ProcessEngineConfiguration;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
@@ -44,6 +45,10 @@ public class CamundaInstancesSupplier implements InjectionProviderInstancesSuppl
    */
   public static CamundaInstancesSupplier camundaInstancesSupplier(final String configurationResource) {
     return new CamundaInstancesSupplier(TestHelper.getProcessEngine(configurationResource));
+  }
+
+  public static CamundaInstancesSupplier camundaInstancesSupplier(final ProcessEngineConfiguration processEngineConfiguration) {
+    return new CamundaInstancesSupplier(processEngineConfiguration.buildProcessEngine());
   }
 
   public static final String CAMUNDA_CONFIG_RESOURCE = "camunda.cfg.xml";

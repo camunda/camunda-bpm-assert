@@ -118,6 +118,9 @@ public final class DelegateExpressions {
     return new TaskListenerVerification(taskListenerMock);
   }
 
+  /**
+   * Hide default constructor
+   */
   private DelegateExpressions() {
     // do not instantiate
   }

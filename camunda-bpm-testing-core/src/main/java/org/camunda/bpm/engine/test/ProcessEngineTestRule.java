@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.needle;
+package org.camunda.bpm.engine.test;
 
 import java.util.Date;
 
@@ -15,10 +15,8 @@ import org.junit.rules.TestRule;
 
 /**
  * Combined interface of {@link ProcessEngine} and {@link TestRule}.
- * 
- * @author Jan Galinski, Holisticon AG (jan.galinski@holisticon.de)
  */
-interface ProcessEngineTestRule extends TestRule, ProcessEngine {
+public interface ProcessEngineTestRule extends TestRule, ProcessEngine {
 
   /**
    * Sets current toime of in memory engine. Use to test timers etc.

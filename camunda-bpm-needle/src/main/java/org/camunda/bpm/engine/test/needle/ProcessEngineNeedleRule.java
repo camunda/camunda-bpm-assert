@@ -27,6 +27,7 @@ import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.ManagementService;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.ProcessEngineConfiguration;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
@@ -38,6 +39,8 @@ import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.IdentityLink;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.ProcessEngineTestRule;
+import org.camunda.bpm.engine.test.ProcessEngineTestWatcher;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestRule;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
 import org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier;
@@ -65,8 +68,8 @@ import de.holisticon.toolbox.needle.NeedleTestRuleBuilder;
  */
 public class ProcessEngineNeedleRule extends ExternalResource implements ProcessEngineTestRule {
 
-  public static ProcessEngineTestRuleBuilder fluentNeedleRule(final Object testInstance) {
-    return new ProcessEngineTestRuleBuilder(testInstance);
+  public static ProcessEngineNeedleRuleBuilder fluentNeedleRule(final Object testInstance) {
+    return new ProcessEngineNeedleRuleBuilder(testInstance);
   }
 
   /**
@@ -91,10 +94,10 @@ public class ProcessEngineNeedleRule extends ExternalResource implements Process
    */
   private ProcessInstance processInstance;
 
-  ProcessEngineNeedleRule(final Object testInstance, final String configurationResource, final Set<InjectionProvider<?>> injectionProviders) {
+  ProcessEngineNeedleRule(final Object testInstance, final ProcessEngineConfiguration configuration, final Set<InjectionProvider<?>> injectionProviders) {
 
     // initialize processEngine
-    final CamundaInstancesSupplier camundaInstancesSupplier = CamundaInstancesSupplier.camundaInstancesSupplier(configurationResource);
+    final CamundaInstancesSupplier camundaInstancesSupplier = CamundaInstancesSupplier.camundaInstancesSupplier(configuration);
 
     // activate activiti rull
     this.processEngineTestWatcher = new ProcessEngineTestWatcher(camundaInstancesSupplier.getProcessEngine());

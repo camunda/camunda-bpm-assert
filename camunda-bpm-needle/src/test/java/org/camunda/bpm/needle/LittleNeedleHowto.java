@@ -1,7 +1,6 @@
 package org.camunda.bpm.needle;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import javax.inject.Inject;
 
@@ -48,6 +47,7 @@ public class LittleNeedleHowto {
   private SomeDelegate delegate;
 
   @Inject
+  @SuppressWarnings("unused")
   private SomeRemoteService someRemoteService;
 
   @Mock

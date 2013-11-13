@@ -12,14 +12,8 @@ import static org.camunda.bpm.engine.test.function.NameForType.juelNameFor;
 import java.lang.reflect.Field;
 import java.util.Collection;
 
-import org.camunda.bpm.engine.delegate.ExecutionListener;
-import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.bpm.engine.delegate.TaskListener;
 import org.camunda.bpm.engine.test.function.FindNestedClasses;
 import org.camunda.bpm.engine.test.function.NameForType;
-import org.camunda.bpm.engine.test.mock.FluentExecutionListenerMock;
-import org.camunda.bpm.engine.test.mock.FluentJavaDelegateMock;
-import org.camunda.bpm.engine.test.mock.FluentTaskListenerMock;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,42 +25,6 @@ import org.slf4j.LoggerFactory;
 public final class Expressions {
 
   private static final Logger LOG = LoggerFactory.getLogger(Expressions.class);
-
-  /**
-   * @deprecated moved to
-   *             {@link DelegateExpressions#registerMockJavaDelegate(String)}
-   * @param name
-   *          the registered name
-   * @return the registered instance
-   */
-  @Deprecated
-  public static FluentJavaDelegateMock registerMockJavaDelegate(final String name) {
-    return DelegateExpressions.registerJavaDelegateMock(name);
-  }
-
-  /**
-   * @deprecated moved to
-   *             {@link DelegateExpressions#registerMockJavaDelegate(String)}
-   * @param name
-   *          the registered name
-   * @return the registered instance
-   */
-  @Deprecated
-  public static FluentExecutionListenerMock registerMockExecutionListener(final String name) {
-    return DelegateExpressions.registerExecutionListenerMock(name);
-  }
-
-  /**
-   * @deprecated moved to
-   *             {@link DelegateExpressions#registerMockJavaDelegate(String)}
-   * @param name
-   *          the registered name
-   * @return the registered instance
-   */
-  @Deprecated
-  public static FluentTaskListenerMock registerMockTaskListener(final String name) {
-    return DelegateExpressions.registerTaskListenerMock(name);
-  }
 
   /**
    * Registers mock instances for every public static nested class found in
@@ -231,42 +189,6 @@ public final class Expressions {
     final T mock = (T) Mocks.get(name);
     checkState(mock != null, "no instance registered for name=" + name);
     return mock;
-  }
-
-  /**
-   * @deprecated moved to
-   *             {@link DelegateExpressions#getRegisteredJavaDelegate(String)}
-   * @param name
-   *          the registered name
-   * @return the registered instance
-   */
-  @Deprecated
-  public static JavaDelegate getRegisteredJavaDelegate(final String name) {
-    return DelegateExpressions.getRegisteredJavaDelegate(name);
-  }
-
-  /**
-   * @deprecated moved to
-   *             {@link DelegateExpressions#getRegisteredExecutionListener(String)}
-   * @param name
-   *          the registered name
-   * @return the registered instance
-   */
-  @Deprecated
-  public static ExecutionListener getRegisteredExecutionListener(final String name) {
-    return DelegateExpressions.getRegisteredExecutionListener(name);
-  }
-
-  /**
-   * @deprecated moved to
-   *             {@link DelegateExpressions#getRegisteredTaskListener(String)}
-   * @param name
-   *          the registered name
-   * @return the registered instance
-   */
-  @Deprecated
-  public static TaskListener getRegisteredTaskListener(final String name) {
-    return getRegistered(name);
   }
 
   /**

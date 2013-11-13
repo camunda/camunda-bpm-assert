@@ -13,6 +13,7 @@ import org.camunda.bpm.test.CamundaSupport;
 import org.jbehave.core.annotations.AfterStory;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
@@ -50,8 +51,9 @@ public class CamundaSteps {
 
   @When("the process definition $processDefinition")
   @Given("the process definition $processDefinition")
-  public void deployProcess(final String processDefinition) {
+  public void deployProcess(final String processDefinition, @Named("resources") final String resources) {
     support.deploy(processDefinition);
+    System.out.println(resources);
   }
 
   @When("the process $processKey is started")

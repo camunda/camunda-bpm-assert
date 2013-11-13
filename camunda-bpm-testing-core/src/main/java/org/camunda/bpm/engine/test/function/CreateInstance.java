@@ -4,6 +4,9 @@ import static com.google.common.base.Throwables.propagate;
 
 import org.mockito.Mockito;
 
+/**
+ * Helper to create either mock() or new() instances for given type.
+ */
 public final class CreateInstance {
 
   public static <T> T mockInstance(final Class<T> type) {

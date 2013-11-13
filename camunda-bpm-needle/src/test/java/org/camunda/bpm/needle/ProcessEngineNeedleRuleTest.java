@@ -14,8 +14,8 @@ import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.fluent.support.ProcessVariableMaps;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.DelegateExpressions;
 import org.camunda.bpm.engine.test.Deployment;
-import org.camunda.bpm.engine.test.Expressions;
 import org.camunda.bpm.engine.test.needle.ProcessEngineNeedleRule;
 import org.hamcrest.collection.IsEmptyCollection;
 import org.junit.Rule;
@@ -62,7 +62,7 @@ public class ProcessEngineNeedleRuleTest {
   @Test
   @Deployment(resources = PROCESS_FILE)
   public void shouldDeployAndRunTestProcess() throws Exception {
-    Expressions.registerMockJavaDelegate("serviceTask").onExecutionSetVariables("world", 8L);
+    DelegateExpressions.registerJavaDelegateMock("serviceTask").onExecutionSetVariables("world", 8L);
     final String deploymentId = repositoryService.createDeploymentQuery().singleResult().getId();
     final List<String> deploymentResources = repositoryService.getDeploymentResourceNames(deploymentId);
 

@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.needle;
+package org.camunda.bpm.engine.test;
 
 import java.util.Date;
 
@@ -141,10 +141,9 @@ public class ProcessEngineTestWatcher extends TestWatcher implements ProcessEngi
     return processEngine.getAuthorizationService();
   }
 
-  @Deprecated
   @Override
   public void close() {
-    throw new UnsupportedOperationException();
+    processEngine.close();
   }
 
 }

@@ -1,3 +1,6 @@
+Meta:
+@resources simple.bpmn
+
 Scenario: Manual processing
 
 GivenStories: ManualFallback.story

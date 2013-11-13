@@ -1,20 +1,19 @@
 package org.camunda.bpm.engine.test;
 
+import static org.camunda.bpm.engine.test.cfg.MostUsefulProcessEngineConfiguration.mostUsefulProcessEngineConfiguration;
 import static org.junit.Assert.assertNotNull;
 
 import org.camunda.bpm.engine.IdentityService;
-import org.camunda.bpm.engine.impl.test.TestHelper;
 import org.junit.Rule;
 import org.junit.Test;
 
 public class IdentityServiceResourceTest {
 
   @Rule
-  public final ProcessEngineRule processEngineRule = new ProcessEngineRule();
+  public final ProcessEngineTestRule processEngineRule = mostUsefulProcessEngineConfiguration().buildProcessEngineRule();
 
   @Rule
-  public final IdentityServiceResource identityServiceResource = new IdentityServiceResource(TestHelper.getProcessEngine("camunda.cfg.xml")
-      .getIdentityService());
+  public final IdentityServiceResource identityServiceResource = new IdentityServiceResource(processEngineRule.getIdentityService());
 
   private final IdentityService identityService = identityServiceResource.getIdentityService();
 
