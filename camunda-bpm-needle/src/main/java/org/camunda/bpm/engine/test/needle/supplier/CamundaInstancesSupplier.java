@@ -17,6 +17,7 @@ import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.impl.ProcessEngineImpl;
 import org.camunda.bpm.engine.impl.interceptor.CommandExecutor;
 import org.camunda.bpm.engine.impl.test.TestHelper;
+import org.camunda.bpm.engine.test.function.GetProcessEngineConfiguration;
 
 import com.google.common.collect.Sets;
 
@@ -73,6 +74,7 @@ public class CamundaInstancesSupplier implements InjectionProviderInstancesSuppl
     providers.add(providerFor(getManagementService()));
     providers.add(providerFor(getAuthorizationService()));
     providers.add(providerFor(getCommandExecutor()));
+    providers.add(providerFor(getProcessEngineConfiguration()));
   }
 
   @Override
@@ -113,6 +115,10 @@ public class CamundaInstancesSupplier implements InjectionProviderInstancesSuppl
   @Override
   public ManagementService getManagementService() {
     return processEngine.getManagementService();
+  }
+
+  public ProcessEngineConfiguration getProcessEngineConfiguration() {
+    return GetProcessEngineConfiguration.INSTANCE.apply(processEngine);
   }
 
   @Deprecated
