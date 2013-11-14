@@ -21,6 +21,8 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
+import javax.sql.DataSource;
+
 import org.camunda.bpm.engine.AuthorizationService;
 import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.HistoryService;
@@ -43,6 +45,7 @@ import org.camunda.bpm.engine.test.ProcessEngineTestRule;
 import org.camunda.bpm.engine.test.ProcessEngineTestWatcher;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTestRule;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
+import org.camunda.bpm.engine.test.function.GetProcessEngineConfiguration;
 import org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier;
 import org.junit.rules.ExternalResource;
 import org.junit.rules.RuleChain;
@@ -185,6 +188,14 @@ public class ProcessEngineNeedleRule extends ExternalResource implements Process
   @Override
   public ManagementService getManagementService() {
     return processEngineTestWatcher.getManagementService();
+  }
+
+  public ProcessEngineConfiguration getProcessEngineConfiguration() {
+    return GetProcessEngineConfiguration.INSTANCE.apply(getProcessEngine());
+  }
+
+  public DataSource getProcessEngineDataSource() {
+    return getProcessEngineConfiguration().getDataSource();
   }
 
   /**
