@@ -4,6 +4,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.Lists.newArrayList;
 import static java.lang.String.format;
+import static java.lang.reflect.Modifier.isPublic;
+import static java.lang.reflect.Modifier.isStatic;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.camunda.bpm.engine.test.function.CreateInstance.mockInstance;
 import static org.camunda.bpm.engine.test.function.CreateInstance.newInstanceByDefaultConstructor;
@@ -11,9 +13,8 @@ import static org.camunda.bpm.engine.test.function.NameForType.juelNameFor;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.List;
 
-import org.camunda.bpm.engine.test.function.FindNestedClasses;
-import org.camunda.bpm.engine.test.function.NameForType;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +35,22 @@ public final class Expressions {
    *          the parentClass to scan for nested public static types
    */
   public static void registerMockInstancesForNestedTypes(final Class<?> parentClass) {
-    for (final Class<?> type : FindNestedClasses.PUBLIC_STATIC.apply(parentClass)) {
+    final Collection<Class<?>> nestedClasses = findNestedClasses(parentClass);
+    for (final Class<?> type : nestedClasses) {
       registerMockInstance(type);
     }
+  }
+
+  private static Collection<Class<?>> findNestedClasses(final Class<?> parentClass) {
+    final List<Class<?>> result = newArrayList();
+
+    for (final Class<?> nestedClass : parentClass.getDeclaredClasses()) {
+      final int modifiers = nestedClass.getModifiers();
+      if (isPublic(modifiers) && isStatic(modifiers)) {
+        result.add(nestedClass);
+      }
+    }
+    return result;
   }
 
   /**
@@ -70,7 +84,7 @@ public final class Expressions {
    *          the parentClass to scan for nested public static types
    */
   public static void registerNewInstancesForNestedTypes(final Class<?> parentClass) {
-    for (final Class<?> type : FindNestedClasses.PUBLIC_STATIC.apply(parentClass)) {
+    for (final Class<?> type : findNestedClasses(parentClass)) {
       registerNewInstance(type);
     }
   }

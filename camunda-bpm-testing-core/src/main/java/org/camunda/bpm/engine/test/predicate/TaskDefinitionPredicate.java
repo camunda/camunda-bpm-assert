@@ -27,8 +27,19 @@ public abstract class TaskDefinitionPredicate implements Predicate<TaskDefinitio
     }
   };
 
-  public static TaskDefinitionPredicate and(final TaskDefinitionPredicate... predicates) {
-    return (TaskDefinitionPredicate) Predicates.and(predicates);
+  public static TaskDefinitionPredicate and(final Predicate<TaskDefinition>... predicates) {
+    final Predicate<TaskDefinition> and = Predicates.and(predicates);
+    return delegate(and);
+  }
+
+  public static TaskDefinitionPredicate delegate(final Predicate<TaskDefinition> predicate) {
+    return new TaskDefinitionPredicate() {
+
+      @Override
+      public boolean applyNullSafe(final TaskDefinition taskDefinition) {
+        return predicate.apply(taskDefinition);
+      }
+    };
   }
 
   /**
