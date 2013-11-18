@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.camunda.bpm.engine.impl.bpmn.parser.BpmnParseListener;
 import org.camunda.bpm.engine.impl.bpmn.parser.TaskDefinitionBpmnParseListener;
 import org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration;
+import org.camunda.bpm.engine.impl.jobexecutor.JobHandler;
 import org.camunda.bpm.engine.test.ProcessEngineTestRule;
 import org.camunda.bpm.engine.test.ProcessEngineTestWatcher;
 import org.camunda.bpm.engine.test.mock.MockExpressionManager;
@@ -24,6 +25,12 @@ public class MostUsefulProcessEngineConfiguration extends StandaloneInMemProcess
     this.jobExecutorActivate = false;
     this.expressionManager = new MockExpressionManager();
     this.setCustomPostBPMNParseListeners(new ArrayList<BpmnParseListener>());
+    this.setCustomJobHandlers(new ArrayList<JobHandler>());
+  }
+
+  public void addCustomJobHandler(final JobHandler jobHandler) {
+    checkArgument(jobHandler != null, "jobHandler must not be null!");
+    getCustomJobHandlers().add(jobHandler);
   }
 
   public void addCustomPostBpmnParseListener(final BpmnParseListener bpmnParseListener) {
