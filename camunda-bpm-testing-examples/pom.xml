@@ -22,10 +22,6 @@
             <artifactId>camunda-engine-cdi</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
             <groupId>de.holisticon.dependencies</groupId>
             <artifactId>junit-mockito</artifactId>
             <type>pom</type>

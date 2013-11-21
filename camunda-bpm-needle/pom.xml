@@ -14,12 +14,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.camunda.bpm.incubation</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>camunda-bpm-data</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.camunda.bpm.incubation</groupId>
-            <artifactId>camunda-bpm-testing-core</artifactId>
         </dependency>
         <dependency>
             <groupId>de.holisticon.toolbox</groupId>
@@ -27,7 +23,7 @@
         </dependency>
 
         <dependency>
-            <groupId>org.camunda.bpm.incubation</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>camunda-bpm-fest-assertions</artifactId>
         </dependency>
         <dependency>
@@ -40,14 +36,6 @@
             <artifactId>camunda-ejb-client</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
     </dependencies>
 
     <developers>

@@ -28,6 +28,7 @@
     <properties>
         <camunda-bpm.version>7.0.0-Final</camunda-bpm.version>
         <camunda-bpm-data.version>1.0.0-SNAPSHOT</camunda-bpm-data.version>
+        <camunda-bpm-testing.version>${project.version}</camunda-bpm-testing.version>
 
         <version.slf4j>1.7.2</version.slf4j>
         <version.guava>14.0.1</version.guava>
@@ -47,32 +48,32 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.camunda.bpm.incubation</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>camunda-bpm-fluent-engine-api</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>
             <!-- camunda bpm testing -->
             <dependency>
-                <groupId>org.camunda.bpm.incubation</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>camunda-bpm-testing-core</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>org.camunda.bpm.incubation</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>camunda-bpm-fest-assertions</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>org.camunda.bpm.incubation</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>camunda-bpm-needle</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>
             <dependency>
-                <groupId>org.camunda.bpm.incubation</groupId>
+                <groupId>${project.groupId}</groupId>
                 <artifactId>camunda-bpm-data</artifactId>
                 <version>${camunda-bpm-data.version}</version>
                 <scope>compile</scope>
@@ -165,6 +166,10 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
