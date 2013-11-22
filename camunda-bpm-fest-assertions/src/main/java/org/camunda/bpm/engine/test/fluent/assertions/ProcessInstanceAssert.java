@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.fest.assertions.api.Assertions;
 
@@ -12,18 +13,18 @@ import java.util.List;
  */
 public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstanceAssert, ProcessInstance> {
 
-  protected ProcessInstanceAssert(ProcessEngine engine, ProcessInstance actual) {
+  protected ProcessInstanceAssert(final ProcessEngine engine, final ProcessInstance actual) {
     super(engine, actual, ProcessInstanceAssert.class);
   }
 
-  public static ProcessInstanceAssert assertThat(ProcessEngine engine, ProcessInstance actual) {
+  public static ProcessInstanceAssert assertThat(final ProcessEngine engine, final ProcessInstance actual) {
     return new ProcessInstanceAssert(engine, actual);
   }
 
-  public ProcessInstanceAssert isWaitingAt(String activityId) {
+  public ProcessInstanceAssert isWaitingAt(final String activityId) {
     isNotNull();
 
-    List<String> activeActivityIds = engine.getRuntimeService().getActiveActivityIds(actual.getId());
+    final List<String> activeActivityIds = engine.getRuntimeService().getActiveActivityIds(actual.getId());
     Assertions
         .assertThat(activeActivityIds)
         .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s", actual.getId(),
@@ -32,6 +33,16 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     checkForMoveToActivityIdException(activityId);
 
     return this;
+  }
+
+  /**
+   * Delegate to {@link #isFinished()}. This method is useful to match the
+   * original api method {@link ProcessInstance#isEnded()}.
+   * 
+   * @return this
+   */
+  public ProcessInstanceAssert isEnded() {
+    return isFinished();
   }
 
   public ProcessInstanceAssert isFinished() {
@@ -51,6 +62,20 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return this;
   }
 
+  /**
+   * The actual instance must neither be ended nor suspended, see
+   * {@link FluentProcessInstance#isActive()}.
+   * 
+   * @return this
+   */
+  public ProcessInstanceAssert isActive() {
+    isStarted();
+
+    Assertions.assertThat(actual.isSuspended()).overridingErrorMessage("Expected processExecution %s to be not suspended but it is!", actual.getId()).isFalse();
+
+    return this;
+  }
+
   public ProcessInstanceAssert isStarted() {
     isNotNull();
 
@@ -61,11 +86,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
   private static ThreadLocal<String> moveToActivityId = new ThreadLocal<String>();
 
-  public static void setMoveToActivityId(String id) {
+  public static void setMoveToActivityId(final String id) {
     moveToActivityId.set(id);
   }
 
-  private static void checkForMoveToActivityIdException(String activityId) {
+  private static void checkForMoveToActivityIdException(final String activityId) {
     if (activityId.equals(moveToActivityId.get())) {
       setMoveToActivityId(null);
       throw new MoveToActivityIdException();

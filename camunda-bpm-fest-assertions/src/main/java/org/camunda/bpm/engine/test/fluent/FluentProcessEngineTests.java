@@ -1,21 +1,31 @@
 package org.camunda.bpm.engine.test.fluent;
 
+import static com.google.common.base.Objects.firstNonNull;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkState;
+import static java.lang.String.format;
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.fluent.FluentJob;
 import org.camunda.bpm.engine.fluent.FluentProcessDefinition;
 import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.fluent.FluentProcessVariable;
+import org.camunda.bpm.engine.fluent.FluentTask;
 import org.camunda.bpm.engine.impl.fluent.FluentDeploymentImpl;
 import org.camunda.bpm.engine.impl.fluent.FluentProcessEngineImpl;
 import org.camunda.bpm.engine.impl.fluent.FluentProcessInstanceImpl;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.fluent.assertions.JobAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessDefinitionAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessVariableAssert;
@@ -66,9 +76,21 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
    * Reset all threadlocal variables to <code>null</code>.
    */
   public static void after() {
+    undeploy();
+
     fluentProcessEngineLocal.set(null);
     testProcessInstancesLocal.set(null);
+
     deploymentIdsLocal.set(null);
+  }
+
+  /**
+   * Undeploy all processes before closing the engine.
+   */
+  private static void undeploy() {
+    for (final String deploymentId : deploymentIdsLocal.get()) {
+      processEngine().getRepositoryService().deleteDeployment(deploymentId, true);
+    }
   }
 
   protected static Map<String, FluentProcessInstance> getTestProcessInstances() {
@@ -106,10 +128,75 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
    * @see org.camunda.bpm.engine.fluent.FluentProcessInstance#start()
    */
   public static FluentProcessInstance newProcessInstance(final String processDefinitionKey) {
-    if (!getTestProcessInstances().containsKey(processDefinitionKey)) {
-      getTestProcessInstances().put(processDefinitionKey, processEngine().getProcessInstanceRepository().newProcessInstance(processDefinitionKey));
-    }
-    return getTestProcessInstances().get(processDefinitionKey);
+    checkArgument(isNotBlank(processDefinitionKey), "processDefinitionKey must not be blank!");
+    final Map<String, FluentProcessInstance> instances = getTestProcessInstances();
+
+    // return cached instance if exists, otherwise create and cache a new
+    // instance
+    return firstNonNull(instances.get(processDefinitionKey), cacheProcessInstance(processDefinitionKey, createProcessInstance(processDefinitionKey)));
+  }
+
+  /**
+   * Get the processDefinitionKey for a given processInstance. If key can not be
+   * found, aan {@link IllegalStateException} is thrown.
+   * 
+   * @param processInstance
+   *          the process instance
+   * @return the process definition key
+   * 
+   */
+  private static String getProcessDefinitionKey(final ProcessInstance processInstance) {
+    final ProcessDefinition processDefinition = processEngine().getRepositoryService().createProcessDefinitionQuery()
+        .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
+    checkState(processDefinition != null, "no processDefinition found for id=" + processInstance.getProcessDefinitionId());
+
+    return processDefinition.getKey();
+  }
+
+  /**
+   * Creates a new process instance.
+   * 
+   * @param processDefinitionKey
+   *          the process definition id for the new instance
+   * @return new ProcessInstance instance
+   */
+  private static FluentProcessInstance createProcessInstance(final String processDefinitionKey) {
+    return processEngine().getProcessInstanceRepository().newProcessInstance(processDefinitionKey);
+  }
+
+  /**
+   * Cache the given process instance under the given process definition key.
+   * 
+   * @param processDefinitionKey
+   *          the process' definition key
+   * @param fluentProcessInstance
+   *          the instance to cache
+   */
+  private static FluentProcessInstance cacheProcessInstance(final String processDefinitionKey, final FluentProcessInstance fluentProcessInstance) {
+    final Map<String, FluentProcessInstance> instances = getTestProcessInstances();
+
+    // make sure no instance for this process is registered
+    checkState(!instances.containsKey(processDefinitionKey), format("An instance for processDefinitionKey='%s' is already registered!", processDefinitionKey));
+
+    instances.put(processDefinitionKey, fluentProcessInstance);
+    return instances.get(processDefinitionKey);
+  }
+
+  /**
+   * Creates a new {@link FluentProcessInstance} from existing, already running
+   * process instance. Use this to enrich an instance that was started
+   * individually with the fluent api and assertions methods. The fluent
+   * instance is cached via {@link #getTestProcessInstances()}.
+   * 
+   * @param newProcessInstance
+   *          the existing process instance, must not be <code>null</code>
+   * @return a fluent process instance wrapping the given instance.
+   */
+  public static FluentProcessInstance newProcessInstance(final ProcessInstance newProcessInstance) {
+    checkArgument(newProcessInstance != null, "newProcessInstance must not be null!");
+
+    return cacheProcessInstance(getProcessDefinitionKey(newProcessInstance), new FluentProcessInstanceImpl(processEngine(), newProcessInstance));
+
   }
 
   /**
@@ -182,7 +269,9 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
    * @return the deployment id
    */
   public static String deploy(final String... classPathResources) {
-    final String deploymentId = new FluentDeploymentImpl(processEngine()).deploy();
+    checkArgument(classPathResources != null && classPathResources.length > 0, "classPathResources must not be null or empty!");
+
+    final String deploymentId = new FluentDeploymentImpl(processEngine()).addClasspathResource(classPathResources).deploy();
     deploymentIdsLocal.get().add(deploymentId);
     return deploymentId;
   }
@@ -194,10 +283,57 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
     return deploymentIdsLocal.get();
   }
 
+  /**
+   * @see FluentProcessInstance#task()
+   * @return current task
+   */
+  public static FluentTask task() {
+    return processInstance().task();
+  }
+
+  /**
+   * Like {@link #task()}, but asserts that the task returned has the given
+   * definition key.
+   * 
+   * @param definitionKey
+   *          the expected task definition key
+   * @return current task
+   */
+  public static FluentTask task(final String definitionKey) {
+    final FluentTask task = processInstance().task();
+    assertThat(task).hasDefinitionKey(definitionKey);
+    return task;
+  }
+
+  /**
+   * @see FluentProcessInstance#job()
+   * @return current job
+   */
+  public static FluentJob job() {
+    return processInstance().job();
+  }
+
+  /**
+   * Like {@link #job()}, but asserts that the job returned has the given jobId.
+   * 
+   * @param jobId
+   *          the expected job id
+   * @return the current job
+   */
+  public static FluentJob job(final String jobId) {
+    final FluentJob job = processInstance().job();
+    assertThat(job).hasId(jobId);
+    return job;
+  }
+
   // Assertions
 
   public static TaskAssert assertThat(final Task actual) {
     return TaskAssert.assertThat(processEngine(), actual);
+  }
+
+  public static JobAssert assertThat(final Job actual) {
+    return JobAssert.assertThat(processEngine(), actual);
   }
 
   public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
