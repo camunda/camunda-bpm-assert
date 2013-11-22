@@ -8,7 +8,6 @@ import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.deploy
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.newProcessInstance;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.processInstance;
 import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.task;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 

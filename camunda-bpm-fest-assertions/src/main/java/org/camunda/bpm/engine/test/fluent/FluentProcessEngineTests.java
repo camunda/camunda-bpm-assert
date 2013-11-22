@@ -22,9 +22,13 @@ import org.camunda.bpm.engine.impl.fluent.FluentDeploymentImpl;
 import org.camunda.bpm.engine.impl.fluent.FluentProcessEngineImpl;
 import org.camunda.bpm.engine.impl.fluent.FluentProcessInstanceImpl;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.Job;
+import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.task.TaskQuery;
 import org.camunda.bpm.engine.test.fluent.assertions.JobAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessDefinitionAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
@@ -324,6 +328,22 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
     final FluentJob job = processInstance().job();
     assertThat(job).hasId(jobId);
     return job;
+  }
+
+  public static TaskQuery taskQuery() {
+    return processEngine().getTaskService().createTaskQuery();
+  }
+
+  public static JobQuery jobQuery() {
+    return processEngine().getManagementService().createJobQuery();
+  }
+
+  public static ProcessInstanceQuery processInstanceQuery() {
+    return processEngine().getRuntimeService().createProcessInstanceQuery();
+  }
+
+  public static ExecutionQuery executionQuery() {
+    return processEngine().getRuntimeService().createExecutionQuery();
   }
 
   // Assertions
