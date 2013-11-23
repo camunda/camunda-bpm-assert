@@ -170,23 +170,6 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
   }
 
   /**
-   * Get the processDefinitionKey for a given processInstance. If key can not be
-   * found, aan {@link IllegalStateException} is thrown.
-   * 
-   * @param processInstance
-   *          the process instance
-   * @return the process definition key
-   * 
-   */
-  private static String getProcessDefinitionKey(final ProcessInstance processInstance) {
-    final ProcessDefinition processDefinition = processEngine().getRepositoryService().createProcessDefinitionQuery()
-        .processDefinitionId(processInstance.getProcessDefinitionId()).singleResult();
-    checkState(processDefinition != null, "no processDefinition found for id=" + processInstance.getProcessDefinitionId());
-
-    return processDefinition.getKey();
-  }
-
-  /**
    * Creates a new process instance.
    * 
    * @param processDefinitionKey
@@ -227,9 +210,13 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
    */
   public static FluentProcessInstance newProcessInstance(final ProcessInstance newProcessInstance) {
     checkArgument(newProcessInstance != null, "newProcessInstance must not be null!");
+    return newProcessInstance(new FluentProcessInstanceImpl(processEngine(), newProcessInstance));
+  }
 
-    return cacheProcessInstance(getProcessDefinitionKey(newProcessInstance), new FluentProcessInstanceImpl(processEngine(), newProcessInstance));
+  public static FluentProcessInstance newProcessInstance(final FluentProcessInstance newProcessInstance) {
+    checkArgument(newProcessInstance != null, "newProcessInstance must not be null!");
 
+    return cacheProcessInstance(newProcessInstance.processDefinitionKey(), new FluentProcessInstanceImpl(processEngine(), newProcessInstance));
   }
 
   /**
@@ -247,11 +234,12 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
    *           context of the current thread running the test scenario.
    */
   public static FluentProcessInstance processInstance() {
-    if (getTestProcessInstances().isEmpty())
+    final Map<String, FluentProcessInstance> instances = getTestProcessInstances();
+    if (instances.isEmpty())
       throw new IllegalStateException("No process instance has been started yet in the context of the current thread. Call newProcessinstance(String) first.");
-    if (getTestProcessInstances().size() > 1)
+    if (instances.size() > 1)
       throw new IllegalStateException("More than one process instance has been started in the context of the current thread.");
-    return getTestProcessInstances().values().iterator().next();
+    return instances.values().iterator().next();
   }
 
   /**
@@ -317,7 +305,7 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
   }
 
   /**
-   * @see FluentProcessInstance#task()
+   * @see processInstance().task()
    * @return current task
    */
   public static FluentTask task() {
@@ -339,7 +327,7 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
   }
 
   /**
-   * @see FluentProcessInstance#job()
+   * @see processInstance().job()
    * @return current job
    */
   public static FluentJob job() {

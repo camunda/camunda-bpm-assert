@@ -23,6 +23,7 @@ import org.camunda.bpm.engine.fluent.FluentProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.fluent.FluentProcessVariable;
 import org.camunda.bpm.engine.fluent.FluentTask;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
@@ -205,6 +206,15 @@ public class FluentProcessInstanceImpl extends AbstractFluentDelegate<ProcessIns
       setVariable(variable.getKey(), variable.getValue());
     }
     return this;
+  }
+
+  @Override
+  public String processDefinitionKey() {
+    final ProcessDefinition processDefinition = getRepositoryService().createProcessDefinitionQuery().processDefinitionId(getProcessDefinitionId())
+        .singleResult();
+    checkState(processDefinition != null, "no processDefinition found for id=" + getProcessDefinitionId());
+
+    return processDefinition.getKey();
   }
 
 }

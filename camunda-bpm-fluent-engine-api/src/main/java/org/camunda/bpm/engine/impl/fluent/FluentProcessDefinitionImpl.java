@@ -10,7 +10,7 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
  */
 public class FluentProcessDefinitionImpl extends AbstractFluentDelegate<ProcessDefinition> implements FluentProcessDefinition {
 
-  protected FluentProcessDefinitionImpl(FluentProcessEngine engine, ProcessDefinition delegate) {
+  protected FluentProcessDefinitionImpl(final FluentProcessEngine engine, final ProcessDefinition delegate) {
     super(engine, delegate);
   }
 
