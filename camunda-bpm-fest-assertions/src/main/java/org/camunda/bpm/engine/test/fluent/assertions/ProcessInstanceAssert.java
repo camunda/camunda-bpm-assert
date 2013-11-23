@@ -1,11 +1,13 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
+import java.util.List;
+
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.fluent.FluentProcessInstance;
+import org.camunda.bpm.engine.history.HistoricActivityInstance;
+import org.camunda.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.fest.assertions.api.Assertions;
-
-import java.util.List;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -32,6 +34,29 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
     checkForMoveToActivityIdException(activityId);
 
+    return this;
+  }
+
+  private HistoricActivityInstanceQuery createHistoricActivityInstanceQuery() {
+    return engine.getHistoryService().createHistoricActivityInstanceQuery();
+  }
+
+  /**
+   * Expects that the given processInstance passed a given activity at least
+   * once. Checks historyService.
+   * 
+   * @param expectedActivityId
+   *          the activity to verify
+   * @return this
+   */
+  public ProcessInstanceAssert isFinishedAndPassedActivity(final String expectedActivityId) {
+    isFinished();
+    final List<HistoricActivityInstance> passed = createHistoricActivityInstanceQuery().activityId(expectedActivityId).finished()
+        .processInstanceId(actual.getId()).list();
+
+    final String message = "Expected processInstance with id '%s' to pass activity '%s' at least once, but didn't";
+    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), expectedActivityId).isNotEmpty();
+    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), expectedActivityId).isNotNull();
     return this;
   }
 

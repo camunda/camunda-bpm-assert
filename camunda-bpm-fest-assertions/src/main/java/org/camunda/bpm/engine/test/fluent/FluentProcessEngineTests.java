@@ -6,6 +6,7 @@ import static com.google.common.base.Preconditions.checkState;
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.camunda.bpm.engine.fluent.FluentTask;
 import org.camunda.bpm.engine.impl.fluent.FluentDeploymentImpl;
 import org.camunda.bpm.engine.impl.fluent.FluentProcessEngineImpl;
 import org.camunda.bpm.engine.impl.fluent.FluentProcessInstanceImpl;
+import org.camunda.bpm.engine.impl.util.ClockUtil;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.Job;
@@ -34,6 +36,7 @@ import org.camunda.bpm.engine.test.fluent.assertions.ProcessDefinitionAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.ProcessVariableAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.TaskAssert;
+import org.camunda.bpm.engine.test.mock.Mocks;
 
 /**
  * Convenience class to access all fluent Activiti assertions. In your code use
@@ -77,7 +80,8 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
   }
 
   /**
-   * Reset all threadlocal variables to <code>null</code>.
+   * Reset all threadlocal variables to <code>null</code>, undeploy processes
+   * and reset clock and mocks.
    */
   public static void after() {
     undeploy();
@@ -86,15 +90,40 @@ public class FluentProcessEngineTests extends org.fest.assertions.api.Assertions
     testProcessInstancesLocal.set(null);
 
     deploymentIdsLocal.set(null);
+
+    resetMocks();
+    resetClock();
   }
 
   /**
    * Undeploy all processes before closing the engine.
    */
-  private static void undeploy() {
+  public static void undeploy() {
     for (final String deploymentId : deploymentIdsLocal.get()) {
       processEngine().getRepositoryService().deleteDeployment(deploymentId, true);
     }
+  }
+
+  /**
+   * Sets time.
+   * 
+   * @param currentTime
+   *          sets current time in the engine
+   */
+  public static void setCurrentTime(final Date currentTime) {
+    checkArgument(currentTime != null, "currentTime must not be null!");
+    ClockUtil.setCurrentTime(currentTime);
+  }
+
+  /**
+   * Resets process engine clock.
+   */
+  public static void resetClock() {
+    ClockUtil.reset();
+  }
+
+  public static void resetMocks() {
+    Mocks.reset();
   }
 
   protected static Map<String, FluentProcessInstance> getTestProcessInstances() {

@@ -1,5 +1,6 @@
 package org.camunda.bdd.examples.simple.steps;
 
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.processInstance;
 import static org.camunda.bpm.test.CamundaSupport.parseStatement;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -12,6 +13,7 @@ import org.camunda.bdd.examples.simple.SimpleProcessConstants.Events;
 import org.camunda.bdd.examples.simple.SimpleProcessConstants.Variables;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.test.Expressions;
+import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
 import org.camunda.bpm.test.CamundaSupport;
 import org.jbehave.core.annotations.AfterScenario;
 import org.jbehave.core.annotations.BeforeScenario;
@@ -59,22 +61,22 @@ public class SimpleProcessSteps {
 
   @Then("the contract is loaded")
   public void contractIsLoaded() {
-    support.assertActivityVisitedOnce(Elements.SERVICE_LOAD_CONTRACT_DATA);
+    FluentProcessEngineTests.assertThat(processInstance()).isFinishedAndPassedActivity(Elements.SERVICE_LOAD_CONTRACT_DATA);
   }
 
   @Then("the contract is processed automatically")
   public void contractIsProcessed() {
-    support.assertActivityVisitedOnce(Elements.SERVICE_PROCESS_CONTRACT_AUTOMATICALLY);
+    FluentProcessEngineTests.assertThat(processInstance()).isFinishedAndPassedActivity(Elements.SERVICE_PROCESS_CONTRACT_AUTOMATICALLY);
   }
 
   @Then("the contract processing is cancelled")
   public void cancelledProcessing() {
-    support.assertActivityVisitedOnce(Elements.SERVICE_CANCEL_PROCESSING);
+    FluentProcessEngineTests.assertThat(processInstance()).isFinishedAndPassedActivity(Elements.SERVICE_CANCEL_PROCESSING);
   }
 
   @When("the contract is processed $withoutErrors")
   public void processManuallys(final String withoutErrors) {
     final boolean hasErrors = !parseStatement("with errors", withoutErrors, false);
-    support.completeTask(Variables.ARE_PROCESSING_ERRORS_PRESENT, Boolean.valueOf(hasErrors));
+    FluentProcessEngineTests.task().complete(Variables.ARE_PROCESSING_ERRORS_PRESENT, Boolean.valueOf(hasErrors));
   }
 }

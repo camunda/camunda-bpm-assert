@@ -1,19 +1,15 @@
 package org.camunda.bpm.bdd.steps;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests.processInstance;
 
 import javax.inject.Inject;
 
-import org.camunda.bpm.engine.runtime.Execution;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
-import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.test.CamundaSupport;
 import org.jbehave.core.annotations.AfterStory;
 import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.annotations.Given;
-import org.jbehave.core.annotations.Named;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.slf4j.Logger;
@@ -43,23 +39,19 @@ public class CamundaSteps {
   @AfterStory(uponGivenStory = false)
   public void cleanUp() {
     LOG.debug("Cleaning up after story run.");
-    Mocks.reset();
-    support.undeploy();
-    support.resetClock();
     FluentProcessEngineTests.after();
   }
 
   @When("the process definition $processDefinition")
   @Given("the process definition $processDefinition")
-  public void deployProcess(final String processDefinition, @Named("resources") final String resources) {
-    support.deploy(processDefinition);
-    System.out.println(resources);
+  public void deployProcess(final String processDefinition) {
+    FluentProcessEngineTests.deploy(processDefinition);
   }
 
-  @When("the process $processKey is started")
-  public void startProcess(final String processKey) {
-    final ProcessInstance processInstance = support.startProcessInstanceByKey(processKey);
-    assertNotNull(processInstance);
+  @When("the process $processDefinitionKey is started")
+  public void startProcess(final String processDefinitionKey) {
+    final ProcessInstance processInstance = FluentProcessEngineTests.newProcessInstance(processDefinitionKey).start();
+    FluentProcessEngineTests.assertThat(processInstance).isActive();
   }
 
   /**
@@ -67,14 +59,13 @@ public class CamundaSteps {
    */
   @Then("the process is finished")
   public void processIsFinished() {
-    assertTrue("Process is not ended", FluentProcessEngineTests.processInstance().isEnded());
+    FluentProcessEngineTests.assertThat(processInstance()).isEnded();
     LOG.debug("Process finished.");
   }
 
   @Then("the process is finished with event $eventName")
   public void processFinishedSucessfully(final String eventName) {
-    assertTrue("Process is not ended", FluentProcessEngineTests.processInstance().isEnded());
-    support.assertActivityVisitedOnce(eventName);
+    FluentProcessEngineTests.assertThat(processInstance()).isFinishedAndPassedActivity(eventName);
   }
 
   /**
@@ -86,9 +77,7 @@ public class CamundaSteps {
   @Then("the step $activityId is reached")
   @When("the step $activityId is reached")
   public void stepIsReached(final String activityId) {
-    final Execution execution = support.getProcessEngine().getRuntimeService().createExecutionQuery().processInstanceId(support.getProcessInstance().getId())
-        .activityId(activityId).singleResult();
-    assertNotNull(execution);
+    FluentProcessEngineTests.assertThat(processInstance()).isWaitingAt(activityId);
     LOG.debug("Step {} reached.", activityId);
   }
 }

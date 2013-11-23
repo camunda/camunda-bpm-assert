@@ -1,38 +1,29 @@
 package org.camunda.bpm.test;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.Assert.assertThat;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.fluent.FluentProcessInstance;
-import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.impl.test.TestHelper;
-import org.camunda.bpm.engine.impl.util.ClockUtil;
-import org.camunda.bpm.engine.repository.DeploymentBuilder;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.fluent.FluentProcessEngineTests;
-import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.engine.test.needle.supplier.CamundaInstancesSupplier;
-import org.hamcrest.collection.IsEmptyCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Sets;
 
 /**
  * Helper for camunda access.
  * 
+ * @deprecated should/could be removed since all functionality moved to
+ *             {@link FluentProcessEngineTests}
  * @author Simon Zambrovski, Holisticon AG
  * 
  */
+@Deprecated
 public class CamundaSupport {
 
   /**
@@ -41,7 +32,6 @@ public class CamundaSupport {
   private static CamundaSupport instance;
 
   private static final Logger logger = LoggerFactory.getLogger(CamundaSupport.class);
-  private final Set<String> deploymentIds = Sets.newHashSet();
   private ProcessEngine processEngine;
   private Date startTime;
 
@@ -53,31 +43,6 @@ public class CamundaSupport {
   }
 
   /**
-   * Checks deployment of the process definition.
-   * 
-   * @param processModelResources
-   *          process definition file (BPMN)
-   */
-  public void deploy(final String... processModelResources) {
-    final DeploymentBuilder deploymentBuilder = processEngine.getRepositoryService().createDeployment();
-    for (final String resource : processModelResources) {
-      deploymentBuilder.addClasspathResource(resource);
-    }
-    this.deploymentIds.add(deploymentBuilder.deploy().getId());
-    getStartTime();
-  }
-
-  /**
-   * Cleans up resources.
-   */
-  public void undeploy() {
-    for (final String deploymentId : deploymentIds) {
-      processEngine.getRepositoryService().deleteDeployment(deploymentId, true);
-    }
-    Mocks.reset();
-  }
-
-  /**
    * Starts process by process definition key with given payload.
    * 
    * @param processDefinitionKey
@@ -85,8 +50,11 @@ public class CamundaSupport {
    * @param variables
    *          maps of initial payload variables.
    * @return process instance
+   * @deprecated use {@link FluentProcessEngineTests#newProcessInstance(String)}
+   *             directly
    * @see RuntimeService#startProcessInstanceByKey(String, Map)
    */
+  @Deprecated
   public ProcessInstance startProcessInstanceByKey(final String processDefinitionKey, final Map<String, Object> variables) {
     checkArgument(processDefinitionKey != null, "processDefinitionKey must not be null!");
 
@@ -100,38 +68,15 @@ public class CamundaSupport {
   /**
    * Starts process by process definition key.
    * 
+   * @deprecated use {@link FluentProcessEngineTests#newProcessInstance(String)}
+   *             directly
    * @param processDefinitionKey
    *          process definition keys.
    * @return process instance
    */
+  @Deprecated
   public ProcessInstance startProcessInstanceByKey(final String processDefinitionKey) {
     return startProcessInstanceByKey(processDefinitionKey, null);
-  }
-
-  /**
-   * Retrieves the process instance.
-   * 
-   * @return running process instance.
-   */
-  public ProcessInstance getProcessInstance() {
-    return FluentProcessEngineTests.processInstance();
-  }
-
-  /**
-   * Sets time.
-   * 
-   * @param currentTime
-   *          sets current time in the engine
-   */
-  public void setCurrentTime(final Date currentTime) {
-    ClockUtil.setCurrentTime(currentTime);
-  }
-
-  /**
-   * Resets process engine clock.
-   */
-  public void resetClock() {
-    ClockUtil.reset();
   }
 
   /**
@@ -166,36 +111,6 @@ public class CamundaSupport {
       this.startTime = new Date();
     }
     return this.startTime;
-  }
-
-  /**
-   * Retrieves process variables of running instance.
-   * 
-   * @return process variables.
-   */
-  public Map<String, Object> getProcessVariables() {
-    return getProcessVariables();
-  }
-
-  /**
-   * Checks historic execution.
-   * 
-   * @param id
-   *          activity name.
-   */
-  public void assertActivityVisitedOnce(final String id) {
-    final List<HistoricActivityInstance> visits = getProcessEngine().getHistoryService().createHistoricActivityInstanceQuery().finished().activityId(id).list();
-    assertThat("activity '" + id + "' not found!", visits, notNullValue());
-    assertThat("activity '" + id + "' not found!", visits, not(IsEmptyCollection.empty()));
-  }
-
-  /**
-   * finishes a task.
-   * 
-   * @param values
-   */
-  public void completeTask(final Object... values) {
-    FluentProcessEngineTests.processInstance().task().complete(values);
   }
 
   /**
