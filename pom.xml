@@ -207,9 +207,9 @@
     </repositories>
 
     <scm>
-        <connection>scm:git:git@github.com:camunda/camunda-bpm-fluent-testing.git</connection>
-        <url>scm:git:git@github.com:camunda/camunda-bpm-fluent-testing.git</url>
-        <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-fluent-testing.git</developerConnection>
+        <connection>scm:git:git@github.com:camunda/camunda-bpm-testing.git</connection>
+        <url>scm:git:git@github.com:camunda/camunda-bpm-testing.git</url>
+        <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-testing.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
