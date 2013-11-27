@@ -14,10 +14,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-bpm-data</artifactId>
-        </dependency>
-        <dependency>
             <groupId>de.holisticon.toolbox</groupId>
             <artifactId>needle-mockito</artifactId>
         </dependency>

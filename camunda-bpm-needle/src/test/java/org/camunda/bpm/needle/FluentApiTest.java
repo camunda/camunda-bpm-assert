@@ -21,14 +21,13 @@ public class FluentApiTest {
 
   @Test
   @Deployment(resources = BPMN_FILE)
-  public void testName() throws Exception {
+  public void shouldStartAndCompleteProcessInstance() throws Exception {
 
     DelegateExpressions.registerJavaDelegateMock("serviceTask").onExecutionSetVariables("world", 1L);
 
     final FluentProcessInstance newProcessInstance = newProcessInstance(PROCESS_KEY).setVariable("foo", Boolean.TRUE).start();
     assertThat(newProcessInstance.task()).isUnassigned();
     final FluentTask taskWait = processInstance().task().claim("admin");
-    // assertThat(taskWait).isAssignedTo("admin").hasName("Wait");
 
     taskWait.complete("bar", Boolean.FALSE, "hello", "jan");
     assertThat(processInstance()).isFinished();

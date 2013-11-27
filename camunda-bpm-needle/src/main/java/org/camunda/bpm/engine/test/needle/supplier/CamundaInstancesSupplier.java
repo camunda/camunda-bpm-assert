@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.needle.supplier;
 
 import static de.holisticon.toolbox.needle.provider.DefaultInstanceInjectionProvider.providerFor;
+import static org.camunda.bpm.engine.test.cfg.MostUsefulProcessEngineConfiguration.mostUsefulProcessEngineConfiguration;
 
 import java.util.Set;
 
@@ -33,7 +34,7 @@ import de.holisticon.toolbox.needle.provider.InjectionProviderInstancesSupplier;
 public class CamundaInstancesSupplier implements InjectionProviderInstancesSupplier, ProcessEngine {
 
   public static CamundaInstancesSupplier camundaInstancesSupplier() {
-    return camundaInstancesSupplier(CAMUNDA_CONFIG_RESOURCE);
+    return camundaInstancesSupplier(mostUsefulProcessEngineConfiguration());
   }
 
   /**

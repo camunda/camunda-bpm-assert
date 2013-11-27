@@ -21,10 +21,28 @@ import org.junit.runners.model.Statement;
 public class FluentProcessEngineTestRule implements TestRule {
 
   private Object test;
-  private FluentProcessEngine engine = null;
+  private FluentProcessEngine fluentProcessEngine = null;
 
+  /**
+   * 
+   * @param test
+   *          the test instance to init
+   */
   public FluentProcessEngineTestRule(final Object test) {
+    this(test, null);
+  }
+
+  /**
+   * 
+   * @param test
+   *          the test instance to init
+   * @param fluentProcessEngine
+   *          the process engine, if it exists apriori. Otherwise it is
+   *          generated in getEngine()
+   */
+  public FluentProcessEngineTestRule(final Object test, final FluentProcessEngine fluentProcessEngine) {
     this.test = test;
+    this.fluentProcessEngine = fluentProcessEngine;
   }
 
   @Override
@@ -56,17 +74,17 @@ public class FluentProcessEngineTestRule implements TestRule {
   }
 
   protected FluentProcessEngine getEngine() {
-    if (engine != null) {
-      return engine;
+    if (fluentProcessEngine != null) {
+      return fluentProcessEngine;
     }
 
     try {
-      return engine = new FluentProcessEngineImpl(ProgrammaticBeanLookup.lookup(ProcessEngine.class));
+      return fluentProcessEngine = new FluentProcessEngineImpl(ProgrammaticBeanLookup.lookup(ProcessEngine.class));
     } catch (final ProcessEngineException e) {
       // fallthrough
     }
     if (test instanceof ProcessEngineTestCase) {
-      return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
+      return fluentProcessEngine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(((ProcessEngineTestCase) test).getConfigurationResource()));
     } else {
       ProcessEngineRule processEngineRule = null;
 
@@ -80,7 +98,7 @@ public class FluentProcessEngineTestRule implements TestRule {
         processEngineRule = new ProcessEngineRule();
       }
 
-      return engine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(processEngineRule.getConfigurationResource()));
+      return fluentProcessEngine = new FluentProcessEngineImpl(TestHelper.getProcessEngine(processEngineRule.getConfigurationResource()));
     }
 
   }

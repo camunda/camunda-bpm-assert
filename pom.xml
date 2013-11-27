@@ -27,7 +27,6 @@
 
     <properties>
         <camunda-bpm.version>7.0.0-Final</camunda-bpm.version>
-        <camunda-bpm-data.version>1.0.0-SNAPSHOT</camunda-bpm-data.version>
         <camunda-bpm-testing.version>${project.version}</camunda-bpm-testing.version>
 
         <version.slf4j>1.7.2</version.slf4j>
@@ -70,12 +69,6 @@
                 <groupId>${project.groupId}</groupId>
                 <artifactId>camunda-bpm-needle</artifactId>
                 <version>${project.version}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>camunda-bpm-data</artifactId>
-                <version>${camunda-bpm-data.version}</version>
                 <scope>compile</scope>
             </dependency>
 

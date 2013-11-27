@@ -102,11 +102,11 @@ public class ProcessEngineNeedleRule extends ExternalResource implements Process
     // initialize processEngine
     final CamundaInstancesSupplier camundaInstancesSupplier = CamundaInstancesSupplier.camundaInstancesSupplier(configuration);
 
-    // activate activiti rull
+    // activate activiti rule
     this.processEngineTestWatcher = new ProcessEngineTestWatcher(camundaInstancesSupplier.getProcessEngine());
     this.fluentProcessEngine = new FluentProcessEngineImpl(camundaInstancesSupplier.getProcessEngine());
 
-    final FluentProcessEngineTestRule fluentProcessEngineTestRule = new FluentProcessEngineTestRule(testInstance);
+    final FluentProcessEngineTestRule fluentProcessEngineTestRule = new FluentProcessEngineTestRule(testInstance, this.fluentProcessEngine);
 
     // create needle rule with camunda supplier and additional providers
     final NeedleTestRule needleTestRule = NeedleTestRuleBuilder.needleTestRule(testInstance).addSupplier(camundaInstancesSupplier) //

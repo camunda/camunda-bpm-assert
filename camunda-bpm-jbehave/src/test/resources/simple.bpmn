@@ -21,9 +21,6 @@
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:serviceTask id="service_load_contract_data" activiti:expression="#{simpleProcessAdapter.loadContractData()}" activiti:resultVariable="isAutomaticProcessing" name="Load&#xD;&#xA;contract &#xD;&#xA;data">
-      <bpmn2:extensionElements>
-        <activiti:executionListener class="org.camunda.bdd.examples.simple.guard.AutomaticProcessingGuard" event="end"/>
-      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:serviceTask>
