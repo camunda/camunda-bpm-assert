@@ -6,10 +6,13 @@ import org.fest.assertions.api.Assertions;
 import org.fest.assertions.api.LongAssert;
 import org.fest.assertions.api.StringAssert;
 
+import java.lang.Deprecated;
+
 /**
  * @author Rafael Cordones <rafael.cordones@plexiti.com>
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
+@Deprecated
 public class ProcessVariableAssert extends AbstractProcessAssert<ProcessVariableAssert, FluentProcessVariable> {
 
   protected ProcessVariableAssert(ProcessEngine engine, FluentProcessVariable actual) {
