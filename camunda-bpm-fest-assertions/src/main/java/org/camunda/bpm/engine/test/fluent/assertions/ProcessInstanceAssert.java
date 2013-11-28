@@ -3,7 +3,6 @@ package org.camunda.bpm.engine.test.fluent.assertions;
 import java.util.List;
 
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.fluent.FluentProcessInstance;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
@@ -88,8 +87,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * The actual instance must neither be ended nor suspended, see
-   * {@link FluentProcessInstance#isActive()}.
+   * The actual instance must neither be ended nor suspended
    * 
    * @return this
    */
