@@ -21,6 +21,7 @@
         <module>camunda-bpm-fest-assertions</module>
         <module>camunda-bpm-needle</module>
         <module>camunda-bpm-jbehave</module>
+        <module>camunda-bpm-testing-deprecated</module>
         <!--<module>camunda-bpm-fluent-integration-tests</module>-->
     </modules>
 
@@ -67,6 +68,12 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>camunda-bpm-needle</artifactId>
+                <version>${project.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>camunda-bpm-testing-deprecated</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>

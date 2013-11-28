@@ -19,7 +19,7 @@
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>camunda-bpm-fest-assertions</artifactId>
+            <artifactId>camunda-bpm-testing-deprecated</artifactId>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>
