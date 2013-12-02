@@ -112,6 +112,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * @return the assigned task - properly refreshed to its assigned state.
    */
   public static Task claim(Task task, String assigneeUserId) {
+    if (task == null || assigneeUserId == null)
+      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s', assigneeUserId = '%s') - both must not be null!", task, assigneeUserId));
     taskService().claim(task.getId(), assigneeUserId);
     return task();
   }
@@ -121,6 +123,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * setting those variables, you can use withVariables(String key, Object value, ...)
    */
   public static void complete(Task task, Map<String, Object> variables) {
+    if (task == null || variables == null)
+      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s', variables = '%s') - both must not be null!", task, variables));
     taskService().complete(task.getId(), variables);
   }
 
@@ -128,6 +132,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Helper method to easily complete a task.
    */
   public static void complete(Task task) {
+    if (task == null)
+      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s') - must not be null!", task));
     taskService().complete(task.getId());
   }
 
