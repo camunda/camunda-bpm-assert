@@ -24,6 +24,8 @@ public class ProcessEngineAssertions extends Assertions {
 
     private static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
 
+    protected ProcessEngineAssertions() {}
+
     public static ProcessEngine processEngine() {
         ProcessEngine processEngine = ProcessEngineAssertions.processEngine.get();
         if (processEngine != null)

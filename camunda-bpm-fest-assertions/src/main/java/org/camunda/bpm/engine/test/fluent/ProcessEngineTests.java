@@ -17,6 +17,8 @@ import org.camunda.bpm.engine.task.TaskQuery;
  */
 public class ProcessEngineTests extends ProcessEngineAssertions {
 
+  protected ProcessEngineTests() {}
+
   public static RuntimeService runtimeService() {
     return processEngine().getRuntimeService();
   }
