@@ -14,5 +14,9 @@ public class AbstractProcessAssert<S extends AbstractProcessAssert<S, A>, A> ext
     super(actual, selfType);
     this.engine = engine;
   }
+    
+  public A getActual() {
+    return actual;
+  }
 
 }
