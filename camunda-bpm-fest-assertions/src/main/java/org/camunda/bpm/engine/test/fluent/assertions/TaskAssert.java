@@ -16,8 +16,11 @@ import java.util.Date;
  */
 public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
+  private static ThreadLocal<TaskAssert> lastAssert = new ThreadLocal<TaskAssert>();
+
   protected TaskAssert(final ProcessEngine engine, final Task actual) {
     super(engine, actual, TaskAssert.class);
+    lastAssert.set(this);
   }
 
   public static TaskAssert assertThat(final ProcessEngine engine, final Task actual) {
@@ -173,6 +176,10 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
         .overridingErrorMessage("Expected task '%s' to have '%s' as name but has '%s'", actual.getName(), expectedDescription, actualDescription)
         .isEqualTo(expectedDescription);
     return this;
+  }
+
+  public static TaskAssert lastAssert() {
+    return lastAssert.get();
   }
 
 }
