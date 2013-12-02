@@ -30,7 +30,7 @@ public class ProcessEngineAssertions extends Assertions {
         ProcessEngine processEngine = ProcessEngineAssertions.processEngine.get();
         if (processEngine != null)
             return processEngine;
-        throw new IllegalStateException("Call ProcessEngineAssertions.init(ProcessEngine processEngine) first.");
+        throw new IllegalStateException(String.format("Call %s.init(ProcessEngine processEngine) first!", ProcessEngineAssertions.class.getSimpleName()));
     }
 
     public static void init(final ProcessEngine processEngine) {
