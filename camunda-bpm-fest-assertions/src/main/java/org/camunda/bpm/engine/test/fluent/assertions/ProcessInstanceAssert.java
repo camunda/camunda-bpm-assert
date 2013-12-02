@@ -81,7 +81,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     /*
      * If it is not null we make sure that it is actually finished.
      */
-    Assertions.assertThat(actual.isEnded()).overridingErrorMessage("Expected processExecution %s to be finished but it is not!", actual.getId()).isTrue();
+    Assertions.assertThat(engine.getRuntimeService().createProcessInstanceQuery().processInstanceId(actual.getId()).singleResult()).overridingErrorMessage("Expected processExecution %s to be finished but it is not!", actual.getId()).isNull();
 
     return this;
   }
