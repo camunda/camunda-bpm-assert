@@ -6,6 +6,7 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.TaskQuery;
 import org.fest.assertions.api.Assertions;
 
 /**
@@ -122,6 +123,36 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
   public static class MoveToActivityIdException extends RuntimeException {
     private static final long serialVersionUID = 2282185191899085294L;
+  }
+
+  /**
+   * Enter into a chained task assert inspecting the one and mostly 
+   * one task currently available in the context of the process instance
+   * under test of this ProcessInstanceAssert.
+   * @return TaskAssert inspecting the only task available. Inspecting a 
+   * 'null' Task in case no such Task is available.
+   * @throws RuntimeException in case more than one task is available TODO check which one
+   */
+  public TaskAssert task() {
+    return task(engine.getTaskService().createTaskQuery());
+  }
+
+  /**
+   * Enter into a chained task assert inspecting only tasks currently 
+   * available in the context of the process instance under test of this 
+   * ProcessInstanceAssert.
+   * @param query TaskQuery further narrowing down the search for tasks
+   * @return TaskAssert inspecting the only task resulting from the given 
+   * search. Inspecting a 'null' Task in case no such Task is available.
+   * @throws RuntimeException in case more than one task is delivered by 
+   * the query TODO check which one
+   */
+  public TaskAssert task(TaskQuery query) {
+    if (query == null)
+      throw new IllegalArgumentException("Illegal call of task(query = 'null') - but must not be null!");
+    isNotNull();
+    TaskQuery narrowed = query.processInstanceId(actual.getId());
+    return TaskAssert.assertThat(engine, narrowed.singleResult());
   }
 
 }
