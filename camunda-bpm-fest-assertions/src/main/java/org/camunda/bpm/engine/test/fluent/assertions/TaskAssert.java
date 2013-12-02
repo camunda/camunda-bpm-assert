@@ -1,7 +1,5 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.task.Task;
@@ -23,8 +21,6 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   public static TaskAssert assertThat(final ProcessEngine engine, final Task actual) {
-    checkArgument(engine != null, "engine must not be null!");
-    checkArgument(actual != null, "actual must not be null!");
     return new TaskAssert(engine, actual);
   }
 
