@@ -6,6 +6,7 @@ import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.engine.test.fluent.assertions.AbstractProcessAssert;
 import org.camunda.bpm.engine.test.fluent.assertions.TaskAssert;
 
 import java.util.HashMap;
@@ -101,10 +102,10 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * @return the last task used as an object under test of a TaskAssert. May return null if no such task exists anymore.
    */
   public static Task task() {
-    TaskAssert lastAssert = TaskAssert.lastAssert();
+    TaskAssert lastAssert = AbstractProcessAssert.getLastAssert(TaskAssert.class);
     if (lastAssert == null)
         throw new IllegalStateException("Call a task assertion first -  e.g. assertThat(task)... or assertThat(processInstance).task()...!");
-    return taskService().createTaskQuery().taskId(TaskAssert.lastAssert().getActual().getId()).singleResult();
+    return taskService().createTaskQuery().taskId(lastAssert.getActual().getId()).singleResult();
   }
 
   /**

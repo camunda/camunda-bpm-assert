@@ -5,10 +5,7 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.test.fluent.assertions.JobAssert;
-import org.camunda.bpm.engine.test.fluent.assertions.ProcessDefinitionAssert;
-import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
-import org.camunda.bpm.engine.test.fluent.assertions.TaskAssert;
+import org.camunda.bpm.engine.test.fluent.assertions.*;
 
 import org.fest.assertions.api.Assertions;
 
@@ -35,10 +32,12 @@ public class ProcessEngineAssertions extends Assertions {
 
     public static void init(final ProcessEngine processEngine) {
         ProcessEngineAssertions.processEngine.set(processEngine);
+        AbstractProcessAssert.resetLastAsserts();
     }
 
     public static void reset() {
         ProcessEngineAssertions.processEngine.remove();
+        AbstractProcessAssert.resetLastAsserts();
     }
 
     public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
