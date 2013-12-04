@@ -37,6 +37,10 @@ public class ProcessEngineAssertions extends Assertions {
         ProcessEngineAssertions.processEngine.set(processEngine);
     }
 
+    public static void reset() {
+        ProcessEngineAssertions.processEngine.remove();
+    }
+
     public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
         return ProcessDefinitionAssert.assertThat(processEngine(), actual);
     }

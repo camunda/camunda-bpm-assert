@@ -3,9 +3,11 @@ package org.camunda.bpm.testing.examples;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.fluent.ProcessEngineTests;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.testing.examples.jobannouncement.JobAnnouncement;
 import org.camunda.bpm.testing.examples.jobannouncement.JobAnnouncementService;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,7 +28,7 @@ public class JobAnnouncementPublicationProcessTest {
   @Mock public JobAnnouncementService jobAnnouncementService;
   @Mock public JobAnnouncement jobAnnouncement;
 
-  // Some boilerplate - we can easily get rid of again by 
+          // Some boilerplate - we can easily get rid of again by 
   @Before // deciding where to ultimately put the jUnit integration
   public void setUp() {
     MockitoAnnotations.initMocks(this);
@@ -35,6 +37,12 @@ public class JobAnnouncementPublicationProcessTest {
     init(processEngineRule.getProcessEngine());
   }
 
+  @After
+  public void tearDown() {
+    Mocks.reset();
+    ProcessEngineTests.reset();
+  }
+  
   @Test
   @Deployment(resources = { "camunda-testing-job-announcement-publication.bpmn" })
   public void testPublishOnlyOnCompanyWebsite() {

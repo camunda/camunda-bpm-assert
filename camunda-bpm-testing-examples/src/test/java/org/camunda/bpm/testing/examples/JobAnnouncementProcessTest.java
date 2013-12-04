@@ -3,9 +3,11 @@ package org.camunda.bpm.testing.examples;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.fluent.ProcessEngineTests;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.testing.examples.jobannouncement.JobAnnouncement;
 import org.camunda.bpm.testing.examples.jobannouncement.JobAnnouncementService;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,9 +36,15 @@ public class JobAnnouncementProcessTest {
     MockitoAnnotations.initMocks(this);
     Mocks.register("jobAnnouncementService", jobAnnouncementService);
     Mocks.register("jobAnnouncement", jobAnnouncement);
-    init(processEngineRule.getProcessEngine());
+    ProcessEngineTests.init(processEngineRule.getProcessEngine());
   }
 
+  @After
+  public void tearDown() {
+    Mocks.reset();
+    ProcessEngineTests.reset();
+  }
+  
   @Test
   @Deployment(resources = {
     "camunda-testing-job-announcement.bpmn",
