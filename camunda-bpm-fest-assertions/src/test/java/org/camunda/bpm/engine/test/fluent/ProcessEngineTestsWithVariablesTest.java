@@ -79,6 +79,7 @@ public class ProcessEngineTestsWithVariablesTest {
       else
         returnedMap = withVariables(null, values.get(0));
       fail("IllegalArgumentException expected!");
+    // Then
     } catch (Throwable t) {
       assertThat(t).isInstanceOf(IllegalArgumentException.class);
     }
@@ -97,6 +98,7 @@ public class ProcessEngineTestsWithVariablesTest {
       else
         returnedMap = withVariables(null, values.get(0));
       fail("IllegalArgumentException expected!");
+    // Then
     } catch (Throwable t) {
       assertThat(t).isInstanceOf(IllegalArgumentException.class);
     }
