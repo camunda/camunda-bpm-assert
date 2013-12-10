@@ -1,6 +1,10 @@
 package org.camunda.bpm.engine.test.fluent;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.runtime.ExecutionQuery;
+import org.camunda.bpm.engine.runtime.JobQuery;
+import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
+import org.camunda.bpm.engine.task.TaskQuery;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -96,6 +100,50 @@ public class ProcessEngineTestsTest {
     assertThat(taskService()).isNotNull().isSameAs(taskService);
     verify(processEngine, times(1)).getTaskService();
     verifyNoMoreInteractions(processEngine);
+  }
+
+  @Test
+  public void testTaskQuery() {
+    TaskService taskService = mock(TaskService.class);
+    TaskQuery taskQuery = mock(TaskQuery.class);
+    when(processEngine.getTaskService()).thenReturn(taskService);
+    when(taskService.createTaskQuery()).thenReturn(taskQuery);
+    assertThat(taskQuery()).isNotNull().isSameAs(taskQuery);
+    verify(taskService, times(1)).createTaskQuery();
+    verifyNoMoreInteractions(taskService);
+  }
+
+  @Test
+  public void testJobQuery() {
+    ManagementService managementService = mock(ManagementService.class);
+    JobQuery jobQuery = mock(JobQuery.class);
+    when(processEngine.getManagementService()).thenReturn(managementService);
+    when(managementService.createJobQuery()).thenReturn(jobQuery);
+    assertThat(jobQuery()).isNotNull().isSameAs(jobQuery);
+    verify(managementService, times(1)).createJobQuery();
+    verifyNoMoreInteractions(managementService);
+  }
+
+  @Test
+  public void testProcessInstanceQuery() {
+    RuntimeService runtimeService = mock(RuntimeService.class);
+    ProcessInstanceQuery processInstanceQuery = mock(ProcessInstanceQuery.class);
+    when(processEngine.getRuntimeService()).thenReturn(runtimeService);
+    when(runtimeService.createProcessInstanceQuery()).thenReturn(processInstanceQuery);
+    assertThat(processInstanceQuery()).isNotNull().isSameAs(processInstanceQuery);
+    verify(runtimeService, times(1)).createProcessInstanceQuery();
+    verifyNoMoreInteractions(runtimeService);
+  }
+
+  @Test
+  public void testExecutionQuery() {
+    RuntimeService runtimeService = mock(RuntimeService.class);
+    ExecutionQuery executionQuery = mock(ExecutionQuery.class);
+    when(processEngine.getRuntimeService()).thenReturn(runtimeService);
+    when(runtimeService.createExecutionQuery()).thenReturn(executionQuery);
+    assertThat(executionQuery()).isNotNull().isSameAs(executionQuery);
+    verify(runtimeService, times(1)).createExecutionQuery();
+    verifyNoMoreInteractions(runtimeService);
   }
 
 }
