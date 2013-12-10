@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 
 
 import static org.camunda.bpm.engine.test.fluent.ProcessEngineAssertions.*;
+import static org.camunda.bpm.engine.test.fluent.ProcessEngineAssertions.assertThat;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -27,32 +28,41 @@ public class ProcessEngineAssertionsTest {
   @Before
   public void setUp() {
     processEngine = Mockito.mock(ProcessEngine.class);
-    ProcessEngineAssertions.init(processEngine);
+    init(processEngine);
   }
 
   @After
   public void tearDown() {
-    ProcessEngineAssertions.reset();
+    reset();
   }
 
   @Test
   public void testProcessEngine() throws Exception {
-    assertThat(ProcessEngineAssertions.processEngine()).isNotNull().isSameAs(processEngine);
+    // When
+    ProcessEngine returnedEngine = processEngine();
+    // Then
+    assertThat(returnedEngine).isNotNull().isSameAs(processEngine);
   }
 
   @Test
   public void testInit() throws Exception {
+    // Given
     reset();
+    // When
     init(processEngine);
+    // Then
     assertThat(ProcessEngineAssertions.processEngine()).isNotNull().isSameAs(processEngine);
   }
 
   @Test
   public void testReset() throws Exception {
+    // Given
     reset();
+    // When
     try {
       processEngine();
       fail("IllegalStateException expected, because processEngine() called immediately after reset()");
+    // Then
     } catch (Throwable e) {
       assertThat(e).isInstanceOf(IllegalStateException.class);
     }
@@ -60,32 +70,48 @@ public class ProcessEngineAssertionsTest {
 
   @Test
   public void testAssertThat_ProcessDefinition() throws Exception {
+    // Given
     ProcessDefinition processDefinition = Mockito.mock(ProcessDefinition.class);
-    assertThat(assertThat(processDefinition)).isNotNull().isInstanceOf(ProcessDefinitionAssert.class);
+    // When
+    ProcessDefinitionAssert returnedAssert = assertThat(processDefinition);
+    // Then
+    assertThat(returnedAssert).isNotNull().isInstanceOf(ProcessDefinitionAssert.class);
     ProcessDefinitionAssert processDefinitionAssert = assertThat(processDefinition);
     assertThat(processDefinitionAssert.getActual()).isSameAs(processDefinition);
   }
 
   @Test
   public void testAssertThat_ProcessInstance() throws Exception {
+    // Given
     ProcessInstance processInstance = Mockito.mock(ProcessInstance.class);
-    assertThat(assertThat(processInstance)).isNotNull().isInstanceOf(ProcessInstanceAssert.class);
+    // When
+    ProcessInstanceAssert returnedAssert = assertThat(processInstance);
+    // Then
+    assertThat(returnedAssert).isNotNull().isInstanceOf(ProcessInstanceAssert.class);
     ProcessInstanceAssert processInstanceAssert = assertThat(processInstance);
     assertThat(processInstanceAssert.getActual()).isSameAs(processInstance);
   }
 
   @Test
   public void testAssertThat_Task() throws Exception {
+    // Given
     Task task = Mockito.mock(Task.class);
-    assertThat(assertThat(task)).isNotNull().isInstanceOf(TaskAssert.class);
+    // When
+    TaskAssert returnedAssert = assertThat(task);
+    // Then
+    assertThat(returnedAssert).isNotNull().isInstanceOf(TaskAssert.class);
     TaskAssert taskAssert = assertThat(task);
     assertThat(taskAssert.getActual()).isSameAs(task);
   }
 
   @Test
   public void testAssertThat_Job() throws Exception {
+    // Given
     Job job = Mockito.mock(Job.class);
-    assertThat(assertThat(job)).isNotNull().isInstanceOf(JobAssert.class);
+    // When
+    JobAssert returnedAssert = assertThat(job);
+    // Then
+    assertThat(returnedAssert).isNotNull().isInstanceOf(JobAssert.class);
     JobAssert jobAssert = assertThat(job);
     assertThat(jobAssert.getActual()).isSameAs(job);
   }
