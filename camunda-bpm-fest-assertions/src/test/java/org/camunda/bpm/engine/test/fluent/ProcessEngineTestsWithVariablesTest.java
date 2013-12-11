@@ -15,7 +15,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 @RunWith(value = Parameterized.class)
 public class ProcessEngineTestsWithVariablesTest {
 
-  List<String> keys;
+  List<Object> keys;
   List<Object> values;
   Map<String, Object> expectedMap;
 
@@ -29,7 +29,7 @@ public class ProcessEngineTestsWithVariablesTest {
     if (key3 != null)
       expectedMap.put(key3, value3);
 
-    keys = new ArrayList<String>();
+    keys = new ArrayList<Object>();
     keys.add(key1);
     keys.add(key2);
     keys.add(key3);
@@ -53,71 +53,63 @@ public class ProcessEngineTestsWithVariablesTest {
 
   @Test
   public void testWithVariables() {
-    // Given
-    Map<String, Object> returnedMap;
-    // When
-    if (keys.get(2) != null) 
-      returnedMap = withVariables(keys.get(0), values.get(0), keys.get(1), values.get(1), keys.get(2), values.get(2));
-    else if (keys.get(1) != null)
-      returnedMap = withVariables(keys.get(0), values.get(0), keys.get(1), values.get(1));
-    else
-      returnedMap = withVariables(keys.get(0), values.get(0));
-    // Then
+    // When we simply constuct the map with the given data
+    Map<String, Object> returnedMap = returnedMap(keys, values);
+    // Then we expect to find the expected Map
     assertThat(returnedMap).isEqualTo(expectedMap);
   }
 
   @Test
   public void testWithVariables_NoStringKeys() {
-    // Given
-    Map<String, Object> returnedMap;
-    // When
+    // Given we replace the last key with its integer value
+    keys.set(keys.size() - 1, values.get(values.size() - 1));
+    // When we construct the variables map
     try {
-      if (keys.get(2) != null)
-        returnedMap = withVariables(keys.get(0), values.get(0), keys.get(1), values.get(1), values.get(2), keys.get(2));
-      else if (keys.get(1) != null)
-        returnedMap = withVariables(keys.get(0), values.get(0), values.get(1), keys.get(1));
-      else
-        returnedMap = withVariables(null, values.get(0));
-      fail("IllegalArgumentException expected!");
-    // Then
+      returnedMap(keys, values);
+      fail("IllegalArgumentException or AssertionError expected!");
+    // Then we expect an exception to be thrown
     } catch (Throwable t) {
-      assertThat(t).isInstanceOf(IllegalArgumentException.class);
+      assertThat(t).isInstanceOfAny(IllegalArgumentException.class, AssertionError.class);
     }
   }
 
   @Test
   public void testWithVariables_NullKeys() {
-    // Given
-    Map<String, Object> returnedMap;
-    // When
+    // Given we replace the last key with a null pointer
+    keys.set(keys.size() - 1, null);
+    // When we construct the variables map
     try {
-      if (keys.get(2) != null)
-        returnedMap = withVariables(keys.get(0), values.get(0), keys.get(1), values.get(1), null, values.get(2));
-      else if (keys.get(1) != null)
-        returnedMap = withVariables(keys.get(0), values.get(0), null, values.get(1));
-      else
-        returnedMap = withVariables(null, values.get(0));
+      returnedMap(keys, values);
       fail("IllegalArgumentException expected!");
-    // Then
+    // Then we expect an exception to be thrown
     } catch (Throwable t) {
-      assertThat(t).isInstanceOf(IllegalArgumentException.class);
+      assertThat(t).isInstanceOfAny(IllegalArgumentException.class, AssertionError.class);
     }
   }
 
   @Test
   public void testWithVariables_NullValues() {
-    // Given
-    Map<String, Object> returnedMap;
-    // When
-    if (keys.get(2) != null)
-      returnedMap = withVariables(keys.get(0), null, keys.get(1), null, keys.get(2), null);
-    else if (keys.get(1) != null)
-      returnedMap = withVariables(keys.get(0), null, keys.get(1), null);
-    else
-      returnedMap = withVariables(keys.get(0), null);
-    // Then
+    // Given we replace all values with a null pointer
+    int idx = values.size(); 
+    while (idx > 0)
+      values.set(--idx, null);
+    // When we construct the variables map
+    Map<String, Object> returnedMap = returnedMap(keys, values);
+    // Then we expect the keys to match the expectedMap keys
     assertThat(returnedMap.keySet()).isEqualTo(expectedMap.keySet());
+    // And we expect all the values to be null
     assertThat(returnedMap.values()).containsOnly((Object) null);
+  }
+  
+  private static Map<String, Object> returnedMap(List<Object> keys, List<Object> values) {
+    Map<String, Object> returnedMap;
+    if (keys.get(2) != null)
+      returnedMap = withVariables((String) keys.get(0), values.get(0), keys.get(1), values.get(1), keys.get(2), values.get(2));
+    else if (keys.get(1) != null)
+      returnedMap = withVariables((String) keys.get(0), values.get(0), keys.get(1), values.get(1));
+    else
+      returnedMap = withVariables((String) keys.get(0), values.get(0));
+    return returnedMap;
   }
 
 }
