@@ -1,34 +1,44 @@
-**NOTE:** This project is part of the [camunda BPM incubation space](https://github.com/camunda/camunda-bpm-testing). 
-You can check the presentation of this project [camunda BPM dev list](https://groups.google.com/forum/#!msg/camunda-bpm-dev/m8VDRnZe55A/YsZ2QwnFOPcJ). 
-Questions, issues, ideas, feedback, … are greatly appreciated and should be made the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev) list.
+# _Name of Project_
 
-**NOTE:** Currently, this project relies on a snapshot version of JBehave-3.9. 
+_Short description of project_
 
-# Introduction
-
-This project aims at improving test creation **and maintenance** when developing process applications based on [the camunda BPM platform](http://camunda.org). 
-Specifically, it focuses on the following aspects:
-
-* enable test of process behavior
-* foster involvement of the business during test creation
-* ease the readability and maintainability of process model tests
-* make the creation of process model tests more fluent and, thus more fun!
-* make it easy to mock the services available to a process instance
-
-# Libraries
-
-This project provides a tool set for different testing approaches. This starts with generic JUnit test with an in-memory engine and ends with BDD-Style integration tests. 
+![Screenshot or code snippet](http://placehold.it/550x350&text=Image%20or%20code%20snippet%20if%20applicable)
 
 
-| Module | Description |
-| ----------------| --- |
-| **camunda-bpm-testing-core** | foundation and basis for testing with Camunda BPM platform. |
-| **camunda-bpm-testing-examples** | shared examples for demonstrating different testing strategies and techniques. |
-| **camunda-bpm-jbehave** | is a basis for writing behaviour specifications and test process up-front of implementation and later after integration |
-| **camunda-bpm-fluent-engine-api** | provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) Camunda BPM API so you can focus on your process expert's domain knowledge while writing and reading your tests |
-| **camunda-bpm-fest-assertions** | provides a [fluent](http://www.martinfowler.com/bliki/FluentInterface.html) convenience methods, matchers and assertions for testing. |
-| **camunda-bpm-needle** | is offering an integration to Needle Mocking provider framework, which eases the use of Mocking Frameworks in Camunda tests and helps to test components with Dependency Injection. |
+## Get started
 
-Suggestions, pull requests, ... you name it... are very welcome! Meet us on the [camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev) list.
+_A quick description how your project can be used, including where the relevant resources can be obtained from.
+Put into another file if too big._
 
-* [Project history on ohloh.net](https://www.ohloh.net/p/camunda-bpm-testing)
+
+## Resources
+
+* [Issue Tracker](link-to-issue-tracker) _use github unless you got your own_
+* [Roadmap](link-to-issue-tracker-filter) _if in terms of tagged issues_
+* [Changelog](link-to-changelog) _lets users track progress on what has been happening_
+* [Download](link-to-downloadable-archive) _if downloadable_
+* [Contributing](link-to-contribute-guide) _if desired, best to put it into a CONTRIBUTE.md file_
+
+
+## Roadmap
+
+_specify a short list of things that yet need to be done (unless you organize it elsewhere)_
+
+**todo**
+- add feature B
+- integrate with technology X
+
+**done**
+- add feature A
+
+
+## Maintainer
+
+_Your Name with link to Github profile or email_
+
+
+## License
+
+Apache License, Version 2.0
+
+_(Choose among Apache License, Version 2.0 or The MIT License. Update file LICENSE as well.)_
