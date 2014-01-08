@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.camunda.bpm.incubation</groupId>
-    <artifactId>camunda-bpm-testing</artifactId>
+    <artifactId>camunda-bpm-assert</artifactId>
     <version>0.7-SNAPSHOT</version>
 
     <packaging>pom</packaging>
@@ -21,7 +21,7 @@
 
     <properties>
         <camunda-bpm.version>7.0.0-Final</camunda-bpm.version>
-        <camunda-bpm-testing.version>${project.version}</camunda-bpm-testing.version>
+        <camunda-bpm-assert.version>${project.version}</camunda-bpm-assert.version>
 
         <version.slf4j>1.7.2</version.slf4j>
         <version.guava>14.0.1</version.guava>
@@ -160,9 +160,9 @@
     </repositories>
 
     <scm>
-        <connection>scm:git:git@github.com:camunda/camunda-bpm-testing.git</connection>
-        <url>scm:git:git@github.com:camunda/camunda-bpm-testing.git</url>
-        <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-testing.git</developerConnection>
+        <connection>scm:git:git@github.com:camunda/camunda-bpm-assert.git</connection>
+        <url>scm:git:git@github.com:camunda/camunda-bpm-assert.git</url>
+        <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-assert.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
