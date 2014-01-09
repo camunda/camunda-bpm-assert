@@ -4,11 +4,9 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 
 /**
- * Fluent assertions for
- * {@link org.camunda.bpm.engine.repository.ProcessDefinition}
- * 
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * Asserts for a {@link ProcessDefinition}
  * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Rafael Cordones <rafael.cordones@plexiti.com>
  */
 public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefinitionAssert, ProcessDefinition> {
 
@@ -20,7 +18,4 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
     return new ProcessDefinitionAssert(engine, actual);
   }
 
-  public ProcessDefinitionAssert isDeployed() {
-    return assertThat(engine, actual).isNotNull();
-  }
 }
