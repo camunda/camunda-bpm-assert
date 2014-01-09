@@ -23,6 +23,12 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return new ProcessInstanceAssert(engine, actual);
   }
 
+  /**
+   * Assert that the {@link ProcessInstance} is currently waiting 
+   * at a specified activity.
+   * @param activityId the id of the expected activity     
+   * @return this {@link ProcessInstanceAssert}
+   */
   public ProcessInstanceAssert isWaitingAt(final String activityId) {
     isNotNull();
 
@@ -37,18 +43,20 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return this;
   }
 
+  // TODO refactor so that services, queries and automatically 'narrowed' queries (e.g. to the asserted processinstance) are accessible for all asserts
   private HistoricActivityInstanceQuery createHistoricActivityInstanceQuery() {
     return engine.getHistoryService().createHistoricActivityInstanceQuery();
   }
 
   /**
-   * Expects that the given processInstance passed a given activity at least
-   * once. Checks historyService.
-   * 
-   * @param expectedActivityId
-   *          the activity to verify
-   * @return this
+   * Assert that the {@link ProcessInstance} has passed a specified activity
+   * @param expectedActivityId the id of the activity expected to have been passed    
+   * @return this {@link ProcessInstanceAssert}
    */
+  // TODO make sure this works for running as well as historic instances
+  // TODO separate isFinished from hasPassed and make sure the latter works for running as well as historic instances
+  // TODO check that the history service is enabled in case a finished process instance is checked against
+  // TODO change parameter name expectedActivityId to activitiId - for consistency reasons
   public ProcessInstanceAssert isFinishedAndPassedActivity(final String expectedActivityId) {
     isFinished();
     final List<HistoricActivityInstance> passed = createHistoricActivityInstanceQuery().activityId(expectedActivityId).finished()
@@ -61,15 +69,15 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Delegate to {@link #isFinished()}. This method is useful to match the
-   * original api method {@link ProcessInstance#isEnded()}.
-   * 
-   * @return this
+   * Assert that the {@link ProcessInstance} is ended
+   * @return this {@link ProcessInstanceAssert}
    */
+  // TODO do not accept actual == null instead just check runtimeservice for the actual process instance id
   public ProcessInstanceAssert isEnded() {
     return isFinished();
   }
 
+  // TODO move code to isEnded() and remove
   public ProcessInstanceAssert isFinished() {
     /*
      * TODO: we need to review this If the incomming Execution instance is null
@@ -88,10 +96,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * The actual instance must neither be ended nor suspended
-   * 
-   * @return this
+   * Assert that the {@link ProcessInstance} is currently 'active', 
+   * so neither suspended nor finished.
+   * @return this {@link ProcessInstanceAssert}
    */
+  // TODO do not directly rely on isSuspended(), instead check runtimeservice for the actual process instance id
   public ProcessInstanceAssert isActive() {
     isStarted();
 
@@ -100,6 +109,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return this;
   }
 
+  /**
+   * Assert that the {@link ProcessInstance} is started
+   * @return this {@link ProcessInstanceAssert}
+   */
+  // TODO do not rely on isEnded(), instead check runtimeservice for the actual process instance id
   public ProcessInstanceAssert isStarted() {
     isNotNull();
 
