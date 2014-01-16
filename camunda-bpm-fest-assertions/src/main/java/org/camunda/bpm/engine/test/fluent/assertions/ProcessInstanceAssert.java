@@ -12,7 +12,7 @@ import org.fest.assertions.api.Assertions;
 /**
  * Asserts for a {@link ProcessInstance}
  * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Rafael Cordones <rafael@cordones.me>
  */
 public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstanceAssert, ProcessInstance> {
 

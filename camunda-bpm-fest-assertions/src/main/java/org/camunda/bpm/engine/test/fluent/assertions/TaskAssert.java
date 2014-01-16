@@ -12,7 +12,7 @@ import java.util.Date;
  * Fluent assertions for {@link org.camunda.bpm.engine.task.Task}
  * 
  * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Rafael Cordones <rafael.cordones@plexiti.com>
+ * @author Rafael Cordones <rafael@cordones.me>
  */
 public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
