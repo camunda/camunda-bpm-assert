@@ -46,7 +46,8 @@ Now you have access to all the assertions provided by the fest library - plus th
 
 Then write:
 
-```java	assertThat(processInstance).isStarted().task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isUnassigned();
+```java	
+	assertThat(processInstance).isStarted().task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isUnassigned();
 ```
 
 Green bar? 
