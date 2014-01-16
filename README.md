@@ -20,7 +20,7 @@ First, [declare the camunda BPM maven repository](http://www.camunda.org/get-sta
 ```xml  
 	<dependency>
 	    <groupId>org.camunda.bpm.incubation</groupId>
-    	<artifactId>camunda-bpm-assert</artifactId>
+    	<artifactId>camunda-bpm-fest-assertions</artifactId>
     	<version>0.7-SNAPSHOT</version>
     	<scope>test</scope>
 	</dependency>
@@ -47,7 +47,10 @@ Now you have access to all the assertions provided by the fest library - plus th
 Then write:
 
 ```java	
-	assertThat(processInstance).isStarted().task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isUnassigned();
+	assertThat(processInstance).isStarted()
+		.task().hasDefinitionKey("edit")
+			.hasCandidateGroup("engineering")
+			.isUnassigned();
 ```
 
 Green bar? 
