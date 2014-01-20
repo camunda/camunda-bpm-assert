@@ -8,22 +8,30 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * Instance: [isActive](#processInstance-isActive)
-   * Instance: [isEnded](#processInstance-isEnded)
-   * Instance: [isStarted](#processInstance-isStarted)
-   * Instance: [isWaitingAt](#processInstance-isWaitingAt)
-   * Task: [isAssignedTo](#task-isAssignedTo)
-   * Task: [isUnassigned](#task-isUnassigned)
-   * Task: [hasCandidateGroup](#task-hasCandidateGroup)
-   * Task: [hasDefinitionKey](#task-hasDefinitionKey)
-   * Task: [hasDescription](#task-hasDescription)
-   * Task: [hasDueDate](#task-hasDueDate)
-   * Task: [hasId](#task-hasId)
-   * Task: [hasName](#task-hasName)
+   * for process instances:
+     * [isActive](#processInstance-isActive)
+     * [isEnded](#processInstance-isEnded)
+     * [isStarted](#processInstance-isStarted)
+     * [isWaitingAt](#processInstance-isWaitingAt)
+   * for jobs:
+     * [hasDeploymentId](#job-hasDeploymentId)
+     * [hasDueDate](#job-hasDueDate)
+     * [hasId](#job-hasId)
+     * [hasRetries](#job-hasRetries)
+   * for tasks:
+     * [isAssignedTo](#task-isAssignedTo)
+     * [isUnassigned](#task-isUnassigned)
+     * [hasCandidateGroup](#task-hasCandidateGroup)
+     * [hasDefinitionKey](#task-hasDefinitionKey)
+     * [hasDescription](#task-hasDescription)
+     * [hasDueDate](#task-hasDueDate)
+     * [hasId](#task-hasId)
+     * [hasName](#task-hasName)
  
  * [Helpers](#helpers)  
-   * Instance: [Make assertions on the only task](#helpers-task)
-   * Instance: [Make assertions on a specific task](#helpers-task-taskquery)
+   * for process instances:
+   * [Make assertions on the only task of the instance](#helpers-task)
+   * [Make assertions on a specific task of the instance](#helpers-task-taskquery)
 
 <a name="assertions"/>
 ## Assertions
@@ -62,6 +70,40 @@ Assert that a process instance is currently waiting at a specified activity:
 
 ```java
 assertThat(processInstance).isWaitingAt("edit");
+```
+
+<a name="job-hasDeploymentId"/>
+#### Job: hasDeploymentId
+
+```java
+assertThat(job).hasDeploymentId(deploymentId);
+```
+ 
+<a name="job-hasDueDate"/>
+#### Job: hasDueDate
+
+Assert that a job is due at a specific date:
+
+```java
+assertThat(job).hasDueDate(dueDate);
+```
+
+<a name="job-hasId"/>
+#### Job: hasId
+
+Assert a specific internal id for the job:
+
+```java
+assertThat(job).hasId(id);
+```
+
+<a name="job-hasRetries"/>
+#### Job: hasRetries
+
+Assert that a job has a specific number of retries left:
+
+```java
+assertThat(job).hasRetries(3);
 ```
 
 <a name="task-isAssignedTo"/>
@@ -158,8 +200,8 @@ assertThat(processInstance).task().isUnAssigned();
 <a name="helpers-task-taskquery"/>
 #### Make assertions on specific task (of many tasks currently available in a process instance)
 
-Retrieve a "chained" task assert inspecting the one and mostly 
-one task currently available in the context of the process instance...
+Retrieve a "chained" task assert inspecting a very specific task currently 
+available in the context of the process instance...
 
 ```java
 assertThat(processInstance).task(taskQuery().taskAssignee("fozzie"));
