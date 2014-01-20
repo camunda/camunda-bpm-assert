@@ -8,6 +8,10 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
 ### Table of Contents
 
  * [Assertions](#assertions)
+   * Instance: [isAssignedTo](#processInstance-isActive)
+   * Instance: [isAssignedTo](#processInstance-isEnded)
+   * Instance: [isAssignedTo](#processInstance-isStarted)
+   * Instance: [isAssignedTo](#processInstance-isWaitingAt)
    * Task: [isAssignedTo](#task-isAssignedTo)
    * Task: [isUnassigned](#task-isUnassigned)
    * Task: [hasCandidateGroup](#task-hasCandidateGroup)
@@ -21,6 +25,42 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
 
 <a name="assertions"/>
 ## Assertions
+
+<a name="processInstance-isActive"/>
+#### Instance: isActive
+
+Assert that a process instance is currently 'active', so neither suspended nor finished:
+
+```java
+assertThat(processInstance).isActive();
+```
+
+<a name="processInstance-isEnded"/>
+#### Instance: isEnded
+
+Assert that a process instance has already ended:
+
+```java
+assertThat(processInstance).isEnded();
+```
+
+<a name="processInstance-isStarted"/>
+#### Instance: isStarted
+
+Assert that a process instance is started:
+
+```java
+assertThat(processInstance).isStarted();
+```
+
+<a name="processInstance-isWaitingAt"/>
+#### Instance: isWaitingAt
+
+Assert that a process instance is currently waiting at a specified activity:
+
+```java
+assertThat(processInstance).isWaitingAt("edit");
+```
 
 <a name="task-isAssignedTo"/>
 #### Task: isAssignedTo
