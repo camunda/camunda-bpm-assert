@@ -22,6 +22,8 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
    * Task: [hasName](#task-hasName)
  
  * [Helpers](#helpers)  
+   * Make assertions on the only task: [](#helpers-task)
+   * Make assertions on a specific task: [](#helpers-task-taskquery)
 
 <a name="assertions"/>
 ## Assertions
@@ -137,3 +139,46 @@ assertThat(task).hasName("Review and approve");
 <a name="helpers"/>
 ## Helpers
 
+<a name="helpers-task"/>
+#### Make assertions on the only task (the only currently available in a process instance)
+ 
+Retrieve a "chained" task assert inspecting the one and mostly 
+one task currently available in the context of the process instance...
+
+```java
+assertThat(processInstance).task();
+```
+
+... in order to directly make assertions on it, e.g. 
+
+```java
+assertThat(processInstance).task().isUnAssigned();
+```
+
+  /**
+   * Enter into a chained task assert inspecting the one and mostly 
+   * one task currently available in the context of the process instance
+   * under test of this ProcessInstanceAssert.
+   * @return TaskAssert inspecting the only task available. Inspecting a 
+   * 'null' Task in case no such Task is available.
+   * @throws RuntimeException in case more than one task is available TODO check which one
+   */
+  public TaskAssert task() {
+    return task(engine.getTaskService().createTaskQuery());
+  }
+
+<a name="helpers-task-taskquery"/>
+#### Make assertions on specific task (of many tasks currently available in a process instance)
+
+Retrieve a "chained" task assert inspecting the one and mostly 
+one task currently available in the context of the process instance...
+
+```java
+assertThat(processInstance).task(taskQuery().taskAssignee("fozzie"));
+```
+
+... in order to directly make assertions on it, e.g. 
+
+```java
+assertThat(processInstance).task(taskQuery().taskAssignee("fozzie")).isAssignedTo("fozzie");
+```
