@@ -15,11 +15,8 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
    1. [Maven dependency](#maven-dependency)
    1. [Static import & Initialisation](#static-import)
    1. [Start using it!](#start-using)
- * [Resources](#resources)
- * [Maintainer](#maintainer)
- * [License](#license)
-
-See the [User Guide](./camunda-bpm-fest-assertions/README.md) for a more detailed documentation.
+ * [Resources](#resources), Maintainer](#maintainer) and [License](#license)
+ * Also check out the [User Guide](./camunda-bpm-fest-assertions/README.md) for a more detailed documentation.
 
 <a name="getting-started"/>
 ## Getting started
