@@ -28,10 +28,15 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
      * [hasId](#task-hasId)
      * [hasName](#task-hasName)
  
- * [Helpers](#helpers)  
-   * for process instances:
-   * [Make assertions on the only task of the instance](#helpers-task)
-   * [Make assertions on a specific task of the instance](#helpers-task-taskquery)
+ * [Helpers](#helpers)
+   * [Claiming tasks](#helpers-claim)
+   * [Completing tasks](#helpers-complete)
+   * [Completing tasks and passing process variables](#helpers-variables)
+   * [Creating queries](#helpers-queries)
+   * [Accessing engine and engine API services](#helpers-services)
+   * [Making assertions on the only task of an instance](#helpers-task)
+   * [Making assertions on a specific task of an instance](#helpers-task-taskquery)
+   * [Accessing last asserted task](#helpers-task-last)
 
 <a name="assertions"/>
 ## Assertions
@@ -181,11 +186,81 @@ assertThat(task).hasName("Review and approve");
 <a name="helpers"/>
 ## Helpers
 
+<a name="helpers-claim"/>
+#### Claiming tasks
+
+You can directly claim a task by means of a static helper method:
+
+```java
+claim(task, "fozzie"); 
+```
+
+<a name="helpers-complete"/>
+#### Completing tasks
+
+You can directly complete a task by means of static helper method:
+
+```java
+complete(task);
+```
+
+<a name="helpers-variables"/>
+#### Completing tasks and passing process variables
+
+You can directly construct a map of process variables by passing a sequence 
+of key/value pairs to the static helper method "withVariables":
+
+```java
+Map<String, Object> variables = withVariables("documentId", 5, "approved", true); 
+```
+
+You can therefore e.g. write
+
+```java
+complete(task, withVariables("documentId", 5, "approved", true)); 
+```
+
+<a name="helpers-queries"/>
+#### Creating queries
+
+You can directly create queries by means of static helper methods:
+
+```java
+TaskQuery taskQuery = taskQuery();
+JobQuery jobQuery = jobQuery();
+ProcessInstanceQuery processInstanceQuery = processInstanceQuery();
+ExecutionQuery executionQuery = executionQuery();
+```
+
+You can therefore e.g. write
+
+```java
+assertThat(processInstance).task(taskQuery().taskAssignee("fozzie")).hasCandidateGroup("human-resources-department");
+```
+
+<a name="helpers-services"/>
+#### Accessing engine and engine API services
+
+You can directly access the engine and API services by means of static helper methods:
+
+```java
+ProcessEngine engine = processEngine();
+
+AuthorizationService authorizationService = authorizationService();
+FormService formService = formService();
+HistoryService historyService = historyService();
+IdentityService identityService = identityService();
+ManagementService managementService = managementService();
+RepositoryService repositoryService = repositoryService();
+RuntimeService runtimeService = runtimeService();
+TaskService taskService = taskService();
+```
+
 <a name="helpers-task"/>
-#### Make assertions on the only task (the only currently available in a process instance)
+#### Making assertions on the only task of an instance
  
-Retrieve a "chained" task assert inspecting the one and mostly 
-one task currently available in the context of the process instance...
+You can retrieve a "chained" task assert inspecting the one and only 
+one task currently available in the context of a process instance...
 
 ```java
 assertThat(processInstance).task();
@@ -198,10 +273,10 @@ assertThat(processInstance).task().isUnAssigned();
 ```
 
 <a name="helpers-task-taskquery"/>
-#### Make assertions on specific task (of many tasks currently available in a process instance)
+#### Making assertions on a specific task of an instance
 
-Retrieve a "chained" task assert inspecting a very specific task currently 
-available in the context of the process instance...
+You can retrieve a "chained" task assert inspecting a very specific task currently 
+available in the context of a process instance...
 
 ```java
 assertThat(processInstance).task(taskQuery().taskAssignee("fozzie"));
@@ -211,4 +286,22 @@ assertThat(processInstance).task(taskQuery().taskAssignee("fozzie"));
 
 ```java
 assertThat(processInstance).task(taskQuery().taskAssignee("fozzie")).isAssignedTo("fozzie");
+```
+
+<a name="helpers-task-last"/>
+#### Accessing the last task under test of an assertion
+
+You can directly access the last asserted task by means of a static helper method task():
+
+```java
+assertThat(processInstance).task().hasDefinitionKey("review-and-approve")
+...
+Task lastAsserted = task();
+```
+  
+You can therefore e.g. write ...
+
+```java
+assertThat(processInstance).task().hasDefinitionKey("review-and-approve");
+complete(task(), withVariables("documentId", 5, "approved", true)); 
 ```
