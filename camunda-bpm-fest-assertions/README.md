@@ -27,70 +27,72 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
 
 Assert that a specified user is assigned to a task:
 
-    ```java
-    assertThat(task).isAssignedTo("kermit");
-    ```
+```java
+assertThat(task).isAssignedTo("kermit");
+```
 
 <a name="task-isUnassigned"/>
 #### Task: isUnassigned
 
-    ```java
-    assertThat(task).isUnassigned();
-    ```
+Assert that a task is currently not assigned to any user:
+
+```java
+assertThat(task).isUnassigned();
+```
 
 <a name="task-hasCandidateGroup"/>
 #### Task: hasCandidateGroup
 
 Assert that a task is connected with a specified candidate group:
 
-    ```java
-    assertThat(task).hasCandidateGroup("human-resources-department");
-    ```
+```java
+assertThat(task).hasCandidateGroup("human-resources-department");
+```
 
 <a name="task-hasDefinitionKey"/>
 #### Task: hasDefinitionKey
 
 Assert that a task has the specified definition key (aka the id attribute of the <code>&lt;userTask id="review-and-approve" .../&gt;</code> element in the process definition BPMN 2.0 XML file):
 
-    ```java
-    assertThat(task).hasDefinitionKey("review-and-approve");
-    ```
+```java
+assertThat(task).hasDefinitionKey("review-and-approve");
+```
 
 <a name="task-hasDescription"/>
 #### Task: hasDescription
 
 Assert that the task has the specified free text description:
 
-    ```java
-    assertThat(task).hasDescription("Please review and approve the result document.");
-    ```
+```java
+assertThat(task).hasDescription("Please review and approve the result document.");
+```
 
 <a name="task-hasDueDate"/>
 #### Task: hasDueDate
 
 Assert that a task is due at a specified date:
 
-    ```java
-    assertThat(task).hasDueDate(expectedDueDate);
-    ```
+```java
+assertThat(task).hasDueDate(expectedDueDate);
+```
 
 <a name="task-hasId"/>
 #### Task: hasId
 
 Assert that a task has the specified internal id:
 
-    ```java
-    assertThat(task).hasId("1");
-    ```
+```java
+assertThat(task).hasId("1");
+```
 
 <a name="task-hasName"/>
 #### Task: hasName
 
 Assert that the task has the specified name:
 
-    ```java
-    assertThat(task).hasName("Review and approve");
-    ```
+```java
+assertThat(task).hasName("Review and approve");
+```
 
 <a name="helpers"/>
 ## Helpers
