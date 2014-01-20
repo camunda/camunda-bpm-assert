@@ -56,6 +56,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   // TODO separate isFinished from hasPassed and make sure the latter works for running as well as historic instances
   // TODO check that the history service is enabled in case a finished process instance is checked against
   // TODO change parameter name expectedActivityId to activitiId - for consistency reasons
+  // TODO add resulting assertions to user guide
   public ProcessInstanceAssert isFinishedAndPassedActivity(final String expectedActivityId) {
     isFinished();
     final List<HistoricActivityInstance> passed = createHistoricActivityInstanceQuery().activityId(expectedActivityId).finished()
