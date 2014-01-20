@@ -61,7 +61,7 @@ Then write:
 ```java	
 	assertThat(processInstance).isStarted()
 		.task().hasDefinitionKey("edit")
-			.hasCandidateGroup("engineering")
+			.hasCandidateGroup("SB-Personal")
 			.isUnassigned();
 ```
 
