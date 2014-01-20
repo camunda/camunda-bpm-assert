@@ -1,4 +1,4 @@
-# ![camunda logo](./camunda-bpm-fest-assertions/src/main/resources/images/camunda.png) <span style="text-align: center">camunda-bpm-assert</span> 
+# ![camunda logo](./camunda-bpm-fest-assertions/src/main/resources/images/camunda.png)&nbsp;camunda-bpm-assert 
 
 This little community-extension to [camunda BPM](http://camunda.org) wants to make it easier to write tests for BPMN process definitions executed with the camunda process engine. 
 For that reason, a set of **assertions** based on the [fest-2](https://github.com/alexruiz/fest-assert-2.x/wiki) fixtures for easy software testing are provided...
@@ -9,7 +9,8 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
 
 ![Spaghetti Test](./camunda-bpm-fest-assertions/src/main/resources/images/spaghetti-test.jpg)
 
-## Get started
+<a name="getting-started"/>
+## Getting started
 
 **BEWARE: The project is currently (*January 2014*) undergoing a major rework. Therefore it will last a few more days until a version *0.7* will be published. Until then, please feel free to checkout below mentioned 0.7-SNAPSHOT.** Previous versions found in the download section do not fully comply to the information given in this guide.
 
@@ -74,7 +75,9 @@ Congrats! You are successfully using camunda-bpm-assert. Find a more detailed de
 
 * [Issue Tracker](https://github.com/camunda/camunda-bpm-assert/issues) 
 * [Roadmap](https://github.com/camunda/camunda-bpm-assert/issues) 
-* [Download](https://github.com/camunda/camunda-bpm-assert/releases) 
+* [Download](https://github.com/camunda/camunda-bpm-assert/releases)
+* [Questions at camunda BPM users list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-users)
+* [Feedback at camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev)
 * Want to **contribute**? You are very welcome! Please contact me directly via [eMail](mailto:martin.schimak@plexiti.com).
 
 ## Maintainer
