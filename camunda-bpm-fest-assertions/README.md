@@ -8,25 +8,9 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances:
-     * [isActive](#processInstance-isActive)
-     * [isEnded](#processInstance-isEnded)
-     * [isStarted](#processInstance-isStarted)
-     * [isWaitingAt](#processInstance-isWaitingAt)
-   * for jobs:
-     * [hasDeploymentId](#job-hasDeploymentId)
-     * [hasDueDate](#job-hasDueDate)
-     * [hasId](#job-hasId)
-     * [hasRetries](#job-hasRetries)
-   * for tasks:
-     * [isAssignedTo](#task-isAssignedTo)
-     * [isUnassigned](#task-isUnassigned)
-     * [hasCandidateGroup](#task-hasCandidateGroup)
-     * [hasDefinitionKey](#task-hasDefinitionKey)
-     * [hasDescription](#task-hasDescription)
-     * [hasDueDate](#task-hasDueDate)
-     * [hasId](#task-hasId)
-     * [hasName](#task-hasName)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isStarted](#processInstance-isStarted), [isWaitingAt](#processInstance-isWaitingAt)
+   * for jobs: [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
+   * for tasks: [isAssignedTo](#task-isAssignedTo), [isUnassigned](#task-isUnassigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
  
  * [Helpers](#helpers)
    * [Claiming tasks](#helpers-claim)
