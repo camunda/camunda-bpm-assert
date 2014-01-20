@@ -73,6 +73,7 @@ Congrats! You are successfully using camunda-bpm-assert. Find a more detailed de
 
 ## Resources
 
+* [User Guide](./camunda-bpm-fest-assertions/README.md) 
 * [Issue Tracker](https://github.com/camunda/camunda-bpm-assert/issues) 
 * [Roadmap](https://github.com/camunda/camunda-bpm-assert/issues) 
 * [Download](https://github.com/camunda/camunda-bpm-assert/releases)
