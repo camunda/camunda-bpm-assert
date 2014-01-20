@@ -9,11 +9,24 @@ For that reason, a set of **assertions** based on the [fest-2](https://github.co
 
 ![Spaghetti Test](./camunda-bpm-fest-assertions/src/main/resources/images/spaghetti-test.jpg)
 
+### Table of Contents
+
+ * [Getting started](#getting-started)
+   1. [Maven dependency](#maven-dependency)
+   1. [Static import & Initialisation](#static-import)
+   1. [Start using it!](#start-using)
+ * [Resources](#resources)
+ * [Maintainer](#maintainer)
+ * [License](#license)
+
+See the [User Guide](./camunda-bpm-fest-assertions/README.md) for a more detailed documentation.
+
 <a name="getting-started"/>
 ## Getting started
 
 **BEWARE: The project is currently (*January 2014*) undergoing a major rework. Therefore it will last a few more days until a version *0.7* will be published. Until then, please feel free to checkout below mentioned 0.7-SNAPSHOT.** Previous versions found in the download section do not fully comply to the information given in this guide.
 
+<a name="maven-dependency"/>
 ### Maven dependency
 
 First, [declare the camunda BPM maven repository](http://www.camunda.org/get-started/#apache-maven) - if you haven't yet done so. Then you find here the coordinates for including camunda-bpm-assert in Apache Maven Projects:
@@ -27,6 +40,7 @@ First, [declare the camunda BPM maven repository](http://www.camunda.org/get-sta
 	</dependency>
 ```
 
+<a name="static-import"/>
 ### Add a static import to your test class
 
 Then, create your test case just as described in [camunda BPM Testing](http://docs.camunda.org/latest/guides/user-guide/#testing). Two things you have to add then 
@@ -46,6 +60,7 @@ Then, create your test case just as described in [camunda BPM Testing](http://do
    }
 ```
 	
+<a name="start-using"/>
 ### Start using camunda-bpm-assert!
 
 Now you have access to all the assertions provided by the fest library - plus the customised camunda BPM assertions provided by this library. Let's assume you want to assert that your process instance 
@@ -71,6 +86,7 @@ Green bar?
 
 Congrats! You are successfully using camunda-bpm-assert. Find a more detailed description of the assertions and helper methods available in the [**camunda-bpm-assert User Guide**](./camunda-bpm-fest-assertions/README.md).
 
+<a name="resources"/>
 ## Resources
 
 * [User Guide](./camunda-bpm-fest-assertions/README.md) 
@@ -81,10 +97,12 @@ Congrats! You are successfully using camunda-bpm-assert. Find a more detailed de
 * [Feedback at camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev)
 * Want to **contribute**? You are very welcome! Please contact me directly via [eMail](mailto:martin.schimak@plexiti.com).
 
+<a name="maintainer"/>
 ## Maintainer
 
 Martin Schimak - [eMail](mailto:martin.schimak@plexiti.com) - [GitHub](https://github.com/martinschimak) - [Blog](http://plexiti.com)
 
+<a name="license"/>
 ## License
 
 Apache License, Version 2.0
