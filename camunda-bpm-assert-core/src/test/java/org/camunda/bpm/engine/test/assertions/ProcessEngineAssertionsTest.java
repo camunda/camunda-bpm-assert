@@ -1,22 +1,18 @@
-package org.camunda.bpm.engine.test.fluent;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.test.fluent.assertions.JobAssert;
-import org.camunda.bpm.engine.test.fluent.assertions.ProcessDefinitionAssert;
-import org.camunda.bpm.engine.test.fluent.assertions.ProcessInstanceAssert;
-import org.camunda.bpm.engine.test.fluent.assertions.TaskAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 
-import static org.camunda.bpm.engine.test.fluent.ProcessEngineAssertions.*;
-import static org.camunda.bpm.engine.test.fluent.ProcessEngineAssertions.assertThat;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.*;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

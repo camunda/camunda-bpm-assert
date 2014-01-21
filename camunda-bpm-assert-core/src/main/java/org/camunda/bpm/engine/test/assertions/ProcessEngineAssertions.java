@@ -1,11 +1,10 @@
-package org.camunda.bpm.engine.test.fluent;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.test.fluent.assertions.*;
 
 import org.assertj.core.api.Assertions;
 
@@ -13,7 +12,7 @@ import org.assertj.core.api.Assertions;
  * Class meant to statically access all 
  * camunda BPM Process Engine Assertions. 
  *
- * In your code use import static org.camunda.bpm.engine.test.fluent.ProcessEngineAssertions.*;
+ * In your code use import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.*;
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */

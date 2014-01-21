@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.mockito.Mockito.*;
 
-import static org.camunda.bpm.engine.test.fluent.ProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

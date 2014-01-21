@@ -1,7 +1,6 @@
-package org.camunda.bpm.engine.test.fluent.assertions;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.test.fluent.ProcessEngineAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

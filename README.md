@@ -43,7 +43,7 @@ Then, create your test case just as described in [camunda BPM Testing](http://do
  * the following static import:
 
 ```xml  
-	import static org.camunda.bpm.engine.test.fluent.ProcessEngineTests.*;
+	import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 ```
   
  * the initialisation code to make the assertions aware of your process engine, e.g. via the junit rule:

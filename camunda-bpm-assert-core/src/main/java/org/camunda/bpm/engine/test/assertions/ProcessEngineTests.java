@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
@@ -6,8 +6,6 @@ import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.camunda.bpm.engine.test.fluent.assertions.AbstractProcessAssert;
-import org.camunda.bpm.engine.test.fluent.assertions.TaskAssert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,12 +13,12 @@ import java.util.Map;
 import static java.lang.String.format;
 
 /**
- * Convenience class to access all fluent camunda BPM 
+ * Convenience class to access all assertions camunda BPM 
  * Process Engine Assertions - PLUS a few helper methods.
  * 
- * In your code use import static org.camunda.bpm.engine.test.fluent.ProcessEngineTests.*;
+ * In your code use import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
  *
- * @see org.camunda.bpm.engine.test.fluent.ProcessEngineAssertions
+ * @see org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
 public class ProcessEngineTests extends ProcessEngineAssertions {

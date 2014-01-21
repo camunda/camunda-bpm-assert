@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent.assertions;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -9,7 +9,7 @@ import org.assertj.core.api.Assertions;
 import java.util.Date;
 
 /**
- * Fluent assertions for {@link org.camunda.bpm.engine.task.Task}
+ * Asserts for {@link org.camunda.bpm.engine.task.Task}
  * 
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael@cordones.me>
@@ -20,7 +20,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     super(engine, actual, TaskAssert.class);
   }
 
-  public static TaskAssert assertThat(final ProcessEngine engine, final Task actual) {
+  protected static TaskAssert assertThat(final ProcessEngine engine, final Task actual) {
     return new TaskAssert(engine, actual);
   }
 

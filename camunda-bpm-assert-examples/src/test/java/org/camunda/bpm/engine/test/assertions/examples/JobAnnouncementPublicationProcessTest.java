@@ -1,12 +1,12 @@
-package org.camunda.bpm.testing.examples;
+package org.camunda.bpm.engine.test.assertions.examples;
 
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.engine.test.fluent.ProcessEngineTests;
+import org.camunda.bpm.engine.test.assertions.ProcessEngineTests;
 import org.camunda.bpm.engine.test.mock.Mocks;
-import org.camunda.bpm.testing.examples.jobannouncement.JobAnnouncement;
-import org.camunda.bpm.testing.examples.jobannouncement.JobAnnouncementService;
+import org.camunda.bpm.engine.test.assertions.examples.jobannouncement.JobAnnouncement;
+import org.camunda.bpm.engine.test.assertions.examples.jobannouncement.JobAnnouncementService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.camunda.bpm.engine.test.fluent.ProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 

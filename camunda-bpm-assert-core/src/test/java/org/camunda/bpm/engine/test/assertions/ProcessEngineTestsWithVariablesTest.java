@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -6,7 +6,7 @@ import org.junit.runners.Parameterized;
 
 import java.util.*;
 
-import static org.camunda.bpm.engine.test.fluent.ProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**

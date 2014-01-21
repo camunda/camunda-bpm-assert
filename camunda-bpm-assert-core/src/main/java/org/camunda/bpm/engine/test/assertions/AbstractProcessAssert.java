@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent.assertions;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.assertj.core.api.AbstractAssert;
@@ -16,7 +16,7 @@ public class AbstractProcessAssert<S extends AbstractProcessAssert<S, A>, A> ext
   private static ThreadLocal<Map<Class<?>, AbstractProcessAssert>>
     lastAsserts = new ThreadLocal<Map<Class<?>, AbstractProcessAssert>>();
 
-  public AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {
+  protected AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {
     super(actual, selfType);
     this.engine = engine;
     setLastAssert(selfType, this);

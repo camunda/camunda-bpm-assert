@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent.assertions;
+package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
@@ -14,7 +14,7 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
     super(engine, actual, ProcessDefinitionAssert.class);
   }
 
-  public static ProcessDefinitionAssert assertThat(ProcessEngine engine, ProcessDefinition actual) {
+  protected static ProcessDefinitionAssert assertThat(ProcessEngine engine, ProcessDefinition actual) {
     return new ProcessDefinitionAssert(engine, actual);
   }
 

@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent.assertions;
+package org.camunda.bpm.engine.test.assertions;
 
 import java.util.Date;
 
@@ -16,7 +16,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     super(engine, actual, JobAssert.class);
   }
 
-  public static JobAssert assertThat(final ProcessEngine engine, final Job actual) {
+  protected static JobAssert assertThat(final ProcessEngine engine, final Job actual) {
     return new JobAssert(engine, actual);
   }
 

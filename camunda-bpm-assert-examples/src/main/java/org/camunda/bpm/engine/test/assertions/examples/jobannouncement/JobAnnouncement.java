@@ -1,4 +1,4 @@
-package org.camunda.bpm.testing.examples.jobannouncement;
+package org.camunda.bpm.engine.test.assertions.examples.jobannouncement;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.fluent.assertions;
+package org.camunda.bpm.engine.test.assertions;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     super(engine, actual, ProcessInstanceAssert.class);
   }
 
-  public static ProcessInstanceAssert assertThat(final ProcessEngine engine, final ProcessInstance actual) {
+  protected static ProcessInstanceAssert assertThat(final ProcessEngine engine, final ProcessInstance actual) {
     return new ProcessInstanceAssert(engine, actual);
   }
 
