@@ -15,8 +15,8 @@
     </parent>
 
     <modules>
-        <module>camunda-bpm-fest-assertions</module>
-        <module>camunda-bpm-testing-examples</module>
+        <module>camunda-bpm-assert-core</module>
+        <module>camunda-bpm-assert-examples</module>
     </modules>
 
     <properties>
@@ -41,7 +41,7 @@
             <!-- camunda bpm testing -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>camunda-bpm-fest-assertions</artifactId>
+                <artifactId>camunda-bpm-assert-core</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>

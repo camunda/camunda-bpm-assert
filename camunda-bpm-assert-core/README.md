@@ -1,7 +1,7 @@
 # ![camunda logo](./src/main/resources/images/camunda.png)&nbsp;camunda-bpm-assert User Guide
 
 This little community-extension to [camunda BPM](http://camunda.org) wants to make it easier to write tests for BPMN process definitions executed with the camunda process engine. 
-For that reason, a set of **assertions** based on the [fest-2](https://github.com/alexruiz/fest-assert-2.x/wiki) fixtures for easy software testing are provided as well as a few little **helpers** to make it a bit easier to drive you through your process.
+For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](https://github.com/joel-costigliola/assertj-core) rich assertions library for java are provided as well as a few little **helpers** to make it a bit easier to drive you through your process.
 
 [Getting started](../README.md#getting-started)
 
