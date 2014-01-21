@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.runtime.Job;
-import org.fest.assertions.api.Assertions;
+import org.assertj.core.api.Assertions;
 
 /**
  * Asserts for a {@link Job}

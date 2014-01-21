@@ -33,7 +33,7 @@
         <!-- test tools -->
         <version.mockito>1.9.5</version.mockito>
         <version.junit>4.11</version.junit>
-        <version.fest-assert>2.0M10</version.fest-assert>
+        <version.assertj>1.5.0</version.assertj>
     </properties>
 
     <dependencyManagement>
@@ -97,9 +97,9 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.easytesting</groupId>
-                <artifactId>fest-assert-core</artifactId>
-                <version>${version.fest-assert}</version>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${version.assertj}</version>
                 <scope>compile</scope>
             </dependency>
         </dependencies>

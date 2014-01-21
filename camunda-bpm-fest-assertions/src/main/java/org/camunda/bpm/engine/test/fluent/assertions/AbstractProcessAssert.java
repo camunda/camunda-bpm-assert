@@ -1,7 +1,7 @@
 package org.camunda.bpm.engine.test.fluent.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
-import org.fest.assertions.api.AbstractAssert;
+import org.assertj.core.api.AbstractAssert;
 
 import java.util.HashMap;
 import java.util.Map;

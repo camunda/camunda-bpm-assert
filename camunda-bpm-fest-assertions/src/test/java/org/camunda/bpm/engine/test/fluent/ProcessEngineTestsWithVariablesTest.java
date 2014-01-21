@@ -7,7 +7,7 @@ import org.junit.runners.Parameterized;
 import java.util.*;
 
 import static org.camunda.bpm.engine.test.fluent.ProcessEngineTests.*;
-import static org.fest.assertions.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

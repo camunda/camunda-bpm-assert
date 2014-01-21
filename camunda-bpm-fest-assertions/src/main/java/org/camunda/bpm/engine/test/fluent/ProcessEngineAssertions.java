@@ -7,7 +7,7 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.fluent.assertions.*;
 
-import org.fest.assertions.api.Assertions;
+import org.assertj.core.api.Assertions;
 
 /**
  * Class meant to statically access all 

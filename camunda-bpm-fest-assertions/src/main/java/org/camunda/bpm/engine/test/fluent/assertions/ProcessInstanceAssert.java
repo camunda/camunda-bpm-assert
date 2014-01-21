@@ -7,7 +7,7 @@ import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.history.HistoricActivityInstanceQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.fest.assertions.api.Assertions;
+import org.assertj.core.api.Assertions;
 
 /**
  * Asserts for a {@link ProcessInstance}

@@ -4,7 +4,7 @@ import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.fest.assertions.api.Assertions;
+import org.assertj.core.api.Assertions;
 
 import java.util.Date;
 
