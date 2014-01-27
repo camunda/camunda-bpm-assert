@@ -1,11 +1,11 @@
-# ![camunda logo](./camunda-bpm-assert/src/main/resources/images/camunda.png)&nbsp;camunda-bpm-assert 
+# ![camunda logo](http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png)&nbsp;camunda-bpm-assert 
 
 This little community-extension to [camunda BPM](http://camunda.org) wants to make it easier to write tests for BPMN process definitions executed with the camunda process engine. 
 For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](https://github.com/joel-costigliola/assertj-core) rich assertions library for java are provided, as well as a few little helpers to make it a bit easier to drive you through your process.
  
 Hopefully this will also make it easier to change your tests half a year after you have written them yourself!-) In short: more **readable code** - less **spaghetti tests**!
 
-![Spaghetti Test](./camunda-bpm-assert/src/main/resources/images/spaghetti-test.jpg)
+![Spaghetti Test](http://camunda.github.io/camunda-bpm-assert/resources/images/spaghetti-test.jpg)
 
 ### Table of Contents
 
@@ -64,7 +64,7 @@ Now you have access to all the assertions provided by the fest library - plus th
  * is waiting at a specific user task and
  * the task is yet unassigned, but waiting to be assigned to a user of a specific group:
  
-![Green Bar](./camunda-bpm-assert/src/main/resources/images/job-announcement.png)
+![Green Bar](http://camunda.github.io/camunda-bpm-assert/resources/images/job-announcement.png)
 
 Then write:
 
@@ -77,7 +77,7 @@ Then write:
 
 Green bar? 
 
-![Green Bar](./camunda-bpm-assert/src/main/resources/images/green-bar.png)
+![Green Bar](http://camunda.github.io/camunda-bpm-assert/resources/images/green-bar.png)
 
 Congrats! You are successfully using camunda-bpm-assert. Find a more detailed description of the assertions and helper methods available in the [**camunda-bpm-assert User Guide**](./camunda-bpm-assert/README.md).
 
