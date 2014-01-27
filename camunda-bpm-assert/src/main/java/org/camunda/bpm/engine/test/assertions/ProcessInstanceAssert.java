@@ -36,7 +36,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     final List<String> activeActivityIds = engine.getRuntimeService().getActiveActivityIds(actual.getId());
     Assertions
         .assertThat(activeActivityIds)
-        .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at activity with id '%s' but it actually waiting at: %s", actual.getId(),
+        .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at '%s' but it is actually waiting at %s", actual.getId(),
             activityId, activeActivityIds).contains(activityId);
 
     return this;
