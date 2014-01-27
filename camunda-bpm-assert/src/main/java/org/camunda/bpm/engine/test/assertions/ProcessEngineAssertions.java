@@ -18,21 +18,29 @@ import org.assertj.core.api.Assertions;
  */
 public class ProcessEngineAssertions extends Assertions {
 
-    private static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
+    static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
 
     protected ProcessEngineAssertions() {}
 
     /**
      * Retrieve the processEngine bound to the current testing thread 
-     * via calling init(ProcessEngine processEngine)
-     * @throws IllegalStateException in case processengine has not been 
-     * initialised yet.
+     * via calling init(ProcessEngine processEngine). In case no such
+     * processEngine is bound yet, init(processEngine) is called with
+     * a default process engine.
+     * @throws IllegalStateException in case a processEngine has not 
+     * been initialised yet and cannot be initialised with a default
+     * engine.
      * @return processEngine bound to the current testing thread
      */
     public static ProcessEngine processEngine() {
         ProcessEngine processEngine = ProcessEngineAssertions.processEngine.get();
         if (processEngine != null)
             return processEngine;
+        processEngine = ProcessEngines.getDefaultProcessEngine();
+        if (processEngine != null) {
+            init(processEngine);
+            return processEngine;
+        }
         throw new IllegalStateException(String.format("Call %s.init(ProcessEngine processEngine) first!", ProcessEngineAssertions.class.getSimpleName()));
     }
 

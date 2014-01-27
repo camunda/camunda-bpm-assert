@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.*;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.processEngine;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -52,16 +53,10 @@ public class ProcessEngineAssertionsTest {
 
   @Test
   public void testReset() throws Exception {
-    // Given
-    reset();
     // When
-    try {
-      processEngine();
-      fail("IllegalStateException expected, because processEngine() called immediately after reset()");
+    reset();
     // Then
-    } catch (Throwable e) {
-      assertThat(e).isInstanceOf(IllegalStateException.class);
-    }
+    assertThat(ProcessEngineTests.processEngine.get()).isNull();
   }
 
   @Test

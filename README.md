@@ -38,21 +38,11 @@ First, [declare the camunda BPM maven repository](http://www.camunda.org/get-sta
 <a name="static-import"/>
 ### Add a static import to your test class
 
-Then, create your test case just as described in [camunda BPM Testing](http://docs.camunda.org/latest/guides/user-guide/#testing). Two things you have to add then 
-
- * the following static import:
+Then, create your test case just as described in [camunda BPM Testing](http://docs.camunda.org/latest/guides/user-guide/#testing). 
+Then you just have to add the following static import:
 
 ```xml  
 	import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
-```
-  
- * the initialisation code to make the assertions aware of your process engine, e.g. via the junit rule:
- 
-```java  
-   @Before
-   public void setUp() {
-     init(processEngineRule.getProcessEngine());
-   }
 ```
 	
 <a name="start-using"/>

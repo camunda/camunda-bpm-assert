@@ -21,6 +21,9 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Making assertions on the only task of an instance](#helpers-task)
    * [Making assertions on a specific task of an instance](#helpers-task-taskquery)
    * [Accessing last asserted task](#helpers-task-last)
+   
+ * [Advanced Usage](#advanced)
+   * [Using a non-default process engine](#non-default-engine)
 
 <a name="assertions"/>
 ## Assertions
@@ -288,4 +291,22 @@ You can therefore e.g. write ...
 ```java
 assertThat(processInstance).task().hasDefinitionKey("review-and-approve");
 complete(task(), withVariables("documentId", 5, "approved", true)); 
+```
+
+<a name="advanced"/>
+## Advanced topics
+
+<a name="non-default-engine"/>
+#### Using a non-default process engine 
+
+In case you want to test with a process engine, which is not the default engine, 
+you can bind a specific process engine to your testing thread by means of
+the following initialisation code. This makes the assertions aware of your process 
+engine, e.g.:
+ 
+```java  
+   @Before
+   public void setUp() {
+     init(processEngineRule.getProcessEngine());
+   }
 ```
