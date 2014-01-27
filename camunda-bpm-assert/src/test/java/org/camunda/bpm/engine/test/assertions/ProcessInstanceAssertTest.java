@@ -66,6 +66,25 @@ public class ProcessInstanceAssertTest {
   @Deployment(resources = {
     "ProcessInstanceAssert-isWaitingAt.bpmn"
   })
+  public void testIsWaitingAt_Non_Existing_Activity_Failure() {
+    // Given
+    ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-isWaitingAt"
+    );
+    // When
+    try {
+      assertThat(processInstance).isWaitingAt("NonExistingUserTask");
+      fail("expected an assertion error to be thrown, but did not see any");
+      // Then
+    } catch (AssertionError e) {
+      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
+    }
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  })
   public void testIsWaitingAt_One_Of_Two_Activities_Success() {
     // Given
     ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
