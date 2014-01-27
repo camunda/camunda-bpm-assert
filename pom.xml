@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.camunda.bpm.incubation</groupId>
-    <artifactId>camunda-bpm-assert</artifactId>
+    <artifactId>camunda-bpm-assert-root</artifactId>
     <version>0.7-SNAPSHOT</version>
 
     <packaging>pom</packaging>
@@ -15,7 +15,7 @@
     </parent>
 
     <modules>
-        <module>camunda-bpm-assert-core</module>
+        <module>camunda-bpm-assert</module>
         <module>camunda-bpm-assert-examples</module>
     </modules>
 
@@ -41,7 +41,7 @@
             <!-- camunda bpm testing -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>camunda-bpm-assert-core</artifactId>
+                <artifactId>camunda-bpm-assert</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>
