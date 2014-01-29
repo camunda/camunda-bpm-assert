@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -78,14 +79,17 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s." 
         , Lists.newArrayList(activityIds))
       .isNotNull().isNotEmpty().doesNotContainNull();
-    String activityId = activityIds[0];
-    List<HistoricActivityInstance> passed = historicActivityInstanceQuery().activityId(activityId).finished().list();
-    final String message = "Expected ProcessInstance { id = '%s' } to have passed activity '%s' at least once, but actually " +
-      "we didn't find that expectation to be true. (Please make sure you have set the history service of the engine to a proper " +
+    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().list();
+    List<String> finished = new ArrayList<String>(finishedInstances.size());
+    for (HistoricActivityInstance instance: finishedInstances) {
+      finished.add(instance.getActivityId());
+    }
+    final String message = "Expected ProcessInstance { id = '%s' } to have finished activities %s at least once, but actually " +
+      "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to a proper " +
       "level before making use of this assertion!)";
-    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), activityId).isNotNull().isNotEmpty();
-    if (activityIds.length > 1)
-      hasPassed(Arrays.copyOfRange(activityIds, 1, activityIds.length));
+    Assertions.assertThat(finished)
+      .overridingErrorMessage(message, actual.getId(), Lists.newArrayList(activityIds), Lists.newArrayList(finished))
+      .contains(activityIds);
     return this;
   }
 
