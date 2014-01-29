@@ -8,7 +8,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isStarted](#processInstance-isStarted), [hasPassed](#processInstance-hasPassed), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isStarted](#processInstance-isStarted), [hasPassed](#processInstance-hasPassed), [hasPassedExactly](#processInstance-hasPassedExactly), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
    * for jobs: [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isUnassigned](#task-isUnassigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
  
@@ -68,6 +68,21 @@ Assert that a process instance has passed several specified activities:
 
 ```java
 assertThat(processInstance).hasPassed("edit", "correct");
+```
+
+<a name="processInstance-hasPassedExactly"/>
+#### Instance: hasPassedExactly
+
+Assert that a process instance has passed exactly a specified activity:
+
+```java
+assertThat(processInstance).hasPassedExactly("StartEvent_1");
+```
+
+Assert that a process instance has passed exactly several specified activities:
+
+```java
+assertThat(processInstance).hasPassedExactly("StartEvent_1", "UserTask_1", "EndEvent_1");
 ```
 
 <a name="processInstance-isWaitingAt"/>

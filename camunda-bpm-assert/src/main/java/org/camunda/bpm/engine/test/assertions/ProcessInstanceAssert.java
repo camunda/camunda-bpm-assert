@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.assertj.core.api.ListAssert;
 import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
@@ -69,27 +70,47 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
+   * Assert that the {@link ProcessInstance} has passed exactly one or more 
+   * specified activities.
+   * @param activityIds the id's of the activities expected to have been passed    
+   * @return this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert hasPassedExactly(final String... activityIds) {
+     return hasPassed(activityIds, true);
+  }
+
+  /**
    * Assert that the {@link ProcessInstance} has passed one or more specified activities
    * @param activityIds the id's of the activities expected to have been passed    
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassed(final String... activityIds) {
+    return hasPassed(activityIds, false);
+  }
+
+  private ProcessInstanceAssert hasPassed(final String[] activityIds, boolean exactly) {
     isNotNull();
     Assertions.assertThat(activityIds)
       .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s." 
         , Lists.newArrayList(activityIds))
       .isNotNull().isNotEmpty().doesNotContainNull();
-    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().list();
+    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByActivityId().asc().list();
     List<String> finished = new ArrayList<String>(finishedInstances.size());
     for (HistoricActivityInstance instance: finishedInstances) {
       finished.add(instance.getActivityId());
     }
-    final String message = "Expected ProcessInstance { id = '%s' } to have finished activities %s at least once, but actually " +
+    final String message = "Expected ProcessInstance { id = '%s' } to have passed activities %s at least once, but actually " +
       "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to a proper " +
       "level before making use of this assertion!)";
-    Assertions.assertThat(finished)
-      .overridingErrorMessage(message, actual.getId(), Lists.newArrayList(activityIds), Lists.newArrayList(finished))
-      .contains(activityIds);
+    ListAssert<String> assertion = Assertions.assertThat(finished)
+      .overridingErrorMessage(message, actual.getId(), Lists.newArrayList(activityIds), Lists.newArrayList(finished));
+    if (exactly) {
+      String[] sorted = activityIds.clone();
+      Arrays.sort(sorted);
+      assertion.containsExactly(sorted);
+    } else {
+      assertion.contains(activityIds);
+    }
     return this;
   }
 
