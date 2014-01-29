@@ -3,9 +3,8 @@ package org.camunda.bpm.engine.test.assertions;
 import java.util.List;
 
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.history.HistoricActivityInstance;
-import org.camunda.bpm.engine.history.HistoricActivityInstanceQuery;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.TaskQuery;
 import org.assertj.core.api.Assertions;
 
@@ -42,11 +41,6 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return this;
   }
 
-  // TODO refactor so that services, queries and automatically 'narrowed' queries (e.g. to the asserted processinstance) are accessible for all asserts
-  private HistoricActivityInstanceQuery createHistoricActivityInstanceQuery() {
-    return engine.getHistoryService().createHistoricActivityInstanceQuery();
-  }
-
   /**
    * Assert that the {@link ProcessInstance} has passed a specified activity
    * @param expectedActivityId the id of the activity expected to have been passed    
@@ -59,7 +53,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   // TODO add resulting assertions to user guide
   public ProcessInstanceAssert isFinishedAndPassedActivity(final String expectedActivityId) {
     isFinished();
-    final List<HistoricActivityInstance> passed = createHistoricActivityInstanceQuery().activityId(expectedActivityId).finished()
+    final List<HistoricActivityInstance> passed = historicActivityInstanceQuery().activityId(expectedActivityId).finished()
         .processInstanceId(actual.getId()).list();
 
     final String message = "Expected processInstance with id '%s' to pass activity '%s' at least once, but didn't";
@@ -152,4 +146,54 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return TaskAssert.assertThat(engine, narrowed.singleResult());
   }
 
+  @Override
+  protected TaskQuery taskQuery() {
+    return super.taskQuery().processInstanceId(actual.getId());
+  }
+
+  @Override
+  protected JobQuery jobQuery() {
+    return super.jobQuery().processInstanceId(actual.getId());
+  }
+
+  @Override
+  protected ProcessInstanceQuery processInstanceQuery() {
+    return super.processInstanceQuery().processInstanceId(actual.getId());
+  }
+
+  @Override
+  protected ExecutionQuery executionQuery() {
+    return super.executionQuery().processInstanceId(actual.getId());
+  }
+
+  @Override
+  protected VariableInstanceQuery variableInstanceQuery() {
+    return super.variableInstanceQuery().processInstanceIdIn(actual.getId());
+  }
+
+  @Override
+  protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
+    return super.historicActivityInstanceQuery().processInstanceId(actual.getId());
+  }
+
+  @Override
+  protected HistoricDetailQuery historicDetailQuery() {
+    return super.historicDetailQuery().processInstanceId(actual.getId());
+  }
+
+  @Override
+  protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
+    return super.historicProcessInstanceQuery().processInstanceId(actual.getId());
+  }
+
+  @Override
+  protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
+    return super.historicTaskInstanceQuery().processInstanceId(actual.getId());
+  }
+
+  @Override
+  protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
+    return super.historicVariableInstanceQuery().processInstanceId(actual.getId());
+  }
+  
 }
