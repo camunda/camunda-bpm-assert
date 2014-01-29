@@ -14,7 +14,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessInstanceAssertTest {
+public class ProcessInstanceAssertIsWaitingAtTest {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
