@@ -47,6 +47,27 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
+   * Assert that the {@link ProcessInstance} is currently waiting 
+   * at exactly one or more specified activities.
+   * @param activityIds the id's of the activities the process instance is expected to 
+   *                    be waiting at
+   * @return this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert isWaitingAtExactly(final String... activityIds) {
+    isNotNull();
+    Assertions.assertThat(activityIds)
+      .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s."
+        , Lists.newArrayList(activityIds))
+      .isNotNull().isNotEmpty().doesNotContainNull();
+    final List<String> activeActivityIds = runtimeService().getActiveActivityIds(actual.getId());
+    Assertions
+      .assertThat(activeActivityIds)
+      .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at '%s' but it is actually waiting at %s", actual.getId(),
+        Lists.newArrayList(activityIds), activeActivityIds).containsExactly(activityIds);
+    return this;
+  }
+
+  /**
    * Assert that the {@link ProcessInstance} has passed one or more specified activities
    * @param activityIds the id's of the activities expected to have been passed    
    * @return this {@link ProcessInstanceAssert}

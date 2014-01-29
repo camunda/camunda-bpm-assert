@@ -8,7 +8,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isStarted](#processInstance-isStarted), [hasPassed](#processInstance-hasPassed), [isWaitingAt](#processInstance-isWaitingAt)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isStarted](#processInstance-isStarted), [hasPassed](#processInstance-hasPassed), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
    * for jobs: [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isUnassigned](#task-isUnassigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
  
@@ -61,13 +61,13 @@ assertThat(processInstance).isStarted();
 Assert that a process instance has passed a specified activity:
 
 ```java
-assertThat(processInstance).isWaitingAt("edit");
+assertThat(processInstance).hasPassed("edit");
 ```
 
 Assert that a process instance has passed several specified activities:
 
 ```java
-assertThat(processInstance).isWaitingAt("edit", "correct");
+assertThat(processInstance).hasPassed("edit", "correct");
 ```
 
 <a name="processInstance-isWaitingAt"/>
@@ -84,6 +84,22 @@ Assert that a process instance is currently waiting several specified activities
 ```java
 assertThat(processInstance).isWaitingAt("edit", "correct");
 ```
+
+<a name="processInstance-isWaitingAtExactly"/>
+#### Instance: isWaitingAtExactly
+
+Assert that a process instance is currently waiting at exactly one specified activity:
+
+```java
+assertThat(processInstance).isWaitingAtExactly("edit");
+```
+
+Assert that a process instance is currently waiting at exactly the several specified activities:
+
+```java
+assertThat(processInstance).isWaitingAtExactly("edit", "correct");
+```
+
 
 <a name="job-hasDeploymentId"/>
 #### Job: hasDeploymentId
