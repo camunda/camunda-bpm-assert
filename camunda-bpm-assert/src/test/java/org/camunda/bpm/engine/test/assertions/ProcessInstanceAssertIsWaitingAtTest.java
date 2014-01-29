@@ -3,9 +3,6 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.engine.test.mock.Mocks;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -18,17 +15,6 @@ public class ProcessInstanceAssertIsWaitingAtTest {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
-  @Before
-  public void setUp() {
-    init(processEngineRule.getProcessEngine());
-  }
-
-  @After
-  public void tearDown() {
-    Mocks.reset();
-    reset();
-  }
 
   @Test
   @Deployment(resources = {
