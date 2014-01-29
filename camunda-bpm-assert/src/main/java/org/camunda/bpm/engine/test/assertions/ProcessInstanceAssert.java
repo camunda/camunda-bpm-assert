@@ -35,17 +35,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isWaitingAt(final String... activityIds) {
-    isNotNull();
-    Assertions.assertThat(activityIds)
-      .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s."
-        , Lists.newArrayList(activityIds))
-      .isNotNull().isNotEmpty().doesNotContainNull();
-    final List<String> activeActivityIds = runtimeService().getActiveActivityIds(actual.getId());
-    Assertions
-        .assertThat(activeActivityIds)
-        .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at '%s' but it is actually waiting at %s", actual.getId(),
-            Lists.newArrayList(activityIds), activeActivityIds).contains(activityIds);
-    return this;
+    return isWaitingAt(activityIds, false);
   }
 
   /**
@@ -56,16 +46,26 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isWaitingAtExactly(final String... activityIds) {
+    return isWaitingAt(activityIds, true);
+  }
+
+  private ProcessInstanceAssert isWaitingAt(final String[] activityIds, boolean exactly) {
     isNotNull();
     Assertions.assertThat(activityIds)
       .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s."
         , Lists.newArrayList(activityIds))
       .isNotNull().isNotEmpty().doesNotContainNull();
     final List<String> activeActivityIds = runtimeService().getActiveActivityIds(actual.getId());
-    Assertions
-      .assertThat(activeActivityIds)
+    ListAssert<String> assertion = Assertions.assertThat(activeActivityIds)
       .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at '%s' but it is actually waiting at %s", actual.getId(),
-        Lists.newArrayList(activityIds), activeActivityIds).containsExactly(activityIds);
+        Lists.newArrayList(activityIds), activeActivityIds);
+    if (exactly) {
+      String[] sorted = activityIds.clone();
+      Arrays.sort(sorted);
+      assertion.containsExactly(sorted);
+    } else {
+      assertion.contains(activityIds);
+    }
     return this;
   }
 
@@ -100,7 +100,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       finished.add(instance.getActivityId());
     }
     final String message = "Expected ProcessInstance { id = '%s' } to have passed activities %s at least once, but actually " +
-      "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to a proper " +
+      "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to at proper " +
       "level before making use of this assertion!)";
     ListAssert<String> assertion = Assertions.assertThat(finished)
       .overridingErrorMessage(message, actual.getId(), Lists.newArrayList(activityIds), Lists.newArrayList(finished));
