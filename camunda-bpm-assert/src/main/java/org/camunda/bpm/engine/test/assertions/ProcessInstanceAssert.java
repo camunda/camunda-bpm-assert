@@ -100,8 +100,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       finished.add(instance.getActivityId());
     }
     final String message = "Expected ProcessInstance { id = '%s' } to have passed activities %s at least once, but actually " +
-      "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to at proper " +
-      "level before making use of this assertion!)";
+      "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to at least " +
+      "'activity' or a higher level before making use of this assertion!)";
     ListAssert<String> assertion = Assertions.assertThat(finished)
       .overridingErrorMessage(message, actual.getId(), Lists.newArrayList(activityIds), Lists.newArrayList(finished));
     if (exactly) {
