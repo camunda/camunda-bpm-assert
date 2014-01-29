@@ -1,7 +1,9 @@
 package org.camunda.bpm.engine.test.assertions;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
 import org.camunda.bpm.engine.runtime.*;
@@ -43,22 +45,23 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
   /**
    * Assert that the {@link ProcessInstance} has passed a specified activity
-   * @param expectedActivityId the id of the activity expected to have been passed    
+   * @param activityIds the id's of the activities expected to have been passed    
    * @return this {@link ProcessInstanceAssert}
    */
-  // TODO make sure this works for running as well as historic instances
-  // TODO separate isFinished from hasPassed and make sure the latter works for running as well as historic instances
-  // TODO check that the history service is enabled in case a finished process instance is checked against
-  // TODO change parameter name expectedActivityId to activitiId - for consistency reasons
-  // TODO add resulting assertions to user guide
-  public ProcessInstanceAssert isFinishedAndPassedActivity(final String expectedActivityId) {
-    isFinished();
-    final List<HistoricActivityInstance> passed = historicActivityInstanceQuery().activityId(expectedActivityId).finished()
-        .processInstanceId(actual.getId()).list();
-
-    final String message = "Expected processInstance with id '%s' to pass activity '%s' at least once, but didn't";
-    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), expectedActivityId).isNotEmpty();
-    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), expectedActivityId).isNotNull();
+  public ProcessInstanceAssert hasPassed(final String... activityIds) {
+    Assertions.assertThat(activityIds)
+      .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s." 
+        , Lists.newArrayList(activityIds))
+      .isNotNull().isNotEmpty().doesNotContainNull();
+    String activityId = activityIds[0];
+    List<HistoricActivityInstance> passed = historicActivityInstanceQuery().activityId(activityId).finished().list();
+    final String message = "Expected ProcessInstance { id = '%s' } to have passed activity '%s' at least once, but actually " +
+      "we didn't find that expectation to be true. (Please make sure you have set the history service of the engine to a proper " +
+      "level before making use of this assertion!)";
+    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), activityId).isNotNull();
+    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), activityId).isNotEmpty();
+    if (activityIds.length > 1)
+      hasPassed(Arrays.copyOfRange(activityIds, 1, activityIds.length));
     return this;
   }
 
