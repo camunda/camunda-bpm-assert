@@ -81,6 +81,7 @@ public class ProcessInstanceAssertIsWaitingAtTest {
     // Then
     assertThat(processInstance).isWaitingAt("UserTask_2");
     assertThat(processInstance).isWaitingAt("UserTask_3");
+    assertThat(processInstance).isWaitingAt("UserTask_2", "UserTask_3");
   }
 
   @Test
@@ -114,10 +115,36 @@ public class ProcessInstanceAssertIsWaitingAtTest {
       "ProcessInstanceAssert-isWaitingAt"
     );
     try {
-    // When
+      // When
+      //noinspection NullArgumentToVariableArgMethod
       assertThat(processInstance).isWaitingAt(null);
       fail("expected an assertion error to be thrown, but did not see any");
-    // Then
+      // Then
+    } catch (AssertionError e) {
+      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
+    }
+    try {
+      // When
+      assertThat(processInstance).isWaitingAt("ok", null);
+      fail("expected an assertion error to be thrown, but did not see any");
+      // Then
+    } catch (AssertionError e) {
+      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
+    }
+    try {
+      // When
+      assertThat(processInstance).isWaitingAt(null, "ok");
+      fail("expected an assertion error to be thrown, but did not see any");
+      // Then
+    } catch (AssertionError e) {
+      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
+    }
+    try {
+      // When
+      String [] args = new String[] {};
+      assertThat(processInstance).isWaitingAt(args);
+      fail("expected an assertion error to be thrown, but did not see any");
+      // Then
     } catch (AssertionError e) {
       System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
     }

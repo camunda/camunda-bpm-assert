@@ -79,6 +79,12 @@ Assert that a process instance is currently waiting at a specified activity:
 assertThat(processInstance).isWaitingAt("edit");
 ```
 
+Assert that a process instance is currently waiting several specified activities:
+
+```java
+assertThat(processInstance).isWaitingAt("edit", "correct");
+```
+
 <a name="job-hasDeploymentId"/>
 #### Job: hasDeploymentId
 

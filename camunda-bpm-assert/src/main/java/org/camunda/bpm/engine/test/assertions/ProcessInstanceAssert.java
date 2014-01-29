@@ -27,28 +27,32 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
   /**
    * Assert that the {@link ProcessInstance} is currently waiting 
-   * at a specified activity.
-   * @param activityId the id of the expected activity     
+   * at one or more specified activities.
+   * @param activityIds the id's of the activities the process instance is expected to 
+   *                    be waiting at
    * @return this {@link ProcessInstanceAssert}
    */
-  public ProcessInstanceAssert isWaitingAt(final String activityId) {
+  public ProcessInstanceAssert isWaitingAt(final String... activityIds) {
     isNotNull();
-
-    final List<String> activeActivityIds = engine.getRuntimeService().getActiveActivityIds(actual.getId());
+    Assertions.assertThat(activityIds)
+      .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s."
+        , Lists.newArrayList(activityIds))
+      .isNotNull().isNotEmpty().doesNotContainNull();
+    final List<String> activeActivityIds = runtimeService().getActiveActivityIds(actual.getId());
     Assertions
         .assertThat(activeActivityIds)
         .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at '%s' but it is actually waiting at %s", actual.getId(),
-            activityId, activeActivityIds).contains(activityId);
-
+            Lists.newArrayList(activityIds), activeActivityIds).contains(activityIds);
     return this;
   }
 
   /**
-   * Assert that the {@link ProcessInstance} has passed a specified activity
+   * Assert that the {@link ProcessInstance} has passed one or more specified activities
    * @param activityIds the id's of the activities expected to have been passed    
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassed(final String... activityIds) {
+    isNotNull();
     Assertions.assertThat(activityIds)
       .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s." 
         , Lists.newArrayList(activityIds))
@@ -58,8 +62,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     final String message = "Expected ProcessInstance { id = '%s' } to have passed activity '%s' at least once, but actually " +
       "we didn't find that expectation to be true. (Please make sure you have set the history service of the engine to a proper " +
       "level before making use of this assertion!)";
-    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), activityId).isNotNull();
-    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), activityId).isNotEmpty();
+    Assertions.assertThat(passed).overridingErrorMessage(message, actual.getId(), activityId).isNotNull().isNotEmpty();
     if (activityIds.length > 1)
       hasPassed(Arrays.copyOfRange(activityIds, 1, activityIds.length));
     return this;
