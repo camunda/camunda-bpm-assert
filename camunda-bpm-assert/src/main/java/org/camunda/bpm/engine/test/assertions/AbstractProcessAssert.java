@@ -1,7 +1,13 @@
 package org.camunda.bpm.engine.test.assertions;
 
-import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.*;
 import org.assertj.core.api.AbstractAssert;
+import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.runtime.ExecutionQuery;
+import org.camunda.bpm.engine.runtime.JobQuery;
+import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
+import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
+import org.camunda.bpm.engine.task.TaskQuery;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +50,78 @@ public class AbstractProcessAssert<S extends AbstractProcessAssert<S, A>, A> ext
     if (asserts == null)
       lastAsserts.set(asserts = new HashMap<Class<?>, AbstractProcessAssert>());
     return asserts;
+  }
+
+  protected RepositoryService repositoryService() {
+    return engine.getRepositoryService();
+  }
+
+  protected RuntimeService runtimeService() {
+    return engine.getRuntimeService();
+  }
+
+  protected FormService formService() {
+    return engine.getFormService();
+  }
+
+  protected TaskService taskService() {
+    return engine.getTaskService();
+  }
+
+  protected HistoryService historyService() {
+    return engine.getHistoryService();
+  }
+
+  protected IdentityService identityService() {
+    return engine.getIdentityService();
+  }
+
+  protected ManagementService managementService() {
+    return engine.getManagementService();
+  }
+
+  protected AuthorizationService authorizationService() {
+    return engine.getAuthorizationService();
+  }
+
+  protected TaskQuery taskQuery() {
+    return taskService().createTaskQuery();
+  }
+
+  protected JobQuery jobQuery() {
+    return managementService().createJobQuery();
+  }
+
+  protected ProcessInstanceQuery processInstanceQuery() {
+    return runtimeService().createProcessInstanceQuery();
+  }
+
+  protected ExecutionQuery executionQuery() {
+    return runtimeService().createExecutionQuery();
+  }
+
+  protected VariableInstanceQuery variableInstanceQuery() {
+    return runtimeService().createVariableInstanceQuery();
+  }
+
+  protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
+    return historyService().createHistoricActivityInstanceQuery();
+  }
+
+  protected HistoricDetailQuery historicDetailQuery() {
+    return historyService().createHistoricDetailQuery();
+  }
+
+  protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
+    return historyService().createHistoricProcessInstanceQuery();
+  }
+
+  protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
+    return historyService().createHistoricTaskInstanceQuery();
+  }
+
+  protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
+    return historyService().createHistoricVariableInstanceQuery();
   }
 
 }
