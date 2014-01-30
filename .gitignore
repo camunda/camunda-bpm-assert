@@ -10,3 +10,4 @@ target
 .checkstyle
 # OSX
 .DS_Store
+generate-apidocs
