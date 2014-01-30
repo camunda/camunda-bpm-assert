@@ -141,15 +141,18 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} is started
+   * Assert that the {@link ProcessInstance} is started. This is also true, in case the 
+   * process instance already ended.
    * @return this {@link ProcessInstanceAssert}
    */
-  // TODO do not rely on isEnded(), instead check runtimeservice for the actual process instance id
   public ProcessInstanceAssert isStarted() {
     isNotNull();
-
-    Assertions.assertThat(actual.isEnded()).overridingErrorMessage("Expected processExecution %s to be started but it is not!", actual.getId()).isFalse();
-
+    Object pi = processInstanceQuery().singleResult();
+    if (pi == null) 
+      pi = historicProcessInstanceQuery().singleResult();
+    Assertions.assertThat(pi)
+      .overridingErrorMessage("Expected ProcessInstance { id = '%s' } to be started, but it is not!", actual.getId())
+      .isNotNull();
     return this;
   }
 
