@@ -58,7 +58,8 @@ public class JobAnnouncementProcessTest {
       withVariables("jobAnnouncementId", jobAnnouncement.getId())
     );
 
-    assertThat(processInstance).isStarted().task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isUnassigned();
+    assertThat(processInstance).isStarted().isNotEnded()
+      .task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isUnassigned();
 
     claim(task(), "fozzie");
 

@@ -8,7 +8,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isStarted](#processInstance-isStarted), [hasPassed](#processInstance-hasPassed), [hasPassedExactly](#processInstance-hasPassedExactly), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [hasPassed](#processInstance-hasPassed), [hasPassedExactly](#processInstance-hasPassedExactly), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
    * for jobs: [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isUnassigned](#task-isUnassigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
  
@@ -40,10 +40,19 @@ assertThat(processInstance).isActive();
 <a name="processInstance-isEnded"/>
 #### Instance: isEnded
 
-Assert that a process instance has already ended:
+Assert that a process instance is already ended:
 
 ```java
 assertThat(processInstance).isEnded();
+```
+
+<a name="processInstance-isNotEnded"/>
+#### Instance: isNotEnded
+
+Assert that a process instance is not ended:
+
+```java
+assertThat(processInstance).isNotEnded();
 ```
 
 <a name="processInstance-isStarted"/>
