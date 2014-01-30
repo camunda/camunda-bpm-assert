@@ -3,6 +3,8 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.Check;
+import org.camunda.bpm.engine.test.assertions.helpers.FailingTestCaseHelper;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -11,7 +13,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessInstanceAssertIsNotEndedTest {
+public class ProcessInstanceAssertIsNotEndedTest extends FailingTestCaseHelper {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule(); 
@@ -35,18 +37,18 @@ public class ProcessInstanceAssertIsNotEndedTest {
   })
   public void testIsNotEnded_Failure() {
     // Given
-    ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-isEnded"
     );
     // When
     complete(taskQuery().singleResult());
-    try {
-      assertThat(processInstance).isNotEnded();
-      fail("expected an assertion error to be thrown, but did not see any");
-      // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    // Then
+    failure(new Check() {
+      @Override
+      public void when() {
+        assertThat(processInstance).isNotEnded();
+      }
+    });
   }
 
 }

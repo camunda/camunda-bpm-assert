@@ -2,21 +2,21 @@ package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.runtime.Job;
+import org.camunda.bpm.engine.test.assertions.helpers.Check;
+import org.camunda.bpm.engine.test.assertions.helpers.FailingTestCaseHelper;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.Date;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 import static org.mockito.Mockito.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class JobAssertTest {
+public class JobAssertTest extends FailingTestCaseHelper {
   
   ProcessEngine processEngine;
   Job job;
@@ -24,8 +24,8 @@ public class JobAssertTest {
 
   @Before
   public void setUp() {
-    processEngine = Mockito.mock(ProcessEngine.class);
-    job = Mockito.mock(Job.class);
+    processEngine = mock(ProcessEngine.class);
+    job = mock(Job.class);
     ProcessEngineAssertions.init(processEngine);
     jobAssert = ProcessEngineAssertions.assertThat(job);
   }
@@ -49,26 +49,24 @@ public class JobAssertTest {
   public void testHasId_Failure() {
     // Given
     when(job.getId()).thenReturn("id");
-    try {
-    // When
-      ProcessEngineAssertions.assertThat(job).hasId("otherId");
-      fail("expected an assertion error to be thrown, but did not see any");
     // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        assertThat(job).hasId("otherId");
+      }
+    });
   }
 
   @Test
   public void testHasId_Error_Null() {
-    try {
-    // When
-      ProcessEngineAssertions.assertThat(job).hasId(null);
-      fail("expected an assertion error to be thrown, but did not see any");
     // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasId(null);
+      }
+    });
   }
 
   @Test
@@ -85,26 +83,23 @@ public class JobAssertTest {
   public void testHasDueDate_Failure() {
     // Given
     when(job.getDuedate()).thenReturn(new Date(999));
-    try {
-    // When
-      ProcessEngineAssertions.assertThat(job).hasDueDate(new Date(1000));
-      fail("expected an assertion error to be thrown, but did not see any");
     // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasDueDate(new Date(1000));
+      }
+    });
   }
 
   @Test
   public void testHasDueDate_Error_Null() {
-    try {
-    // When
-      ProcessEngineAssertions.assertThat(job).hasDueDate(null);
-      fail("expected an assertion error to be thrown, but did not see any");
-    // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasDueDate(null);
+      }
+    });
   }
 
   @Test
@@ -121,26 +116,23 @@ public class JobAssertTest {
   public void testHasProcessInstanceId_Failure() {
     // Given
     when(job.getProcessInstanceId()).thenReturn("processInstanceId");
-    try {
-    // When
-      ProcessEngineAssertions.assertThat(job).hasProcessInstanceId("otherProcessInstanceId");
-      fail("expected an assertion error to be thrown, but did not see any");
     // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasProcessInstanceId("otherProcessInstanceId");
+      }
+    });
   }
 
   @Test
   public void testHasProcessInstanceId_Error_Null() {
-    try {
-    // When
-      ProcessEngineAssertions.assertThat(job).hasProcessInstanceId(null);
-      fail("expected an assertion error to be thrown, but did not see any");
-    // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasProcessInstanceId(null);
+      }
+    });
   }
 
   @Test
@@ -157,26 +149,23 @@ public class JobAssertTest {
   public void testHasExecutionId_Failure() {
     // Given
     when(job.getExecutionId()).thenReturn("executionId");
-    try {
-    // When
-      ProcessEngineAssertions.assertThat(job).hasExecutionId("otherExecutionId");
-      fail("expected an assertion error to be thrown, but did not see any");
     // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasExecutionId("otherExecutionId");
+      }
+    });
   }
 
   @Test
   public void testHasExecutionId_Error_Null() {
-    try {
-    // When
-      ProcessEngineAssertions.assertThat(job).hasExecutionId(null);
-      fail("expected an assertion error to be thrown, but did not see any");
-    // Then
-    } catch (AssertionError e) {      
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasExecutionId(null);
+      }
+    });
   }
 
   @Test
@@ -193,14 +182,13 @@ public class JobAssertTest {
   public void testHasRetries_Failure() {
     // Given
     when(job.getRetries()).thenReturn(3);
-    try {
-    // When
-      JobAssert actualAssert = jobAssert.hasRetries(2);
-      fail("expected an assertion error to be thrown, but did not see any");
     // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        JobAssert actualAssert = jobAssert.hasRetries(2);
+      }
+    });
   }
 
   @Test
@@ -215,14 +203,12 @@ public class JobAssertTest {
 
   @Test
   public void testHasExceptionMessage_Failure() {
-    try {
-    // When
-      JobAssert actualAssert = jobAssert.hasExceptionMessage();
-      fail("expected an assertion error to be thrown, but did not see any");
-    // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        jobAssert.hasExceptionMessage();
+      }
+    });
   }
 
   @Test
@@ -239,26 +225,23 @@ public class JobAssertTest {
   public void testHasDeploymentId_Failure() {
     // Given
     when(job.getDeploymentId()).thenReturn("deploymentId");
-    try {
-      // When
-      ProcessEngineAssertions.assertThat(job).hasDeploymentId("otherDeploymentId");
-      fail("expected an assertion error to be thrown, but did not see any");
-      // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    // Then
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasDeploymentId("otherDeploymentId");
+      }
+    });
   }
 
   @Test
   public void testHasDeploymentId_Error_Null() {
-    try {
-      // When
-      ProcessEngineAssertions.assertThat(job).hasDeploymentId(null);
-      fail("expected an assertion error to be thrown, but did not see any");
-      // Then
-    } catch (AssertionError e) {
-      System.out.println(String.format("caught expected AssertionError with message '%s'", e.getMessage()));
-    }
+    failure(new Check() {
+      @Override
+      public void when() {
+        ProcessEngineAssertions.assertThat(job).hasDeploymentId(null);
+      }
+    });
   }
 
 }

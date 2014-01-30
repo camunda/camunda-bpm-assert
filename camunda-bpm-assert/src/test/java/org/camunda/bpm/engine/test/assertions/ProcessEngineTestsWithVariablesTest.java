@@ -30,13 +30,19 @@ public class ProcessEngineTestsWithVariablesTest {
       expectedMap.put(key3, value3);
 
     keys = new ArrayList<Object>();
+    if (key1 != null)
     keys.add(key1);
+    if (key2 != null)
     keys.add(key2);
+    if (key3 != null)
     keys.add(key3);
 
     values = new ArrayList<Object>();
+    if (key1 != null)
     values.add(value1);
+    if (key2 != null)
     values.add(value2);
+    if (key3 != null)
     values.add(value3);
 
   }
@@ -66,11 +72,12 @@ public class ProcessEngineTestsWithVariablesTest {
     // When we construct the variables map
     try {
       returnedMap(keys, values);
-      fail("IllegalArgumentException or AssertionError expected!");
     // Then we expect an exception to be thrown
     } catch (Throwable t) {
-      assertThat(t).isInstanceOfAny(IllegalArgumentException.class, AssertionError.class);
+      assertThat(t).isInstanceOfAny(ClassCastException.class, IllegalArgumentException.class, AssertionError.class);
+      return;
     }
+    fail("IllegalArgumentException or AssertionError expected!");
   }
 
   @Test
@@ -80,11 +87,12 @@ public class ProcessEngineTestsWithVariablesTest {
     // When we construct the variables map
     try {
       returnedMap(keys, values);
-      fail("IllegalArgumentException expected!");
     // Then we expect an exception to be thrown
     } catch (Throwable t) {
       assertThat(t).isInstanceOfAny(IllegalArgumentException.class, AssertionError.class);
+      return;
     }
+    fail("IllegalArgumentException expected!");
   }
 
   @Test
@@ -103,9 +111,9 @@ public class ProcessEngineTestsWithVariablesTest {
   
   private static Map<String, Object> returnedMap(List<Object> keys, List<Object> values) {
     Map<String, Object> returnedMap;
-    if (keys.get(2) != null)
+    if (keys.size() > 2)
       returnedMap = withVariables((String) keys.get(0), values.get(0), keys.get(1), values.get(1), keys.get(2), values.get(2));
-    else if (keys.get(1) != null)
+    else if (keys.size() > 1)
       returnedMap = withVariables((String) keys.get(0), values.get(0), keys.get(1), values.get(1));
     else
       returnedMap = withVariables((String) keys.get(0), values.get(0));
