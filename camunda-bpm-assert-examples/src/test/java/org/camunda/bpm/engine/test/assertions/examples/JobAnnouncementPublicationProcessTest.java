@@ -59,7 +59,7 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService, never()).postToTwitter(any(Long.class));
     verify(jobAnnouncementService, never()).postToFacebook(any(Long.class));
 
-    assertThat(processInstance).isFinished();
+    assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
 
@@ -82,7 +82,7 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
     verify(jobAnnouncementService, never()).postToFacebook(any(Long.class));
 
-    assertThat(processInstance).isFinished();
+    assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
 
@@ -105,7 +105,7 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService, never()).postToTwitter(any(Long.class));
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 
-    assertThat(processInstance).isFinished();
+    assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
 
@@ -128,7 +128,7 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService).postToTwitter(jobAnnouncement.getId());
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 
-    assertThat(processInstance).isFinished();
+    assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
 

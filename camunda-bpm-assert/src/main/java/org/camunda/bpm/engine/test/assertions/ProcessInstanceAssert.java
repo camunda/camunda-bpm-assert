@@ -118,26 +118,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * Assert that the {@link ProcessInstance} is ended
    * @return this {@link ProcessInstanceAssert}
    */
-  // TODO do not accept actual == null instead just check runtimeservice for the actual process instance id
   public ProcessInstanceAssert isEnded() {
-    return isFinished();
-  }
-
-  // TODO move code to isEnded() and remove
-  public ProcessInstanceAssert isFinished() {
-    /*
-     * TODO: we need to review this If the incomming Execution instance is null
-     * we consider the processExecution finished
-     */
-    if (actual == null) {
-      return this;
-    }
-
-    /*
-     * If it is not null we make sure that it is actually finished.
-     */
-    Assertions.assertThat(engine.getRuntimeService().createProcessInstanceQuery().processInstanceId(actual.getId()).singleResult()).overridingErrorMessage("Expected processExecution %s to be finished but it is not!", actual.getId()).isNull();
-
+    isNotNull();
+    Assertions.assertThat(processInstanceQuery().singleResult())
+      .overridingErrorMessage("Expected ProcessInstance { id = '%s' } to be ended, but it is not!", actual.getId())
+      .isNull();
     return this;
   }
 
