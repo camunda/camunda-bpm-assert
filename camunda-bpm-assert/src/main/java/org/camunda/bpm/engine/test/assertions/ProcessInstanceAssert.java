@@ -150,18 +150,18 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       .isNotNull();
     return this;
   }
-  
+
   /**
-   * Assert that the {@link ProcessInstance} is currently 'active', 
-   * so neither suspended nor finished.
+   * Assert that the {@link ProcessInstance} is currently active, iow not suspended
    * @return this {@link ProcessInstanceAssert}
    */
-  // TODO do not directly rely on isSuspended(), instead check runtimeservice for the actual process instance id
   public ProcessInstanceAssert isActive() {
+    isNotNull();
     isStarted();
-
-    Assertions.assertThat(actual.isSuspended()).overridingErrorMessage("Expected processExecution %s to be not suspended but it is!", actual.getId()).isFalse();
-
+    isNotEnded();
+    Assertions.assertThat(processInstanceQuery().singleResult().isSuspended())
+      .overridingErrorMessage("Expected ProcessInstance { id = '%s' } not to be suspended, but it is!", actual.getId())
+      .isFalse();
     return this;
   }
 

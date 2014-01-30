@@ -31,7 +31,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 <a name="processInstance-isActive"/>
 #### Instance: isActive
 
-Assert that a process instance is currently 'active', so neither suspended nor finished:
+Assert that a process instance is currently 'active', so neither suspended nor ended:
 
 ```java
 assertThat(processInstance).isActive();
