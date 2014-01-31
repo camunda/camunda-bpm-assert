@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
@@ -179,6 +180,21 @@ public class ProcessEngineTestsTest {
     verifyNoMoreInteractions(runtimeService);
   }
 
+  @Test
+  public void testProcessDefinitionQuery() {
+    // Given
+    RepositoryService repositoryService = mock(RepositoryService.class);
+    ProcessDefinitionQuery processDefinitionQuery = mock(ProcessDefinitionQuery.class);
+    when(processEngine.getRepositoryService()).thenReturn(repositoryService);
+    when(repositoryService.createProcessDefinitionQuery()).thenReturn(processDefinitionQuery);
+    // When
+    ProcessDefinitionQuery createdQuery = processDefinitionQuery();
+    // Then
+    assertThat(createdQuery).isNotNull().isSameAs(processDefinitionQuery);
+    verify(repositoryService, times(1)).createProcessDefinitionQuery();
+    verifyNoMoreInteractions(repositoryService);
+  }
+  
   @Test
   public void testExecutionQuery() {
     // Given

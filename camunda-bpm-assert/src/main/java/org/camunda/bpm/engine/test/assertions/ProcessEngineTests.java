@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
@@ -122,6 +123,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    */
   public static ProcessInstanceQuery processInstanceQuery() {
     return runtimeService().createProcessInstanceQuery();
+  }
+
+  /**
+   * Helper method to easily create a new ProcessDefinitionQuery
+   * @see org.camunda.bpm.engine.repository.ProcessDefinitionQuery
+   * @return new ProcessDefinitionQuery for process engine bound to this testing thread
+   */
+  public static ProcessDefinitionQuery processDefinitionQuery() {
+    return repositoryService().createProcessDefinitionQuery();
   }
 
   /**
