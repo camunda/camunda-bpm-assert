@@ -27,6 +27,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return new ProcessInstanceAssert(engine, actual);
   }
 
+  @Override
+  public ProcessInstance getRefreshedActual() {
+    return processInstanceQuery().processInstanceId(actual.getId()).singleResult();
+  }
+
   /**
    * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * at one or more specified activities.

@@ -22,6 +22,11 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     return new JobAssert(engine, actual);
   }
 
+  @Override
+  public Job getRefreshedActual() {
+    return jobQuery().jobId(actual.getId()).singleResult();
+  }
+
   /**
    * Verifies the expectation of a specific id for the {@link Job}.
    * @param expectedId the expected job id     

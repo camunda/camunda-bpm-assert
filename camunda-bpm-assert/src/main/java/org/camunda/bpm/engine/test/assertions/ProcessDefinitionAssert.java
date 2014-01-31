@@ -3,10 +3,7 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.engine.runtime.ExecutionQuery;
-import org.camunda.bpm.engine.runtime.JobQuery;
-import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
-import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
+import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.TaskQuery;
 
 /**
@@ -22,6 +19,11 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
 
   protected static ProcessDefinitionAssert assertThat(ProcessEngine engine, ProcessDefinition actual) {
     return new ProcessDefinitionAssert(engine, actual);
+  }
+
+  @Override
+  public ProcessDefinition getRefreshedActual() {
+    return repositoryService().createProcessDefinitionQuery().processDefinitionId(actual.getId()).singleResult();
   }
 
   /* TaskQuery, automatically narrowed to actual {@link ProcessDefinition} */

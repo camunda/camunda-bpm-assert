@@ -15,7 +15,7 @@ import java.util.Map;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class AbstractProcessAssert<S extends AbstractProcessAssert<S, A>, A> extends AbstractAssert<S, A> {
+public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A>, A> extends AbstractAssert<S, A> {
 
   protected ProcessEngine engine;
 
@@ -31,6 +31,8 @@ public class AbstractProcessAssert<S extends AbstractProcessAssert<S, A>, A> ext
   public A getActual() {
     return actual;
   }
+
+  public abstract A getRefreshedActual();
   
   public static void resetLastAsserts() {
     getLastAsserts().clear();

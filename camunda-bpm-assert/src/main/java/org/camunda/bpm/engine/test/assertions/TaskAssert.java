@@ -28,6 +28,11 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     return new TaskAssert(engine, actual);
   }
 
+  @Override
+  public Task getRefreshedActual() {
+    return taskQuery().taskId(actual.getId()).singleResult();
+  }
+
   public TaskAssert isUnassigned() {
     isNotNull();
 
