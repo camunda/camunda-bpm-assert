@@ -13,7 +13,7 @@ import org.camunda.bpm.engine.task.TaskQuery;
 import org.assertj.core.api.Assertions;
 
 /**
- * Asserts for a {@link ProcessInstance}
+ * Assertions for a {@link ProcessInstance}
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael@cordones.me>
  */
@@ -28,7 +28,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} is currently waiting 
+   * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * at one or more specified activities.
    * @param activityIds the id's of the activities the process instance is expected to 
    *                    be waiting at
@@ -39,7 +39,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} is currently waiting 
+   * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * at exactly one or more specified activities.
    * @param activityIds the id's of the activities the process instance is expected to 
    *                    be waiting at
@@ -70,22 +70,23 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} has passed exactly one or more 
-   * specified activities.
-   * @param activityIds the id's of the activities expected to have been passed    
-   * @return this {@link ProcessInstanceAssert}
-   */
-  public ProcessInstanceAssert hasPassedExactly(final String... activityIds) {
-     return hasPassed(activityIds, true);
-  }
-
-  /**
-   * Assert that the {@link ProcessInstance} has passed one or more specified activities
+   * Verifies the expectation that the {@link ProcessInstance} has passed one or 
+   * more specified activities.
    * @param activityIds the id's of the activities expected to have been passed    
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassed(final String... activityIds) {
     return hasPassed(activityIds, false);
+  }
+  
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} has passed exactly 
+   * one or more specified activities.
+   * @param activityIds the id's of the activities expected to have been passed    
+   * @return this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert hasPassedExactly(final String... activityIds) {
+     return hasPassed(activityIds, true);
   }
 
   private ProcessInstanceAssert hasPassed(final String[] activityIds, boolean exactly) {
@@ -115,7 +116,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} is ended
+   * Verifies the expectation that the {@link ProcessInstance} is ended.
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isEnded() {
@@ -127,7 +128,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} is currently suspended
+   * Verifies the expectation that the {@link ProcessInstance} is currently 
+   * suspended.
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isSuspended() {
@@ -140,7 +142,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} is not ended
+   * Verifies the expectation that the {@link ProcessInstance} is not ended.
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isNotEnded() {
@@ -152,7 +154,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} is currently active, iow not suspended
+   * Verifies the expectation that the {@link ProcessInstance} is currently active, 
+   * iow not suspended and not ended.
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isActive() {
@@ -166,8 +169,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Assert that the {@link ProcessInstance} is started. This is also true, in case the 
-   * process instance already ended.
+   * Verifies the expectation that the {@link ProcessInstance} is started. This is 
+   * also true, in case the process instance already ended.
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isStarted() {
@@ -187,7 +190,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * under test of this ProcessInstanceAssert.
    * @return TaskAssert inspecting the only task available. Inspecting a 
    * 'null' Task in case no such Task is available.
-   * @throws RuntimeException in case more than one task is available TODO check which one
+   * @throws RuntimeException in case more than one task is available 
+   * TODO check which one
    */
   public TaskAssert task() {
     return task(engine.getTaskService().createTaskQuery());
@@ -201,7 +205,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return TaskAssert inspecting the only task resulting from the given 
    * search. Inspecting a 'null' Task in case no such Task is available.
    * @throws RuntimeException in case more than one task is delivered by 
-   * the query TODO check which one
+   * the query 
+   * TODO check which one
    */
   public TaskAssert task(TaskQuery query) {
     if (query == null)
@@ -211,61 +216,61 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return TaskAssert.assertThat(engine, narrowed.singleResult());
   }
 
-  /* TaskQuery, automatically narrowed to actual ProcessInstance */
+  /* TaskQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processInstanceId(actual.getId());
   }
 
-  /* JobQuery, automatically narrowed to actual ProcessInstance */
+  /* JobQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected JobQuery jobQuery() {
     return super.jobQuery().processInstanceId(actual.getId());
   }
 
-  /* ProcessInstanceQuery, automatically narrowed to actual ProcessInstance */
+  /* ProcessInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected ProcessInstanceQuery processInstanceQuery() {
     return super.processInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* ExecutionQuery, automatically narrowed to actual ProcessInstance */
+  /* ExecutionQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected ExecutionQuery executionQuery() {
     return super.executionQuery().processInstanceId(actual.getId());
   }
 
-  /* VariableInstanceQuery, automatically narrowed to actual ProcessInstance */
+  /* VariableInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected VariableInstanceQuery variableInstanceQuery() {
     return super.variableInstanceQuery().processInstanceIdIn(actual.getId());
   }
 
-  /* HistoricActivityInstanceQuery, automatically narrowed to actual ProcessInstance */
+  /* HistoricActivityInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
     return super.historicActivityInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* HistoricDetailQuery, automatically narrowed to actual ProcessInstance */
+  /* HistoricDetailQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricDetailQuery historicDetailQuery() {
     return super.historicDetailQuery().processInstanceId(actual.getId());
   }
 
-  /* HistoricProcessInstanceQuery, automatically narrowed to actual ProcessInstance */
+  /* HistoricProcessInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
     return super.historicProcessInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* HistoricTaskInstanceQuery, automatically narrowed to actual ProcessInstance */
+  /* HistoricTaskInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
     return super.historicTaskInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* HistoricVariableInstanceQuery, automatically narrowed to actual ProcessInstance */
+  /* HistoricVariableInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
     return super.historicVariableInstanceQuery().processInstanceId(actual.getId());

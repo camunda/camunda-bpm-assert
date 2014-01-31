@@ -14,8 +14,7 @@ import org.assertj.core.api.Assertions;
 import java.util.Date;
 
 /**
- * Asserts for {@link org.camunda.bpm.engine.task.Task}
- * 
+ * Assertions for a {@link Task}
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael@cordones.me>
  */
@@ -180,61 +179,79 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     return this;
   }
 
-  /* TaskQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* TaskQuery, automatically narrowed to {@link ProcessInstance} of actual 
+   * {@link Task} 
+   */
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* JobQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* JobQuery, automatically narrowed to {@link ProcessInstance} of actual 
+   * {@link Task} 
+   */
   @Override
   protected JobQuery jobQuery() {
     return super.jobQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* ProcessInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* ProcessInstanceQuery, automatically narrowed to {@link ProcessInstance} of 
+   * actual {@link Task} 
+   */
   @Override
   protected ProcessInstanceQuery processInstanceQuery() {
     return super.processInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* ExecutionQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* ExecutionQuery, automatically narrowed to {@link ProcessInstance} of 
+   * actual {@link Task} 
+   */
   @Override
   protected ExecutionQuery executionQuery() {
     return super.executionQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* VariableInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* VariableInstanceQuery, automatically narrowed to {@link ProcessInstance} of 
+   * actual {@link Task} 
+   */
   @Override
   protected VariableInstanceQuery variableInstanceQuery() {
     return super.variableInstanceQuery().processInstanceIdIn(actual.getProcessInstanceId());
   }
 
-  /* HistoricActivityInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* HistoricActivityInstanceQuery, automatically narrowed to {@link ProcessInstance} of actual {@link Task} */
   @Override
   protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
     return super.historicActivityInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* HistoricDetailQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* HistoricDetailQuery, automatically narrowed to {@link ProcessInstance} of 
+   * actual {@link Task} 
+   */
   @Override
   protected HistoricDetailQuery historicDetailQuery() {
     return super.historicDetailQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* HistoricProcessInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* HistoricProcessInstanceQuery, automatically narrowed to {@link ProcessInstance} 
+   * of actual {@link Task} 
+   */
   @Override
   protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
     return super.historicProcessInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* HistoricTaskInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* HistoricTaskInstanceQuery, automatically narrowed to {@link ProcessInstance} 
+   * of actual {@link Task} 
+   */
   @Override
   protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
     return super.historicTaskInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* HistoricVariableInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  /* HistoricVariableInstanceQuery, automatically narrowed to {@link ProcessInstance} 
+   * of actual {@link Task} 
+   */
   @Override
   protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
     return super.historicVariableInstanceQuery().processInstanceId(actual.getProcessInstanceId());

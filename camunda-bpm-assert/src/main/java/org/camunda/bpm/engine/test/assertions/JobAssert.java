@@ -9,7 +9,7 @@ import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.task.TaskQuery;
 
 /**
- * Asserts for a {@link Job}
+ * Assertions for a {@link Job}
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
 public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
@@ -23,7 +23,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   }
 
   /**
-   * Assert a specific id for the {@link Job}
+   * Verifies the expectation of a specific id for the {@link Job}.
    * @param expectedId the expected job id     
    * @return this {@link JobAssert}
    * @see org.camunda.bpm.engine.runtime.Job#getId()
@@ -43,7 +43,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   }
 
   /**
-   * Assert a specific due date for the {@link Job}.
+   * Verifies the expectation of a specific due date for the {@link Job}.
    * @param expectedDueDate the expected due date
    * @return this {@link JobAssert}  
    * @see org.camunda.bpm.engine.runtime.Job#getDuedate() 
@@ -63,7 +63,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   }
 
   /**
-   * Assert a specific process instance id for the {@link Job}
+   * Verifies the expectation of a specific process instance id for the {@link Job}.
    * @param expectedProcessInstanceId the expected process instance id     
    * @return this {@link JobAssert}
    * @see org.camunda.bpm.engine.runtime.Job#getProcessInstanceId()
@@ -83,7 +83,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   }
 
   /**
-   * Assert a specific execution id for the {@link Job}
+   * Verifies the expectation of a specific execution id for the {@link Job}.
    * @param expectedExecutionId the expected execution id     
    * @return this {@link JobAssert}
    * @see org.camunda.bpm.engine.runtime.Job#getExecutionId()
@@ -103,7 +103,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   }
 
   /**
-   * Assert a specific number of retries left for the {@link Job}
+   * Verifies the expectation of a specific number of retries left for the {@link Job}.
    * @param expectedRetries the expected number of retries     
    * @return this {@link JobAssert}
    * @see org.camunda.bpm.engine.runtime.Job#getExecutionId()
@@ -122,7 +122,8 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   }
 
   /**
-   * Assert the existence of an exception message for the {@link Job}
+   * Verifies the expectation of the existence of an exception message 
+   * for the {@link Job} .
    * @return this {@link JobAssert}
    * @see org.camunda.bpm.engine.runtime.Job#getExceptionMessage() 
    */
@@ -139,7 +140,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   }
 
   /**
-   * Assert a specific deployment id for the {@link Job}
+   * Verifies the expectation of a specific deployment id for the {@link Job}.
    * @param expectedDeploymentId the expected deployment id     
    * @return this {@link JobAssert}
    * @see org.camunda.bpm.engine.runtime.Job#getDeploymentId()
@@ -162,61 +163,80 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
      return job != null ? String.format("actual %s {id='%s', processInstanceId='%s', executionId='%s'}", Job.class.getName(), job.getId(), job.getProcessInstanceId(), job.getExecutionId()) : null; 
   }
 
-  /* TaskQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* 
+   * TaskQuery, automatically narrowed to {@link ProcessInstance} of actual 
+   * {@link job} 
+   */
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* JobQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* 
+   * JobQuery, automatically narrowed to {@link ProcessInstance} of actual {@link job} 
+   */
   @Override
   protected JobQuery jobQuery() {
     return super.jobQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* ProcessInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
-  @Override
+  /* ProcessInstanceQuery, automatically narrowed to {@link ProcessInstance} of 
+   * actual {@link job} 
+   */
+  @Override                                                   
   protected ProcessInstanceQuery processInstanceQuery() {
     return super.processInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* ExecutionQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* ExecutionQuery, automatically narrowed to {@link ProcessInstance} of actual 
+   * {@link job} 
+   */
   @Override
   protected ExecutionQuery executionQuery() {
     return super.executionQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* VariableInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* VariableInstanceQuery, automatically narrowed to {@link ProcessInstance} of 
+   * actual {@link job} 
+   */
   @Override
   protected VariableInstanceQuery variableInstanceQuery() {
     return super.variableInstanceQuery().processInstanceIdIn(actual.getProcessInstanceId());
   }
 
-  /* HistoricActivityInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* HistoricActivityInstanceQuery, automatically narrowed to {@link ProcessInstance} 
+   * of actual {@link job} 
+   */
   @Override
   protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
     return super.historicActivityInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* HistoricDetailQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* HistoricDetailQuery, automatically narrowed to {@link ProcessInstance} of 
+   * actual {@link job} 
+   */
   @Override
   protected HistoricDetailQuery historicDetailQuery() {
     return super.historicDetailQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* HistoricProcessInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* HistoricProcessInstanceQuery, automatically narrowed to {@link ProcessInstance} of actual {@link job} */
   @Override
   protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
     return super.historicProcessInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* HistoricTaskInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* HistoricTaskInstanceQuery, automatically narrowed to {@link ProcessInstance} of 
+   * actual {@link job} 
+   */
   @Override
   protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
     return super.historicTaskInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
-  /* HistoricVariableInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  /* HistoricVariableInstanceQuery, automatically narrowed to {@link ProcessInstance} 
+   * of actual {@link job} 
+   */
   @Override
   protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
     return super.historicVariableInstanceQuery().processInstanceId(actual.getProcessInstanceId());

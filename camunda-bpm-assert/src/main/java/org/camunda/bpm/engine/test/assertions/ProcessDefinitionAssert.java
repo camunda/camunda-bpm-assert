@@ -10,7 +10,7 @@ import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
 import org.camunda.bpm.engine.task.TaskQuery;
 
 /**
- * Asserts for a {@link ProcessDefinition}
+ * Assertions for a {@link ProcessDefinition}
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Rafael Cordones <rafael@cordones.me>
  */
@@ -24,7 +24,7 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
     return new ProcessDefinitionAssert(engine, actual);
   }
 
-  /* TaskQuery, automatically narrowed to actual ProcessDefinition */
+  /* TaskQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processDefinitionId(actual.getId());
@@ -36,13 +36,13 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
     throw new UnsupportedOperationException();
   }
 
-  /* ProcessInstanceQuery, automatically narrowed to actual ProcessDefinition */
+  /* ProcessInstanceQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected ProcessInstanceQuery processInstanceQuery() {
     return super.processInstanceQuery().processDefinitionId(actual.getId());
   }
 
-  /* ExecutionQuery, automatically narrowed to actual ProcessDefinition */
+  /* ExecutionQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected ExecutionQuery executionQuery() {
     return super.executionQuery().processDefinitionId(actual.getId());
@@ -54,7 +54,7 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
     throw new UnsupportedOperationException();
   }
 
-  /* HistoricActivityInstanceQuery, automatically narrowed to actual ProcessDefinition */
+  /* HistoricActivityInstanceQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
     return super.historicActivityInstanceQuery().processDefinitionId(actual.getId());
@@ -66,13 +66,13 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
     throw new UnsupportedOperationException();
   }
 
-  /* HistoricProcessInstanceQuery, automatically narrowed to actual ProcessDefinition */
+  /* HistoricProcessInstanceQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
     return super.historicProcessInstanceQuery().processDefinitionId(actual.getId());
   }
 
-  /* HistoricTaskInstanceQuery, automatically narrowed to actual ProcessDefinition */
+  /* HistoricTaskInstanceQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
     return super.historicTaskInstanceQuery().processDefinitionId(actual.getId());
