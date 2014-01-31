@@ -3,8 +3,8 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.engine.test.assertions.helpers.Check;
-import org.camunda.bpm.engine.test.assertions.helpers.FailingTestCaseHelper;
+import org.camunda.bpm.engine.test.assertions.helpers.Failure;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessInstanceAssertHasPassedExactlyTest extends FailingTestCaseHelper {
+public class ProcessInstanceAssertHasPassedExactlyTest extends ProcessAssertTestCase {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
@@ -43,7 +43,7 @@ public class ProcessInstanceAssertHasPassedExactlyTest extends FailingTestCaseHe
       "ProcessInstanceAssert-hasPassed"
     );
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_1");
@@ -82,14 +82,14 @@ public class ProcessInstanceAssertHasPassedExactlyTest extends FailingTestCaseHe
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_3");
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_4");
@@ -132,21 +132,21 @@ public class ProcessInstanceAssertHasPassedExactlyTest extends FailingTestCaseHe
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_1");
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_2");
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_3");
@@ -193,28 +193,28 @@ public class ProcessInstanceAssertHasPassedExactlyTest extends FailingTestCaseHe
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_4").singleResult());
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_1");
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_2");
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_3");
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("UserTask_4");
@@ -232,7 +232,7 @@ public class ProcessInstanceAssertHasPassedExactlyTest extends FailingTestCaseHe
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         //noinspection NullArgumentToVariableArgMethod
@@ -240,24 +240,24 @@ public class ProcessInstanceAssertHasPassedExactlyTest extends FailingTestCaseHe
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly("ok", null);
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassedExactly(null, "ok");
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
-        String [] args = new String[] {};
+        String[] args = new String[]{};
         assertThat(processInstance).hasPassedExactly(args);
       }
     });

@@ -3,8 +3,8 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.engine.test.assertions.helpers.Check;
-import org.camunda.bpm.engine.test.assertions.helpers.FailingTestCaseHelper;
+import org.camunda.bpm.engine.test.assertions.helpers.Failure;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessInstanceAssertIsNotEndedTest extends FailingTestCaseHelper {
+public class ProcessInstanceAssertIsNotEndedTest extends ProcessAssertTestCase {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule(); 
@@ -43,7 +43,7 @@ public class ProcessInstanceAssertIsNotEndedTest extends FailingTestCaseHelper {
     // When
     complete(taskQuery().singleResult());
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).isNotEnded();

@@ -3,8 +3,8 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.engine.test.assertions.helpers.Check;
-import org.camunda.bpm.engine.test.assertions.helpers.FailingTestCaseHelper;
+import org.camunda.bpm.engine.test.assertions.helpers.Failure;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessInstanceAssertIsWaitingAtExactlyTest extends FailingTestCaseHelper {
+public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTestCase {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
@@ -41,7 +41,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends FailingTestCase
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).isWaitingAtExactly("UserTask_2");
@@ -59,7 +59,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends FailingTestCase
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).isWaitingAtExactly("NonExistingUserTask");
@@ -94,7 +94,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends FailingTestCase
     // When
     complete(taskQuery().singleResult());
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).isWaitingAt("UserTask_1", "UserTask_2");
@@ -112,7 +112,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends FailingTestCase
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         //noinspection NullArgumentToVariableArgMethod
@@ -120,24 +120,24 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends FailingTestCase
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).isWaitingAt("ok", null);
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).isWaitingAt(null, "ok");
       }
     });
     // And
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
-        String [] args = new String[] {};
+        String[] args = new String[]{};
         assertThat(processInstance).isWaitingAt(args);
       }
     });

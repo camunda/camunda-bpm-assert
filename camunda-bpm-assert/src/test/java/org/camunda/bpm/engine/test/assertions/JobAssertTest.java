@@ -2,8 +2,8 @@ package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.runtime.Job;
-import org.camunda.bpm.engine.test.assertions.helpers.Check;
-import org.camunda.bpm.engine.test.assertions.helpers.FailingTestCaseHelper;
+import org.camunda.bpm.engine.test.assertions.helpers.Failure;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class JobAssertTest extends FailingTestCaseHelper {
+public class JobAssertTest extends ProcessAssertTestCase {
   
   ProcessEngine processEngine;
   Job job;
@@ -50,7 +50,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
     // Given
     when(job.getId()).thenReturn("id");
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(job).hasId("otherId");
@@ -61,7 +61,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
   @Test
   public void testHasId_Error_Null() {
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasId(null);
@@ -84,7 +84,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
     // Given
     when(job.getDuedate()).thenReturn(new Date(999));
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasDueDate(new Date(1000));
@@ -94,7 +94,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
 
   @Test
   public void testHasDueDate_Error_Null() {
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasDueDate(null);
@@ -117,7 +117,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
     // Given
     when(job.getProcessInstanceId()).thenReturn("processInstanceId");
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasProcessInstanceId("otherProcessInstanceId");
@@ -127,7 +127,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
 
   @Test
   public void testHasProcessInstanceId_Error_Null() {
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasProcessInstanceId(null);
@@ -150,7 +150,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
     // Given
     when(job.getExecutionId()).thenReturn("executionId");
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasExecutionId("otherExecutionId");
@@ -160,7 +160,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
 
   @Test
   public void testHasExecutionId_Error_Null() {
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasExecutionId(null);
@@ -183,7 +183,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
     // Given
     when(job.getRetries()).thenReturn(3);
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         JobAssert actualAssert = jobAssert.hasRetries(2);
@@ -203,7 +203,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
 
   @Test
   public void testHasExceptionMessage_Failure() {
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         jobAssert.hasExceptionMessage();
@@ -226,7 +226,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
     // Given
     when(job.getDeploymentId()).thenReturn("deploymentId");
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasDeploymentId("otherDeploymentId");
@@ -236,7 +236,7 @@ public class JobAssertTest extends FailingTestCaseHelper {
 
   @Test
   public void testHasDeploymentId_Error_Null() {
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         ProcessEngineAssertions.assertThat(job).hasDeploymentId(null);

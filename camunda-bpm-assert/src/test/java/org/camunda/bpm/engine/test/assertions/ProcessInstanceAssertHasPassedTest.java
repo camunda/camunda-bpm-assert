@@ -3,8 +3,8 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.engine.test.assertions.helpers.Check;
-import org.camunda.bpm.engine.test.assertions.helpers.FailingTestCaseHelper;
+import org.camunda.bpm.engine.test.assertions.helpers.Failure;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessInstanceAssertHasPassedTest extends FailingTestCaseHelper {
+public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
@@ -43,7 +43,7 @@ public class ProcessInstanceAssertHasPassedTest extends FailingTestCaseHelper {
       "ProcessInstanceAssert-hasPassed"
     );
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassed("UserTask_1");
@@ -86,13 +86,13 @@ public class ProcessInstanceAssertHasPassedTest extends FailingTestCaseHelper {
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassed("UserTask_3");
       }
     });
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassed("UserTask_4");
@@ -141,7 +141,7 @@ public class ProcessInstanceAssertHasPassedTest extends FailingTestCaseHelper {
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassed("UserTask_4");
@@ -196,7 +196,7 @@ public class ProcessInstanceAssertHasPassedTest extends FailingTestCaseHelper {
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_4").singleResult());
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassed("UserTask_5");
@@ -214,29 +214,29 @@ public class ProcessInstanceAssertHasPassedTest extends FailingTestCaseHelper {
       "ProcessInstanceAssert-isWaitingAt"
     );
     // Then
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         //noinspection NullArgumentToVariableArgMethod
         assertThat(processInstance).hasPassed(null);
       }
     });
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassed("ok", null);
       }
     });
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
         assertThat(processInstance).hasPassed(null, "ok");
       }
     });
-    failure(new Check() {
+    expect(new Failure() {
       @Override
       public void when() {
-        String [] args = new String[] {};
+        String[] args = new String[]{};
         assertThat(processInstance).hasPassed(args);
       }
     });

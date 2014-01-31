@@ -5,9 +5,9 @@ import org.assertj.core.api.Assertions;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public abstract class FailingTestCaseHelper {
+public abstract class ProcessAssertTestCase {
 
-  protected void failure(Check fail) {
+  protected void expect(Failure fail) {
     try {
       fail.when();
       throw new RuntimeException();
