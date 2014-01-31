@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
+import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -97,6 +98,30 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
         assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_1")).isNotNull();
       }
     });
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-task.bpmn"
+  })
+  public void testTask_MultipleWithQuery_Failure() {
+    // When
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-task"
+    );
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_1").singleResult());
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_4")).isNotNull();
+      }
+    }, ProcessEngineException.class);
   }
 
 }

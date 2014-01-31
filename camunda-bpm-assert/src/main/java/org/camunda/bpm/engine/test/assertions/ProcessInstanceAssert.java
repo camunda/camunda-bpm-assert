@@ -196,29 +196,34 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * under test of this ProcessInstanceAssert.
    * @return TaskAssert inspecting the only task available. Inspecting a 
    * 'null' Task in case no such Task is available.
-   * @throws RuntimeException in case more than one task is available 
-   * TODO check which one
+   * @throws org.camunda.bpm.engine.ProcessEngineException in case more than 
+   * one task is available in the ProcessInstance. 
    */
   public TaskAssert task() {
     return task(engine.getTaskService().createTaskQuery());
   }
 
   /**
-   * Enter into a chained task assert inspecting only tasks currently 
-   * available in the context of the process instance under test of this 
-   * ProcessInstanceAssert.
+   * Enter into a chained task assert inspecting only tasks currently
+   * available in the context of the process instance under test of this
+   * ProcessInstanceAssert. The query is automatically narrowed down to
+   * the actual ProcessInstance under test of this assertion.
+   *
    * @param query TaskQuery further narrowing down the search for tasks
-   * @return TaskAssert inspecting the only task resulting from the given 
+   * The query is automatically narrowed down to the actual ProcessInstance 
+   * under test of this assertion.
+   * @return TaskAssert inspecting the only task resulting from the given
    * search. Inspecting a 'null' Task in case no such Task is available.
-   * @throws RuntimeException in case more than one task is delivered by 
-   * the query 
-   * TODO check which one
+   * @throws org.camunda.bpm.engine.ProcessEngineException in case more than
+   * one task is delivered by the query (after being narrowed to actual
+   * ProcessInstance)
    */
   public TaskAssert task(TaskQuery query) {
     if (query == null)
       throw new IllegalArgumentException("Illegal call of task(query = 'null') - but must not be null!");
     isNotNull();
     TaskQuery narrowed = query.processInstanceId(actual.getId());
+    List l = narrowed.list();
     return TaskAssert.assertThat(engine, narrowed.singleResult());
   }
 
