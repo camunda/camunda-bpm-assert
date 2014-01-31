@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.task.TaskQuery;
@@ -247,4 +248,12 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     return super.historicVariableInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
+  /* ProcessDefinitionQuery, automatically narrowed to process definition of 
+   * {@link ProcessInstance} of actual {@link job} 
+   */
+  @Override
+  protected ProcessDefinitionQuery processDefinitionQuery() {
+    return super.processDefinitionQuery().processDefinitionId(processInstanceQuery().singleResult().getProcessDefinitionId());
+  }
+  
 }

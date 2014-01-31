@@ -8,6 +8,7 @@ import org.assertj.core.api.ListAssert;
 import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.TaskQuery;
 import org.assertj.core.api.Assertions;
@@ -280,5 +281,13 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
     return super.historicVariableInstanceQuery().processInstanceId(actual.getId());
   }
-  
+
+  /* ProcessDefinitionQuery, automatically narrowed to {@link ProcessDefinition} 
+   * of actual {@link ProcessInstance} 
+   */
+  @Override
+  protected ProcessDefinitionQuery processDefinitionQuery() {
+    return super.processDefinitionQuery().processDefinitionId(actual.getProcessDefinitionId());
+  }
+
 }

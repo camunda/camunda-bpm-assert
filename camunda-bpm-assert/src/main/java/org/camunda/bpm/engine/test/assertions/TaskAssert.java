@@ -3,6 +3,7 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
@@ -260,6 +261,14 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   @Override
   protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
     return super.historicVariableInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* ProcessDefinitionQuery, automatically narrowed to {@link ProcessDefinition} 
+   * of {@link ProcessInstance} of actual {@link Task} 
+   */
+  @Override
+  protected ProcessDefinitionQuery processDefinitionQuery() {
+    return super.processDefinitionQuery().processDefinitionId(actual.getProcessDefinitionId());
   }
 
 }

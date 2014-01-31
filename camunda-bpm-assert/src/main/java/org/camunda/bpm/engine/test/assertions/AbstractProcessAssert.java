@@ -3,6 +3,7 @@ package org.camunda.bpm.engine.test.assertions;
 import org.camunda.bpm.engine.*;
 import org.assertj.core.api.AbstractAssert;
 import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
@@ -174,6 +175,15 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
    */
   protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
     return historyService().createHistoricVariableInstanceQuery();
+  }
+
+  /* 
+   * ProcessDefinitionQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or 
+   * {@link ProcessDefinition}) by overriding this method in sub classes specialised to 
+   * verify a specific process engine domain class. 
+   */
+  protected ProcessDefinitionQuery processDefinitionQuery() {
+    return repositoryService().createProcessDefinitionQuery();
   }
 
 }
