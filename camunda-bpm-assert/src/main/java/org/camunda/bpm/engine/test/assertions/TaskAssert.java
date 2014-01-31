@@ -2,6 +2,11 @@ package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.runtime.ExecutionQuery;
+import org.camunda.bpm.engine.runtime.JobQuery;
+import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
+import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 import org.assertj.core.api.Assertions;
@@ -173,6 +178,66 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
         .overridingErrorMessage("Expected task '%s' to have '%s' as name but has '%s'", actual.getName(), expectedDescription, actualDescription)
         .isEqualTo(expectedDescription);
     return this;
+  }
+
+  /* TaskQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected TaskQuery taskQuery() {
+    return super.taskQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* JobQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected JobQuery jobQuery() {
+    return super.jobQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* ProcessInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected ProcessInstanceQuery processInstanceQuery() {
+    return super.processInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* ExecutionQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected ExecutionQuery executionQuery() {
+    return super.executionQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* VariableInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected VariableInstanceQuery variableInstanceQuery() {
+    return super.variableInstanceQuery().processInstanceIdIn(actual.getProcessInstanceId());
+  }
+
+  /* HistoricActivityInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
+    return super.historicActivityInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* HistoricDetailQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected HistoricDetailQuery historicDetailQuery() {
+    return super.historicDetailQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* HistoricProcessInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
+    return super.historicProcessInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* HistoricTaskInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
+    return super.historicTaskInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* HistoricVariableInstanceQuery, automatically narrowed to ProcessInstance of actual Task */
+  @Override
+  protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
+    return super.historicVariableInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
 }

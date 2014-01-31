@@ -3,8 +3,10 @@ package org.camunda.bpm.engine.test.assertions;
 import java.util.Date;
 
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.runtime.Job;
+import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.runtime.*;
 import org.assertj.core.api.Assertions;
+import org.camunda.bpm.engine.task.TaskQuery;
 
 /**
  * Asserts for a {@link Job}
@@ -158,6 +160,66 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
 
   private String toString(Job job) {
      return job != null ? String.format("actual %s {id='%s', processInstanceId='%s', executionId='%s'}", Job.class.getName(), job.getId(), job.getProcessInstanceId(), job.getExecutionId()) : null; 
+  }
+
+  /* TaskQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected TaskQuery taskQuery() {
+    return super.taskQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* JobQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected JobQuery jobQuery() {
+    return super.jobQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* ProcessInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected ProcessInstanceQuery processInstanceQuery() {
+    return super.processInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* ExecutionQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected ExecutionQuery executionQuery() {
+    return super.executionQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* VariableInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected VariableInstanceQuery variableInstanceQuery() {
+    return super.variableInstanceQuery().processInstanceIdIn(actual.getProcessInstanceId());
+  }
+
+  /* HistoricActivityInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
+    return super.historicActivityInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* HistoricDetailQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected HistoricDetailQuery historicDetailQuery() {
+    return super.historicDetailQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* HistoricProcessInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
+    return super.historicProcessInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* HistoricTaskInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
+    return super.historicTaskInstanceQuery().processInstanceId(actual.getProcessInstanceId());
+  }
+
+  /* HistoricVariableInstanceQuery, automatically narrowed to ProcessInstance of actual Job */
+  @Override
+  protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
+    return super.historicVariableInstanceQuery().processInstanceId(actual.getProcessInstanceId());
   }
 
 }
