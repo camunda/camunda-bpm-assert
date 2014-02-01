@@ -19,7 +19,7 @@ Hopefully this will also make it easier to change your tests half a year after y
 <a name="getting-started"/>
 ## Getting started
 
-**BEWARE: The project is currently (*January 2014*) undergoing a major rework. Therefore it will last a few more days until a version *0.7* will be published. Until then, please feel free to checkout below mentioned 0.7-SNAPSHOT.** Previous versions found in the download section do not fully comply to the information given in this guide.
+**BEWARE: The project is currently (*January/February 2014*) undergoing a major rework. Therefore it will last a few more days until a version *0.7* will be published. Until then, please feel free to checkout below mentioned 0.7-SNAPSHOT.** Previous versions found in the download section do not fully comply to the information given in this guide.
 
 <a name="maven-dependency"/>
 ### Maven dependency
