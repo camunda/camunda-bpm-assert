@@ -237,7 +237,6 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       throw new IllegalArgumentException("Illegal call of task(query = 'null') - but must not be null!");
     isNotNull();
     TaskQuery narrowed = query.processInstanceId(actual.getId());
-    List l = narrowed.list();
     return TaskAssert.assertThat(engine, narrowed.singleResult());
   }
 
