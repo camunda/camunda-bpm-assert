@@ -38,7 +38,7 @@ First, [declare the camunda BPM maven repository](http://www.camunda.org/get-sta
 <a name="static-import"/>
 ### Add a static import to your test class
 
-Then, create your test case just as described in [camunda BPM Testing](http://docs.camunda.org/latest/guides/user-guide/#testing). 
+Create your test case just as described in [camunda BPM Testing](http://docs.camunda.org/latest/guides/user-guide/#testing). 
 Then you just have to add the following static import:
 
 ```xml  
@@ -48,7 +48,7 @@ Then you just have to add the following static import:
 <a name="start-using"/>
 ### Start using camunda-bpm-assert!
 
-Now you have access to all the assertions provided by the fest library - plus the customised camunda BPM assertions provided by this library. Let's assume you want to assert that your process instance 
+Now you have access to all the assertions provided by the AssertJ library - plus the customised camunda BPM assertions provided by this library. Let's assume you want to assert that your process instance 
 
  * was actually started 
  * is waiting at a specific user task and
