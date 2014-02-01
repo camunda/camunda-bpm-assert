@@ -124,4 +124,45 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
     }, ProcessEngineException.class);
   }
 
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-task.bpmn"
+  })
+  public void testTask_MultipleWithTaskDefinitionKey_Success() {
+    // When
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-task"
+    );
+    // And
+    complete(taskQuery().singleResult());
+    // Then
+    assertThat(processInstance).task("UserTask_2").isNotNull();
+    // And
+    assertThat(processInstance).task("UserTask_3").isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-task.bpmn"
+  })
+  public void testTask_MultipleWithTaskDefinitionKey_Failure() {
+    // When
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-task"
+    );
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_1").singleResult());
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).task("UserTask_4").isNotNull();
+      }
+    }, ProcessEngineException.class);
+  }
+
 }

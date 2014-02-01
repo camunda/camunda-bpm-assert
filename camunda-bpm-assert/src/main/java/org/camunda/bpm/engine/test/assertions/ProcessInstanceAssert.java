@@ -200,7 +200,21 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * one task is available in the ProcessInstance. 
    */
   public TaskAssert task() {
-    return task(engine.getTaskService().createTaskQuery());
+    return task(taskQuery());
+  }
+
+  /**
+   * Enter into a chained task assert inspecting the one and mostly 
+   * one task of the specified task definition key currently available in the 
+   * context of the process instance under test of this ProcessInstanceAssert.
+   * @param taskDefinitionKey definition key narrowing down the search for tasks
+   * @return TaskAssert inspecting the only task available. Inspecting a 
+   * 'null' Task in case no such Task is available.
+   * @throws org.camunda.bpm.engine.ProcessEngineException in case more than 
+   * one task is available in the ProcessInstance. 
+   */
+  public TaskAssert task(String taskDefinitionKey) {
+    return task(taskQuery().taskDefinitionKey(taskDefinitionKey));
   }
 
   /**
