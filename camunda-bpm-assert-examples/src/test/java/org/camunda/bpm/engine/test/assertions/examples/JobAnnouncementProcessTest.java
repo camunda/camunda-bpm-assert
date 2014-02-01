@@ -66,6 +66,7 @@ public class JobAnnouncementProcessTest {
     assertThat(task()).isAssignedTo("fozzie");
     // and just to show off more possibilities...
     assertThat(processInstance).task(taskQuery().taskAssignee("fozzie")).hasDefinitionKey("edit");
+    assertThat(processInstance).task("edit").isAssignedTo("fozzie");
 
     complete(task());
 
