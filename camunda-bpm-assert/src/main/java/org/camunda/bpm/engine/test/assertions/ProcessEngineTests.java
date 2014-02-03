@@ -2,9 +2,7 @@ package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
-import org.camunda.bpm.engine.runtime.ExecutionQuery;
-import org.camunda.bpm.engine.runtime.JobQuery;
-import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
+import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 
@@ -214,6 +212,19 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
     if (task == null)
       throw new IllegalArgumentException(format("Illegal call of claim(task = '%s') - must not be null!", task));
     taskService().complete(task.getId());
+  }
+
+  /**
+   * Helper method to easily execute a job.
+   * @param job 
+   */
+  public static void execute(Job job) {
+    if (job == null)
+      throw new IllegalArgumentException(format("Illegal call of execute(job = '%s') - must not be null!", job));
+    Job current = jobQuery().jobId(job.getId()).singleResult();
+    if (current == null)
+      throw new IllegalStateException(format("Illegal state when calling execute(job = '%s') - job does not exist anymore!", job));
+    managementService().executeJob(job.getId());
   }
 
 }
