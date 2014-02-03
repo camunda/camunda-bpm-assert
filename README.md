@@ -1,7 +1,8 @@
 # ![camunda logo](http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png)&nbsp;camunda-bpm-assert 
 
 This little community-extension to [camunda BPM](http://camunda.org) wants to make it easier to write tests for BPMN process definitions executed with the camunda process engine. 
-For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](https://github.com/joel-costigliola/assertj-core) rich assertions library for java are provided, as well as a few little helpers to make it a bit easier to drive you through your process.
+For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](http://joel-costigliola.github.io/assertj/) rich assertions library for java are provided, 
+as well as a few little helpers to make it a bit easier to drive you through your process.
  
 Hopefully this will also make it easier to change your tests half a year after you have written them yourself!-) In short: more **readable code** - less **spaghetti tests**!
 
