@@ -148,10 +148,17 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    */
   public ProcessInstanceAssert isEnded() {
     isNotNull();
+    final String message = "Expecting %s to be ended, but it is not!. (Please " +
+      "make sure you have set the history service of the engine to at least " +
+      "'activity' or a higher level before making use of this assertion!)";
     Assertions.assertThat(processInstanceQuery().singleResult())
-      .overridingErrorMessage("Expecting %s to be ended, but it is not!", 
+      .overridingErrorMessage(message,
         toString(actual))
       .isNull();
+    Assertions.assertThat(historicProcessInstanceQuery().singleResult())
+      .overridingErrorMessage(message, 
+        toString(actual))
+      .isNotNull();
     return this;
   }
 
