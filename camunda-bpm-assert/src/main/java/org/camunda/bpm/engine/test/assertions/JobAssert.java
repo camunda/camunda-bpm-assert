@@ -24,7 +24,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
   }
 
   @Override
-  public Job getRefreshedActual() {
+  protected Job getCurrent() {
     return jobQuery().jobId(actual.getId()).singleResult();
   }
 
@@ -35,13 +35,13 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
    * @see org.camunda.bpm.engine.runtime.Job#getId()
    */
   public JobAssert hasId(final String expectedId) {
-    isNotNull();
+    Job current = getExistingCurrent();
     Assertions.assertThat(expectedId).isNotEmpty();
     final String actualId = actual.getId();
     Assertions.assertThat(actualId)
       .overridingErrorMessage(
         "expecting %s to have id '%s', but found it to be '%s'", 
-        toString(getRefreshedActual()), expectedId, actualId
+        toString(current), expectedId, actualId
       )
       .isEqualTo(expectedId);
     return this;
@@ -54,13 +54,13 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
    * @see org.camunda.bpm.engine.runtime.Job#getDuedate() 
    */
   public JobAssert hasDueDate(final Date expectedDueDate) {
-    isNotNull();
+    Job current = getExistingCurrent();
     Assertions.assertThat(expectedDueDate).isNotNull();
-    final Date actualDuedate = getRefreshedActual().getDuedate();
+    final Date actualDuedate = current.getDuedate();
     Assertions.assertThat(actualDuedate)
       .overridingErrorMessage(
         "expecting %s to be due at '%s', but found it to be due at '%s'", 
-        toString(getRefreshedActual()), expectedDueDate, actualDuedate
+        toString(current), expectedDueDate, actualDuedate
       )
       .isEqualTo(expectedDueDate);
     return this;
@@ -73,13 +73,13 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
    * @see org.camunda.bpm.engine.runtime.Job#getProcessInstanceId()
    */
   public JobAssert hasProcessInstanceId(final String expectedProcessInstanceId) {
-    isNotNull();
+    Job current = getExistingCurrent();
     Assertions.assertThat(expectedProcessInstanceId).isNotNull();
-    final String actualProcessInstanceId = actual.getProcessInstanceId();
+    final String actualProcessInstanceId = current.getProcessInstanceId();
     Assertions.assertThat(actualProcessInstanceId)
       .overridingErrorMessage(
         "expecting %s to have process instance id '%s', but found it to be '%s'", 
-        toString(getRefreshedActual()), expectedProcessInstanceId, actualProcessInstanceId
+        toString(current), expectedProcessInstanceId, actualProcessInstanceId
       )
       .isEqualTo(expectedProcessInstanceId);
     return this;
@@ -92,13 +92,13 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
    * @see org.camunda.bpm.engine.runtime.Job#getExecutionId()
    */
   public JobAssert hasExecutionId(final String expectedExecutionId) {
-    isNotNull();
+    Job current = getExistingCurrent();
     Assertions.assertThat(expectedExecutionId).isNotNull();
-    final String actualExecutionId = getRefreshedActual().getExecutionId();
+    final String actualExecutionId = current.getExecutionId();
     Assertions.assertThat(actualExecutionId)
       .overridingErrorMessage(
         "expecting %s to have execution id '%s', but found it to be '%s'",
-        toString(getRefreshedActual()), expectedExecutionId, actualExecutionId
+        toString(current), expectedExecutionId, actualExecutionId
       )
       .isEqualTo(expectedExecutionId);
     return this;
@@ -111,12 +111,12 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
    * @see org.camunda.bpm.engine.runtime.Job#getExecutionId()
    */
   public JobAssert hasRetries(final int expectedRetries) {
-    isNotNull();
-    final int actualRetries = getRefreshedActual().getRetries();
+    Job current = getExistingCurrent();
+    final int actualRetries = current.getRetries();
     Assertions.assertThat(actualRetries)
       .overridingErrorMessage(
         "expecting %s to have %s retries left, but found %s retries",
-        toString(getRefreshedActual()), expectedRetries, actualRetries
+        toString(current), expectedRetries, actualRetries
       )
       .isEqualTo(expectedRetries);
     return this;
@@ -129,12 +129,12 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
    * @see org.camunda.bpm.engine.runtime.Job#getExceptionMessage() 
    */
   public JobAssert hasExceptionMessage() {
-    isNotNull();
-    final String actualExceptionMessage = getRefreshedActual().getExceptionMessage();
+    Job current = getExistingCurrent();
+    final String actualExceptionMessage = current.getExceptionMessage();
     Assertions.assertThat(actualExceptionMessage)
       .overridingErrorMessage(
         "expecting %s to have an exception message, but found it to be null or empty: '%s'",
-        toString(getRefreshedActual()), actualExceptionMessage
+        toString(current), actualExceptionMessage
       )
       .isNotEmpty();
     return this;
@@ -147,13 +147,13 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
    * @see org.camunda.bpm.engine.runtime.Job#getDeploymentId()
    */
   public JobAssert hasDeploymentId(final String expectedDeploymentId) {
-    isNotNull();
+    Job current = getExistingCurrent();
     Assertions.assertThat(expectedDeploymentId).isNotNull();
-    final String actualDeploymentId = actual.getDeploymentId();
+    final String actualDeploymentId = current.getDeploymentId();
     Assertions.assertThat(actualDeploymentId)
       .overridingErrorMessage(
         "expecting %s to have deployment id '%s', but found it to be '%s'",
-        toString(getRefreshedActual()), expectedDeploymentId, actualDeploymentId
+        toString(current), expectedDeploymentId, actualDeploymentId
       )
       .isEqualTo(expectedDeploymentId);
     return this;

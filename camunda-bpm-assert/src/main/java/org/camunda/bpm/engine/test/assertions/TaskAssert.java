@@ -26,7 +26,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   @Override
-  public Task getRefreshedActual() {
+  protected Task getCurrent() {
     return taskQuery().taskId(actual.getId()).singleResult();
   }
 
@@ -36,13 +36,11 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    * @return this {@link TaskAssert}
    */  
   public TaskAssert isNotAssigned() {
-    isNotNull();
-    Task task = getRefreshedActual();
-    Assertions.assertThat(task).isNotNull();
-    Assertions.assertThat(task.getAssignee())
+    Task current = getExistingCurrent();
+    Assertions.assertThat(current.getAssignee())
       .overridingErrorMessage("Expected %s not to be assigned, but found it to be assigned to user '%s'!",
-        toString(task),
-        task.getAssignee())
+        toString(current),
+        current.getAssignee())
       .isNull();
     return this;
   }
@@ -54,15 +52,13 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    * @return this {@link TaskAssert}
    */
   public TaskAssert isAssignedTo(final String userId) {
-    isNotNull();
-    Task task = getRefreshedActual();
-    Assertions.assertThat(task).isNotNull();
+    Task current = getExistingCurrent();
     Assertions
-      .assertThat(task.getAssignee())
+      .assertThat(current.getAssignee())
       .overridingErrorMessage("Expected %s to be assigned to user '%s', but found it to be assigned to '%s'!", 
-        toString(task), 
+        toString(current), 
         userId,
-        task.getAssignee())
+        current.getAssignee())
       .isEqualTo(userId);
     return this;
   }
@@ -75,13 +71,11 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    */
   public TaskAssert hasCandidateGroup(final String candidateGroupId) {
     Assertions.assertThat(candidateGroupId).isNotNull();
-    isNotNull();
-    final Task task = getRefreshedActual();
-    Assertions.assertThat(task).isNotNull();
+    final Task current = getExistingCurrent();
     final Task inGroup = taskQuery().taskId(actual.getId()).taskCandidateGroup(candidateGroupId).singleResult();
     Assertions.assertThat(inGroup)
-        .overridingErrorMessage("Expected %s to have candidate group '%s', but found it not to have that candidate group!", 
-          toString(task), 
+        .overridingErrorMessage("Expected %s to have candidate group '%s', but found it not to have that candidate group!",
+          toString(current),
           candidateGroupId)
       .isNotNull();
     return this;

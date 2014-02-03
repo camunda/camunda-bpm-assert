@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
+import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.*;
 import org.assertj.core.api.AbstractAssert;
 import org.camunda.bpm.engine.history.*;
@@ -8,6 +9,7 @@ import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
+import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 
 import java.util.HashMap;
@@ -33,7 +35,27 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return actual;
   }
 
-  public abstract A getRefreshedActual();
+  /*
+   * Method definition meant to deliver the current/refreshed persistent state of 
+   * the actual object under test and expecting that such a current state actually exists.
+   */
+  protected A getExistingCurrent() {
+    Assertions.assertThat(actual)
+      .overridingErrorMessage("Expecting assertion to be called on non-null actual, but found it to be null!")
+      .isNotNull();
+    A current =getCurrent();
+    Assertions.assertThat(current)
+      .overridingErrorMessage("Expecting assertion to be called on non-null current state of actual %s, but found it to be null!",
+        actual)
+      .isNotNull();
+    return current;
+  }
+  
+  /*
+   * Abstract method definition meant to deliver the current/refreshed persistent state of 
+   * the actual object under test. Needs to be correctly implemented by implementations of this.
+   */
+  protected abstract A getCurrent();
   
   public static void resetLastAsserts() {
     getLastAsserts().clear();

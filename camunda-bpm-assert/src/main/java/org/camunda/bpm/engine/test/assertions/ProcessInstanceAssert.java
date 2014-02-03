@@ -29,8 +29,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   @Override
-  public ProcessInstance getRefreshedActual() {
-    return processInstanceQuery().processInstanceId(actual.getId()).singleResult();
+  protected ProcessInstance getCurrent() {
+    return processInstanceQuery().singleResult();
   }
 
   /**
@@ -139,9 +139,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isSuspended() {
-    isNotNull();
-    Assertions.assertThat(processInstanceQuery().singleResult()).isNotNull();
-    Assertions.assertThat(processInstanceQuery().singleResult().isSuspended())
+    ProcessInstance current = getExistingCurrent();
+    Assertions.assertThat(current.isSuspended())
       .overridingErrorMessage("Expected ProcessInstance { id = '%s' } to be suspended, but it is not!", actual.getId())
       .isTrue();
     return this;
@@ -152,8 +151,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isNotEnded() {
-    isNotNull();
-    Assertions.assertThat(processInstanceQuery().singleResult())
+    ProcessInstance current = getExistingCurrent();
+    Assertions.assertThat(current)
       .overridingErrorMessage("Expected ProcessInstance { id = '%s' } not to be ended, but it is!", actual.getId())
       .isNotNull();
     return this;
@@ -165,10 +164,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isActive() {
-    isNotNull();
+    ProcessInstance current = getExistingCurrent();
     isStarted();
     isNotEnded();
-    Assertions.assertThat(processInstanceQuery().singleResult().isSuspended())
+    Assertions.assertThat(current.isSuspended())
       .overridingErrorMessage("Expected ProcessInstance { id = '%s' } not to be suspended, but it is!", actual.getId())
       .isFalse();
     return this;
@@ -180,8 +179,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isStarted() {
-    isNotNull();
-    Object pi = processInstanceQuery().singleResult();
+    Object pi = getCurrent();
     if (pi == null) 
       pi = historicProcessInstanceQuery().singleResult();
     Assertions.assertThat(pi)

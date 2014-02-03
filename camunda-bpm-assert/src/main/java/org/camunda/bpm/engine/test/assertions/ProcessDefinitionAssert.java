@@ -23,7 +23,7 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
   }
 
   @Override
-  public ProcessDefinition getRefreshedActual() {
+  protected ProcessDefinition getCurrent() {
     return processDefinitionQuery().singleResult();
   }
 
