@@ -27,6 +27,23 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
     return processDefinitionQuery().singleResult();
   }
 
+  @Override
+  protected String toString(ProcessDefinition processDefinition) {
+    return processDefinition != null ?
+      String.format("actual %s {" +
+        "id='%s', " +
+        "name='%s', " +
+        "description='%s', " +
+        "deploymentId='%s'" +
+        "}",
+        ProcessDefinition.class.getSimpleName(),
+        processDefinition.getId(),
+        processDefinition.getName(),
+        processDefinition.getDescription(),
+        processDefinition.getDeploymentId())
+      : null;
+  }
+  
   /* TaskQuery, automatically narrowed to actual {@link ProcessDefinition} */
   @Override
   protected TaskQuery taskQuery() {

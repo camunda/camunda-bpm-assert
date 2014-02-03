@@ -9,7 +9,6 @@ import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
-import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 
 import java.util.HashMap;
@@ -59,6 +58,12 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
    * the actual object under test. Needs to be correctly implemented by implementations of this.
    */
   protected abstract A getCurrent();
+
+  /*
+   * Abstract method definition meant to deliver a loggable string representation of the
+   * given object of same type as the actual object under test.
+   */
+  protected abstract String toString(A object);
   
   public static void resetLastAsserts() {
     getLastAsserts().clear();

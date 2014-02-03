@@ -159,8 +159,19 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     return this;
   }
 
-  private String toString(Job job) {
-     return job != null ? String.format("actual %s {id='%s', processInstanceId='%s', executionId='%s'}", Job.class.getName(), job.getId(), job.getProcessInstanceId(), job.getExecutionId()) : null; 
+  @Override
+  protected String toString(Job job) {
+     return job != null ? 
+       String.format("actual %s {" +
+         "id='%s', " +
+         "processInstanceId='%s', " +
+         "executionId='%s'" +
+         "}", 
+         Job.class.getSimpleName(), 
+         job.getId(), 
+         job.getProcessInstanceId(), 
+         job.getExecutionId()) 
+       : null; 
   }
 
   /* 
