@@ -1,6 +1,5 @@
 package org.camunda.bpm.engine.test.assertions;
 
-import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
@@ -69,30 +68,22 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   /**
-   * Assertion on the candidate group a {@link org.camunda.bpm.engine.task.Task}
-   * is assigned to.
-   * 
-   * @param candidateGroupId
-   *          the candidate group
-   * 
-   * @return a {@link TaskAssert} that can be further configured before starting
-   *         the process instance
-   * 
-   * @see org.camunda.bpm.engine.task.Task
+   * Verifies the expectation that the {@link Task} is currently waiting to 
+   * be assigned to a user of the specified candidate group.
+   * @param candidateGroupId id of the candidate group the task is assigned to
+   * @return this {@link TaskAssert}
    */
   public TaskAssert hasCandidateGroup(final String candidateGroupId) {
+    Assertions.assertThat(candidateGroupId).isNotNull();
     isNotNull();
-    final TaskService taskService = engine.getTaskService();
-    final TaskQuery query = taskService.createTaskQuery().taskId(actual.getId()).taskCandidateGroup(candidateGroupId);
-    final Task task = query.singleResult();
-    /*
-     * TODO: There does not seem to be a way to find out the candidate groups of
-     * a given task. The TaskQuery API only offers to look up tasks which have a
-     * given candidate group but not the other way around.
-     */
-    Assertions.assertThat(task)
-        .overridingErrorMessage("Expected task '%s' to have '%s' as a candidate group but id doesn't", actual.getName(), candidateGroupId).isNotNull();
-
+    final Task task = getRefreshedActual();
+    Assertions.assertThat(task).isNotNull();
+    final Task inGroup = taskQuery().taskId(actual.getId()).taskCandidateGroup(candidateGroupId).singleResult();
+    Assertions.assertThat(inGroup)
+        .overridingErrorMessage("Expected %s to have candidate group '%s', but found it not to have that candidate group!", 
+          toString(task), 
+          candidateGroupId)
+      .isNotNull();
     return this;
   }
 
@@ -201,11 +192,11 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
   private String toString(Task task) {
     return task != null ? 
-      String.format("actual %s {id='%s', processInstanceId='%s', taskDefinitionKey='%s', taskName='%s'}", 
-        Task.class.getName(), 
-        task.getId(), 
-        task.getProcessInstanceId(), 
-        task.getTaskDefinitionKey(), 
+      String.format("actual %s {id='%s', processInstanceId='%s', taskDefinitionKey='%s', taskName='%s'}",
+        Task.class.getName(),
+        task.getId(),
+        task.getProcessInstanceId(),
+        task.getTaskDefinitionKey(),
         task.getName()
       ) : null;
   }
