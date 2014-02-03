@@ -82,21 +82,20 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   /**
-   * Assertion on the due date of the {@link org.camunda.bpm.engine.task.Task}.
-   * 
-   * @param expectedDueDate
-   *          the due date
-   * 
-   * @return a {@link TaskAssert} that can be further configured before starting
-   *         the process instance
-   * 
-   * @see org.camunda.bpm.engine.task.Task#getDueDate()
+   * Verifies the due date of a {@link Task}.
+   * @param dueDate the date the task should be due at
+   * @return this {@link TaskAssert}
    */
-  public TaskAssert hasDueDate(final Date expectedDueDate) {
-    isNotNull();
-    Assertions.assertThat(actual.getDueDate())
-        .overridingErrorMessage("Expecting task '%s' to have '%s' as due date but has '%s'", actual.getName(), expectedDueDate, actual.getDueDate())
-        .equals(expectedDueDate);
+  public TaskAssert hasDueDate(final Date dueDate) {
+    Task current = getExistingCurrent();
+    Assertions.assertThat(dueDate).isNotNull();
+    Assertions.assertThat(current.getDueDate())
+        .overridingErrorMessage("Expecting %s to be due at '%s', but found it to be due at '%s'!",
+          toString(current),
+          dueDate, 
+          current.getDueDate()
+        )
+      .isEqualTo(dueDate);
     return this;
   }
 
