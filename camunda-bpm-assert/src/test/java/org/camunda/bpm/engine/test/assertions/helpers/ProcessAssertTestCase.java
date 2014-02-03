@@ -27,7 +27,7 @@ public abstract class ProcessAssertTestCase {
       }
       throw (RuntimeException) e;
     }
-    fail("expected on of " + Lists.newArrayList(exception) + " to be thrown, but did not see any");
+    fail("expected one of " + Lists.newArrayList(exception) + " to be thrown, but did not see any");
   }
 
 }
