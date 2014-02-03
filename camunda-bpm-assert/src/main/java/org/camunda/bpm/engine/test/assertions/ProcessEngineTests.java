@@ -188,7 +188,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
     if (task == null || assigneeUserId == null)
       throw new IllegalArgumentException(format("Illegal call of claim(task = '%s', assigneeUserId = '%s') - both must not be null!", task, assigneeUserId));
     taskService().claim(task.getId(), assigneeUserId);
-    return taskService().createTaskQuery().taskId(task.getId()).singleResult();
+    return taskQuery().taskId(task.getId()).singleResult();
   }
 
   /**
