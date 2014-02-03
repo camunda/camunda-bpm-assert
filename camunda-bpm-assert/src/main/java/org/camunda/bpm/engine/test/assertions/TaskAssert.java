@@ -155,23 +155,21 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   /**
-   * Assertion on the free text description of the
-   * {@link org.camunda.bpm.engine.task.Task}.
-   * 
-   * @param expectedDescription
-   *          the free text description of the task
-   * 
-   * @return a {@link TaskAssert} that can be further configured before starting
-   *         the process instance
-   * 
-   * @see org.camunda.bpm.engine.task.Task#getDescription()
+   * Verifies the description of a {@link Task}. This description can be found
+   * in the &lt;userTask&gt;&lt;documentation&gt;description&lt;/documentation&gt;&lt;/userTask&gt; 
+   * element of the process definition BPMN 2.0 XML file.
+   * @param description the expected value of the description
+   * @return this {@link TaskAssert}
    */
-  public TaskAssert hasDescription(final String expectedDescription) {
-    isNotNull();
-    final String actualDescription = actual.getDescription();
-    Assertions.assertThat(actualDescription)
-        .overridingErrorMessage("Expecting task '%s' to have '%s' as name but has '%s'", actual.getName(), expectedDescription, actualDescription)
-        .isEqualTo(expectedDescription);
+  public TaskAssert hasDescription(final String description) {
+    Task current = getExistingCurrent();
+    Assertions.assertThat(description).isNotNull();
+    Assertions.assertThat(current.getDescription())
+      .overridingErrorMessage("Expecting %s to have description '%s', but found it to be '%s'!", 
+        toString(current),
+        description,
+        current.getDescription())
+      .isEqualTo(description);
     return this;
   }
 
