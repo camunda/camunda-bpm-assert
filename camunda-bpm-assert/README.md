@@ -10,7 +10,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
  * [Assertions](#assertions)
    * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasPassedExactly](#processInstance-hasPassedExactly), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
    * for jobs: [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
-   * for tasks: [isAssignedTo](#task-isAssignedTo), [isUnassigned](#task-isUnassigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
+   * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
  
  * [Helpers](#helpers)
    * [Claiming tasks](#helpers-claim)
@@ -177,13 +177,13 @@ Assert that a specified user is assigned to a task:
 assertThat(task).isAssignedTo("kermit");
 ```
 
-<a name="task-isUnassigned"/>
-#### Task: isUnassigned
+<a name="task-isNotAssigned"/>
+#### Task: isNotAssigned
 
 Assert that a task is currently not assigned to any user:
 
 ```java
-assertThat(task).isUnassigned();
+assertThat(task).isNotAssigned();
 ```
 
 <a name="task-hasCandidateGroup"/>
@@ -326,7 +326,7 @@ assertThat(processInstance).task();
 ... in order to directly make assertions on it, e.g. 
 
 ```java
-assertThat(processInstance).task().isUnAssigned();
+assertThat(processInstance).task().isNotAssigned();
 ```
 
 <a name="helpers-task-taskquery"/>

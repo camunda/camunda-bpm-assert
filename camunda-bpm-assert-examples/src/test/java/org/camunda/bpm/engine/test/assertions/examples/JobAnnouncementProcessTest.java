@@ -59,7 +59,7 @@ public class JobAnnouncementProcessTest {
     );
 
     assertThat(processInstance).isStarted().isNotEnded()
-      .task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isUnassigned();
+      .task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isNotAssigned();
 
     claim(task(), "fozzie");
 
@@ -74,7 +74,7 @@ public class JobAnnouncementProcessTest {
 
     complete(task(), withVariables("approved", true));
 
-    assertThat(processInstance).task().hasDefinitionKey("publish").hasCandidateGroup("engineering").isUnassigned();
+    assertThat(processInstance).task().hasDefinitionKey("publish").hasCandidateGroup("engineering").isNotAssigned();
 
     // claim and complete could be combined, too
     complete(claim(task(), "fozzie"), withVariables("twitter", true, "facebook", true));

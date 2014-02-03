@@ -34,12 +34,20 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     return taskQuery().taskId(actual.getId()).singleResult();
   }
 
-  public TaskAssert isUnassigned() {
+  /**
+   * Verifies the expectation that the {@link Task} is currently not assigned to 
+   * any particular user.
+   * @return this {@link TaskAssert}
+   */  
+  public TaskAssert isNotAssigned() {
     isNotNull();
-
-    Assertions.assertThat(actual.getAssignee())
-        .overridingErrorMessage("Expected processTask '%s' to be unassigned but it is assigned to '%s'", actual.getName(), actual.getAssignee()).isNull();
-
+    Task task = getRefreshedActual();
+    Assertions.assertThat(task).isNotNull();
+    Assertions.assertThat(task.getAssignee())
+      .overridingErrorMessage("Expected %s not to be assigned, but found it to be assigned to user '%s'!",
+        toString(task),
+        task.getAssignee())
+      .isNull();
     return this;
   }
 
@@ -183,6 +191,17 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
         .overridingErrorMessage("Expected task '%s' to have '%s' as name but has '%s'", actual.getName(), expectedDescription, actualDescription)
         .isEqualTo(expectedDescription);
     return this;
+  }
+
+  private String toString(Task task) {
+    return task != null ? 
+      String.format("actual %s {id='%s', processInstanceId='%s', taskDefinitionKey='%s', taskName='%s'}", 
+        Task.class.getName(), 
+        task.getId(), 
+        task.getProcessInstanceId(), 
+        task.getTaskDefinitionKey(), 
+        task.getName()
+      ) : null;
   }
 
   /* TaskQuery, automatically narrowed to {@link ProcessInstance} of actual 

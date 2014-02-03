@@ -62,7 +62,7 @@ Then write:
 	assertThat(processInstance).isStarted()
 		.task().hasDefinitionKey("edit")
 			.hasCandidateGroup("SB-Personal")
-			.isUnassigned();
+			.isNotAssigned();
 ```
 
 Green bar? 
