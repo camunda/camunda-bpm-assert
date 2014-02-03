@@ -101,7 +101,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
 
   /**
    * Verifies the definition key of a {@link Task}. This key can be found
-   * in the &lt;userTask id="myTaskDefinitionKey" .../&gt; element of the
+   * in the &lt;userTask id="myTaskDefinitionKey" .../&gt; attribute of the
    * process definition BPMN 2.0 XML file.
    * @param taskDefinitionKey the expected value of the task/@id attribute
    * @return this {@link TaskAssert}
@@ -136,21 +136,21 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   /**
-   * Assertion on the name or title of the
-   * {@link org.camunda.bpm.engine.task.Task}.
-   * 
-   * @param expectedName
-   *          the task name or title
-   * 
-   * @return a {@link TaskAssert} that can be further configured before starting
-   *         the process instance
-   * 
-   * @see org.camunda.bpm.engine.task.Task#getName()
+   * Verifies the name (label) of a {@link Task}. This name can be found
+   * in the &lt;userTask name="myName" .../&gt; attribute of the
+   * process definition BPMN 2.0 XML file.
+   * @param name the expected value of the name
+   * @return this {@link TaskAssert}
    */
-  public TaskAssert hasName(final String expectedName) {
-    isNotNull();
-    Assertions.assertThat(actual.getName()).overridingErrorMessage("Expecting task with name '%s', but was '%s'", expectedName, actual.getName())
-        .isEqualTo(expectedName);
+  public TaskAssert hasName(final String name) {
+    Task current = getExistingCurrent();
+    Assertions.assertThat(name).isNotNull();
+    Assertions.assertThat(current.getName())
+      .overridingErrorMessage("Expecting %s to have name '%s', but found it to be '%s'!",
+        toString(current),
+        name,
+        current.getName()
+      ).isEqualTo(name);
     return this;
   }
 
