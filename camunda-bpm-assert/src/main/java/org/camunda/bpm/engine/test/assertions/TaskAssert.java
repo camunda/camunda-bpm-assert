@@ -4,10 +4,7 @@ import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
-import org.camunda.bpm.engine.runtime.ExecutionQuery;
-import org.camunda.bpm.engine.runtime.JobQuery;
-import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
-import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
+import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 import org.assertj.core.api.Assertions;
@@ -51,14 +48,23 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     return this;
   }
 
+  /**
+   * Verifies the expectation that the {@link Task} is currently assigned to 
+   * the specified user.
+   * @param userId id of the user the task should be currently assigned to.
+   * @return this {@link TaskAssert}
+   */
   public TaskAssert isAssignedTo(final String userId) {
     isNotNull();
-
+    Task task = getRefreshedActual();
+    Assertions.assertThat(task).isNotNull();
     Assertions
-        .assertThat(actual.getAssignee())
-        .overridingErrorMessage("Expected processTask '%s' to be assigned to user '%s' but it is assigned to '%s'", actual.getName(), userId,
-            actual.getAssignee()).isEqualTo(userId);
-
+      .assertThat(task.getAssignee())
+      .overridingErrorMessage("Expected %s to be assigned to user '%s', but found it to be assigned to '%s'!", 
+        toString(task), 
+        userId,
+        task.getAssignee())
+      .isEqualTo(userId);
     return this;
   }
 
