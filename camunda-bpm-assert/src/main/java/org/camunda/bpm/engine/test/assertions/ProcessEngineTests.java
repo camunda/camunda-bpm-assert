@@ -216,7 +216,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily execute a job.
-   * @param job 
+   * @param job Job to be executed.
    */
   public static void execute(Job job) {
     if (job == null)
