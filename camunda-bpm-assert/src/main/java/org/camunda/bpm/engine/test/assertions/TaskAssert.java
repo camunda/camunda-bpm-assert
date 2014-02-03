@@ -100,24 +100,21 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   /**
-   * Assertion on the id of the &lt;userTask id="xxx" .../&gt; element in the
+   * Verifies the definition key of a {@link Task}. This key can be found
+   * in the &lt;userTask id="myTaskDefinitionKey" .../&gt; element of the
    * process definition BPMN 2.0 XML file.
-   * 
-   * @param expectedTaskDefinitionKey
-   *          the value of the id attribute in the process definition
-   * 
-   * @return a {@link TaskAssert} that can be further configured before starting
-   *         the process instance
-   * 
-   * @see org.camunda.bpm.engine.task.Task#getTaskDefinitionKey()
+   * @param taskDefinitionKey the expected value of the task/@id attribute
+   * @return this {@link TaskAssert}
    */
-  public TaskAssert hasDefinitionKey(final String expectedTaskDefinitionKey) {
-    isNotNull();
-    final String actualTaskDefinitionKey = actual.getTaskDefinitionKey();
-
-    Assertions.assertThat(actualTaskDefinitionKey)
-        .overridingErrorMessage("Expecting task definitionKey to be '%1$s', but was '%2$s'", expectedTaskDefinitionKey, actualTaskDefinitionKey)
-        .isEqualTo(expectedTaskDefinitionKey);
+  public TaskAssert hasDefinitionKey(final String taskDefinitionKey) {
+    Task current = getExistingCurrent();
+    Assertions.assertThat(taskDefinitionKey).isNotNull();
+    Assertions.assertThat(current.getTaskDefinitionKey())
+      .overridingErrorMessage("Expecting %s to have definition key '%s', but found it to have '%s'!",
+        toString(current),
+        taskDefinitionKey,
+        current.getTaskDefinitionKey()
+      ).isEqualTo(taskDefinitionKey);
     return this;
   }
 
