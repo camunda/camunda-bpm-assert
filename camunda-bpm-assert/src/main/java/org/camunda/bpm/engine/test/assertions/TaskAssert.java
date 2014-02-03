@@ -119,24 +119,19 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   /**
-   * Assertion on the id of the <usertask> element in the process definition
-   * BPMN 2.0 XML file.
-   * 
-   * Please note that the method
-   * {@link org.camunda.bpm.engine.task.Task#getId()} returns the database id of
-   * the task and not the value of the attribute 'id' of the task in the process
-   * definition file.
-   * 
-   * @param id
-   *          the task id
-   * 
-   * @return a {@link TaskAssert} that can be further configured before starting
-   *         the process instance
+   * Verifies the internal id of a {@link Task}.
+   * @param id the expected value of the internal task id
+   * @return this {@link TaskAssert}
    */
   public TaskAssert hasId(final String id) {
-    isNotNull();
-    final String actualId = actual.getId();
-    Assertions.assertThat(actualId).overridingErrorMessage("Expecting task '%s' to have '%s' as id but has '%s'", actual.getName(), actualId, id).isEqualTo(id);
+    Task current = getExistingCurrent();
+    Assertions.assertThat(id).isNotNull();
+    Assertions.assertThat(current.getId())
+      .overridingErrorMessage("Expecting %s to have internal id '%s', but found it to be '%s'!",
+        toString(current),
+        id,
+        current.getId()
+      ).isEqualTo(id);
     return this;
   }
 
