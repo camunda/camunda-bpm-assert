@@ -40,7 +40,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     final String actualId = actual.getId();
     Assertions.assertThat(actualId)
       .overridingErrorMessage(
-        "expecting %s to have id '%s', but found it to be '%s'", 
+        "Expecting %s to have id '%s', but found it to be '%s'", 
         toString(current), expectedId, actualId
       )
       .isEqualTo(expectedId);
@@ -59,7 +59,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     final Date actualDuedate = current.getDuedate();
     Assertions.assertThat(actualDuedate)
       .overridingErrorMessage(
-        "expecting %s to be due at '%s', but found it to be due at '%s'", 
+        "Expecting %s to be due at '%s', but found it to be due at '%s'", 
         toString(current), expectedDueDate, actualDuedate
       )
       .isEqualTo(expectedDueDate);
@@ -78,7 +78,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     final String actualProcessInstanceId = current.getProcessInstanceId();
     Assertions.assertThat(actualProcessInstanceId)
       .overridingErrorMessage(
-        "expecting %s to have process instance id '%s', but found it to be '%s'", 
+        "Expecting %s to have process instance id '%s', but found it to be '%s'", 
         toString(current), expectedProcessInstanceId, actualProcessInstanceId
       )
       .isEqualTo(expectedProcessInstanceId);
@@ -97,7 +97,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     final String actualExecutionId = current.getExecutionId();
     Assertions.assertThat(actualExecutionId)
       .overridingErrorMessage(
-        "expecting %s to have execution id '%s', but found it to be '%s'",
+        "Expecting %s to have execution id '%s', but found it to be '%s'",
         toString(current), expectedExecutionId, actualExecutionId
       )
       .isEqualTo(expectedExecutionId);
@@ -115,7 +115,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     final int actualRetries = current.getRetries();
     Assertions.assertThat(actualRetries)
       .overridingErrorMessage(
-        "expecting %s to have %s retries left, but found %s retries",
+        "Expecting %s to have %s retries left, but found %s retries",
         toString(current), expectedRetries, actualRetries
       )
       .isEqualTo(expectedRetries);
@@ -133,7 +133,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     final String actualExceptionMessage = current.getExceptionMessage();
     Assertions.assertThat(actualExceptionMessage)
       .overridingErrorMessage(
-        "expecting %s to have an exception message, but found it to be null or empty: '%s'",
+        "Expecting %s to have an exception message, but found it to be null or empty: '%s'",
         toString(current), actualExceptionMessage
       )
       .isNotEmpty();
@@ -152,7 +152,7 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     final String actualDeploymentId = current.getDeploymentId();
     Assertions.assertThat(actualDeploymentId)
       .overridingErrorMessage(
-        "expecting %s to have deployment id '%s', but found it to be '%s'",
+        "Expecting %s to have deployment id '%s', but found it to be '%s'",
         toString(current), expectedDeploymentId, actualDeploymentId
       )
       .isEqualTo(expectedDeploymentId);

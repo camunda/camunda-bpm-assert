@@ -30,7 +30,10 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     this.engine = engine;
     setLastAssert(selfType, this);
   }
-  
+
+  /*
+   * Delivers the the actual object under test.
+   */
   public A getActual() {
     return actual;
   }

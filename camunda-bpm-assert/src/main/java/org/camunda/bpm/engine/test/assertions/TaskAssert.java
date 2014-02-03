@@ -38,7 +38,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   public TaskAssert isNotAssigned() {
     Task current = getExistingCurrent();
     Assertions.assertThat(current.getAssignee())
-      .overridingErrorMessage("Expected %s not to be assigned, but found it to be assigned to user '%s'!",
+      .overridingErrorMessage("Expecting %s not to be assigned, but found it to be assigned to user '%s'!",
         toString(current),
         current.getAssignee())
       .isNull();
@@ -55,7 +55,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     Task current = getExistingCurrent();
     Assertions
       .assertThat(current.getAssignee())
-      .overridingErrorMessage("Expected %s to be assigned to user '%s', but found it to be assigned to '%s'!", 
+      .overridingErrorMessage("Expecting %s to be assigned to user '%s', but found it to be assigned to '%s'!", 
         toString(current), 
         userId,
         current.getAssignee())
@@ -74,7 +74,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     final Task current = getExistingCurrent();
     final Task inGroup = taskQuery().taskId(actual.getId()).taskCandidateGroup(candidateGroupId).singleResult();
     Assertions.assertThat(inGroup)
-        .overridingErrorMessage("Expected %s to have candidate group '%s', but found it not to have that candidate group!",
+        .overridingErrorMessage("Expecting %s to have candidate group '%s', but found it not to have that candidate group!",
           toString(current),
           candidateGroupId)
       .isNotNull();
@@ -95,7 +95,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   public TaskAssert hasDueDate(final Date expectedDueDate) {
     isNotNull();
     Assertions.assertThat(actual.getDueDate())
-        .overridingErrorMessage("Expected task '%s' to have '%s' as due date but has '%s'", actual.getName(), expectedDueDate, actual.getDueDate())
+        .overridingErrorMessage("Expecting task '%s' to have '%s' as due date but has '%s'", actual.getName(), expectedDueDate, actual.getDueDate())
         .equals(expectedDueDate);
     return this;
   }
@@ -117,7 +117,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     final String actualTaskDefinitionKey = actual.getTaskDefinitionKey();
 
     Assertions.assertThat(actualTaskDefinitionKey)
-        .overridingErrorMessage("Expected task definitionKey to be '%1$s', but was '%2$s'", expectedTaskDefinitionKey, actualTaskDefinitionKey)
+        .overridingErrorMessage("Expecting task definitionKey to be '%1$s', but was '%2$s'", expectedTaskDefinitionKey, actualTaskDefinitionKey)
         .isEqualTo(expectedTaskDefinitionKey);
     return this;
   }
@@ -140,7 +140,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   public TaskAssert hasId(final String id) {
     isNotNull();
     final String actualId = actual.getId();
-    Assertions.assertThat(actualId).overridingErrorMessage("Expected task '%s' to have '%s' as id but has '%s'", actual.getName(), actualId, id).isEqualTo(id);
+    Assertions.assertThat(actualId).overridingErrorMessage("Expecting task '%s' to have '%s' as id but has '%s'", actual.getName(), actualId, id).isEqualTo(id);
     return this;
   }
 
@@ -158,7 +158,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    */
   public TaskAssert hasName(final String expectedName) {
     isNotNull();
-    Assertions.assertThat(actual.getName()).overridingErrorMessage("Expected task with name '%s', but was '%s'", expectedName, actual.getName())
+    Assertions.assertThat(actual.getName()).overridingErrorMessage("Expecting task with name '%s', but was '%s'", expectedName, actual.getName())
         .isEqualTo(expectedName);
     return this;
   }
@@ -179,7 +179,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     isNotNull();
     final String actualDescription = actual.getDescription();
     Assertions.assertThat(actualDescription)
-        .overridingErrorMessage("Expected task '%s' to have '%s' as name but has '%s'", actual.getName(), expectedDescription, actualDescription)
+        .overridingErrorMessage("Expecting task '%s' to have '%s' as name but has '%s'", actual.getName(), expectedDescription, actualDescription)
         .isEqualTo(expectedDescription);
     return this;
   }

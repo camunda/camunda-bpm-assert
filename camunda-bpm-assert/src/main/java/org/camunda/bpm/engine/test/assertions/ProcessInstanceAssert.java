@@ -36,7 +36,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * at one or more specified activities.
-   * @param activityIds the id's of the activities the process instance is expected to 
+   * @param activityIds the id's of the activities the process instance is Expecting to 
    *                    be waiting at
    * @return this {@link ProcessInstanceAssert}
    */
@@ -47,7 +47,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * at exactly one or more specified activities.
-   * @param activityIds the id's of the activities the process instance is expected to 
+   * @param activityIds the id's of the activities the process instance is Expecting to 
    *                    be waiting at
    * @return this {@link ProcessInstanceAssert}
    */
@@ -58,12 +58,12 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   private ProcessInstanceAssert isWaitingAt(final String[] activityIds, boolean exactly) {
     isNotNull();
     Assertions.assertThat(activityIds)
-      .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s."
+      .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s."
         , Lists.newArrayList(activityIds))
       .isNotNull().isNotEmpty().doesNotContainNull();
     final List<String> activeActivityIds = runtimeService().getActiveActivityIds(actual.getId());
     ListAssert<String> assertion = Assertions.assertThat(activeActivityIds)
-      .overridingErrorMessage("Expected processInstance with id '%s' to be waiting at '%s' but it is actually waiting at %s", actual.getId(),
+      .overridingErrorMessage("Expecting processInstance with id '%s' to be waiting at '%s' but it is actually waiting at %s", actual.getId(),
         Lists.newArrayList(activityIds), activeActivityIds);
     if (exactly) {
       String[] sorted = activityIds.clone();
@@ -78,7 +78,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} has passed one or 
    * more specified activities.
-   * @param activityIds the id's of the activities expected to have been passed    
+   * @param activityIds the id's of the activities Expecting to have been passed    
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassed(final String... activityIds) {
@@ -88,7 +88,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} has passed exactly 
    * one or more specified activities.
-   * @param activityIds the id's of the activities expected to have been passed    
+   * @param activityIds the id's of the activities Expecting to have been passed    
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassedExactly(final String... activityIds) {
@@ -98,7 +98,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   private ProcessInstanceAssert hasPassed(final String[] activityIds, boolean exactly) {
     isNotNull();
     Assertions.assertThat(activityIds)
-      .overridingErrorMessage("expected list of activityIds not to be null, not to be empty and not to contain null values: %s." 
+      .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
         , Lists.newArrayList(activityIds))
       .isNotNull().isNotEmpty().doesNotContainNull();
     List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByActivityId().asc().list();
@@ -106,7 +106,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     for (HistoricActivityInstance instance: finishedInstances) {
       finished.add(instance.getActivityId());
     }
-    final String message = "Expected ProcessInstance { id = '%s' } to have passed activities %s at least once, but actually " +
+    final String message = "Expecting ProcessInstance { id = '%s' } to have passed activities %s at least once, but actually " +
       "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to at least " +
       "'activity' or a higher level before making use of this assertion!)";
     ListAssert<String> assertion = Assertions.assertThat(finished)
@@ -128,7 +128,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   public ProcessInstanceAssert isEnded() {
     isNotNull();
     Assertions.assertThat(processInstanceQuery().singleResult())
-      .overridingErrorMessage("Expected ProcessInstance { id = '%s' } to be ended, but it is not!", actual.getId())
+      .overridingErrorMessage("Expecting ProcessInstance { id = '%s' } to be ended, but it is not!", actual.getId())
       .isNull();
     return this;
   }
@@ -141,7 +141,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   public ProcessInstanceAssert isSuspended() {
     ProcessInstance current = getExistingCurrent();
     Assertions.assertThat(current.isSuspended())
-      .overridingErrorMessage("Expected ProcessInstance { id = '%s' } to be suspended, but it is not!", actual.getId())
+      .overridingErrorMessage("Expecting ProcessInstance { id = '%s' } to be suspended, but it is not!", actual.getId())
       .isTrue();
     return this;
   }
@@ -153,7 +153,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   public ProcessInstanceAssert isNotEnded() {
     ProcessInstance current = getExistingCurrent();
     Assertions.assertThat(current)
-      .overridingErrorMessage("Expected ProcessInstance { id = '%s' } not to be ended, but it is!", actual.getId())
+      .overridingErrorMessage("Expecting ProcessInstance { id = '%s' } not to be ended, but it is!", actual.getId())
       .isNotNull();
     return this;
   }
@@ -168,7 +168,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     isStarted();
     isNotEnded();
     Assertions.assertThat(current.isSuspended())
-      .overridingErrorMessage("Expected ProcessInstance { id = '%s' } not to be suspended, but it is!", actual.getId())
+      .overridingErrorMessage("Expecting ProcessInstance { id = '%s' } not to be suspended, but it is!", actual.getId())
       .isFalse();
     return this;
   }
@@ -183,7 +183,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     if (pi == null) 
       pi = historicProcessInstanceQuery().singleResult();
     Assertions.assertThat(pi)
-      .overridingErrorMessage("Expected ProcessInstance { id = '%s' } to be started, but it is not!", actual.getId())
+      .overridingErrorMessage("Expecting ProcessInstance { id = '%s' } to be started, but it is not!", actual.getId())
       .isNotNull();
     return this;
   }
