@@ -95,24 +95,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} has passed one or 
    * more specified activities.
-   * @param activityIds the id's of the activities Expecting to have been passed    
+   * @param activityIds the id's of the activities expected to have been passed    
    * @return this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassed(final String... activityIds) {
-    return hasPassed(activityIds, false);
-  }
-  
-  /**
-   * Verifies the expectation that the {@link ProcessInstance} has passed exactly 
-   * one or more specified activities.
-   * @param activityIds the id's of the activities Expecting to have been passed    
-   * @return this {@link ProcessInstanceAssert}
-   */
-  public ProcessInstanceAssert hasPassedExactly(final String... activityIds) {
-     return hasPassed(activityIds, true);
-  }
-
-  private ProcessInstanceAssert hasPassed(final String[] activityIds, boolean exactly) {
     isNotNull();
     Assertions.assertThat(activityIds)
       .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
@@ -132,13 +118,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
         Lists.newArrayList(activityIds), 
         Lists.newArrayList(finished)
       );
-    if (exactly) {
-      String[] sorted = activityIds.clone();
-      Arrays.sort(sorted);
-      assertion.containsExactly(sorted);
-    } else {
-      assertion.contains(activityIds);
-    }
+    assertion.contains(activityIds);
     return this;
   }
 
