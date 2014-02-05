@@ -41,7 +41,6 @@
         <signavio:signavioMetaData metaKey="viaitsystem" metaValue=""/>
       </extensionElements>
       <outgoing>sequenceFlow_363</outgoing>
-      <messageEventDefinition id="sid-e1d44160-0a00-4e58-9351-03eb3919cabf" messageRef="sid-3cb3e5f5-137b-4be8-8629-4d2d78cc009d"/>
     </startEvent>
     <serviceTask id="Erfolgsmeldung_senden_316" activiti:expression="#{jobAnnouncementService.notifyAboutPostings(jobAnnouncementId)}" name="Erfolgsmeldung senden" implementation="webService">
       <extensionElements>
