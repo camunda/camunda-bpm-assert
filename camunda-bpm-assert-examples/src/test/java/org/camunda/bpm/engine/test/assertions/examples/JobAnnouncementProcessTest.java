@@ -85,6 +85,14 @@ public class JobAnnouncementProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
     verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
 
+    assertThat(processInstance).hasPassed(
+      "edit", 
+      "review", 
+      "publish", 
+      "publication", 
+      "Erfolgsmeldung_senden_316"
+    );
+
     assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
