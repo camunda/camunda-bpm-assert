@@ -1,6 +1,5 @@
 package org.camunda.bpm.engine.test.assertions;
 
-import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -121,7 +120,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
       public void when() {
         assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_4")).isNotNull();
       }
-    }, ProcessEngineException.class);
+    }, IllegalStateException.class);
   }
 
   @Test
@@ -162,7 +161,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
       public void when() {
         assertThat(processInstance).task("UserTask_4").isNotNull();
       }
-    }, ProcessEngineException.class);
+    }, IllegalStateException.class);
   }
 
 }

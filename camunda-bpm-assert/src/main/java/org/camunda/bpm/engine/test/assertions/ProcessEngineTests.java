@@ -167,17 +167,123 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the last asserted task.
-   * @return the last task used as an object under test of a TaskAssert. 
-   * May return null if no such task exists anymore.
+   * Helper method to easily access the only task currently
+   * available in the context of the last asserted process
+   * instance.
+   *
+   * @return  the only task of the last asserted process
+   *          instance. May return null if no such task exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one task is delivered by the underlying 
+   *          query or in case no process instance was asserted 
+   *          yet.
    */
   public static Task task() {
-    TaskAssert lastAssert = AbstractProcessAssert.getLastAssert(TaskAssert.class);
-    if (lastAssert == null)
-        throw new IllegalStateException("Call a task assertion first -  e.g. assertThat(task)... or assertThat(processInstance).task()...!");
-    return taskService().createTaskQuery().taskId(lastAssert.getActual().getId()).singleResult();
+    return task(taskQuery());
   }
 
+  /**
+   * Helper method to easily access the only task currently 
+   * available in the context of the given process instance.
+   *
+   * @param   processInstance the process instance for which
+   *          a task should be retrieved.
+   * @return  the only task of the process instance. May 
+   *          return null if no such task exists.
+   * @throws  java.lang.IllegalStateException in case more 
+   *          than one task is delivered by the underlying 
+   *          query.
+   */
+  public static Task task(ProcessInstance processInstance) {
+    return task(taskQuery(), processInstance);
+  }
+
+  /**
+   * Helper method to easily access the only task with the 
+   * given taskDefinitionKey currently available in the context 
+   * of the last asserted process instance.
+   * 
+   * @param   taskDefinitionKey the key of the task that should
+   *          be retrieved.                             
+   * @return  the only task of the last asserted process
+   *          instance. May return null if no such task exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one task is delivered by the underlying 
+   *          query or in case no process instance was asserted 
+   *          yet.
+   */
+  public static Task task(String taskDefinitionKey) {
+    assertThat(taskDefinitionKey).isNotNull();
+    return task(taskQuery().taskDefinitionKey(taskDefinitionKey));
+  }
+
+  /**
+   * Helper method to easily access the only task with the 
+   * given taskDefinitionKey currently available in the context 
+   * of the given process instance.
+   *
+   * @param   taskDefinitionKey the key of the task that should
+   *          be retrieved.                             
+   * @param   processInstance the process instance for which
+   *          a task should be retrieved.
+   * @return  the only task of the given process instance. May
+   *          return null if no such task exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one task is delivered by the underlying 
+   *          query.
+   */
+  public static Task task(String taskDefinitionKey, ProcessInstance processInstance) {
+    assertThat(taskDefinitionKey).isNotNull();
+    return task(taskQuery().taskDefinitionKey(taskDefinitionKey), processInstance);
+  }
+
+  /**
+   * Helper method to easily access the only task compliant to 
+   * a given taskQuery and currently available in the context 
+   * of the last asserted process instance.
+   *
+   * @param   taskQuery the query with which the task should
+   *          be retrieved. This query will be further narrowed
+   *          to the last asserted process instance.
+   * @return  the only task of the last asserted process instance 
+   *          and compliant to the given query. May return null 
+   *          in case no such task exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one task is delivered by the underlying 
+   *          query or in case no process instance was asserted 
+   *          yet.
+   */
+  public static Task task(TaskQuery taskQuery) {
+    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
+    if (lastAssert == null)
+      throw new IllegalStateException(
+        "Call a process instance assertion first - " +
+          "e.g. assertThat(processInstance)... !"
+      );
+    return task(taskQuery, lastAssert.getActual());
+  }
+
+  /**
+   * Helper method to easily access the only task compliant to 
+   * a given taskQuery and currently available in the context 
+   * of the given process instance.
+   *
+   * @param   taskQuery the query with which the task should
+   *          be retrieved. This query will be further narrowed
+   *          to the given process instance.
+   * @param   processInstance the process instance for which
+   *          a task should be retrieved.
+   * @return  the only task of the given process instance and 
+   *          compliant to the given query. May return null in 
+   *          case no such task exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one task is delivered by the underlying 
+   *          query.
+   */
+  public static Task task(TaskQuery taskQuery, ProcessInstance processInstance) {
+    return assertThat(processInstance).isNotNull().task(taskQuery).getActual();
+  }
+  
   /**
    * Helper method to easily claim a task for a specific assignee.
    * @param task Task to be claimed for an assignee
