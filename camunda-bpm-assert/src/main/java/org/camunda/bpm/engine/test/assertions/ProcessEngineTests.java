@@ -285,14 +285,20 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
   
   /**
-   * Helper method to easily claim a task for a specific assignee.
-   * @param task Task to be claimed for an assignee
-   * @param assigneeUserId userId of assignee for which the task should be claimed
-   * @return the assigned task - properly refreshed to its assigned state.
+   * Helper method to easily claim a task for a specific 
+   * assignee.
+   * 
+   * @param   task Task to be claimed for an assignee
+   * @param   assigneeUserId userId of assignee for which 
+   *          the task should be claimed
+   * @return  the assigned task - properly refreshed to its 
+   *          assigned state.
    */
   public static Task claim(Task task, String assigneeUserId) {
     if (task == null || assigneeUserId == null)
-      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s', assigneeUserId = '%s') - both must not be null!", task, assigneeUserId));
+      throw new IllegalArgumentException(format("Illegal call " +
+        "of claim(task = '%s', assigneeUserId = '%s') - both must " +
+        "not be null!", task, assigneeUserId));
     taskService().claim(task.getId(), assigneeUserId);
     return taskQuery().taskId(task.getId()).singleResult();
   }
