@@ -30,9 +30,10 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
 
   /**
    * Verifies the expectation of a specific id for the {@link Job}.
-   * @param expectedId the expected job id     
-   * @return this {@link JobAssert}
-   * @see org.camunda.bpm.engine.runtime.Job#getId()
+   * 
+   * @param   expectedId the expected job id     
+   * @return  this {@link JobAssert}
+   * @see     org.camunda.bpm.engine.runtime.Job#getId()
    */
   public JobAssert hasId(final String expectedId) {
     Job current = getExistingCurrent();
@@ -49,9 +50,10 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
 
   /**
    * Verifies the expectation of a specific due date for the {@link Job}.
-   * @param expectedDueDate the expected due date
-   * @return this {@link JobAssert}  
-   * @see org.camunda.bpm.engine.runtime.Job#getDuedate() 
+   * 
+   * @param   expectedDueDate the expected due date
+   * @return  this {@link JobAssert}  
+   * @see     org.camunda.bpm.engine.runtime.Job#getDuedate() 
    */
   public JobAssert hasDueDate(final Date expectedDueDate) {
     Job current = getExistingCurrent();
@@ -68,9 +70,10 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
 
   /**
    * Verifies the expectation of a specific process instance id for the {@link Job}.
-   * @param expectedProcessInstanceId the expected process instance id     
-   * @return this {@link JobAssert}
-   * @see org.camunda.bpm.engine.runtime.Job#getProcessInstanceId()
+   * 
+   * @param   expectedProcessInstanceId the expected process instance id     
+   * @return  this {@link JobAssert}
+   * @see     org.camunda.bpm.engine.runtime.Job#getProcessInstanceId()
    */
   public JobAssert hasProcessInstanceId(final String expectedProcessInstanceId) {
     Job current = getExistingCurrent();
@@ -87,9 +90,10 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
 
   /**
    * Verifies the expectation of a specific execution id for the {@link Job}.
-   * @param expectedExecutionId the expected execution id     
-   * @return this {@link JobAssert}
-   * @see org.camunda.bpm.engine.runtime.Job#getExecutionId()
+   * 
+   * @param   expectedExecutionId the expected execution id     
+   * @return  this {@link JobAssert}
+   * @see     org.camunda.bpm.engine.runtime.Job#getExecutionId()
    */
   public JobAssert hasExecutionId(final String expectedExecutionId) {
     Job current = getExistingCurrent();
@@ -106,9 +110,9 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
 
   /**
    * Verifies the expectation of a specific number of retries left for the {@link Job}.
-   * @param expectedRetries the expected number of retries     
-   * @return this {@link JobAssert}
-   * @see org.camunda.bpm.engine.runtime.Job#getExecutionId()
+   * @param   expectedRetries the expected number of retries     
+   * @return  this {@link JobAssert}
+   * @see     org.camunda.bpm.engine.runtime.Job#getExecutionId()
    */
   public JobAssert hasRetries(final int expectedRetries) {
     Job current = getExistingCurrent();
@@ -124,9 +128,10 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
 
   /**
    * Verifies the expectation of the existence of an exception message 
-   * for the {@link Job} .
-   * @return this {@link JobAssert}
-   * @see org.camunda.bpm.engine.runtime.Job#getExceptionMessage() 
+   * for the {@link Job}.
+   * 
+   * @return  this {@link JobAssert}
+   * @see     org.camunda.bpm.engine.runtime.Job#getExceptionMessage() 
    */
   public JobAssert hasExceptionMessage() {
     Job current = getExistingCurrent();
@@ -142,9 +147,10 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
 
   /**
    * Verifies the expectation of a specific deployment id for the {@link Job}.
-   * @param expectedDeploymentId the expected deployment id     
-   * @return this {@link JobAssert}
-   * @see org.camunda.bpm.engine.runtime.Job#getDeploymentId()
+   * 
+   * @param   expectedDeploymentId the expected deployment id     
+   * @return  this {@link JobAssert}
+   * @see     org.camunda.bpm.engine.runtime.Job#getDeploymentId()
    */
   public JobAssert hasDeploymentId(final String expectedDeploymentId) {
     Job current = getExistingCurrent();
@@ -258,7 +264,8 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
    */
   @Override
   protected ProcessDefinitionQuery processDefinitionQuery() {
-    return super.processDefinitionQuery().processDefinitionId(processInstanceQuery().singleResult().getProcessDefinitionId());
+    return super.processDefinitionQuery()
+      .processDefinitionId(processInstanceQuery().singleResult().getProcessDefinitionId());
   }
   
 }

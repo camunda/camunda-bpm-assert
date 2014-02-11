@@ -29,10 +29,10 @@ public class ProcessEngineAssertions extends Assertions {
    * processEngine is bound yet, init(processEngine) is called with
    * a default process engine.
    *
-   * @return processEngine bound to the current testing thread
-   * @throws IllegalStateException in case a processEngine has not
-   *                               been initialised yet and cannot be initialised with a default
-   *                               engine.
+   * @return  processEngine bound to the current testing thread
+   * @throws  IllegalStateException in case a processEngine has not
+   *          been initialised yet and cannot be initialised with a 
+   *          default engine.
    */
   public static ProcessEngine processEngine() {
     ProcessEngine processEngine = ProcessEngineAssertions.processEngine.get();
@@ -43,15 +43,18 @@ public class ProcessEngineAssertions extends Assertions {
       init(processEngine);
       return processEngine;
     }
-    throw new IllegalStateException(String.format("Call %s.init(ProcessEngine processEngine) first!", ProcessEngineAssertions.class.getSimpleName()));
+    throw new IllegalStateException(
+      String.format("Call %s.init(ProcessEngine processEngine) first!", 
+      ProcessEngineAssertions.class.getSimpleName())
+    );
   }
 
   /**
    * Bind an instance of ProcessEngine to the current testing calls done
    * in your test method.
    *
-   * @param processEngine ProcessEngine which should be bound to the
-   *                      current testing thread.
+   * @param   processEngine ProcessEngine which should be bound to the
+   *          current testing thread.
    */
   public static void init(final ProcessEngine processEngine) {
     ProcessEngineAssertions.processEngine.set(processEngine);
@@ -70,8 +73,8 @@ public class ProcessEngineAssertions extends Assertions {
   /**
    * Assert that... the given ProcessDefinition meets your expecations.
    *
-   * @param actual ProcessDefinition under test
-   * @return Assert object offering ProcessDefinition specific assertions.
+   * @param   actual ProcessDefinition under test
+   * @return  Assert object offering ProcessDefinition specific assertions.
    */
   public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
     return ProcessDefinitionAssert.assertThat(processEngine(), actual);
@@ -80,8 +83,8 @@ public class ProcessEngineAssertions extends Assertions {
   /**
    * Assert that... the given ProcessInstance meets your expecations.
    *
-   * @param actual ProcessInstance under test
-   * @return Assert object offering ProcessInstance specific assertions.
+   * @param   actual ProcessInstance under test
+   * @return  Assert object offering ProcessInstance specific assertions.
    */
   public static ProcessInstanceAssert assertThat(final ProcessInstance actual) {
     return ProcessInstanceAssert.assertThat(processEngine(), actual);
@@ -90,8 +93,8 @@ public class ProcessEngineAssertions extends Assertions {
   /**
    * Assert that... the given Task meets your expecations.
    *
-   * @param actual Task under test
-   * @return Assert object offering Task specific assertions.
+   * @param   actual Task under test
+   * @return  Assert object offering Task specific assertions.
    */
   public static TaskAssert assertThat(final Task actual) {
     return TaskAssert.assertThat(processEngine(), actual);
@@ -100,8 +103,8 @@ public class ProcessEngineAssertions extends Assertions {
   /**
    * Assert that... the given Job meets your expecations.
    *
-   * @param actual Job under test
-   * @return Assert object offering Job specific assertions.
+   * @param   actual Job under test
+   * @return  Assert object offering Job specific assertions.
    */
   public static JobAssert assertThat(final Job actual) {
     return JobAssert.assertThat(processEngine(), actual);

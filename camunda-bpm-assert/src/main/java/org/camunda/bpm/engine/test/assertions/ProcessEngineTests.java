@@ -26,8 +26,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily access RuntimeService
-   * @see org.camunda.bpm.engine.RuntimeService
-   * @return RuntimeService of process engine bound to this testing thread
+   *
+   * @return  RuntimeService of process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.RuntimeService
    */
   public static RuntimeService runtimeService() {
     return processEngine().getRuntimeService();
@@ -35,8 +36,10 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily access AuthorizationService
-   * @see org.camunda.bpm.engine.AuthorizationService
-   * @return AuthorizationService of process engine bound to this testing thread
+   *
+   * @return  AuthorizationService of process engine bound to this 
+   *          testing thread
+   * @see     org.camunda.bpm.engine.AuthorizationService
    */
   public static AuthorizationService authorizationService() {
     return processEngine().getAuthorizationService();
@@ -44,8 +47,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily access FormService
-   * @see org.camunda.bpm.engine.FormService
-   * @return FormService of process engine bound to this testing thread
+   * 
+   * @return  FormService of process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.FormService
    */
   public static FormService formService() {
     return processEngine().getFormService();
@@ -53,8 +57,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily access HistoryService
-   * @see org.camunda.bpm.engine.HistoryService
-   * @return HistoryService of process engine bound to this testing thread
+   *
+   * @return  HistoryService of process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.HistoryService
    */
   public static HistoryService historyService() {
     return processEngine().getHistoryService();
@@ -62,8 +67,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily access IdentityService
-   * @see org.camunda.bpm.engine.IdentityService
-   * @return IdentityService of process engine bound to this testing thread
+   *
+   * @return  IdentityService of process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.IdentityService
    */
   public static IdentityService identityService() {
     return processEngine().getIdentityService();
@@ -71,8 +77,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily access ManagementService
-   * @see org.camunda.bpm.engine.ManagementService
-   * @return ManagementService of process engine bound to this testing thread
+   *
+   * @return  ManagementService of process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.ManagementService
    */
   public static ManagementService managementService() {
     return processEngine().getManagementService();
@@ -80,8 +87,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily access RepositoryService
-   * @see org.camunda.bpm.engine.RepositoryService
-   * @return RepositoryService of process engine bound to this testing thread
+   *
+   * @return  RepositoryService of process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.RepositoryService
    */
   public static RepositoryService repositoryService() {
     return processEngine().getRepositoryService();
@@ -89,8 +97,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily access TaskService
-   * @see org.camunda.bpm.engine.TaskService
-   * @return TaskService of process engine bound to this testing thread
+   *
+   * @return  TaskService of process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.TaskService
    */
   public static TaskService taskService() {
     return processEngine().getTaskService();
@@ -98,8 +107,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily create a new TaskQuery
-   * @see org.camunda.bpm.engine.task.TaskQuery
-   * @return new TaskQuery for process engine bound to this testing thread
+   * 
+   * @return  new TaskQuery for process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.task.TaskQuery
    */
   public static TaskQuery taskQuery() {
     return taskService().createTaskQuery();
@@ -107,8 +117,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily create a new JobQuery
-   * @see org.camunda.bpm.engine.runtime.JobQuery
-   * @return new JobQuery for process engine bound to this testing thread
+   *
+   * @return  new JobQuery for process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.runtime.JobQuery
    */
   public static JobQuery jobQuery() {
     return managementService().createJobQuery();
@@ -116,8 +127,10 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily create a new ProcessInstanceQuery
-   * @see org.camunda.bpm.engine.runtime.ProcessInstanceQuery
-   * @return new ProcessInstanceQuery for process engine bound to this testing thread
+   * 
+   * @return  new ProcessInstanceQuery for process engine bound to this 
+   *          testing thread
+   * @see     org.camunda.bpm.engine.runtime.ProcessInstanceQuery
    */
   public static ProcessInstanceQuery processInstanceQuery() {
     return runtimeService().createProcessInstanceQuery();
@@ -125,8 +138,10 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily create a new ProcessDefinitionQuery
-   * @see org.camunda.bpm.engine.repository.ProcessDefinitionQuery
-   * @return new ProcessDefinitionQuery for process engine bound to this testing thread
+   * 
+   * @return  new ProcessDefinitionQuery for process engine bound to this 
+   *          testing thread
+   * @see     org.camunda.bpm.engine.repository.ProcessDefinitionQuery
    */
   public static ProcessDefinitionQuery processDefinitionQuery() {
     return repositoryService().createProcessDefinitionQuery();
@@ -134,8 +149,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily create a new ExecutionQuery
-   * @see org.camunda.bpm.engine.runtime.ExecutionQuery
-   * @return new ExecutionQuery for process engine bound to this testing thread
+   *
+   * @return  new ExecutionQuery for process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.runtime.ExecutionQuery
    */
   public static ExecutionQuery executionQuery() {
     return runtimeService().createExecutionQuery();
@@ -143,10 +159,13 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily construct a map of process variables
-   * @param key (obligatory) key of first process variable
-   * @param value (obligatory) value of first process variable
-   * @param furtherKeyValuePairs (optional) key/value pairs for further process variables
-   * @return a map of process variables by passing a list of String -> Object key value pairs.
+   * 
+   * @param   key (obligatory) key of first process variable
+   * @param   value (obligatory) value of first process variable
+   * @param   furtherKeyValuePairs (optional) key/value pairs for further 
+   *          process variables
+   * @return  a map of process variables by passing a list of String 
+   *          -> Object key value pairs.
    */
   public static Map<String, Object> withVariables(final String key, final Object value, final Object... furtherKeyValuePairs) {
     if (key == null)
@@ -401,7 +420,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   /**
    * Helper method to easily complete a task.
    * 
-   * @param task Task to be completed 
+   * @param   task Task to be completed 
    */
   public static void complete(Task task) {
     if (task == null)
@@ -411,7 +430,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily execute a job.
-   * @param job Job to be executed.
+   * 
+   * @param   job Job to be executed.
    */
   public static void execute(Job job) {
     if (job == null)

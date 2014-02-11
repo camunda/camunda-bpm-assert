@@ -52,9 +52,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * at one or more specified activities.
-   * @param activityIds the id's of the activities the process instance is Expecting to 
-   *                    be waiting at
-   * @return this {@link ProcessInstanceAssert}
+   * 
+   * @param   activityIds the id's of the activities the process instance is Expecting to 
+   *          be waiting at
+   * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isWaitingAt(final String... activityIds) {
     return isWaitingAt(activityIds, false);
@@ -63,9 +64,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * at exactly one or more specified activities.
-   * @param activityIds the id's of the activities the process instance is Expecting to 
-   *                    be waiting at
-   * @return this {@link ProcessInstanceAssert}
+   * 
+   * @param   activityIds the id's of the activities the process instance is Expecting to 
+   *          be waiting at
+   * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isWaitingAtExactly(final String... activityIds) {
     return isWaitingAt(activityIds, true);
@@ -96,8 +98,9 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} has passed one or 
    * more specified activities.
-   * @param activityIds the id's of the activities expected to have been passed    
-   * @return this {@link ProcessInstanceAssert}
+   * 
+   * @param   activityIds the id's of the activities expected to have been passed    
+   * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassed(final String... activityIds) {
     isNotNull();
@@ -125,7 +128,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
   /**
    * Verifies the expectation that the {@link ProcessInstance} is ended.
-   * @return this {@link ProcessInstanceAssert}
+   * 
+   * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isEnded() {
     isNotNull();
@@ -146,7 +150,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} is currently 
    * suspended.
-   * @return this {@link ProcessInstanceAssert}
+   * 
+   * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isSuspended() {
     ProcessInstance current = getExistingCurrent();
@@ -159,7 +164,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
   /**
    * Verifies the expectation that the {@link ProcessInstance} is not ended.
-   * @return this {@link ProcessInstanceAssert}
+   * 
+   * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isNotEnded() {
     ProcessInstance current = getExistingCurrent();
@@ -173,7 +179,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} is currently active, 
    * iow not suspended and not ended.
-   * @return this {@link ProcessInstanceAssert}
+   * 
+   * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isActive() {
     ProcessInstance current = getExistingCurrent();
@@ -189,7 +196,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   /**
    * Verifies the expectation that the {@link ProcessInstance} is started. This is 
    * also true, in case the process instance already ended.
-   * @return this {@link ProcessInstanceAssert}
+   * 
+   * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isStarted() {
     Object pi = getCurrent();
@@ -206,11 +214,12 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * Enter into a chained task assert inspecting the one and mostly 
    * one task currently available in the context of the process instance
    * under test of this ProcessInstanceAssert.
-   * @return TaskAssert inspecting the only task available. Inspecting a 
-   * 'null' Task in case no such Task is available.
-   * @throws org.camunda.bpm.engine.ProcessEngineException in case more 
-   * than one task is delivered by the query (after being narrowed to 
-   * actual ProcessInstance)
+   * 
+   * @return  TaskAssert inspecting the only task available. Inspecting a 
+   *          'null' Task in case no such Task is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
+   *          than one task is delivered by the query (after being narrowed 
+   *          to actual ProcessInstance)
    */
   public TaskAssert task() {
     return task(taskQuery());
@@ -220,11 +229,14 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * Enter into a chained task assert inspecting the one and mostly 
    * one task of the specified task definition key currently available in the 
    * context of the process instance under test of this ProcessInstanceAssert.
-   * @param taskDefinitionKey definition key narrowing down the search for tasks
-   * @return TaskAssert inspecting the only task available. Inspecting a 
-   * 'null' Task in case no such Task is available.
-   * @throws org.camunda.bpm.engine.ProcessEngineException in case more than one 
-   * task is delivered by the query (after being narrowed to actual ProcessInstance)
+   * 
+   * @param   taskDefinitionKey definition key narrowing down the search for 
+   *          tasks
+   * @return  TaskAssert inspecting the only task available. Inspecting a 
+   *          'null' Task in case no such Task is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than one 
+   *          task is delivered by the query (after being narrowed to actual 
+   *          ProcessInstance)
    */
   public TaskAssert task(String taskDefinitionKey) {
     return task(taskQuery().taskDefinitionKey(taskDefinitionKey));
@@ -236,14 +248,15 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * ProcessInstanceAssert. The query is automatically narrowed down to
    * the actual ProcessInstance under test of this assertion.
    *
-   * @param query TaskQuery further narrowing down the search for tasks
-   * The query is automatically narrowed down to the actual ProcessInstance 
-   * under test of this assertion.
-   * @return TaskAssert inspecting the only task resulting from the given
-   * search. Inspecting a 'null' Task in case no such Task is available.
-   * @throws org.camunda.bpm.engine.ProcessEngineException in case more than 
-   * one task is delivered by the query (after being narrowed to actual 
-   * ProcessInstance)
+   * @param   query TaskQuery further narrowing down the search for tasks
+   *          The query is automatically narrowed down to the actual 
+   *          ProcessInstance under test of this assertion.
+   * @return  TaskAssert inspecting the only task resulting from the given
+   *          search. Inspecting a 'null' Task in case no such Task is 
+   *          available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one task is delivered by the query (after being narrowed to 
+   *          actual ProcessInstance)
    */
   public TaskAssert task(TaskQuery query) {
     if (query == null)
