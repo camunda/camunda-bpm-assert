@@ -64,7 +64,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
       public void when() {
         assertThat(processInstance).job(jobQuery().executable()).isNotNull();
       }
-    }, IllegalStateException.class);
+    }, ProcessEngineException.class);
   }
 
 }

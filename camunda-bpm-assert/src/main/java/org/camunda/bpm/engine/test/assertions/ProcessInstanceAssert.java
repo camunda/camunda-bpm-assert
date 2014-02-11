@@ -208,8 +208,9 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * under test of this ProcessInstanceAssert.
    * @return TaskAssert inspecting the only task available. Inspecting a 
    * 'null' Task in case no such Task is available.
-   * @throws java.lang.IllegalStateException in case more than one task is 
-   * delivered by the query (after being narrowed to actual ProcessInstance)
+   * @throws org.camunda.bpm.engine.ProcessEngineException in case more 
+   * than one task is delivered by the query (after being narrowed to 
+   * actual ProcessInstance)
    */
   public TaskAssert task() {
     return task(taskQuery());
@@ -222,8 +223,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @param taskDefinitionKey definition key narrowing down the search for tasks
    * @return TaskAssert inspecting the only task available. Inspecting a 
    * 'null' Task in case no such Task is available.
-   * @throws java.lang.IllegalStateException in case more than one task is 
-   * delivered by the query (after being narrowed to actual ProcessInstance)
+   * @throws org.camunda.bpm.engine.ProcessEngineException in case more than one 
+   * task is delivered by the query (after being narrowed to actual ProcessInstance)
    */
   public TaskAssert task(String taskDefinitionKey) {
     return task(taskQuery().taskDefinitionKey(taskDefinitionKey));
@@ -240,19 +241,16 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * under test of this assertion.
    * @return TaskAssert inspecting the only task resulting from the given
    * search. Inspecting a 'null' Task in case no such Task is available.
-   * @throws java.lang.IllegalStateException in case more than one task is 
-   * delivered by the query (after being narrowed to actual ProcessInstance)
+   * @throws org.camunda.bpm.engine.ProcessEngineException in case more than 
+   * one task is delivered by the query (after being narrowed to actual 
+   * ProcessInstance)
    */
   public TaskAssert task(TaskQuery query) {
     if (query == null)
       throw new IllegalArgumentException("Illegal call of task(query = 'null') - but must not be null!");
     isNotNull();
     TaskQuery narrowed = query.processInstanceId(actual.getId());
-    try {
-      return TaskAssert.assertThat(engine, narrowed.singleResult());
-    } catch (ProcessEngineException e) {
-      throw new IllegalStateException(e);
-    }
+    return TaskAssert.assertThat(engine, narrowed.singleResult());
   }
 
   /**
@@ -262,8 +260,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * 
    * @return  JobAssert inspecting the only job available. Inspecting 
    *          a 'null' Job in case no such Job is available.
-   * @throws  java.lang.IllegalStateException in case more than one 
-   *          task is delivered by the query (after being narrowed 
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
+   *          than one task is delivered by the query (after being narrowed 
    *          to actual ProcessInstance)
    */
   public JobAssert job() {
@@ -282,20 +280,16 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return  TaskAssert inspecting the only task resulting from the 
    *          given search. Inspecting a 'null' Task in case no such Task 
    *          is available.
-   * @throws  java.lang.IllegalStateException in case more than one task 
-   *          is delivered by the query (after being narrowed to actual 
-   *          ProcessInstance)
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
+   *          than one task is delivered by the query (after being narrowed 
+   *          to actual ProcessInstance)
    */
   public JobAssert job(JobQuery query) {
     if (query == null)
       throw new IllegalArgumentException("Illegal call of job(query = 'null') - but must not be null!");
     isNotNull();
     JobQuery narrowed = query.processInstanceId(actual.getId());
-    try {
-      return JobAssert.assertThat(engine, narrowed.singleResult());
-    } catch (ProcessEngineException e) {
-      throw new IllegalStateException(e);
-    }
+    return JobAssert.assertThat(engine, narrowed.singleResult());
   }
 
   /* TaskQuery, automatically narrowed to actual {@link ProcessInstance} */

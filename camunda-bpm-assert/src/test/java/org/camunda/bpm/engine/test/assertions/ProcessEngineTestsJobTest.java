@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
+import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -92,7 +93,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
       public void when() {
         job();
       }
-    }, IllegalStateException.class);
+    }, ProcessEngineException.class);
   }
 
   @Test
@@ -161,7 +162,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
       public void when() {
         job(jobQuery());
       }
-    }, IllegalStateException.class);
+    }, ProcessEngineException.class);
   }
 
   @Test
@@ -204,7 +205,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
       public void when() {
         job(processInstance);
       }
-    }, IllegalStateException.class);
+    }, ProcessEngineException.class);
   }
 
   @Test
@@ -247,7 +248,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
       public void when() {
         job(jobQuery(), processInstance);
       }
-    }, IllegalStateException.class);
+    }, ProcessEngineException.class);
   }
 
 }
