@@ -283,7 +283,86 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   public static Task task(TaskQuery taskQuery, ProcessInstance processInstance) {
     return assertThat(processInstance).isNotNull().task(taskQuery).getActual();
   }
-  
+
+  /**
+   * Helper method to easily access the only job currently
+   * available in the context of the last asserted process
+   * instance.
+   *
+   * @return  the only job of the last asserted process
+   *          instance. May return null if no such job exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one job is delivered by the underlying 
+   *          query or in case no process instance was asserted 
+   *          yet.
+   */
+  public static Job job() {
+    return job(jobQuery());
+  }
+
+  /**
+   * Helper method to easily access the only job currently 
+   * available in the context of the given process instance.
+   *
+   * @param   processInstance the process instance for which
+   *          a job should be retrieved.
+   * @return  the only job of the process instance. May 
+   *          return null if no such task exists.
+   * @throws  java.lang.IllegalStateException in case more 
+   *          than one job is delivered by the underlying 
+   *          query.
+   */
+  public static Job job(ProcessInstance processInstance) {
+    return job(jobQuery(), processInstance);
+  }
+
+  /**
+   * Helper method to easily access the only job compliant to 
+   * a given jobQuery and currently available in the context 
+   * of the last asserted process instance.
+   *
+   * @param   jobQuery the query with which the job should
+   *          be retrieved. This query will be further narrowed
+   *          to the last asserted process instance.
+   * @return  the only job of the last asserted process instance 
+   *          and compliant to the given query. May return null 
+   *          in case no such task exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one job is delivered by the underlying 
+   *          query or in case no process instance was asserted 
+   *          yet.
+   */
+  public static Job job(JobQuery jobQuery) {
+    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
+    if (lastAssert == null)
+      throw new IllegalStateException(
+        "Call a process instance assertion first - " +
+          "e.g. assertThat(processInstance)... !"
+      );
+    return job(jobQuery, lastAssert.getActual());
+  }
+
+  /**
+   * Helper method to easily access the only job compliant to 
+   * a given jobQuery and currently available in the context 
+   * of the given process instance.
+   *
+   * @param   jobQuery the query with which the job should
+   *          be retrieved. This query will be further narrowed
+   *          to the given process instance.
+   * @param   processInstance the process instance for which
+   *          a job should be retrieved.
+   * @return  the only job of the given process instance and 
+   *          compliant to the given query. May return null in 
+   *          case no such job exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one job is delivered by the underlying 
+   *          query.
+   */
+  public static Job job(JobQuery jobQuery, ProcessInstance processInstance) {
+    return assertThat(processInstance).isNotNull().job(jobQuery).getActual();
+  }
+
   /**
    * Helper method to easily claim a task for a specific 
    * assignee.

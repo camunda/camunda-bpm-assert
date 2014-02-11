@@ -22,7 +22,8 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Making assertions on a specific task of an instance](#helpers-task-taskquery)
    * [Making assertions on the only job of an instance](#helpers-job)
    * [Making assertions on a specific jobs of an instance](#helpers-job-jobquery)
-   * [Accessing last asserted task](#helpers-task-last)
+   * [Accessing tasks in the context of a process instance under test](#helpers-task-last)
+   * [Accessing jobs in the context of a process instance under test](#helpers-job-last)
    
  * [Advanced Usage](#advanced)
    * [Using a non-default process engine](#non-default-engine)
@@ -365,14 +366,17 @@ assertThat(processInstance).job(jobQuery().executionId(executionId)).hasRetries(
 ```
 
 <a name="helpers-task-last"/>
-#### Accessing the last task under test of an assertion
+#### Accessing tasks in the context of a process instance under test
 
-You can directly access the last asserted task by means of a static helper method task():
+You can directly access tasks in the context of the last asserted process 
+instance by means of static helper methods:
 
 ```java
-assertThat(processInstance).task().hasDefinitionKey("review-and-approve")
+assertThat(processInstance).isNotNull();
 ...
-Task lastAsserted = task();
+Task onlyTaskOflastAssertedProcessInstance = task();
+Task someTaskOflastAssertedProcessInstance = task("review-and-approve");
+Task sameTaskOflastAssertedProcessInstance = task(taskQuery().taskDefinitionKey("review-and-approve"));
 ```
   
 You can therefore e.g. write ...
@@ -380,6 +384,26 @@ You can therefore e.g. write ...
 ```java
 assertThat(processInstance).task().hasDefinitionKey("review-and-approve");
 complete(task(), withVariables("documentId", 5, "approved", true)); 
+```
+
+<a name="helpers-job-last"/>
+#### Accessing jobs in the context of a process instance under test
+
+You can directly access jobs in the context of the last asserted process 
+instance by means of static helper methods:
+
+```java
+assertThat(processInstance).isNotNull();
+...
+Job onlyJobOflastAssertedProcessInstance = job();
+Job someJobOflastAssertedProcessInstance = job(jobQuery().executionId(executionId));
+```
+  
+You can therefore e.g. write ...
+
+```java
+assertThat(processInstance).job().isNotNull();
+execute(job()); 
 ```
 
 <a name="advanced"/>
