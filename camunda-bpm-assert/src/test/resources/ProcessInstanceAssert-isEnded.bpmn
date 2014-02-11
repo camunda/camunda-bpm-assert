@@ -15,7 +15,7 @@
     <sequenceFlow id="SequenceFlow_8" name="" sourceRef="UserTask_1" targetRef="EndEvent_1"/>
   </process>
   <bpmndi:BPMNDiagram id="sid-830c5f5e-90b8-4b10-84fa-0fe5d466f2d0">
-    <bpmndi:BPMNPlane id="sid-c40130ce-08e6-4f67-ae3d-774a7f6a3ead" bpmnElement="ProcessInstanceAssert-isWaitingAt">
+    <bpmndi:BPMNPlane id="sid-c40130ce-08e6-4f67-ae3d-774a7f6a3ead" bpmnElement="ProcessInstanceAssert-isEnded">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <omgdc:Bounds height="28.0" width="28.0" x="106.0" y="111.0"/>
       </bpmndi:BPMNShape>
