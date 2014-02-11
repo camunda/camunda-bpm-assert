@@ -304,11 +304,14 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily complete a task and pass some process variables. 
-   * @param task Task to be completed 
-   * @param variables Process variables to be passed to the process instance when 
-   *                  completing the task. For setting those variables, you can use 
-   *                  withVariables(String key, Object value, ...)
+   * Helper method to easily complete a task and pass some 
+   * process variables. 
+   * 
+   * @param   task Task to be completed 
+   * @param   variables Process variables to be passed to the 
+   *          process instance when completing the task. For 
+   *          setting those variables, you can use 
+   *          withVariables(String key, Object value, ...)
    */
   public static void complete(Task task, Map<String, Object> variables) {
     if (task == null || variables == null)
@@ -318,6 +321,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily complete a task.
+   * 
    * @param task Task to be completed 
    */
   public static void complete(Task task) {
