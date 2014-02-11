@@ -255,6 +255,49 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     }
   }
 
+  /**
+   * Enter into a chained job assert inspecting the one and mostly 
+   * one job currently available in the context of the process 
+   * instance under test of this ProcessInstanceAssert.
+   * 
+   * @return  JobAssert inspecting the only job available. Inspecting 
+   *          a 'null' Job in case no such Job is available.
+   * @throws  java.lang.IllegalStateException in case more than one 
+   *          task is delivered by the query (after being narrowed 
+   *          to actual ProcessInstance)
+   */
+  public JobAssert job() {
+    return job(jobQuery());
+  }
+
+  /**
+   * Enter into a chained job assert inspecting only tasks currently
+   * available in the context of the process instance under test of this
+   * ProcessInstanceAssert. The query is automatically narrowed down to
+   * the actual ProcessInstance under test of this assertion.
+   *
+   * @param   query JobQuery further narrowing down the search for 
+   *          jobs. The query is automatically narrowed down to the 
+   *          actual ProcessInstance under test of this assertion.
+   * @return  TaskAssert inspecting the only task resulting from the 
+   *          given search. Inspecting a 'null' Task in case no such Task 
+   *          is available.
+   * @throws  java.lang.IllegalStateException in case more than one task 
+   *          is delivered by the query (after being narrowed to actual 
+   *          ProcessInstance)
+   */
+  public JobAssert job(JobQuery query) {
+    if (query == null)
+      throw new IllegalArgumentException("Illegal call of job(query = 'null') - but must not be null!");
+    isNotNull();
+    JobQuery narrowed = query.processInstanceId(actual.getId());
+    try {
+      return JobAssert.assertThat(engine, narrowed.singleResult());
+    } catch (ProcessEngineException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
   /* TaskQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected TaskQuery taskQuery() {

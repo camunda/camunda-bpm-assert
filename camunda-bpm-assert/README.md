@@ -20,6 +20,8 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Accessing engine and engine API services](#helpers-services)
    * [Making assertions on the only task of an instance](#helpers-task)
    * [Making assertions on a specific task of an instance](#helpers-task-taskquery)
+   * [Making assertions on the only job of an instance](#helpers-job)
+   * [Making assertions on a specific jobs of an instance](#helpers-job-jobquery)
    * [Accessing last asserted task](#helpers-task-last)
    
  * [Advanced Usage](#advanced)
@@ -328,6 +330,38 @@ assertThat(processInstance).task(taskQuery().taskAssignee("fozzie"));
 
 ```java
 assertThat(processInstance).task(taskQuery().taskAssignee("fozzie")).isAssignedTo("fozzie");
+```
+
+<a name="helpers-job"/>
+#### Making assertions on the only job of an instance
+ 
+You can retrieve a "chained" job assert inspecting the one and only 
+one job currently available in the context of a process instance...
+
+```java
+assertThat(processInstance).job();
+```
+
+... in order to directly make assertions on it, e.g. 
+
+```java
+assertThat(processInstance).job().hasRetries(0);
+```
+
+<a name="helpers-job-jobquery"/>
+#### Making assertions on a specific job of an instance
+
+You can retrieve a "chained" job assert inspecting a very specific job currently 
+available in the context of a process instance...
+
+```java
+assertThat(processInstance).job(jobQuery().executionId(executionId));
+```
+
+... in order to directly make assertions on it, e.g. 
+
+```java
+assertThat(processInstance).job(jobQuery().executionId(executionId)).hasRetries(0);
 ```
 
 <a name="helpers-task-last"/>
