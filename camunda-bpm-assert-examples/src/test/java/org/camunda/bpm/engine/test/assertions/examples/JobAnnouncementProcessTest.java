@@ -90,7 +90,7 @@ public class JobAnnouncementProcessTest {
       "review", 
       "publish", 
       "publication", 
-      "Erfolgsmeldung_senden_316"
+      "mail"
     );
 
     assertThat(processInstance).isEnded();

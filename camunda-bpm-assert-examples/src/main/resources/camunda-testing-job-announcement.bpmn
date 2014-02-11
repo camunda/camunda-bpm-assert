@@ -15,7 +15,7 @@
           <signavio:signavioMetaData metaKey="bgcolor" metaValue=""/>
         </extensionElements>
         <flowNodeRef>Freie_Stelle_gemeldet_303</flowNodeRef>
-        <flowNodeRef>Erfolgsmeldung_senden_316</flowNodeRef>
+        <flowNodeRef>mail</flowNodeRef>
         <flowNodeRef>Stelle_ausgeschrieben_323</flowNodeRef>
         <flowNodeRef>publication</flowNodeRef>
       </lane>
@@ -42,7 +42,7 @@
       </extensionElements>
       <outgoing>sequenceFlow_363</outgoing>
     </startEvent>
-    <serviceTask id="Erfolgsmeldung_senden_316" activiti:expression="#{jobAnnouncementService.notifyAboutPostings(jobAnnouncementId)}" name="Erfolgsmeldung senden" implementation="webService">
+    <serviceTask id="mail" activiti:expression="#{jobAnnouncementService.notifyAboutPostings(jobAnnouncementId)}" name="Erfolgsmeldung senden" implementation="webService">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
         <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
@@ -117,9 +117,9 @@
     </userTask>
     <sequenceFlow id="sequenceFlow_365" name="" isImmediate="true" sourceRef="review" targetRef="OK__335"/>
     <sequenceFlow id="sequenceFlow_364" name="" isImmediate="true" sourceRef="edit" targetRef="review"/>
-    <sequenceFlow id="sequenceFlow_369" name="" isImmediate="true" sourceRef="Erfolgsmeldung_senden_316" targetRef="Stelle_ausgeschrieben_323"/>
+    <sequenceFlow id="sequenceFlow_369" name="" isImmediate="true" sourceRef="mail" targetRef="Stelle_ausgeschrieben_323"/>
     <sequenceFlow id="sequenceFlow_367" name="" isImmediate="true" sourceRef="publish" targetRef="publication"/>
-    <sequenceFlow id="sequenceFlow_368" name="" isImmediate="true" sourceRef="publication" targetRef="Erfolgsmeldung_senden_316"/>
+    <sequenceFlow id="sequenceFlow_368" name="" isImmediate="true" sourceRef="publication" targetRef="mail"/>
     <sequenceFlow id="sequenceFlow_363" name="" isImmediate="true" sourceRef="Freie_Stelle_gemeldet_303" targetRef="edit"/>
     <sequenceFlow id="sequenceFlow_366" name="" isImmediate="true" sourceRef="correct" targetRef="review"/>
     <sequenceFlow id="ja_371" name="Ja" isImmediate="true" sourceRef="OK__335" targetRef="publish">
@@ -146,7 +146,7 @@
       <bpmndi:BPMNShape id="Freie_Stelle_gemeldet_303_gui" bpmnElement="Freie_Stelle_gemeldet_303" isHorizontal="true">
         <omgdc:Bounds height="30.0" width="30.0" x="88.49999" y="90.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Erfolgsmeldung_senden_316_gui" bpmnElement="Erfolgsmeldung_senden_316" isHorizontal="true">
+      <bpmndi:BPMNShape id="mail_gui" bpmnElement="mail" isHorizontal="true">
         <omgdc:Bounds height="79.0" width="111.0" x="1099.0" y="62.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Stelle_ausgeschrieben_323_gui" bpmnElement="Stelle_ausgeschrieben_323" isHorizontal="true">
@@ -204,7 +204,7 @@
         <omgdi:waypoint xsi:type="omgdc:Point" x="304.79" y="514.26666"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="345.0" y="514.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="sequenceFlow_369_gui" bpmnElement="sequenceFlow_369" sourceElement="Erfolgsmeldung_senden_316_gui" targetElement="Stelle_ausgeschrieben_323_gui">
+      <bpmndi:BPMNEdge id="sequenceFlow_369_gui" bpmnElement="sequenceFlow_369" sourceElement="mail_gui" targetElement="Stelle_ausgeschrieben_323_gui">
         <omgdi:waypoint xsi:type="omgdc:Point" x="1210.0" y="102.0"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="1256.0" y="102.0"/>
       </bpmndi:BPMNEdge>
@@ -214,7 +214,7 @@
         <omgdi:waypoint xsi:type="omgdc:Point" x="908.5" y="102.0"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="943.0" y="102.0"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="sequenceFlow_368_gui" bpmnElement="sequenceFlow_368" sourceElement="publication_gui" targetElement="Erfolgsmeldung_senden_316_gui">
+      <bpmndi:BPMNEdge id="sequenceFlow_368_gui" bpmnElement="sequenceFlow_368" sourceElement="publication_gui" targetElement="mail_gui">
         <omgdi:waypoint xsi:type="omgdc:Point" x="1054.0" y="102.0"/>
         <omgdi:waypoint xsi:type="omgdc:Point" x="1099.0" y="101.0"/>
       </bpmndi:BPMNEdge>

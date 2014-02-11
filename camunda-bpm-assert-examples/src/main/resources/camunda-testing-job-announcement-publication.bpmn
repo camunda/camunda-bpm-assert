@@ -7,7 +7,7 @@
       </extensionElements>
       <outgoing>sequenceFlow_68</outgoing>
     </startEvent>
-    <serviceTask id="Anzeige_auf_Firmenwebsite_publizieren_5" activiti:expression="#{jobAnnouncementService.postToWebsite(jobAnnouncementId)}" name="Anzeige auf Firmenwebsite publizieren" implementation="webService">
+    <serviceTask id="Anzeige_auf_Firmenwebsite_publizieren" activiti:expression="#{jobAnnouncementService.postToWebsite(jobAnnouncementId)}" name="Anzeige auf Firmenwebsite publizieren" implementation="webService">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
         <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
@@ -33,7 +33,7 @@
       <outgoing>sequenceFlow_69</outgoing>
       <outgoing>sequenceFlow_73</outgoing>
     </exclusiveGateway>
-    <serviceTask id="Anzeige_auf_Twitter_publizieren_50" activiti:expression="#{jobAnnouncementService.postToTwitter(jobAnnouncementId)}" name="Anzeige auf Twitter publizieren" implementation="webService">
+    <serviceTask id="Anzeige_auf_Twitter_publizieren" activiti:expression="#{jobAnnouncementService.postToTwitter(jobAnnouncementId)}" name="Anzeige auf Twitter publizieren" implementation="webService">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
         <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
@@ -66,7 +66,7 @@
       <incoming>sequenceFlow_74</incoming>
       <outgoing>sequenceFlow_75</outgoing>
     </exclusiveGateway>
-    <serviceTask id="Anzeige_auf_Facebook_Page_publizieren_31" activiti:expression="#{jobAnnouncementService.postToFacebook(jobAnnouncementId)}" name="Anzeige auf Facebook Page publizieren" implementation="webService">
+    <serviceTask id="Anzeige_auf_Facebook_Page_publizieren" activiti:expression="#{jobAnnouncementService.postToFacebook(jobAnnouncementId)}" name="Anzeige auf Facebook Page publizieren" implementation="webService">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
         <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
@@ -90,22 +90,22 @@
       </extensionElements>
       <incoming>sequenceFlow_76</incoming>
     </endEvent>
-    <sequenceFlow id="sequenceFlow_77" name="Ja" isImmediate="true" sourceRef="Facebook_gew_hlt__18" targetRef="Anzeige_auf_Facebook_Page_publizieren_31">
+    <sequenceFlow id="sequenceFlow_77" name="Ja" isImmediate="true" sourceRef="Facebook_gew_hlt__18" targetRef="Anzeige_auf_Facebook_Page_publizieren">
       <conditionExpression xsi:type="tFormalExpression" id="sid-54b51d6e-8673-42c5-8d8d-14435a8064bb">#{facebook}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sequenceFlow_80" name="" isImmediate="true" sourceRef="exclusiveGateway_44" targetRef="parallelGateway_38"/>
-    <sequenceFlow id="sequenceFlow_68" name="" isImmediate="true" sourceRef="startEvent_1" targetRef="Anzeige_auf_Firmenwebsite_publizieren_5"/>
+    <sequenceFlow id="sequenceFlow_68" name="" isImmediate="true" sourceRef="startEvent_1" targetRef="Anzeige_auf_Firmenwebsite_publizieren"/>
     <sequenceFlow id="sequenceFlow_79" name="" isImmediate="true" sourceRef="parallelGateway_12" targetRef="Twitter_gew_hlt__57"/>
-    <sequenceFlow id="sequenceFlow_70" name="" isImmediate="true" sourceRef="Anzeige_auf_Twitter_publizieren_50" targetRef="exclusiveGateway_44"/>
+    <sequenceFlow id="sequenceFlow_70" name="" isImmediate="true" sourceRef="Anzeige_auf_Twitter_publizieren" targetRef="exclusiveGateway_44"/>
     <sequenceFlow id="sequenceFlow_72" name="" isImmediate="true" sourceRef="parallelGateway_12" targetRef="Facebook_gew_hlt__18"/>
-    <sequenceFlow id="sequenceFlow_78" name="" isImmediate="true" sourceRef="Anzeige_auf_Facebook_Page_publizieren_31" targetRef="exclusiveGateway_25"/>
+    <sequenceFlow id="sequenceFlow_78" name="" isImmediate="true" sourceRef="Anzeige_auf_Facebook_Page_publizieren" targetRef="exclusiveGateway_25"/>
     <sequenceFlow id="sequenceFlow_76" name="" isImmediate="true" sourceRef="parallelGateway_38" targetRef="endEvent_64"/>
-    <sequenceFlow id="sequenceFlow_71" name="" isImmediate="true" sourceRef="Anzeige_auf_Firmenwebsite_publizieren_5" targetRef="parallelGateway_12"/>
+    <sequenceFlow id="sequenceFlow_71" name="" isImmediate="true" sourceRef="Anzeige_auf_Firmenwebsite_publizieren" targetRef="parallelGateway_12"/>
     <sequenceFlow id="sequenceFlow_75" name="" isImmediate="true" sourceRef="exclusiveGateway_25" targetRef="parallelGateway_38"/>
     <sequenceFlow id="sequenceFlow_74" name="Nein" isImmediate="true" sourceRef="Facebook_gew_hlt__18" targetRef="exclusiveGateway_25">
       <conditionExpression xsi:type="tFormalExpression" id="sid-9c263286-a99e-40b4-970e-e4e28e7644a0">#{!facebook}</conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="sequenceFlow_69" name="Ja" isImmediate="true" sourceRef="Twitter_gew_hlt__57" targetRef="Anzeige_auf_Twitter_publizieren_50">
+    <sequenceFlow id="sequenceFlow_69" name="Ja" isImmediate="true" sourceRef="Twitter_gew_hlt__57" targetRef="Anzeige_auf_Twitter_publizieren">
       <conditionExpression xsi:type="tFormalExpression" id="sid-c6f170b1-aaf9-446d-963a-d9db89ae6250">#{twitter}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sequenceFlow_73" name="Nein" isImmediate="true" sourceRef="Twitter_gew_hlt__57" targetRef="exclusiveGateway_44">
@@ -120,7 +120,7 @@
       <bpmndi:BPMNShape id="startEvent_1_gui" bpmnElement="startEvent_1">
         <omgdc:Bounds height="30.0" width="30.0" x="106.0" y="171.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Anzeige_auf_Firmenwebsite_publizieren_5_gui" bpmnElement="Anzeige_auf_Firmenwebsite_publizieren_5">
+      <bpmndi:BPMNShape id="Anzeige_auf_Firmenwebsite_publizieren_gui" bpmnElement="Anzeige_auf_Firmenwebsite_publizieren">
         <omgdc:Bounds height="80.0" width="100.0" x="180.0" y="145.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="parallelGateway_12_gui" bpmnElement="parallelGateway_12">
@@ -129,7 +129,7 @@
       <bpmndi:BPMNShape id="Twitter_gew_hlt__57_gui" bpmnElement="Twitter_gew_hlt__57" isMarkerVisible="true">
         <omgdc:Bounds height="40.0" width="40.0" x="420.0" y="110.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Anzeige_auf_Twitter_publizieren_50_gui" bpmnElement="Anzeige_auf_Twitter_publizieren_50">
+      <bpmndi:BPMNShape id="Anzeige_auf_Twitter_publizieren_gui" bpmnElement="Anzeige_auf_Twitter_publizieren">
         <omgdc:Bounds height="80.0" width="100.0" x="522.0" y="90.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="exclusiveGateway_44_gui" bpmnElement="exclusiveGateway_44" isMarkerVisible="true">
@@ -141,7 +141,7 @@
       <bpmndi:BPMNShape id="exclusiveGateway_25_gui" bpmnElement="exclusiveGateway_25" isMarkerVisible="true">
         <omgdc:Bounds height="40.0" width="40.0" x="680.0" y="215.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Anzeige_auf_Facebook_Page_publizieren_31_gui" bpmnElement="Anzeige_auf_Facebook_Page_publizieren_31">
+      <bpmndi:BPMNShape id="Anzeige_auf_Facebook_Page_publizieren_gui" bpmnElement="Anzeige_auf_Facebook_Page_publizieren">
         <omgdc:Bounds height="80.0" width="100.0" x="522.0" y="195.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Facebook_gew_hlt__18_gui" bpmnElement="Facebook_gew_hlt__18" isMarkerVisible="true">

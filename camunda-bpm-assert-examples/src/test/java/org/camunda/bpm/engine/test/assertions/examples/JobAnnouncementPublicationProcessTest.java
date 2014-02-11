@@ -60,7 +60,7 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService, never()).postToFacebook(any(Long.class));
 
     assertThat(processInstance).hasPassed(
-      "Anzeige_auf_Firmenwebsite_publizieren_5"
+      "Anzeige_auf_Firmenwebsite_publizieren"
     );
 
     assertThat(processInstance).isEnded();
@@ -87,8 +87,8 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService, never()).postToFacebook(any(Long.class));
 
     assertThat(processInstance).hasPassed(
-      "Anzeige_auf_Firmenwebsite_publizieren_5",
-      "Anzeige_auf_Twitter_publizieren_50"
+      "Anzeige_auf_Firmenwebsite_publizieren",
+      "Anzeige_auf_Twitter_publizieren"
     );
 
     assertThat(processInstance).isEnded();
@@ -115,8 +115,8 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 
     assertThat(processInstance).hasPassed(
-      "Anzeige_auf_Firmenwebsite_publizieren_5",
-      "Anzeige_auf_Facebook_Page_publizieren_31"
+      "Anzeige_auf_Firmenwebsite_publizieren",
+      "Anzeige_auf_Facebook_Page_publizieren"
     );
 
     assertThat(processInstance).isEnded();
@@ -143,9 +143,9 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 
     assertThat(processInstance).hasPassed(
-      "Anzeige_auf_Firmenwebsite_publizieren_5",
-      "Anzeige_auf_Twitter_publizieren_50",
-      "Anzeige_auf_Facebook_Page_publizieren_31"
+      "Anzeige_auf_Firmenwebsite_publizieren",
+      "Anzeige_auf_Twitter_publizieren",
+      "Anzeige_auf_Facebook_Page_publizieren"
     );
     
     assertThat(processInstance).isEnded();
