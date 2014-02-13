@@ -282,7 +282,42 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
-   * Enter into a chained job assert inspecting only tasks currently
+   * Enter into a chained task assert inspecting the one and mostly 
+   * one task of the specified task definition key currently available in the 
+   * context of the process instance under test of this ProcessInstanceAssert.
+   *
+   * @param   activityId id narrowing down the search for jobs
+   * @return  JobAssert inspecting the retrieved job. Inspecting a 
+   *          'null' Task in case no such Job is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than one 
+   *          job is delivered by the query (after being narrowed to actual 
+   *          ProcessInstance)
+   */
+  public JobAssert job(String activityId) {
+    Execution execution = executionQuery().activityId(activityId).active().singleResult();
+    return JobAssert.assertThat(
+      engine,
+      execution != null ? jobQuery().executionId(execution.getId()).singleResult() : null
+    );
+  }
+
+  private Job job(ActivityInstance activityInstance, String activityId) {
+    for(Job job: jobQuery().list()) {
+      
+    }
+    
+    if (activityInstance.getActivityId().equals(activityId))
+      return jobQuery().executionId(activityInstance.getExecutionIds()[0]).singleResult();
+    for (ActivityInstance nextActivityInstance: Lists.newArrayList(activityInstance.getChildActivityInstances())) {
+      Job job = job(nextActivityInstance, activityId);
+      if (job != null)
+        return job;
+    }
+    return null;
+  }
+
+  /**
+   * Enter into a chained job assert inspecting only jobs currently
    * available in the context of the process instance under test of this
    * ProcessInstanceAssert. The query is automatically narrowed down to
    * the actual ProcessInstance under test of this assertion.
@@ -290,11 +325,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @param   query JobQuery further narrowing down the search for 
    *          jobs. The query is automatically narrowed down to the 
    *          actual ProcessInstance under test of this assertion.
-   * @return  TaskAssert inspecting the only task resulting from the 
-   *          given search. Inspecting a 'null' Task in case no such Task 
+   * @return  JobAssert inspecting the only job resulting from the 
+   *          given search. Inspecting a 'null' job in case no such job 
    *          is available.
    * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
-   *          than one task is delivered by the query (after being narrowed 
+   *          than one job is delivered by the query (after being narrowed 
    *          to actual ProcessInstance)
    */
   public JobAssert job(JobQuery query) {

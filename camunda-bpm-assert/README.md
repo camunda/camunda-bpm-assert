@@ -324,13 +324,19 @@ You can retrieve a "chained" task assert inspecting a very specific task current
 available in the context of a process instance...
 
 ```java
+assertThat(processInstance).task("edit");
+```
+
+or
+
+```java
 assertThat(processInstance).task(taskQuery().taskAssignee("fozzie"));
 ```
 
 ... in order to directly make assertions on it, e.g. 
 
 ```java
-assertThat(processInstance).task(taskQuery().taskAssignee("fozzie")).isAssignedTo("fozzie");
+assertThat(processInstance).task("edit").isAssignedTo("fozzie");
 ```
 
 <a name="helpers-job"/>
@@ -356,13 +362,18 @@ You can retrieve a "chained" job assert inspecting a very specific job currently
 available in the context of a process instance...
 
 ```java
+assertThat(processInstance).job("ServiceTask_1");
+```
+or
+
+```java
 assertThat(processInstance).job(jobQuery().executionId(executionId));
 ```
 
 ... in order to directly make assertions on it, e.g. 
 
 ```java
-assertThat(processInstance).job(jobQuery().executionId(executionId)).hasRetries(0);
+assertThat(processInstance).job("ServiceTask_1").hasRetries(0);
 ```
 
 <a name="helpers-task-last"/>
@@ -396,14 +407,15 @@ instance by means of static helper methods:
 assertThat(processInstance).isNotNull();
 ...
 Job onlyJobOflastAssertedProcessInstance = job();
+Job someJobOflastAssertedProcessInstance = job("publish");
 Job someJobOflastAssertedProcessInstance = job(jobQuery().executionId(executionId));
 ```
   
 You can therefore e.g. write ...
 
 ```java
-assertThat(processInstance).job().isNotNull();
-execute(job()); 
+assertThat(processInstance).job("publish").isNotNull();
+execute(job("publish")); 
 ```
 
 <a name="advanced"/>

@@ -50,6 +50,67 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   @Deployment(resources = {
     "ProcessInstanceAssert-job.bpmn"
   })
+  public void testJob_MultipleWithQuery_Success() {
+    // When
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-job"
+    );
+    // Then
+    assertThat(processInstance).job("ServiceTask_1").isNotNull();
+    // And
+    Mocks.register("serviceTask_1", "someService");
+    // And
+    execute(jobQuery().singleResult());
+    // Then
+    assertThat(processInstance).job("ServiceTask_2").isNotNull();
+    // And
+    assertThat(processInstance).job("ServiceTask_3").isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-job.bpmn"
+  })
+  public void testJob_NotYet_Failure() {
+    // When
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-job"
+    );
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).job("ServiceTask_2").isNotNull();
+      }
+    });
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-job.bpmn"
+  })
+  public void testJob_Passed_Failure() {
+    // Given
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-job"
+    );
+    // Then
+    Mocks.register("serviceTask_1", "someService");
+    // When
+    execute(jobQuery().singleResult());
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).task("ServiceTask_1").isNotNull();
+      }
+    });
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-job.bpmn"
+  })
   public void testJob_MultipleWithQuery_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
@@ -63,6 +124,51 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
       @Override
       public void when() {
         assertThat(processInstance).job(jobQuery().executable()).isNotNull();
+      }
+    }, ProcessEngineException.class);
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-job.bpmn"
+  })
+  public void testJob_MultipleWithTaskDefinitionKey_Success() {
+    // When
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-job"
+    );
+    // And
+    Mocks.register("serviceTask_1", "someService");
+    execute(jobQuery().singleResult());
+    // Then
+    assertThat(processInstance).job("ServiceTask_2").isNotNull();
+    // And
+    assertThat(processInstance).job("ServiceTask_3").isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-job.bpmn"
+  })
+  public void testJob_MultipleWithTaskDefinitionKey_Failure() {
+    // When
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-job"
+    );
+    // And
+    Mocks.register("serviceTask_1", "someService");
+    execute(jobQuery().list().get(0));
+    // And
+    Mocks.register("serviceTask_2", "someService");
+    execute(jobQuery().list().get(0));
+    // And
+    Mocks.register("serviceTask_3", "someService");
+    execute(jobQuery().list().get(0));
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).job("ServiceTask_4").isNotNull();
       }
     }, ProcessEngineException.class);
   }
