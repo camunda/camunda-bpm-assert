@@ -25,7 +25,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Accessing tasks in the context of a process instance under test](#helpers-task-last)
    * [Accessing jobs in the context of a process instance under test](#helpers-job-last)
    
- * [Advanced Usage](#advanced)
+ * [Advanced Topics](#advanced)
    * [Using a non-default process engine](#non-default-engine)
 
 <a name="assertions"/>
@@ -407,6 +407,21 @@ assertThat(processInstance).task().hasDefinitionKey("review-and-approve");
 complete(task(), withVariables("documentId", 5, "approved", true)); 
 ```
 
+Furthermore you can directly access tasks in the context of a *specified* process 
+instance by means of static helper methods:
+
+```java
+Task onlyTaskOfProcessInstance = task(processInstance);
+Task someTaskOfProcessInstance = task("review-and-approve", processInstance);
+Task sameTaskOfProcessInstance = task(taskQuery().taskDefinitionKey("review-and-approve"), processInstance);
+```
+  
+You can therefore e.g. write ...
+
+```java
+complete(task("review-and-approve", processInstance), withVariables("documentId", 5, "approved", true)); 
+```
+
 <a name="helpers-job-last"/>
 #### Accessing jobs in the context of a process instance under test
 
@@ -426,6 +441,21 @@ You can therefore e.g. write ...
 ```java
 assertThat(processInstance).job("publish").isNotNull();
 execute(job("publish")); 
+```
+
+Furthermore you can directly access jobs in the context of a *specified* process 
+instance by means of static helper methods:
+
+```java
+Task onlyJobOfProcessInstance = job(processInstance);
+Task someJobOfProcessInstance = job("publish", processInstance);
+Task sameJobOfProcessInstance = job(jobQuery().executable(), processInstance);
+```
+  
+You can therefore e.g. write ...
+
+```java
+execute(job("publish", processInstance)); 
 ```
 
 <a name="advanced"/>
