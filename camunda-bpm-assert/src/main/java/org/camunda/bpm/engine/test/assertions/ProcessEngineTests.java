@@ -336,6 +336,49 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
+   * Helper method to easily access the only job with the 
+   * given activityId currently available in the context 
+   * of the last asserted process instance.
+   *
+   * @param   activityId the id of the job that should
+   *          be retrieved.                             
+   * @return  the only job of the last asserted process
+   *          instance. May return null if no such job exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one job is delivered by the underlying 
+   *          query or in case no process instance was asserted 
+   *          yet.
+   */
+  public static Job job(String activityId) {
+    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
+    if (lastAssert == null)
+      throw new IllegalStateException(
+        "Call a process instance assertion first - " +
+          "e.g. assertThat(processInstance)... !"
+      );
+    return job(activityId, lastAssert.getActual());
+  }
+
+  /**
+   * Helper method to easily access the only job with the 
+   * given activityId currently available in the context 
+   * of the given process instance.
+   *
+   * @param   activityId the activityId of the job that should
+   *          be retrieved.                             
+   * @param   processInstance the process instance for which
+   *          a job should be retrieved.
+   * @return  the only job of the given process instance. May
+   *          return null if no such job exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one job is delivered by the underlying 
+   *          query.
+   */
+  public static Job job(String activityId, ProcessInstance processInstance) {
+    return assertThat(processInstance).isNotNull().job(activityId).getActual();
+  }
+
+  /**
    * Helper method to easily access the only job compliant to 
    * a given jobQuery and currently available in the context 
    * of the last asserted process instance.
