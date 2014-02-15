@@ -9,7 +9,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 
  * [Assertions](#assertions)
    * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
-   * for jobs: [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
+   * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
  
  * [Helpers](#helpers)
@@ -121,9 +121,19 @@ Assert that a process instance is currently waiting at exactly the several speci
 assertThat(processInstance).isWaitingAtExactly("edit", "correct");
 ```
 
+<a name="job-hasActivityId"/>
+#### Job: hasActivityId
 
+Assert that a job is based on an activity definition with a specific id:
+
+```java
+assertThat(job).hasActivityId("ServiceTask_1");
+```
+ 
 <a name="job-hasDeploymentId"/>
 #### Job: hasDeploymentId
+
+Assert that a job has a specific deployment id:
 
 ```java
 assertThat(job).hasDeploymentId(deploymentId);

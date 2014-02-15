@@ -165,6 +165,20 @@ public class JobAssert extends AbstractProcessAssert<JobAssert, Job> {
     return this;
   }
 
+  public JobAssert hasActivityId(final String activityId) {
+    Execution execution = executionQuery().activityId(activityId).active().singleResult();
+    Assertions.assertThat(activityId).isNotNull();
+    String failureMessage = "Expecting %s to correspond to activity with id '%s', " +
+      "but did not find that to be true";
+    Assertions.assertThat(execution)
+      .overridingErrorMessage(failureMessage, toString(getExistingCurrent()), activityId)
+      .isNotNull();
+    Assertions.assertThat(execution.getId())
+      .overridingErrorMessage(failureMessage, toString(getExistingCurrent()), activityId)
+      .isEqualTo(actual.getExecutionId());
+    return this;
+  }
+
   @Override
   protected String toString(Job job) {
      return job != null ? 
