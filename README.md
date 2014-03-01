@@ -20,8 +20,6 @@ Hopefully this will also make it easier to change your tests half a year after y
 <a name="getting-started"/>
 ## Getting started
 
-**BEWARE: The project is currently (*January/February 2014*) undergoing a major rework. Therefore it will last a few more days until a version *0.7* will be published. Until then, please feel free to checkout below mentioned 0.7-SNAPSHOT.** Previous versions found in the download section do not fully comply to the information given in this guide.
-
 <a name="maven-dependency"/>
 ### Maven dependency
 
@@ -31,7 +29,7 @@ First, [declare the camunda BPM maven repository](http://www.camunda.org/get-sta
 	<dependency>
 	    <groupId>org.camunda.bpm.incubation</groupId>
     	<artifactId>camunda-bpm-assert</artifactId>
-    	<version>0.7-SNAPSHOT</version>
+    	<version>1.0</version>
     	<scope>test</scope>
 	</dependency>
 ```
