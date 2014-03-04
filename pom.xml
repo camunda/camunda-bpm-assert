@@ -4,7 +4,7 @@
 
     <groupId>org.camunda.bpm.extension</groupId>
     <artifactId>camunda-bpm-assert-root</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>1.0</version>
 
     <packaging>pom</packaging>
 
