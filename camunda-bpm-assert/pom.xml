@@ -5,7 +5,7 @@
     <artifactId>camunda-bpm-assert</artifactId>
 
     <parent>
-        <groupId>org.camunda.bpm.incubation</groupId>
+        <groupId>org.camunda.bpm.extension</groupId>
         <artifactId>camunda-bpm-assert-root</artifactId>
         <version>0.7-SNAPSHOT</version>
     </parent>
