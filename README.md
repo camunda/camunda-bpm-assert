@@ -27,7 +27,7 @@ First, [declare the camunda BPM maven repository](http://www.camunda.org/get-sta
 
 ```xml  
 	<dependency>
-	    <groupId>org.camunda.bpm.incubation</groupId>
+	    <groupId>org.camunda.bpm.extension</groupId>
     	<artifactId>camunda-bpm-assert</artifactId>
     	<version>1.0</version>
     	<scope>test</scope>
