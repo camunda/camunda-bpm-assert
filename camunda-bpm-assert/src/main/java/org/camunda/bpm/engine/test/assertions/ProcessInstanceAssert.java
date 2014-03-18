@@ -108,7 +108,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
         , Lists.newArrayList(activityIds))
       .isNotNull().isNotEmpty().doesNotContainNull();
-    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByActivityId().asc().list();
+    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByHistoricActivityInstanceEndTime().asc().list();
     List<String> finished = new ArrayList<String>(finishedInstances.size());
     for (HistoricActivityInstance instance: finishedInstances) {
       finished.add(instance.getActivityId());
