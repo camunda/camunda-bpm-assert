@@ -73,9 +73,13 @@ public class ProcessEngineTestsUnclaimTest extends ProcessAssertTestCase {
     );
     // When
 	unclaim(task(processInstance));
-	unclaim(task(processInstance));
     // Then
-    assertThat(task(processInstance)).isNotNull().hasDefinitionKey("UserTask_1").isNotAssigned();
+    expect(new Failure() {
+      @Override
+      public void when() {
+        unclaim(task(processInstance));
+      }
+    }, IllegalArgumentException.class);
   }
 
 }
