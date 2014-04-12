@@ -16,7 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Jens Kanschik
  */
 public class ProcessEngineTestsUnclaimTest extends ProcessAssertTestCase {
 
@@ -72,14 +72,10 @@ public class ProcessEngineTestsUnclaimTest extends ProcessAssertTestCase {
       "ProcessEngineTests-unclaim"
     );
     // When
-	unclaim(task(processInstance));
+    unclaim(task(processInstance));
+    unclaim(task(processInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        unclaim(task(processInstance));
-      }
-    }, IllegalArgumentException.class);
+    assertThat(task(processInstance)).isNotNull().hasDefinitionKey("UserTask_1").isNotAssigned();
   }
 
 }

@@ -456,10 +456,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
       throw new IllegalArgumentException(format("Illegal call " +
         "of unclaim(task = '%s') - task must " +
         "not be null!", task));
-    if (task.getAssignee() == null)
-        throw new IllegalArgumentException(format("Illegal call " +
-                "of unclaim(task = '%s') - task must " +
-                "be assigned!", task));
     taskService().claim(task.getId(), null);
     return taskQuery().taskId(task.getId()).singleResult();
   }
