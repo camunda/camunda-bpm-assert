@@ -445,6 +445,22 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
+   * Helper method to easily unclaim a task.
+   * 
+   * @param   task Task to be claimed for an assignee
+   * @return  the assigned task - properly refreshed to its 
+   *          unassigned state.
+   */
+  public static Task unclaim(Task task) {
+    if (task == null)
+      throw new IllegalArgumentException(format("Illegal call " +
+        "of unclaim(task = '%s') - task must " +
+        "not be null!", task));
+    taskService().claim(task.getId(), null);
+    return taskQuery().taskId(task.getId()).singleResult();
+  }
+
+  /**
    * Helper method to easily complete a task and pass some 
    * process variables. 
    * 
