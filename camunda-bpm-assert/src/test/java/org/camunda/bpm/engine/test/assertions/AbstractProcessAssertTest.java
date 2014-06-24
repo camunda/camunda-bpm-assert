@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
