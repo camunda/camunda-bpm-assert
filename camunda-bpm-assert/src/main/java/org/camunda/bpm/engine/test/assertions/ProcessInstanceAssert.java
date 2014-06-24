@@ -7,7 +7,6 @@ import java.util.List;
 import org.assertj.core.api.ListAssert;
 import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.history.*;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
@@ -124,6 +123,30 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       );
     assertion.contains(activityIds);
     return this;
+  }
+  
+  public ProcessInstanceAssert hasNotPassed(final String... activityIds) {
+      isNotNull();
+      Assertions.assertThat(activityIds)
+        .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
+          , Lists.newArrayList(activityIds))
+        .isNotNull().isNotEmpty().doesNotContainNull();
+      List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByHistoricActivityInstanceEndTime().asc().list();
+      List<String> finished = new ArrayList<String>(finishedInstances.size());
+      for (HistoricActivityInstance instance: finishedInstances) {
+        finished.add(instance.getActivityId());
+      }
+      final String message = "Expecting %s to have passed activities %s never, but actually " +
+        "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to at least " +
+        "'activity' or a higher level before making use of this assertion!)";
+      ListAssert<String> assertion = Assertions.assertThat(finished)
+        .overridingErrorMessage(message, 
+          actual, 
+          Lists.newArrayList(activityIds), 
+          Lists.newArrayList(finished)
+        );
+      assertion.doesNotContain(activityIds);
+      return this;
   }
 
   /**
@@ -301,6 +324,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     );
   }
 
+  /*
   private Job job(ActivityInstance activityInstance, String activityId) {
     for(Job job: jobQuery().list()) {
       
@@ -315,7 +339,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     }
     return null;
   }
-
+  */
+  
   /**
    * Enter into a chained job assert inspecting only jobs currently
    * available in the context of the process instance under test of this
