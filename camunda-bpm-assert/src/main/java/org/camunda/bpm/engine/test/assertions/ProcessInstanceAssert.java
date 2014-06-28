@@ -102,27 +102,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassed(final String... activityIds) {
-    isNotNull();
-    Assertions.assertThat(activityIds)
-      .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
-        , Lists.newArrayList(activityIds))
-      .isNotNull().isNotEmpty().doesNotContainNull();
-    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByHistoricActivityInstanceEndTime().asc().list();
-    List<String> finished = new ArrayList<String>(finishedInstances.size());
-    for (HistoricActivityInstance instance: finishedInstances) {
-      finished.add(instance.getActivityId());
-    }
-    final String message = "Expecting %s to have passed activities %s at least once, but actually " +
-      "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to at least " +
-      "'activity' or a higher level before making use of this assertion!)";
-    ListAssert<String> assertion = Assertions.assertThat(finished)
-      .overridingErrorMessage(message, 
-        actual, 
-        Lists.newArrayList(activityIds), 
-        Lists.newArrayList(finished)
-      );
-    assertion.contains(activityIds);
-    return this;
+    return hasPassed(activityIds, true);
   }
 
   /**
@@ -133,27 +113,35 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasNotPassed(final String... activityIds) {
-      isNotNull();
-      Assertions.assertThat(activityIds)
-        .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
-          , Lists.newArrayList(activityIds))
-        .isNotNull().isNotEmpty().doesNotContainNull();
-      List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByHistoricActivityInstanceEndTime().asc().list();
-      List<String> finished = new ArrayList<String>(finishedInstances.size());
-      for (HistoricActivityInstance instance: finishedInstances) {
-        finished.add(instance.getActivityId());
-      }
-      final String message = "Expecting %s to have passed activities %s never, but actually " +
-        "we instead we found that it passed %s. (Please make sure you have set the history service of the engine to at least " +
-        "'activity' or a higher level before making use of this assertion!)";
-      ListAssert<String> assertion = Assertions.assertThat(finished)
-        .overridingErrorMessage(message, 
-          actual, 
-          Lists.newArrayList(activityIds), 
-          Lists.newArrayList(finished)
-        );
+    return hasPassed(activityIds, false);
+  }
+  
+  private ProcessInstanceAssert hasPassed(final String[] activityIds, boolean hasPassed) {
+    isNotNull();
+    Assertions.assertThat(activityIds)
+      .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
+        , Lists.newArrayList(activityIds))
+      .isNotNull().isNotEmpty().doesNotContainNull();
+    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByHistoricActivityInstanceEndTime().asc().list();
+    List<String> finished = new ArrayList<String>(finishedInstances.size());
+    for (HistoricActivityInstance instance: finishedInstances) {
+      finished.add(instance.getActivityId());
+    }
+    final String message = "Expecting %s " +
+      (hasPassed ? "to have passed activities %s at least once, ": "NOT to have passed activities %s, ") +
+      "but actually we instead we found that it passed %s. (Please make sure you have set the history " +
+      "service of the engine to at least 'activity' or a higher level before making use of this assertion!)";
+    ListAssert<String> assertion = Assertions.assertThat(finished)
+      .overridingErrorMessage(message, 
+        actual, 
+        Lists.newArrayList(activityIds), 
+        Lists.newArrayList(finished)
+      );
+    if (hasPassed)
+      assertion.contains(activityIds);
+    else
       assertion.doesNotContain(activityIds);
-      return this;
+    return this;
   }
 
   /**
