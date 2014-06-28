@@ -124,7 +124,14 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     assertion.contains(activityIds);
     return this;
   }
-  
+
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} has NOT passed one 
+   * or more specified activities.
+   *
+   * @param   activityIds the id's of the activities expected NOT to have been passed    
+   * @return  this {@link ProcessInstanceAssert}
+   */
   public ProcessInstanceAssert hasNotPassed(final String... activityIds) {
       isNotNull();
       Assertions.assertThat(activityIds)

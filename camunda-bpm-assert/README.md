@@ -8,12 +8,13 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasNotPassed](processInstance-hasNotPassed), [isWaitingAt](#processInstance-isWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
    * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
  
  * [Helpers](#helpers)
    * [Claiming tasks](#helpers-claim)
+   * [Unclaiming tasks](#helpers-unclaim)
    * [Completing tasks](#helpers-complete)
    * [Completing tasks and passing process variables](#helpers-variables)
    * [Creating queries](#helpers-queries)
@@ -89,6 +90,23 @@ Assert that a process instance has passed several specified activities:
 
 ```java
 assertThat(processInstance).hasPassed("edit", "correct");
+```
+
+<a name="processInstance-hasNotPassed"/>
+#### Instance: hasNotPassed
+
+**Available from camunda-bpm-assert version 1.1 onwards**
+
+Assert that a process instance has not passed a specified activity:
+
+```java
+assertThat(processInstance).hasNotPassed("edit");
+```
+
+Assert that a process instance has not passed several specified activities:
+
+```java
+assertThat(processInstance).hasNotPassed("edit", "correct");
 ```
 
 <a name="processInstance-isWaitingAt"/>
@@ -248,6 +266,17 @@ You can directly claim a task by means of a static helper method:
 
 ```java
 claim(task, "fozzie"); 
+```
+
+<a name="helpers-unclaim"/>
+#### Unclaiming tasks
+
+**Available from camunda-bpm-assert version 1.1 onwards**
+
+You can directly unclaim a task by means of a static helper method:
+
+```java
+unclaim(task); 
 ```
 
 <a name="helpers-complete"/>
