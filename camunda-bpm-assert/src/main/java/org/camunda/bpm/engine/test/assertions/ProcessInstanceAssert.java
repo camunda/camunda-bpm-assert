@@ -323,23 +323,6 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       execution != null ? jobQuery().executionId(execution.getId()).singleResult() : null
     );
   }
-
-  /*
-  private Job job(ActivityInstance activityInstance, String activityId) {
-    for(Job job: jobQuery().list()) {
-      
-    }
-    
-    if (activityInstance.getActivityId().equals(activityId))
-      return jobQuery().executionId(activityInstance.getExecutionIds()[0]).singleResult();
-    for (ActivityInstance nextActivityInstance: Lists.newArrayList(activityInstance.getChildActivityInstances())) {
-      Job job = job(nextActivityInstance, activityId);
-      if (job != null)
-        return job;
-    }
-    return null;
-  }
-  */
   
   /**
    * Enter into a chained job assert inspecting only jobs currently
