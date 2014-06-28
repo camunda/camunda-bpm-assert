@@ -20,15 +20,15 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
 
   @Test
   @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassed.bpmn"
+    "ProcessInstanceAssert-hasNotPassed.bpmn"
   })
-  public void testHasNotPassed_OnlyActivity_RunningInstance_Success() {
+  public void testHasNotPassed_OnlyActivity_RunningInstance_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-hasPassed"
+      "ProcessInstanceAssert-hasNotPassed"
     );
     // When
-    complete(taskQuery().singleResult());
+    complete(taskQuery().singleResult(), withVariables("doUserTask5", false));
     // Then
     expect(new Failure() {
       @Override
@@ -40,12 +40,12 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
 
   @Test
   @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassed.bpmn"
+    "ProcessInstanceAssert-hasNotPassed.bpmn"
   })
-  public void testHasNotPassed_OnlyActivity_RunningInstance_Failure() {
+  public void testHasNotPassed_OnlyActivity_RunningInstance_Success() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-hasPassed"
+      "ProcessInstanceAssert-hasNotPassed"
     );
     // Then
     assertThat(processInstance).hasNotPassed("UserTask_1");
@@ -55,15 +55,15 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
 
   @Test
   @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassed.bpmn"
+    "ProcessInstanceAssert-hasNotPassed.bpmn"
   })
-  public void testHasNotPassed_ParallelActivities_RunningInstance_Failure() {
+  public void testHasNotPassed_ParallelActivities_RunningInstance_Success() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-hasPassed"
+      "ProcessInstanceAssert-hasNotPassed"
     );
     // When
-    complete(taskQuery().singleResult());
+    complete(taskQuery().singleResult(), withVariables("doUserTask5", false));
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
     // Then
@@ -74,34 +74,56 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
 
   @Test
   @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassed.bpmn"
+    "ProcessInstanceAssert-hasNotPassed.bpmn"
   })
-  public void testHasNotPassed_SeveralActivities_RunningInstance_Failure() {
+  public void testHasNotPassed_ParallelActivities_RunningInstance_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-hasPassed"
+      "ProcessInstanceAssert-hasNotPassed"
     );
     // When
-    complete(taskQuery().singleResult());
+    complete(taskQuery().singleResult(), withVariables("doUserTask5", false));
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasNotPassed("UserTask_2", "UserTask_3", "UserTask_4");
+      }
+    });
+  }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  })
+  public void testHasNotPassed_SeveralActivities_RunningInstance_Success() {
+    // Given
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-hasNotPassed"
+    );
+    // When
+    complete(taskQuery().singleResult(), withVariables("doUserTask5", false));
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_3").singleResult());
     // Then
-    assertThat(processInstance).hasNotPassed("UserTask_4");
+    assertThat(processInstance).hasNotPassed("UserTask_4", "UserTask_5");
   }
 
   @Test
   @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassed.bpmn"
+    "ProcessInstanceAssert-hasNotPassed.bpmn"
   })
-  public void testHasNotPassed_SeveralActivities_HistoricInstance_Failure() {
+  public void testHasNotPassed_SeveralActivities_HistoricInstance_Success() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-hasPassed"
+      "ProcessInstanceAssert-hasNotPassed"
     );
     // When
-    complete(taskQuery().singleResult());
+    complete(taskQuery().singleResult(), withVariables("doUserTask5", false));
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_2").singleResult());
     // And
@@ -111,4 +133,29 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
     // Then
     assertThat(processInstance).hasNotPassed("UserTask_5");
   }
+
+  @Test
+  @Deployment(resources = {
+    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  })
+  public void testHasNotPassed_SeveralActivities_HistoricInstance_Failure() {
+    // Given
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-hasNotPassed"
+    );
+    // When
+    complete(taskQuery().singleResult(), withVariables("doUserTask5", true));
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_5").singleResult());
+    // And
+    complete(taskQuery().taskDefinitionKey("UserTask_4").singleResult());
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasNotPassed("UserTask_5");
+      }
+    });
+  }
+
 }
