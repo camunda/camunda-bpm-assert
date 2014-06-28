@@ -12,8 +12,6 @@ import org.mockito.Mockito;
 
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.*;
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.processEngine;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
