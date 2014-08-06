@@ -127,6 +127,8 @@ assertThat(processInstance).isWaitingAt("edit", "correct");
 <a name="processInstance-isNotWaitingAt"/>
 #### Instance: isNotWaitingAt
 
+**Available from camunda-bpm-assert version 1.1 onwards**
+
 Assert that a process instance is currently NOT waiting at a specified activity:
 
 ```java
