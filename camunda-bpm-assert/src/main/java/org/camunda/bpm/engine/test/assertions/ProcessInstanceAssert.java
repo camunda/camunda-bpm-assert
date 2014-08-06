@@ -57,7 +57,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isWaitingAt(final String... activityIds) {
-    return isWaitingAt(activityIds, false);
+    return isWaitingAt(activityIds, true, false);
   }
 
   /**
@@ -69,10 +69,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isWaitingAtExactly(final String... activityIds) {
-    return isWaitingAt(activityIds, true);
+    return isWaitingAt(activityIds, true, true);
   }
 
-  private ProcessInstanceAssert isWaitingAt(final String[] activityIds, boolean exactly) {
+  private ProcessInstanceAssert isWaitingAt(final String[] activityIds, boolean isWaitingAt, boolean exactly) {
     ProcessInstance current = getExistingCurrent();
     Assertions.assertThat(activityIds)
       .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s."
@@ -85,11 +85,20 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
         Lists.newArrayList(activityIds), 
         activeActivityIds);
     if (exactly) {
-      String[] sorted = activityIds.clone();
-      Arrays.sort(sorted);
-      assertion.containsExactly(sorted);
+        String[] sorted = activityIds.clone();
+        Arrays.sort(sorted);
+      if (isWaitingAt) {
+        assertion.containsExactly(sorted);
+      } else {
+        throw new UnsupportedOperationException(); 
+        // "isNotWaitingAtExactly" is unsupported
+      }
     } else {
-      assertion.contains(activityIds);
+      if (isWaitingAt) {
+        assertion.contains(activityIds);
+      } else {
+        // "isNotWaitingAt" is unsupported
+      }
     }
     return this;
   }
