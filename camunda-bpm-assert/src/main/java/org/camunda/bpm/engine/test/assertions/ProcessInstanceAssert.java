@@ -61,6 +61,18 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
+   * Verifies the expectation that the {@link ProcessInstance} is currently NOT waiting 
+   * at one or more specified activities.
+   *
+   * @param   activityIds the id's of the activities the process instance is expected 
+   *          not to be waiting at
+   * @return  this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert isNotWaitingAt(final String... activityIds) {
+    return isWaitingAt(activityIds, false, false);
+  }
+
+  /**
    * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * at exactly one or more specified activities.
    * 
@@ -79,8 +91,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
         , Lists.newArrayList(activityIds))
       .isNotNull().isNotEmpty().doesNotContainNull();
     final List<String> activeActivityIds = runtimeService().getActiveActivityIds(actual.getId());
+    final String message = "Expecting %s " +
+      (isWaitingAt ? "to be waiting at " + (exactly ? "exactly " : "") + "%s, ": "NOT to be waiting at %s, ") +
+      "but it is actually waiting at %s.";
     ListAssert<String> assertion = Assertions.assertThat(activeActivityIds)
-      .overridingErrorMessage("Expecting %s to be waiting at '%s' but it is actually waiting at %s", 
+      .overridingErrorMessage(message, 
         toString(current),
         Lists.newArrayList(activityIds), 
         activeActivityIds);
@@ -97,7 +112,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       if (isWaitingAt) {
         assertion.contains(activityIds);
       } else {
-        // "isNotWaitingAt" is unsupported
+        assertion.doesNotContain(activityIds);
       }
     }
     return this;
