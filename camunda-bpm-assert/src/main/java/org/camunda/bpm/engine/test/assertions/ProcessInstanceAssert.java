@@ -198,7 +198,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       .overridingErrorMessage("Expecting %s to hold " + 
         (shouldHaveVariables ? "process variables" + (shouldHaveSpecificVariables ? " %s, " : ", ") : "no variables at all, ") +
         "instead we found it to hold " + (vars.isEmpty() ? "no variables at all." : "the variables %s."),
-        toString(current), Arrays.asList(names), vars.keySet()
+        toString(current), shouldHaveSpecificVariables ? Arrays.asList(names) : vars.keySet(), vars.keySet()
       );
     if (shouldHaveVariables) {
       if (shouldHaveSpecificVariables) {
