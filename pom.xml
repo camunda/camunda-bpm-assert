@@ -34,7 +34,7 @@
         <!-- test tools -->
         <version.mockito>1.9.5</version.mockito>
         <version.junit>4.11</version.junit>
-        <version.assertj>1.5.0</version.assertj>
+        <version.assertj>1.6.1</version.assertj>
     </properties>
 
     <dependencyManagement>
