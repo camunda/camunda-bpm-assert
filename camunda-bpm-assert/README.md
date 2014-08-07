@@ -8,7 +8,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasNotPassed](#processInstance-hasNotPassed), [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
    * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
  
@@ -23,6 +23,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Making assertions on a specific task of an instance](#helpers-task-taskquery)
    * [Making assertions on the only job of an instance](#helpers-job)
    * [Making assertions on a specific jobs of an instance](#helpers-job-jobquery)
+   * [Making assertions on the process variables map of an instance](#helpers-variables)
    * [Accessing tasks in the context of a process instance under test](#helpers-task-last)
    * [Accessing jobs in the context of a process instance under test](#helpers-job-last)
    
@@ -107,6 +108,36 @@ Assert that a process instance has not passed several specified activities:
 
 ```java
 assertThat(processInstance).hasNotPassed("edit", "correct");
+```
+
+<a name="processInstance-hasVariables"/>
+#### Instance: hasVariables
+
+**Available from camunda-bpm-assert version 1.1 onwards**
+
+Assert that a process instance holds at least one process variable:
+
+```java
+assertThat(processInstance).hasVariables();
+```
+
+Assert that a process instance holds - aside potential other variables - one or more specified process variables:
+
+```java
+assertThat(processInstance)
+  .hasVariables("approved")
+  .hasVariables("jobAnnouncementId", "approved");
+```
+
+<a name="processInstance-hasNoVariables"/>
+#### Instance: hasNoVariables
+
+**Available from camunda-bpm-assert version 1.1 onwards**
+
+Assert that a process instance holds no process variables at all:
+
+```java
+assertThat(processInstance).hasNoVariables();
 ```
 
 <a name="processInstance-isWaitingAt"/>
@@ -431,6 +462,26 @@ assertThat(processInstance).job(jobQuery().executionId(executionId));
 ```java
 assertThat(processInstance).job("ServiceTask_1").hasRetries(0);
 ```
+
+<a name="helpers-variables"/>
+#### Making assertions on the process variables map of an instance
+
+You can retrieve a "chained" process variables map assert inspecting all the process variables 
+available in the context of a process instance...
+
+```java
+assertThat(processInstance).variables();
+```
+
+... in order to directly make assertions on them, e.g. 
+
+```java
+assertThat(processInstance).variables()
+  .hasSize(2).containsEntry("approved", true);
+```
+
+You may want to compare that with the other possibility to assert whether a process instance 
+[hasVariables](#processInstance-hasVariables) (without leaving your current ProcessInstanceAssert). 
 
 <a name="helpers-task-last"/>
 #### Accessing tasks in the context of a process instance under test

@@ -169,9 +169,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
   /**
    * Verifies the expectation that the {@link ProcessInstance} holds one or 
-   * more process variables with the specified names
+   * more process variables with the specified names. 
    *
-   * @param   names the names of the process variables expected to exist    
+   * @param   names the names of the process variables expected to exist. In
+   *          case no variable name is given, the existence of at least one
+   *          variable will be verified.
    * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasVariables(final String... names) {
