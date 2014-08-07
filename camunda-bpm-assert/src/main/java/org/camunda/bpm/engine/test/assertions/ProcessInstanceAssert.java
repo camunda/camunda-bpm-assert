@@ -1,10 +1,9 @@
 package org.camunda.bpm.engine.test.assertions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import org.assertj.core.api.ListAssert;
+import org.assertj.core.api.MapAssert;
 import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
@@ -168,6 +167,51 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return this;
   }
 
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} holds one or 
+   * more process variables with the specified names
+   *
+   * @param   names the names of the process variables expected to exist    
+   * @return  this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert hasVariables(final String... names) {
+    return hasVars(names);
+  }
+
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} holds no 
+   * process variables at all.
+   *
+   * @return  this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert hasNoVariables() {
+    return hasVars(null);
+  }
+
+  private ProcessInstanceAssert hasVars(final String[] names) {
+    boolean shouldHaveVariables = names != null;
+    boolean shouldHaveSpecificVariables = names != null && names.length > 0;
+
+    ProcessInstance current = getExistingCurrent();
+    Map<String, Object> vars = runtimeService().getVariables(getExistingCurrent().getProcessInstanceId());
+    MapAssert<String, Object> assertion = Assertions.assertThat(vars)
+      .overridingErrorMessage("Expecting %s to hold " + 
+        (shouldHaveVariables ? "process variables" + (shouldHaveSpecificVariables ? " %s, " : ", ") : "no variables at all, ") +
+        "instead we found it to hold " + (vars.isEmpty() ? "no variables at all." : "the variables %s."),
+        toString(current), Arrays.asList(names), vars.keySet()
+      );
+    if (shouldHaveVariables) {
+      if (shouldHaveSpecificVariables) {
+        assertion.containsKeys(names);
+      } else {
+        assertion.isNotEmpty();
+      }
+    } else {
+      assertion.isEmpty();
+    }
+    return this;
+  }
+  
   /**
    * Verifies the expectation that the {@link ProcessInstance} is ended.
    * 
