@@ -411,6 +411,18 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return JobAssert.assertThat(engine, narrowed.singleResult());
   }
 
+  /**
+   * Enter into a chained map assert inspecting the variables currently
+   * available in the context of the process instance under test of this
+   * ProcessInstanceAssert.
+   *
+   * @return  MapAssert<String, Object> inspecting the process variables. 
+   *          Inspecting a 'null' map in case no such variables are available.
+   */
+  public MapAssert<String, Object> variables() {
+    return Assertions.assertThat(runtimeService().getVariables(getExistingCurrent().getProcessInstanceId()));
+  }
+
   /* TaskQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected TaskQuery taskQuery() {

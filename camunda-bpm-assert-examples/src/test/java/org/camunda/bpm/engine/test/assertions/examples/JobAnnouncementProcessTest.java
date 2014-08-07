@@ -75,6 +75,13 @@ public class JobAnnouncementProcessTest {
     complete(task(), withVariables("approved", true));
 
     assertThat(processInstance).task().hasDefinitionKey("publish").hasCandidateGroup("engineering").isNotAssigned();
+    
+    assertThat(processInstance).hasVariables();
+    assertThat(processInstance).hasVariables("jobAnnouncementId", "approved");
+    assertThat(processInstance).variables()
+      .hasSize(2)
+      .containsEntry("jobAnnouncementId", jobAnnouncement.getId())
+      .containsEntry("approved", true);
 
     // claim and complete could be combined, too
     complete(claim(task(), "fozzie"), withVariables("twitter", true, "facebook", true));
