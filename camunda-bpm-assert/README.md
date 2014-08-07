@@ -16,7 +16,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Claiming tasks](#helpers-claim)
    * [Unclaiming tasks](#helpers-unclaim)
    * [Completing tasks](#helpers-complete)
-   * [Completing tasks and passing process variables](#helpers-variables)
+   * [Completing tasks and passing process variables](#helpers-complete-variables)
    * [Creating queries](#helpers-queries)
    * [Accessing engine and engine API services](#helpers-services)
    * [Making assertions on the only task of an instance](#helpers-task)
@@ -336,7 +336,7 @@ You can directly complete a task by means of static helper method:
 complete(task);
 ```
 
-<a name="helpers-variables"/>
+<a name="helpers-complete-variables"/>
 #### Completing tasks and passing process variables
 
 You can directly construct a map of process variables by passing a sequence 
