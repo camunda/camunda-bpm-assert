@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
+import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
@@ -42,6 +43,24 @@ public class ProcessDefinitionAssert extends AbstractProcessAssert<ProcessDefini
         processDefinition.getDescription(),
         processDefinition.getDeploymentId())
       : null;
+  }
+
+  /**
+   * Verifies the expectation that the {@link ProcessDefinition} currently has the 
+   * specified number of active instances, iow neither suspended nor ended instances.
+   *
+   * @param   number the number of expected active instances 
+   * @return  this {@link ProcessDefinitionAssert}
+   */
+  public ProcessDefinitionAssert hasActiveInstances(final long number) {
+    long instances = processInstanceQuery().active().count();
+    Assertions      
+      .assertThat(instances)
+      .overridingErrorMessage("Expecting %s to have %s active instances, but found it to have %s.",
+        getCurrent(), number, instances 
+      )
+      .isEqualTo(number);
+    return this;
   }
   
   /* TaskQuery, automatically narrowed to actual {@link ProcessDefinition} */
