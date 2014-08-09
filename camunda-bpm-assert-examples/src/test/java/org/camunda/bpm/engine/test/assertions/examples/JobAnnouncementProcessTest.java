@@ -103,6 +103,8 @@ public class JobAnnouncementProcessTest {
     assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
+    
+    assertThat(processDefinition()).hasActiveInstances(0);
 
   }
 

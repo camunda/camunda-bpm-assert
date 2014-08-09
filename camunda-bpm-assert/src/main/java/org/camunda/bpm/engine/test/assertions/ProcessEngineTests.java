@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
@@ -301,6 +302,69 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    */
   public static Task task(TaskQuery taskQuery, ProcessInstance processInstance) {
     return assertThat(processInstance).isNotNull().task(taskQuery).getActual();
+  }
+
+  /**
+   * Helper method to easily access the process definition 
+   * on which the last asserted process instance is based.
+   *
+   * @return  the process definition on which the last 
+   *          asserted process instance is based.
+   * @throws  java.lang.IllegalStateException in case no 
+   *          process instance was asserted yet.
+   */
+  public static ProcessDefinition processDefinition() {
+    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
+    if (lastAssert == null)
+      throw new IllegalStateException(
+        "Call a process instance assertion first - " +
+          "e.g. assertThat(processInstance)... !"
+      );
+    return processDefinition(lastAssert.getActual());
+  }
+
+  /**
+   * Helper method to easily access the process definition 
+   * on which the given process instance is based.
+   *
+   * @param   processInstance the process instance for which
+   *          the definition should be retrieved.
+   * @return  the process definition on which the given 
+   *          process instance is based.
+   */
+  public static ProcessDefinition processDefinition(ProcessInstance processInstance) {
+    assertThat(processInstance).isNotNull();
+    return processDefinition(processDefinitionQuery().processDefinitionId(processInstance.getProcessDefinitionId()));
+  }
+
+  /**
+   * Helper method to easily access the process definition with the 
+   * given processDefinitionKey.
+   *
+   * @param   processDefinitionKey the key of the process definition 
+   *          that should be retrieved.                             
+   * @return  the process definition with the given key. 
+   *          May return null if no such process definition exists.
+   */
+  public static ProcessDefinition processDefinition(String processDefinitionKey) {
+    assertThat(processDefinitionKey).isNotNull();
+    return processDefinition(processDefinitionQuery().processDefinitionKey(processDefinitionKey));
+  }
+
+  /**
+   * Helper method to easily access the process definition compliant 
+   * to a given process definition query.
+   *
+   * @param   processDefinitionQuery the query with which the process 
+   *          definition should be retrieved.
+   * @return  the process definition compliant to the given query. May 
+   *          return null in case no such process definition exists.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
+   *          than one process definition is delivered by the underlying 
+   *          query.
+   */
+  public static ProcessDefinition processDefinition(ProcessDefinitionQuery processDefinitionQuery) {
+    return processDefinitionQuery.singleResult();
   }
 
   /**
