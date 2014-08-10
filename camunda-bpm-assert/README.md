@@ -27,6 +27,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Making assertions on the process variables map of an instance](#helpers-variables)
    * [Accessing tasks in the context of a process instance under test](#helpers-task-last)
    * [Accessing jobs in the context of a process instance under test](#helpers-job-last)
+   * [Accessing process definitions](#helpers-process-definition)
    
  * [Advanced Topics](#advanced)
    * [Using a non-default process engine](#non-default-engine)
@@ -566,6 +567,25 @@ You can therefore e.g. write ...
 execute(job("publish", processInstance)); 
 ```
 
+<a name="helpers-process-definition"/>
+#### Accessing process definitions
+
+You can directly access process definitions by means of static helper methods:
+
+```java
+ProcessDefinition processDefinitionOflastAssertedProcessInstance = processDefinition();
+ProcessDefinition processDefinitionOfSpecifiedProcessInstance = processDefinition(processInstance);
+ProcessDefinition processDefinitionOfSpecifiedProcessDefinitionKey = processDefinition("myProcessDefintionKey");
+ProcessDefinition processDefinitionConformingToSpecifiedQuery = processDefinition(processDefinitionQuery().processDefinitionKey("myProcessDefintionKey");
+```
+  
+In order to check, whether your last asserted process instance is the only currently running 
+instance of its own process definition you can therefore e.g. write ...
+
+```java
+assertThat(processDefinition()).hasActiveInstances(1);
+```
+                           
 <a name="advanced"/>
 ## Advanced topics
 
