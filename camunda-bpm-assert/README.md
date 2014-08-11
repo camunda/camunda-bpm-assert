@@ -570,6 +570,8 @@ execute(job("publish", processInstance));
 <a name="helpers-process-definition"/>
 #### Accessing process definitions
 
+**Available from camunda-bpm-assert version 1.1 onwards**
+
 You can directly access process definitions by means of static helper methods:
 
 ```java
