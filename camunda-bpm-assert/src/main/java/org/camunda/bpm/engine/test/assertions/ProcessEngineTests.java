@@ -368,6 +368,122 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
+   * Helper method to easily access the only called process instance 
+   * currently available in the context of the last asserted process
+   * instance.
+   *
+   * @return  the only called process instance called by the last asserted process
+   *          instance. May return null if no such process instance exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one process instance is delivered by the underlying 
+   *          query or in case no process instance was asserted 
+   *          yet.
+   */
+  public static ProcessInstance calledProcessInstance() {
+    return calledProcessInstance(processInstanceQuery());
+  }
+
+  /**
+   * Helper method to easily access the only called process instance 
+   * currently available in the context of the given process instance.
+   *
+   * @param   processInstance the process instance for which
+   *          a called process instance should be retrieved.
+   * @return  the only called process instance called by the given process 
+   *          instance. May return null if no such process instance exists.
+   * @throws  java.lang.IllegalStateException in case more 
+   *          than one process instance is delivered by the underlying 
+   *          query.
+   */
+  public static ProcessInstance calledProcessInstance(ProcessInstance processInstance) {
+    return calledProcessInstance(processInstanceQuery(), processInstance);
+  }
+
+  /**
+   * Helper method to easily access the only called process instance with 
+   * the given processDefinitionKey currently available in the context 
+   * of the last asserted process instance.
+   *
+   * @param   processDefinitionKey the key of the process instance that should
+   *          be retrieved.                             
+   * @return  the only such process instance called by the last asserted process
+   *          instance. May return null if no such process instance exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one process instance is delivered by the underlying 
+   *          query or in case no process instance was asserted 
+   *          yet.
+   */
+  public static ProcessInstance calledProcessInstance(String processDefinitionKey) {
+    assertThat(processDefinitionKey).isNotNull();
+    return calledProcessInstance(processInstanceQuery().processDefinitionKey(processDefinitionKey));
+  }
+
+  /**
+   * Helper method to easily access the only called process instance with the 
+   * given processDefinitionKey currently available in the context 
+   * of the given process instance.
+   *
+   * @param   processDefinitionKey the key of the process instance that should
+   *          be retrieved.                             
+   * @param   processInstance the process instance for which
+   *          a called process instance should be retrieved.
+   * @return  the only such process instance called by the given process instance. 
+   *          May return null if no such process instance exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one process instance is delivered by the underlying 
+   *          query.
+   */
+  public static ProcessInstance calledProcessInstance(String processDefinitionKey, ProcessInstance processInstance) {
+    assertThat(processDefinitionKey).isNotNull();
+    return calledProcessInstance(processInstanceQuery().processDefinitionKey(processDefinitionKey), processInstance);
+  }
+
+  /**
+   * Helper method to easily access the only called process instance compliant to 
+   * a given processInstanceQuery and currently available in the context 
+   * of the last asserted process instance.
+   *
+   * @param   processInstanceQuery the query with which the called process instance should
+   *          be retrieved. This query will be further narrowed to the last asserted 
+   *          process instance.
+   * @return  the only such process instance called by the last asserted process instance and 
+   *          compliant to the given query. May return null in case no such task exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one process instance is delivered by the underlying query or in case no 
+   *          process instance was asserted yet.
+   */
+  public static ProcessInstance calledProcessInstance(ProcessInstanceQuery processInstanceQuery) {
+    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
+    if (lastAssert == null)
+      throw new IllegalStateException(
+        "Call a process instance assertion first - " +
+          "e.g. assertThat(processInstance)... !"
+      );
+    return calledProcessInstance(processInstanceQuery, lastAssert.getActual());
+  }
+
+  /**
+   * Helper method to easily access the only called process instance compliant to 
+   * a given processInstanceQuery and currently available in the context of the given 
+   * process instance.
+   *
+   * @param   processInstanceQuery the query with which the process instance should
+   *          be retrieved. This query will be further narrowed to the given process 
+   *          instance.
+   * @param   processInstance the process instance for which
+   *          a called process instance should be retrieved.
+   * @return  the only such process instance called by the given process instance and 
+   *          compliant to the given query. May return null in 
+   *          case no such process instance exists.
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one instance is delivered by the underlying 
+   *          query.
+   */
+  public static ProcessInstance calledProcessInstance(ProcessInstanceQuery processInstanceQuery, ProcessInstance processInstance) {
+    return assertThat(processInstance).isNotNull().calledProcessInstance(processInstanceQuery).getActual();
+  }
+
+  /**
    * Helper method to easily access the only job currently
    * available in the context of the last asserted process
    * instance.
