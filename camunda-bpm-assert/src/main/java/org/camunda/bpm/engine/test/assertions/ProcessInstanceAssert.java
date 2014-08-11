@@ -355,6 +355,62 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
+   * Enter into a chained process instance assert inspecting the one and mostly 
+   * one called process instance currently available in the context of the process instance
+   * under test of this ProcessInstanceAssert.
+   *
+   * @return  ProcessInstanceAssert inspecting the only called process instance available. Inspecting a 
+   *          'null' process instance in case no such Task is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
+   *          than one process instance is delivered by the query (after being narrowed 
+   *          to actual ProcessInstance)
+   */
+  public ProcessInstanceAssert calledProcessInstance() {
+    return calledProcessInstance(processInstanceQuery());
+  }
+
+  /**
+   * Enter into a chained process instance assert inspecting the one and mostly 
+   * one called process instance of the specified process definition key currently available in the 
+   * context of the process instance under test of this ProcessInstanceAssert.
+   *
+   * @param   processDefinitionKey definition key narrowing down the search for 
+   *          process instances
+   * @return  ProcessInstanceAssert inspecting the only such process instance available. 
+   *          Inspecting a 'null' ProcessInstance in case no such ProcessInstance is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than one 
+   *          process instance is delivered by the query (after being narrowed to actual 
+   *          ProcessInstance)
+   */
+  public ProcessInstanceAssert calledProcessInstance(String processDefinitionKey) {
+    return calledProcessInstance(processInstanceQuery().processDefinitionKey(processDefinitionKey));
+  }
+
+  /**
+   * Enter into a chained process instance assert inspecting a called process instance 
+   * called by and currently available in the context of the process instance under test 
+   * of this ProcessInstanceAssert. The query is automatically narrowed down to the actual 
+   * ProcessInstance under test of this assertion.
+   *
+   * @param   query ProcessDefinitionQuery further narrowing down the search for process 
+   *          instances. The query is automatically narrowed down to the actual 
+   *          ProcessInstance under test of this assertion.
+   * @return  ProcessInstanceAssert inspecting the only such process instance resulting 
+   *          from the given search. Inspecting a 'null' ProcessInstance in case no such 
+   *          ProcessInstance is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one ProcessInstance is delivered by the query (after being narrowed to 
+   *          actual ProcessInstance)
+   */
+  public ProcessInstanceAssert calledProcessInstance(ProcessInstanceQuery query) {
+    if (query == null)
+      throw new IllegalArgumentException("Illegal call of calledProcessInstance(query = 'null') - but must not be null!");
+    isNotNull();
+    ProcessInstanceQuery narrowed = query.superProcessInstanceId(actual.getId());
+    return ProcessInstanceAssert.assertThat(engine, narrowed.singleResult());
+  }
+
+  /**
    * Enter into a chained job assert inspecting the one and mostly 
    * one job currently available in the context of the process 
    * instance under test of this ProcessInstanceAssert.
