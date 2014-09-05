@@ -366,7 +366,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    *          to actual ProcessInstance)
    */
   public ProcessInstanceAssert calledProcessInstance() {
-    return calledProcessInstance(processInstanceQuery());
+    return calledProcessInstance(super.processInstanceQuery());
   }
 
   /**
@@ -383,7 +383,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    *          ProcessInstance)
    */
   public ProcessInstanceAssert calledProcessInstance(String processDefinitionKey) {
-    return calledProcessInstance(processInstanceQuery().processDefinitionKey(processDefinitionKey));
+    return calledProcessInstance(super.processInstanceQuery().processDefinitionKey(processDefinitionKey));
   }
 
   /**
