@@ -69,7 +69,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
       .isNotNull()
       .isWaitingAt("UserTask_1");
     // When
-    complete(task("UserTask_1"));
+    complete(task("UserTask_1", calledProcessInstance()));
     // Then
     assertThat(processInstance)
       .calledProcessInstance()
@@ -106,7 +106,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
       .isNotNull()
       .isWaitingAt("UserTask_1");
     // When
-    complete(task("UserTask_1"));
+    complete(task("UserTask_1", calledProcessInstance()));
     // Then
     expect(new Failure() {
       @Override

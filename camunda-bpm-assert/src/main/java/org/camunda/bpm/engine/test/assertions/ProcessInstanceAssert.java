@@ -23,6 +23,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     super(engine, actual, ProcessInstanceAssert.class);
   }
 
+  protected ProcessInstanceAssert(final ProcessEngine engine, final ProcessInstance actual, Class<?> selfType) {
+    super(engine, actual, selfType);
+  }
+
   protected static ProcessInstanceAssert assertThat(final ProcessEngine engine, final ProcessInstance actual) {
     return new ProcessInstanceAssert(engine, actual);
   }
@@ -407,7 +411,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       throw new IllegalArgumentException("Illegal call of calledProcessInstance(query = 'null') - but must not be null!");
     isNotNull();
     ProcessInstanceQuery narrowed = query.superProcessInstanceId(actual.getId());
-    return ProcessInstanceAssert.assertThat(engine, narrowed.singleResult());
+    return CalledProcessInstanceAssert.assertThat(engine, narrowed.singleResult());
   }
 
   /**
