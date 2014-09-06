@@ -92,7 +92,7 @@ public class JobAnnouncementProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
     verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
 
-    assertThat(processInstance).hasPassed(
+    assertThat(processInstance).hasPassedInOrder(
       "edit", 
       "review", 
       "publish", 

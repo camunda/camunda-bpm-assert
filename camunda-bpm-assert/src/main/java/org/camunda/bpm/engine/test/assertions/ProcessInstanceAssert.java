@@ -130,7 +130,18 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasPassed(final String... activityIds) {
-    return hasPassed(activityIds, true);
+    return hasPassed(activityIds, true, false);
+  }
+
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} has passed one or 
+   * more specified activities exactly in the given order.
+   *
+   * @param   activityIds the id's of the activities expected to have been passed    
+   * @return  this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert hasPassedInOrder(final String... activityIds) {
+    return hasPassed(activityIds, true, true);
   }
 
   /**
@@ -141,10 +152,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert hasNotPassed(final String... activityIds) {
-    return hasPassed(activityIds, false);
+    return hasPassed(activityIds, false, false);
   }
   
-  private ProcessInstanceAssert hasPassed(final String[] activityIds, boolean hasPassed) {
+  private ProcessInstanceAssert hasPassed(final String[] activityIds, boolean hasPassed, boolean inOrder) {
     isNotNull();
     Assertions.assertThat(activityIds)
       .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
@@ -156,7 +167,9 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       finished.add(instance.getActivityId());
     }
     final String message = "Expecting %s " +
-      (hasPassed ? "to have passed activities %s at least once, ": "NOT to have passed activities %s, ") +
+      (hasPassed ? "to have passed activities %s at least once" 
+        + (inOrder? " and in order" : "") + ", "
+        : "NOT to have passed activities %s, ") +
       "but actually we instead we found that it passed %s. (Please make sure you have set the history " +
       "service of the engine to at least 'activity' or a higher level before making use of this assertion!)";
     ListAssert<String> assertion = Assertions.assertThat(finished)
@@ -165,8 +178,22 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
         Lists.newArrayList(activityIds), 
         Lists.newArrayList(finished)
       );
-    if (hasPassed)
+    if (hasPassed) {
       assertion.contains(activityIds);
+      if (inOrder) {
+        List<String> remainingFinished = finished;
+        for (int i = 0; i< activityIds.length; i++) {
+          Assertions.assertThat(remainingFinished)
+            .overridingErrorMessage(message,
+              actual,
+              Lists.newArrayList(activityIds),
+              Lists.newArrayList(finished)
+            )
+            .contains(activityIds[i]);
+          remainingFinished = remainingFinished.subList(remainingFinished.indexOf(activityIds[i]) + 1, remainingFinished.size());
+        }
+      }
+    }
     else
       assertion.doesNotContain(activityIds);
     return this;
