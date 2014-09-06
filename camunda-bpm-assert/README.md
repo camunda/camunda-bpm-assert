@@ -24,9 +24,12 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Making assertions on a specific task of an instance](#helpers-task-taskquery)
    * [Making assertions on the only job of an instance](#helpers-job)
    * [Making assertions on a specific jobs of an instance](#helpers-job-jobquery)
+   * [Making assertions on the only called process instance of a super instance](#helpers-called-process-instance)
+   * [Making assertions on a specific called process instance of a super instance](#helpers-called-process-instance-jobquery)
    * [Making assertions on the process variables map of an instance](#helpers-variables)
    * [Accessing tasks in the context of a process instance under test](#helpers-task-last)
    * [Accessing jobs in the context of a process instance under test](#helpers-job-last)
+   * [Accessing called process instances in the context of a process instance under test](#helpers-called-process-instance-last)
    * [Accessing process definitions](#helpers-process-definition)
    
  * [Advanced Topics](#advanced)
@@ -486,6 +489,43 @@ assertThat(processInstance).job(jobQuery().executionId(executionId));
 assertThat(processInstance).job("ServiceTask_1").hasRetries(0);
 ```
 
+<a name="helpers-called-process-instance"/>
+#### Making assertions on the only called process of a super process instance
+ 
+You can retrieve a "chained" process instance assert inspecting the one and only 
+called process instance currently available in the context of a super process instance...
+
+```java
+assertThat(processInstance).calledProcessInstance();
+```
+
+... in order to directly make assertions on it, e.g. 
+
+```java
+assertThat(processInstance).calledProcessInstance().hasProcessDefinitionKey("mySubProcessDefinitionKey");
+```
+
+<a name="helpers-called-process-instance-jobquery"/>
+#### Making assertions on a specific called process instance of a super process instance
+
+You can retrieve a "chained" process instance assert inspecting a very specific called process instance currently 
+available in the context of a super process instance, either by means of a processDefinitionKey...
+
+```java
+assertThat(processInstance).calledProcessInstance("mySubProcessDefinitionKey");
+```
+or even by means of a more sophisticated processInstanceQuery
+
+```java
+assertThat(processInstance).calledProcessInstance(processInstanceQuery().processDefinitionKey("mySubProcessDefinitionKey"));
+```
+
+... in order to directly make assertions on it, e.g. 
+
+```java
+assertThat(processInstance).calledProcessInstance("mySubProcessDefinitionKey").isNotNull();
+```
+
 <a name="helpers-variables"/>
 #### Making assertions on the process variables map of an instance
 
@@ -576,6 +616,44 @@ You can therefore e.g. write ...
 
 ```java
 execute(job("publish", processInstance)); 
+```
+
+<a name="helpers-called-process-instance-last"/>
+#### Accessing called process instances in the context of a process instance under test
+
+**Available from camunda-bpm-assert version 1.1 onwards**
+
+You can directly access called process instances in the context of the last asserted process 
+instance by means of static helper methods:
+
+```java
+assertThat(processInstance).isNotNull();
+...
+ProcessInstance onlyCalledProcessInstanceOflastAssertedProcessInstance = calledProcessInstance();
+ProcessInstance someCalledProcessInstanceOflastAssertedProcessInstance = calledProcessInstance("myCalledProcessDefinitionKey");
+ProcessInstance someCalledProcessInstanceOflastAssertedProcessInstance = calledProcessInstance(processInstanceQuery().processDefinitionKey("myCalledProcessDefinitionKey"));
+```
+  
+You can therefore e.g. write ...
+
+```java
+assertThat(processInstance).isNotNull();
+ProcessInstance calledProcessInstance = calledProcessInstance(); 
+```
+
+Furthermore you can directly access jobs in the context of a *specified* super process 
+instance by means of static helper methods:
+
+```java
+ProcessInstance onlyCalledProcessInstanceOfProcessInstance = calledProcessInstance(superProcessInstance);
+ProcessInstance someCalledProcessInstanceOfProcessInstance = calledProcessInstance("myCalledProcessDefinitionKey", superProcessInstance);
+ProcessInstance sameCalledProcessInstanceOfProcessInstance = calledProcessInstance(processInstanceQuery().processDefinitionKey("myCalledProcessDefinitionKey"), superProcessInstance);
+```
+  
+You can therefore e.g. write ...
+
+```java
+ProcessInstance calledProcessInstance = calledProcessInstance("myCalledProcessDefinitionKey", superProcessInstance); 
 ```
 
 <a name="helpers-process-definition"/>
