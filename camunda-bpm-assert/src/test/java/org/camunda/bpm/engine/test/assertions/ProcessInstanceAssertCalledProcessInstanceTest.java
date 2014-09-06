@@ -31,13 +31,11 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
     // Then
     assertThat(processInstance)
       .calledProcessInstance()
-        .isNotNull()
-        .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess1");
     // And
     assertThat(processInstance)
       .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess1")
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess1");
     // And
     assertThat(processInstance)
       .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess2")
@@ -45,8 +43,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
     // And
     assertThat(processInstance)
       .calledProcessInstance(processInstanceQuery())
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess1");
   }
 
   @Test
@@ -66,15 +63,13 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
     // And
     assertThat(processInstance)
       .calledProcessInstance()
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess1");
     // When
     complete(task("UserTask_1", calledProcessInstance()));
     // Then
     assertThat(processInstance)
       .calledProcessInstance()
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess2");
     // And
     assertThat(processInstance)
       .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess1")
@@ -103,8 +98,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
     // And
     assertThat(processInstance)
       .calledProcessInstance()
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess1");
     // When
     complete(task("UserTask_1", calledProcessInstance()));
     // Then
@@ -130,23 +124,19 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
     // Then
     assertThat(processInstance)
       .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess1")
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess1");
     // And
     assertThat(processInstance)
       .calledProcessInstance(processInstanceQuery().processDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess1"))
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess1");
     // And
     assertThat(processInstance)
       .calledProcessInstance("ProcessInstanceAssert-calledProcessInstance-subProcess2")
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess2");
     // And
     assertThat(processInstance)
       .calledProcessInstance(processInstanceQuery().processDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess2"))
-      .isNotNull()
-      .isWaitingAt("UserTask_1");
+      .hasProcessDefinitionKey("ProcessInstanceAssert-calledProcessInstance-subProcess2");
   }
 
   @Test

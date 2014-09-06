@@ -7,6 +7,7 @@ import org.assertj.core.api.MapAssert;
 import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.TaskQuery;
@@ -215,6 +216,24 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     } else {
       assertion.isEmpty();
     }
+    return this;
+  }
+  
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} has the 
+   * given processDefinitionKey.
+   *
+   * @param processDefinitionKey the expected key
+   * @return  this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert hasProcessDefinitionKey(String processDefinitionKey) {
+    isNotNull();
+    final String message = "Expecting %s to have process definition key '%s', " +
+      "but instead found it to have process definition key '%s'.";
+    ProcessDefinition processDefinition = processDefinitionQuery().singleResult();
+    Assertions.assertThat(processDefinitionKey)
+      .overridingErrorMessage(message, toString(actual), processDefinitionKey, processDefinition.getKey())
+      .isEqualTo(processDefinition.getKey());
     return this;
   }
   

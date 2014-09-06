@@ -8,7 +8,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [hasProcessDefinitionKey](#processInstance-hasProcessDefinitionKey) [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
    * for process definitions: [hasActiveInstances](#processDefinition-hasActiveInstances)
    * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
@@ -140,6 +140,17 @@ Assert that a process instance holds no process variables at all:
 
 ```java
 assertThat(processInstance).hasNoVariables();
+```
+
+<a name="processInstance-hasProcessDefinitionKey"/>
+#### Instance: hasProcessDefinitionKey
+
+**Available from camunda-bpm-assert version 1.1 onwards**
+
+Assert that a process instance is based on a specific process definition:
+
+```java
+assertThat(processInstance).hasProcessDefinitionKey("myProcessDefinitionKey");
 ```
 
 <a name="processInstance-isWaitingAt"/>
