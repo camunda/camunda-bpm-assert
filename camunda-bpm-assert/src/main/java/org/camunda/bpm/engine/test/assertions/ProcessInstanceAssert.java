@@ -12,6 +12,7 @@ import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.TaskQuery;
 import org.assertj.core.api.Assertions;
+import org.camunda.bpm.engine.test.util.HistoricActivityInstanceComparator;
 
 /**
  * Assertions for a {@link ProcessInstance}
@@ -161,7 +162,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       .overridingErrorMessage("Expecting list of activityIds not to be null, not to be empty and not to contain null values: %s." 
         , Lists.newArrayList(activityIds))
       .isNotNull().isNotEmpty().doesNotContainNull();
-    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().orderByHistoricActivityInstanceEndTime().asc().list();
+    List<HistoricActivityInstance> finishedInstances = historicActivityInstanceQuery().finished().list();
+    Collections.sort(finishedInstances, new HistoricActivityInstanceComparator());
     List<String> finished = new ArrayList<String>(finishedInstances.size());
     for (HistoricActivityInstance instance: finishedInstances) {
       finished.add(instance.getActivityId());
