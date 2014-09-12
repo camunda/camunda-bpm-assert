@@ -124,6 +124,29 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   }
 
   /**
+   * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
+   * for one or more specified messages.
+   *
+   * @param   messageNames the names of the message the process instance is expected to 
+   *          be waiting for
+   * @return  this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert isWaitingFor(final String... messageNames) {
+    isNotNull();
+    Assertions.assertThat(messageNames)
+      .overridingErrorMessage("Expecting list of messageNames not to be null, not to be empty and not to contain null values: %s."
+        , Lists.newArrayList(messageNames))
+      .isNotNull().isNotEmpty().doesNotContainNull();
+    for (String messageName: messageNames) {
+      List<Execution> executions = executionQuery().messageEventSubscriptionName(messageName).list();
+      Assertions.assertThat(executions).overridingErrorMessage("Expecting %s to be waiting for messages %s, " +
+        "but did not find it to be waiting for message [%s].", actual, Arrays.asList(messageNames), messageName)
+      .isNotNull().isNotEmpty();
+    }
+    return this;
+  }
+
+  /**
    * Verifies the expectation that the {@link ProcessInstance} has passed one or 
    * more specified activities.
    * 
