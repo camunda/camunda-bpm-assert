@@ -132,6 +132,22 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    * @return  this {@link ProcessInstanceAssert}
    */
   public ProcessInstanceAssert isWaitingFor(final String... messageNames) {
+    return isWaitingFor(messageNames, true);
+  }
+
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
+   * for one or more specified messages.
+   *
+   * @param   messageNames the names of the message the process instance is expected to 
+   *          be waiting for
+   * @return  this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert isNotWaitingFor(final String... messageNames) {
+    return isWaitingFor(messageNames, false);
+  }
+
+  private ProcessInstanceAssert isWaitingFor(final String[] messageNames, boolean isWaitingFor) {
     isNotNull();
     Assertions.assertThat(messageNames)
       .overridingErrorMessage("Expecting list of messageNames not to be null, not to be empty and not to contain null values: %s."
@@ -139,13 +155,19 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       .isNotNull().isNotEmpty().doesNotContainNull();
     for (String messageName: messageNames) {
       List<Execution> executions = executionQuery().messageEventSubscriptionName(messageName).list();
-      Assertions.assertThat(executions).overridingErrorMessage("Expecting %s to be waiting for messages %s, " +
-        "but did not find it to be waiting for message [%s].", actual, Arrays.asList(messageNames), messageName)
-      .isNotNull().isNotEmpty();
+      ListAssert<Execution> assertion = Assertions.assertThat(executions).overridingErrorMessage("Expecting %s " +
+        (isWaitingFor ? "to be waiting for %s, ": "NOT to be waiting for %s, ") +
+        "but actually did " + (isWaitingFor ? "not ": "") + "find it to be waiting for message [%s].", 
+        actual, Arrays.asList(messageNames), messageName);
+      if (isWaitingFor) {
+        assertion.isNotEmpty();
+      } else {
+        assertion.isEmpty();
+      }
     }
     return this;
   }
-
+  
   /**
    * Verifies the expectation that the {@link ProcessInstance} has passed one or 
    * more specified activities.
