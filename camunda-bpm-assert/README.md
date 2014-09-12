@@ -19,6 +19,8 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Completing tasks](#helpers-complete)
    * [Completing tasks and passing process variables](#helpers-complete-variables)
    * [Executing jobs](#helpers-execute)
+   * [Sending messages](#helpers-send)
+   * [Sending messages and passing process variables](#helpers-send-variables)
    * [Creating queries](#helpers-queries)
    * [Accessing engine and engine API services](#helpers-services)
    * [Making assertions on the only task of an instance](#helpers-task)
@@ -102,6 +104,8 @@ assertThat(processInstance).hasPassed("edit", "correct");
 <a name="processInstance-hasPassedInOrder"/>
 #### Instance: hasPassedInOrder
 
+**Available from camunda-bpm-assert version 1.1 onwards**
+
 Assert that a process instance has passed several specified activities 
 exactly in the given order:
 
@@ -134,7 +138,7 @@ Assert that a process instance has not passed a specified activity:
 assertThat(processInstance).hasNotPassed("edit");
 ```
 
-Assert that a process instance has not passed several specified activities:
+Assert that a process instance has not passed any of several specified activities:
 
 ```java
 assertThat(processInstance).hasNotPassed("edit", "correct");
@@ -242,7 +246,7 @@ assertThat(processInstance).isWaitingFor("myMessage");
 Assert that a process instance is currently waiting for several specified messages:
 
 ```java
-assertThat(processInstance).isWaitingAt("myMessage", "yourMessage");
+assertThat(processInstance).isWaitingFor("myMessage", "yourMessage");
 ```
 
 <a name="processInstance-isNotWaitingFor"/>
@@ -253,17 +257,19 @@ assertThat(processInstance).isWaitingAt("myMessage", "yourMessage");
 Assert that a process instance is currently NOT waiting for a specified message:
 
 ```java
-assertThat(processInstance).isNotWaitingAt("myMessage");
+assertThat(processInstance).isNotWaitingFor("myMessage");
 ```
 
 Assert that a process instance is currently NOT waiting for any of several specified messages:
 
 ```java
-assertThat(processInstance).isNotWaitingAt("myMessage", "yourMessage");
+assertThat(processInstance).isNotWaitingFor("myMessage", "yourMessage");
 ```
 
 <a name="processDefinition-hasActiveInstances"/>
 #### Definition: hasActiveInstances
+
+**Available from camunda-bpm-assert version 1.1 onwards**
 
 Assert that a process definition currently has exactly the expected number of 'active' 
 (so neither ended nor suspended) instances:
@@ -415,7 +421,7 @@ unclaim(task);
 <a name="helpers-complete"/>
 #### Completing tasks
 
-You can directly complete a task by means of static helper method:
+You can directly complete a task by means of a static helper method:
 
 ```java
 complete(task);
@@ -440,7 +446,7 @@ complete(task, withVariables("documentId", 5, "approved", true));
 <a name="helpers-execute"/>
 #### Executing jobs
 
-You can directly execute a job by means of static helper method:
+You can directly execute a job by means of a static helper method:
 
 ```java
 execute(job());
@@ -449,7 +455,7 @@ execute(job());
 <a name="helpers-queries"/>
 #### Creating queries
 
-You can directly create queries by means of static helper methods:
+You can directly create queries by means of a static helper methods:
 
 ```java
 TaskQuery taskQuery = taskQuery();
@@ -560,6 +566,8 @@ assertThat(processInstance).job("ServiceTask_1").hasRetries(0);
 <a name="helpers-called-process-instance"/>
 #### Making assertions on the only called process of a super process instance
  
+**Available from camunda-bpm-assert version 1.1 onwards**
+
 You can retrieve a "chained" process instance assert inspecting the one and only 
 called process instance currently available in the context of a super process instance...
 
@@ -575,6 +583,8 @@ assertThat(processInstance).calledProcessInstance().hasProcessDefinitionKey("myS
 
 <a name="helpers-called-process-instance-jobquery"/>
 #### Making assertions on a specific called process instance of a super process instance
+
+**Available from camunda-bpm-assert version 1.1 onwards**
 
 You can retrieve a "chained" process instance assert inspecting a very specific called process instance currently 
 available in the context of a super process instance, either by means of a processDefinitionKey...
@@ -596,6 +606,8 @@ assertThat(processInstance).calledProcessInstance("mySubProcessDefinitionKey").i
 
 <a name="helpers-variables"/>
 #### Making assertions on the process variables map of an instance
+
+**Available from camunda-bpm-assert version 1.1 onwards**
 
 You can retrieve a "chained" process variables map assert inspecting all the process variables 
 available in the context of a process instance...
@@ -749,12 +761,14 @@ assertThat(processDefinition()).hasActiveInstances(1);
 ## Advanced topics
 
 <a name="non-default-engine"/>
-#### Using a non-default process engine 
+#### Using a non-default process engine
+ 
+**Available from camunda-bpm-assert version 1.1 onwards**
 
-In case you want to test with a process engine, which is not the default engine, 
-you can bind a specific process engine to your testing thread by means of
-the following initialisation code. This makes the assertions aware of your process 
-engine, e.g.:
+In case you want to test with a process engine, which is neither the default engine,
+nor the only one ramped up, you can bind a specific process engine to your testing 
+thread by means of the following initialisation code. This makes the assertions aware 
+of your process engine, e.g.:
  
 ```java  
    @Before
