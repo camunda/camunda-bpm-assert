@@ -8,7 +8,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasPassedInOrder](#processInstance-hasPassedInOrder), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [hasProcessDefinitionKey](#processInstance-hasProcessDefinitionKey) [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasPassedInOrder](#processInstance-hasPassedInOrder), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [hasProcessDefinitionKey](#processInstance-hasProcessDefinitionKey), [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly), [isWaitingFor](#processInstance-isWaitingFor), [isNotWaitingFor](#processInstance-isNotWaitingFor)
    * for process definitions: [hasActiveInstances](#processDefinition-hasActiveInstances)
    * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
@@ -18,6 +18,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * [Unclaiming tasks](#helpers-unclaim)
    * [Completing tasks](#helpers-complete)
    * [Completing tasks and passing process variables](#helpers-complete-variables)
+   * [Executing jobs](#helpers-execute)
    * [Creating queries](#helpers-queries)
    * [Accessing engine and engine API services](#helpers-services)
    * [Making assertions on the only task of an instance](#helpers-task)
@@ -227,6 +228,40 @@ Assert that a process instance is currently waiting at exactly the several speci
 assertThat(processInstance).isWaitingAtExactly("edit", "correct");
 ```
 
+<a name="processInstance-isWaitingFor"/>
+#### Instance: isWaitingFor
+
+**Available from camunda-bpm-assert version 1.1 onwards**
+
+Assert that a process instance is currently waiting for a specified message:
+
+```java
+assertThat(processInstance).isWaitingFor("myMessage");
+```
+
+Assert that a process instance is currently waiting for several specified messages:
+
+```java
+assertThat(processInstance).isWaitingAt("myMessage", "yourMessage");
+```
+
+<a name="processInstance-isNotWaitingFor"/>
+#### Instance: isNotWaitingFor
+
+**Available from camunda-bpm-assert version 1.1 onwards**
+
+Assert that a process instance is currently NOT waiting for a specified message:
+
+```java
+assertThat(processInstance).isNotWaitingAt("myMessage");
+```
+
+Assert that a process instance is currently NOT waiting for any of several specified messages:
+
+```java
+assertThat(processInstance).isNotWaitingAt("myMessage", "yourMessage");
+```
+
 <a name="processDefinition-hasActiveInstances"/>
 #### Definition: hasActiveInstances
 
@@ -400,6 +435,15 @@ You can therefore e.g. write
 
 ```java
 complete(task, withVariables("documentId", 5, "approved", true)); 
+```
+
+<a name="helpers-execute"/>
+#### Executing jobs
+
+You can directly execute a job by means of static helper method:
+
+```java
+execute(job());
 ```
 
 <a name="helpers-queries"/>
