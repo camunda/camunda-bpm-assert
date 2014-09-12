@@ -8,6 +8,8 @@ import org.camunda.bpm.engine.task.Task;
 
 import org.assertj.core.api.Assertions;
 
+import java.util.Map;
+
 /**
  * Class meant to statically access all
  * camunda BPM Process Engine Assertions.
@@ -42,6 +44,13 @@ public class ProcessEngineAssertions extends Assertions {
     if (processEngine != null) {
       init(processEngine);
       return processEngine;
+    } else {
+      Map<String, ProcessEngine> processEngines = ProcessEngines.getProcessEngines();
+      if (processEngines.size() == 1) {
+        processEngine = processEngines.values().iterator().next();
+        init(processEngine);
+        return processEngine;
+      }
     }
     throw new IllegalStateException(
       String.format("Call %s.init(ProcessEngine processEngine) first!", 
