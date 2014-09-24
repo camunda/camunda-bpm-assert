@@ -23,13 +23,13 @@ Hopefully this will also make it easier to change your tests half a year after y
 <a name="maven-dependency"/>
 ### Maven dependency
 
-First, [declare the camunda BPM maven repository](http://www.camunda.org/get-started/#apache-maven) - if you haven't yet done so. Then you find here the coordinates for including camunda-bpm-assert in Apache Maven Projects:
+Here you find here the coordinates for including camunda-bpm-assert in Apache Maven Projects:
 
 ```xml  
 	<dependency>
 	    <groupId>org.camunda.bpm.extension</groupId>
     	<artifactId>camunda-bpm-assert</artifactId>
-    	<version>1.0</version>
+    	<version>1.1</version>
     	<scope>test</scope>
 	</dependency>
 ```
