@@ -3,6 +3,8 @@ package org.camunda.bpm.engine.test.util;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
 
 import java.util.Comparator;
+import java.util.IllegalFormatException;
+import java.util.UUID;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -19,8 +21,12 @@ public class HistoricActivityInstanceComparator implements Comparator<HistoricAc
         Long long1 = Long.parseLong(string1);
         Long long2 = Long.parseLong(string2);
         return long1.compareTo(long2);
-      } catch (NumberFormatException e) {
-        return string1.compareTo(string2);
+      } catch (NumberFormatException e1) {
+        try {
+          return UUID.fromString(string1).compareTo(UUID.fromString(string2));
+        } catch (IllegalArgumentException e2) {
+          throw new IllegalArgumentException("You seem to use an unsupported ID generator.", e2);
+        }
       }
     }
     return compare;
