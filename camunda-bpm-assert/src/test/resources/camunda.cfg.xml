@@ -10,6 +10,9 @@
         <property name="expressionManager">
             <bean class="org.camunda.bpm.engine.test.mock.MockExpressionManager" />
         </property>
+        <property name="idGenerator">
+            <bean class="org.camunda.bpm.engine.impl.persistence.StrongUuidGenerator"/>
+        </property>
 
     </bean>
 </beans>
