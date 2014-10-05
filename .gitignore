@@ -11,3 +11,4 @@ target
 # OSX
 .DS_Store
 generate-apidocs
+.java-version
