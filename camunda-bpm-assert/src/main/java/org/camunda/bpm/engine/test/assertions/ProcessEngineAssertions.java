@@ -40,22 +40,17 @@ public class ProcessEngineAssertions extends Assertions {
     ProcessEngine processEngine = ProcessEngineAssertions.processEngine.get();
     if (processEngine != null)
       return processEngine;
-    processEngine = ProcessEngines.getDefaultProcessEngine();
-    if (processEngine != null) {
+    Map<String, ProcessEngine> processEngines = ProcessEngines.getProcessEngines();
+    if (processEngines.size() == 1) {
+      processEngine = processEngines.values().iterator().next();
       init(processEngine);
       return processEngine;
-    } else {
-      Map<String, ProcessEngine> processEngines = ProcessEngines.getProcessEngines();
-      if (processEngines.size() == 1) {
-        processEngine = processEngines.values().iterator().next();
-        init(processEngine);
-        return processEngine;
-      }
     }
-    throw new IllegalStateException(
-      String.format("Call %s.init(ProcessEngine processEngine) first!", 
-      ProcessEngineAssertions.class.getSimpleName())
-    );
+    String message = processEngines.size() == 0 ? "No ProcessEngine found to be " +
+      "registered with " + ProcessEngines.class.getSimpleName() + "!" 
+      : String.format(processEngines.size() + " ProcessEngines initialized. Call %s.init" +
+      "(ProcessEngine processEngine) first!", ProcessEngineAssertions.class.getSimpleName());
+    throw new IllegalStateException(message);
   }
 
   /**
