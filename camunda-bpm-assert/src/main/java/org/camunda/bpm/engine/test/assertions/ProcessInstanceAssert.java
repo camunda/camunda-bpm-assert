@@ -2,8 +2,7 @@ package org.camunda.bpm.engine.test.assertions;
 
 import java.util.*;
 
-import org.assertj.core.api.ListAssert;
-import org.assertj.core.api.MapAssert;
+import org.assertj.core.api.*;
 import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
@@ -11,7 +10,6 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.test.util.HistoricActivityInstanceComparator;
 
 /**
@@ -99,7 +97,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     final String message = "Expecting %s " +
       (isWaitingAt ? "to be waiting at " + (exactly ? "exactly " : "") + "%s, ": "NOT to be waiting at %s, ") +
       "but it is actually waiting at %s.";
-    ListAssert<String> assertion = Assertions.assertThat(activeActivityIds)
+    ListAssert<String> assertion = (ListAssert<String>) Assertions.assertThat(activeActivityIds)
       .overridingErrorMessage(message, 
         toString(current),
         Lists.newArrayList(activityIds), 
@@ -155,7 +153,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       .isNotNull().isNotEmpty().doesNotContainNull();
     for (String messageName: messageNames) {
       List<Execution> executions = executionQuery().messageEventSubscriptionName(messageName).list();
-      ListAssert<Execution> assertion = Assertions.assertThat(executions).overridingErrorMessage("Expecting %s " +
+      ListAssert<Execution> assertion = (ListAssert<Execution>) Assertions.assertThat(executions).overridingErrorMessage("Expecting %s " +
         (isWaitingFor ? "to be waiting for %s, ": "NOT to be waiting for %s, ") +
         "but actually did " + (isWaitingFor ? "not ": "") + "find it to be waiting for message [%s].", 
         actual, Arrays.asList(messageNames), messageName);
@@ -219,7 +217,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
         : "NOT to have passed activities %s, ") +
       "but actually we instead we found that it passed %s. (Please make sure you have set the history " +
       "service of the engine to at least 'activity' or a higher level before making use of this assertion!)";
-    ListAssert<String> assertion = Assertions.assertThat(finished)
+    ListAssert<String> assertion = (ListAssert<String>) Assertions.assertThat(finished)
       .overridingErrorMessage(message, 
         actual, 
         Lists.newArrayList(activityIds), 
@@ -275,7 +273,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
     ProcessInstance current = getExistingCurrent();
     Map<String, Object> vars = runtimeService().getVariables(getExistingCurrent().getProcessInstanceId());
-    MapAssert<String, Object> assertion = Assertions.assertThat(vars)
+    MapAssert<String, Object> assertion = (MapAssert<String, Object>) Assertions.assertThat(vars)
       .overridingErrorMessage("Expecting %s to hold " + 
         (shouldHaveVariables ? "process variables" + (shouldHaveSpecificVariables ? " %s, " : ", ") : "no variables at all, ") +
         "instead we found it to hold " + (vars.isEmpty() ? "no variables at all." : "the variables %s."),
@@ -575,7 +573,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    *          Inspecting a 'null' map in case no such variables are available.
    */
   public MapAssert<String, Object> variables() {
-    return Assertions.assertThat(runtimeService().getVariables(getExistingCurrent().getProcessInstanceId()));
+    return (MapAssert<String, Object>) Assertions.assertThat(runtimeService().getVariables(getExistingCurrent().getProcessInstanceId()));
   }
 
   /* TaskQuery, automatically narrowed to actual {@link ProcessInstance} */
