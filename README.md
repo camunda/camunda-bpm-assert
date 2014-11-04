@@ -1,6 +1,4 @@
-# ![camunda logo](http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png)&nbsp;camunda-bpm-assert 
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert)
+# ![camunda logo](http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png)&nbsp;camunda-bpm-assert <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert"><img align="right" src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert/badge.svg"/></a>
 
 This little community-extension to [camunda BPM](http://camunda.org) wants to make it easier to write tests for BPMN process definitions executed with the camunda process engine. 
 For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](http://joel-costigliola.github.io/assertj/) rich assertions library for java are provided, 
