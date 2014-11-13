@@ -11,7 +11,7 @@ Hopefully this will also make it easier to change your tests half a year after y
 ### Table of Contents
 
  * [Getting started](#getting-started)
-   1. [Maven dependency](#maven-dependency)
+   1. [Maven/Gradle Dependency](#maven-gradle-dependency)
    1. [Static import & Initialisation](#static-import)
    1. [Start using it!](#start-using)
  * [Resources](#resources), [Maintainer](#maintainer) and [License](#license)
@@ -20,10 +20,12 @@ Hopefully this will also make it easier to change your tests half a year after y
 <a name="getting-started"/>
 ## Getting started
 
-<a name="maven-dependency"/>
-### Maven dependency
+<a name="maven-gradle-dependency"/>
+### Maven/Gradle dependency
 
-Here you find here the coordinates for including camunda-bpm-assert in Apache Maven Projects:
+Here you find here the coordinates for including camunda-bpm-assert in your project:
+
+#### 1. Apache Maven:
 
 ```xml  
 	<dependency>
@@ -32,6 +34,12 @@ Here you find here the coordinates for including camunda-bpm-assert in Apache Ma
     	<version>1.1</version>
     	<scope>test</scope>
 	</dependency>
+```
+
+#### 2. Gradle/Grails:
+
+```groovy
+	testCompile 'org.camunda.bpm.extension:camunda-bpm-assert:1.1'
 ```
 
 <a name="static-import"/>
