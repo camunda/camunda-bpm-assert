@@ -1,5 +1,10 @@
 package org.camunda.bpm.engine.test.assertions;
 
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.assertThat;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.runtimeService;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.taskQuery;
+
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
@@ -8,8 +13,6 @@ import org.camunda.bpm.engine.test.assertions.helpers.Failure;
 import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
-
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -25,9 +28,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_Single_Success() {
     // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-task"
-    );
+    final ProcessInstance processInstance = startProcess();
     // Then
     assertThat(processInstance).task().isNotNull();
   }
@@ -38,9 +39,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_SingleWithQuery_Success() {
     // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-task"
-    );
+    final ProcessInstance processInstance = startProcess();
     // Then
     assertThat(processInstance).task(taskQuery().taskDefinitionKey("UserTask_1")).isNotNull();
   }
@@ -51,9 +50,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_MultipleWithQuery_Success() {
     // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-task"
-    );
+    final ProcessInstance processInstance = startProcess();
     // And
     complete(taskQuery().singleResult());
     // Then
@@ -68,9 +65,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_NotYet_Failure() {
     // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-task"
-    );
+    final ProcessInstance processInstance = startProcess();
     // Then
     expect(new Failure() {
       @Override
@@ -86,9 +81,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_Passed_Failure() {
     // Given
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-task"
-    );
+    final ProcessInstance processInstance = startProcess();
     // When
     complete(taskQuery().singleResult());
     // Then
@@ -106,9 +99,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_MultipleWithQuery_Failure() {
     // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-task"
-    );
+    final ProcessInstance processInstance = startProcess();
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_1").singleResult());
     // And
@@ -130,9 +121,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_MultipleWithTaskDefinitionKey_Success() {
     // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-task"
-    );
+    final ProcessInstance processInstance = startProcess();
     // And
     complete(taskQuery().singleResult());
     // Then
@@ -147,9 +136,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   })
   public void testTask_MultipleWithTaskDefinitionKey_Failure() {
     // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-task"
-    );
+    final ProcessInstance processInstance = startProcess();
     // And
     complete(taskQuery().taskDefinitionKey("UserTask_1").singleResult());
     // And
@@ -165,4 +152,25 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
     }, ProcessEngineException.class);
   }
 
+
+  @Test
+  @Deployment(resources = {
+      "ProcessInstanceAssert-task.bpmn"
+  })
+  public void testTask_notWaitingAtTaskDefinitionKey() {
+    final ProcessInstance processInstance = startProcess();
+
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).task("UserTask_2").isNotNull();
+      }
+    });
+  }
+
+  private ProcessInstance startProcess() {
+    return runtimeService().startProcessInstanceByKey(
+        "ProcessInstanceAssert-task"
+      );
+  }
 }
