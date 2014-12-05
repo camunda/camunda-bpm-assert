@@ -422,6 +422,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    *          ProcessInstance)
    */
   public TaskAssert task(String taskDefinitionKey) {
+    isWaitingAt(taskDefinitionKey);
     return task(taskQuery().taskDefinitionKey(taskDefinitionKey));
   }
 

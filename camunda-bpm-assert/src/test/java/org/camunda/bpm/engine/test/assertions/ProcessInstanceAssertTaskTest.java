@@ -165,4 +165,25 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
     }, ProcessEngineException.class);
   }
 
+
+  @Test
+  @Deployment(resources = {
+      "ProcessInstanceAssert-task.bpmn"
+  })
+  public void testTask_notWaitingAtTaskDefinitionKey() {
+    final ProcessInstance processInstance = startProcess();
+
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).task("UserTask_2").isNotNull();
+      }
+    });
+  }
+
+  private ProcessInstance startProcess() {
+    return runtimeService().startProcessInstanceByKey(
+        "ProcessInstanceAssert-task"
+      );
+  }
 }

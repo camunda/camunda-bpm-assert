@@ -92,20 +92,41 @@ public class JobAnnouncementProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
     verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
 
-    assertThat(processInstance).hasPassedInOrder(
-      "edit", 
-      "review", 
-      "publish", 
-      "publication", 
-      "mail"
-    );
+    assertThat(processInstance).hasPassedInOrder("edit", "review", "publish", "publication", "mail");
 
     assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
-    
+
     assertThat(processDefinition()).hasActiveInstances(0);
 
   }
 
+  @Test
+  @Deployment(resources = { "camunda-testing-job-announcement.bpmn", "camunda-testing-job-announcement-publication.bpmn" })
+  public void should_fail_if_processInstance_is_not_waiting_at_expected_task() {
+    final ProcessInstance processInstance = startProcess();
+
+    try {
+      assertThat(processInstance).task("review").isNotAssigned();
+    } catch (AssertionError e) {
+      assertThat(e.getMessage()).contains("to be waiting at [review], but it is actually waiting at [edit]");
+    }
+
+  }
+
+
+  @Test
+  @Deployment(resources = { "camunda-testing-job-announcement.bpmn", "camunda-testing-job-announcement-publication.bpmn" })
+  public void should_not_fail_if_processInstance_is_waiting_at_expected_task() {
+    final ProcessInstance processInstance = startProcess();
+
+    assertThat(processInstance).task("edit").isNotAssigned();
+  }
+
+  private ProcessInstance startProcess() {
+    return runtimeService().startProcessInstanceByKey("camunda-testing-job-announcement",
+          withVariables("jobAnnouncementId", jobAnnouncement.getId())
+      );
+  }
 }
