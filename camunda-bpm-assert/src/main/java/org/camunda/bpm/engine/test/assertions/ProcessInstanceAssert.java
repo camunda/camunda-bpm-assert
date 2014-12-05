@@ -442,7 +442,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    *          one task is delivered by the query (after being narrowed to 
    *          actual ProcessInstance)
    */
-  public TaskAssert task(TaskQuery query) {
+  public TaskAssert task(final TaskQuery query) {
     if (query == null)
       throw new IllegalArgumentException("Illegal call of task(query = 'null') - but must not be null!");
     isNotNull();

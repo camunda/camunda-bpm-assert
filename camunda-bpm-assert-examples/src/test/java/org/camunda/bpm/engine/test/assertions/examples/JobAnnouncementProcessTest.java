@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 public class JobAnnouncementProcessTest {
 
   @Rule
-  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+  public final ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Mock
   public JobAnnouncementService jobAnnouncementService;
@@ -53,8 +53,7 @@ public class JobAnnouncementProcessTest {
     when(jobAnnouncementService.findRequester(1L)).thenReturn("gonzo");
     when(jobAnnouncementService.findEditor(1L)).thenReturn("fozzie");
 
-    ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("camunda-testing-job-announcement", 
-      withVariables("jobAnnouncementId", jobAnnouncement.getId()));
+    final ProcessInstance processInstance = startProcess();
 
     assertThat(processInstance).isStarted().isNotEnded()
       .task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isNotAssigned();
@@ -104,28 +103,26 @@ public class JobAnnouncementProcessTest {
   @Deployment(resources = { "camunda-testing-job-announcement.bpmn", "camunda-testing-job-announcement-publication.bpmn" })
   public void should_fail_if_processInstance_is_not_waiting_at_expected_task() {
     final ProcessInstance processInstance = startProcess();
-
     try {
       assertThat(processInstance).task("review");
     } catch (AssertionError e) {
       return;
     }
     throw new AssertionError("Expected AssertionError to be thrown, but did not see any such exception.");
-
   }
-
 
   @Test
   @Deployment(resources = { "camunda-testing-job-announcement.bpmn", "camunda-testing-job-announcement-publication.bpmn" })
   public void should_not_fail_if_processInstance_is_waiting_at_expected_task() {
     final ProcessInstance processInstance = startProcess();
-
     assertThat(processInstance).task("edit").isNotAssigned();
   }
 
   private ProcessInstance startProcess() {
-    return runtimeService().startProcessInstanceByKey("camunda-testing-job-announcement",
-          withVariables("jobAnnouncementId", jobAnnouncement.getId())
-      );
+    return runtimeService().startProcessInstanceByKey(
+      "camunda-testing-job-announcement",
+      withVariables("jobAnnouncementId", jobAnnouncement.getId())
+    );
   }
+
 }
