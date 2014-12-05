@@ -53,10 +53,8 @@ public class JobAnnouncementProcessTest {
     when(jobAnnouncementService.findRequester(1L)).thenReturn("gonzo");
     when(jobAnnouncementService.findEditor(1L)).thenReturn("fozzie");
 
-    ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "camunda-testing-job-announcement",
-      withVariables("jobAnnouncementId", jobAnnouncement.getId())
-    );
+    ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("camunda-testing-job-announcement", 
+      withVariables("jobAnnouncementId", jobAnnouncement.getId()));
 
     assertThat(processInstance).isStarted().isNotEnded()
       .task().hasDefinitionKey("edit").hasCandidateGroup("engineering").isNotAssigned();
@@ -108,10 +106,11 @@ public class JobAnnouncementProcessTest {
     final ProcessInstance processInstance = startProcess();
 
     try {
-      assertThat(processInstance).task("review").isNotAssigned();
+      assertThat(processInstance).task("review");
     } catch (AssertionError e) {
-      assertThat(e.getMessage()).contains("to be waiting at [review], but it is actually waiting at [edit]");
+      return;
     }
+    throw new AssertionError("Expected AssertionError to be thrown, but did not see any such exception.");
 
   }
 
