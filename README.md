@@ -31,7 +31,7 @@ Here you find here the coordinates for including camunda-bpm-assert in your proj
 	<dependency>
 	    <groupId>org.camunda.bpm.extension</groupId>
     	<artifactId>camunda-bpm-assert</artifactId>
-    	<version>1.1</version>
+    	<version>1.2</version>
     	<scope>test</scope>
 	</dependency>
 ```
@@ -39,7 +39,7 @@ Here you find here the coordinates for including camunda-bpm-assert in your proj
 #### 2. Gradle/Grails:
 
 ```groovy
-	testCompile 'org.camunda.bpm.extension:camunda-bpm-assert:1.1'
+	testCompile 'org.camunda.bpm.extension:camunda-bpm-assert:1.2'
 ```
 
 <a name="static-import"/>
