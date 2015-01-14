@@ -730,6 +730,14 @@ assertThat(processDefinition()).hasActiveInstances(1);
 <a name="advanced"/>
 ## Advanced topics
 
+#### Add camunda-bpm-assert to Eclipse
+
+Eclipse will remove the static import, when it organizes the imports. Thus it is recommended to add camunda-bpm-assert to your 'Content Assist Favorites'.In Eclipse go to Window -> Preferences -> Java -> Editor -> Content Assist -> Favorites -> New Type... and add the following type:
+
+```java
+org.camunda.bpm.engine.test.assertions.ProcessEngineTests
+```
+
 <a name="non-default-engine"/>
 #### Using a non-default process engine
  

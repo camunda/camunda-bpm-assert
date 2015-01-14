@@ -52,15 +52,8 @@ Then you just have to add the following static import:
 	import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 ```
 
-### Alternative: Add camunda-bpm-assert to Eclipse
+<sub>:warning: **Eclipse Users**: you might want to [add camunda-bpm-assert to your Content Assist Favorites](https://github.com/camunda/camunda-bpm-assert/blob/master/camunda-bpm-assert/README.md#add-camunda-bpm-assert-to-eclipse).</sub>
 
-Eclipse will remove the static import, when it organizes the imports.
-Thus we recommend to add camunda-bpm-assert to your Content Assist Favorites.
-In Eclipse go to Window -> Preferences -> Java -> Editor -> Content Assist -> Favorites -> New Type... and add the following type:
-```java
-org.camunda.bpm.engine.test.assertions.ProcessEngineTests
-```
-	
 <a name="start-using"/>
 ### Start using camunda-bpm-assert!
 
