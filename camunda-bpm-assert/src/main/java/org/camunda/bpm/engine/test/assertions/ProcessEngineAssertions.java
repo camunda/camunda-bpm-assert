@@ -1,11 +1,12 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.repository.CaseDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
-
 import org.assertj.core.api.Assertions;
 
 import java.util.Map;
@@ -75,7 +76,7 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given ProcessDefinition meets your expecations.
+   * Assert that... the given ProcessDefinition meets your expectations.
    *
    * @param   actual ProcessDefinition under test
    * @return  Assert object offering ProcessDefinition specific assertions.
@@ -85,7 +86,7 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given ProcessInstance meets your expecations.
+   * Assert that... the given ProcessInstance meets your expectations.
    *
    * @param   actual ProcessInstance under test
    * @return  Assert object offering ProcessInstance specific assertions.
@@ -95,7 +96,7 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given Task meets your expecations.
+   * Assert that... the given Task meets your expectations.
    *
    * @param   actual Task under test
    * @return  Assert object offering Task specific assertions.
@@ -105,13 +106,33 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given Job meets your expecations.
+   * Assert that... the given Job meets your expectations.
    *
    * @param   actual Job under test
    * @return  Assert object offering Job specific assertions.
    */
   public static JobAssert assertThat(final Job actual) {
     return JobAssert.assertThat(processEngine(), actual);
+  }
+
+  /**
+   * Assert that... the given CaseInstance meets your expectations.
+   *
+   * @param   actual CaseInstance under test
+   * @return  Assert object offering CaseInstance specific assertions.
+   */
+  public static CaseInstanceAssert assertThat(final CaseInstance actual) {
+    return CaseInstanceAssert.assertThat(processEngine(), actual);
+  }
+
+  /**
+   * Assert that... the given CaseDefinition meets your expectations.
+   *
+   * @param   actual ProcessDefinition under test
+   * @return  Assert object offering ProcessDefinition specific assertions.
+   */
+  public static CaseDefinitionAssert assertThat(final CaseDefinition actual) {
+    return CaseDefinitionAssert.assertThat(processEngine(), actual);
   }
 
 }
