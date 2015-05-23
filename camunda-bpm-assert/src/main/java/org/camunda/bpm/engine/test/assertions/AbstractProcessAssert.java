@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.*;
 import org.assertj.core.api.AbstractAssert;
 import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.repository.CaseDefinitionQuery;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
 import org.camunda.bpm.engine.runtime.CaseInstanceQuery;
@@ -226,6 +227,20 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return caseService().createCaseExecutionQuery();
   }
 
+  /*
+   * CaseDefinitionQuery, unnarrowed. Narrow this to {@link CaseInstance} (or
+   * {@link CaseDefinition}) by overriding this method in sub classes specialized to
+   * verify a specific process engine domain class.
+   */
+  protected CaseDefinitionQuery caseDefinitionQuery() {
+    return repositoryService().createCaseDefinitionQuery();
+  }
+
+  /*
+   * CaseInstanceQuery, unnarrowed. Narrow this to {@link CaseInstance} (or
+   * {@link CaseDefinition}) by overriding this method in sub classes specialized to
+   * verify a specific process engine domain class.
+   */
   protected CaseInstanceQuery caseInstanceQuery() {
     return caseService().createCaseInstanceQuery();
   }

@@ -2,6 +2,7 @@ package org.camunda.bpm.engine.test.assertions;
 
 import org.assertj.core.util.Preconditions;
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.repository.CaseDefinitionQuery;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
@@ -169,6 +170,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    */
   public static CaseExecutionQuery caseExecutionQuery() {
     return caseService().createCaseExecutionQuery();
+  }
+
+
+  /**
+   * Helper method to easily create a new CaseDefinitionQuery.
+   * @return new CaseExecutionQuery for process engine bound to this testing thread
+   */
+  public static CaseDefinitionQuery caseDefinitionQuery() {
+    return repositoryService().createCaseDefinitionQuery();
   }
 
   /**

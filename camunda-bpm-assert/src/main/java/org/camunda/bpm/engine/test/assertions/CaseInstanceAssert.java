@@ -10,7 +10,7 @@ public class CaseInstanceAssert extends AbstractProcessAssert<CaseInstanceAssert
   }
 
   protected CaseInstanceAssert(final ProcessEngine engine, final CaseInstance actual) {
-    super(engine, actual, CaseInstance.class);
+    super(engine, actual, CaseInstanceAssert.class);
   }
 
   @Override
@@ -18,8 +18,19 @@ public class CaseInstanceAssert extends AbstractProcessAssert<CaseInstanceAssert
     return caseInstanceQuery().singleResult();
   }
 
+
   @Override
-  protected String toString(final CaseInstance caseInstance) {
-    return caseInstance.toString();
+  protected String toString(CaseInstance caseInstance) {
+    return caseInstance != null ?
+      String.format("actual %s {" +
+          "id='%s', " +
+          "caseDefinitionId='%s', " +
+          "businessKey='%s'" +
+          "}",
+          CaseInstance.class.getSimpleName(),
+          caseInstance.getId(),
+          caseInstance.getCaseDefinitionId(),
+          caseInstance.getBusinessKey())
+        : null;
   }
 }
