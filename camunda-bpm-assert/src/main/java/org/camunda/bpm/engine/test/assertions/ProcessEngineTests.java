@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
+import org.assertj.core.util.Preconditions;
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
@@ -13,9 +14,9 @@ import java.util.Map;
 import static java.lang.String.format;
 
 /**
- * Convenience class to access all assertions camunda BPM 
+ * Convenience class to access all assertions camunda BPM
  * Process Engine Assertions - PLUS a few helper methods.
- * 
+ *
  * In your code use import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
  *
  * @see org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions
@@ -38,19 +39,25 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   /**
    * Helper method to easily access AuthorizationService
    *
-   * @return  AuthorizationService of process engine bound to this 
+   * @return  AuthorizationService of process engine bound to this
    *          testing thread
-   * @see     org.camunda.bpm.engine.AuthorizationService
    */
   public static AuthorizationService authorizationService() {
     return processEngine().getAuthorizationService();
   }
 
   /**
+   * Helper method to wasily access CaseService.
+   * @return CaseService of process engine bound to this testing thread
+   */
+  public static CaseService caseService() {
+    return processEngine().getCaseService();
+  }
+
+  /**
    * Helper method to easily access FormService
-   * 
+   *
    * @return  FormService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.FormService
    */
   public static FormService formService() {
     return processEngine().getFormService();
@@ -60,7 +67,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Helper method to easily access HistoryService
    *
    * @return  HistoryService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.HistoryService
    */
   public static HistoryService historyService() {
     return processEngine().getHistoryService();
@@ -70,7 +76,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Helper method to easily access IdentityService
    *
    * @return  IdentityService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.IdentityService
    */
   public static IdentityService identityService() {
     return processEngine().getIdentityService();
@@ -80,7 +85,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Helper method to easily access ManagementService
    *
    * @return  ManagementService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.ManagementService
    */
   public static ManagementService managementService() {
     return processEngine().getManagementService();
@@ -90,7 +94,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Helper method to easily access RepositoryService
    *
    * @return  RepositoryService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.RepositoryService
    */
   public static RepositoryService repositoryService() {
     return processEngine().getRepositoryService();
@@ -100,7 +103,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Helper method to easily access TaskService
    *
    * @return  TaskService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.TaskService
    */
   public static TaskService taskService() {
     return processEngine().getTaskService();
@@ -108,9 +110,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily create a new TaskQuery
-   * 
+   *
    * @return  new TaskQuery for process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.task.TaskQuery
    */
   public static TaskQuery taskQuery() {
     return taskService().createTaskQuery();
@@ -120,7 +121,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Helper method to easily create a new JobQuery
    *
    * @return  new JobQuery for process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.runtime.JobQuery
    */
   public static JobQuery jobQuery() {
     return managementService().createJobQuery();
@@ -128,10 +128,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily create a new ProcessInstanceQuery
-   * 
-   * @return  new ProcessInstanceQuery for process engine bound to this 
+   *
+   * @return  new ProcessInstanceQuery for process engine bound to this
    *          testing thread
-   * @see     org.camunda.bpm.engine.runtime.ProcessInstanceQuery
    */
   public static ProcessInstanceQuery processInstanceQuery() {
     return runtimeService().createProcessInstanceQuery();
@@ -139,10 +138,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily create a new ProcessDefinitionQuery
-   * 
-   * @return  new ProcessDefinitionQuery for process engine bound to this 
+   *
+   * @return  new ProcessDefinitionQuery for process engine bound to this
    *          testing thread
-   * @see     org.camunda.bpm.engine.repository.ProcessDefinitionQuery
    */
   public static ProcessDefinitionQuery processDefinitionQuery() {
     return repositoryService().createProcessDefinitionQuery();
@@ -152,25 +150,41 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Helper method to easily create a new ExecutionQuery
    *
    * @return  new ExecutionQuery for process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.runtime.ExecutionQuery
    */
   public static ExecutionQuery executionQuery() {
     return runtimeService().createExecutionQuery();
   }
 
   /**
+   * Helper method to easily create a new CaseInstanceQuery.
+   * @return new CaseInstanceQuery for process engine bound to this testing thread
+   */
+  public static CaseInstanceQuery caseInstanceQuery() {
+    return caseService().createCaseInstanceQuery();
+  }
+
+  /**
+   * Helper method to easily create a new CaseExecutionQuery.
+   * @return new CaseExecutionQuery for process engine bound to this testing thread
+   */
+  public static CaseExecutionQuery caseExecutionQuery() {
+    return caseService().createCaseExecutionQuery();
+  }
+
+  /**
    * Helper method to easily construct a map of process variables
-   * 
+   *
    * @param   key (obligatory) key of first process variable
    * @param   value (obligatory) value of first process variable
-   * @param   furtherKeyValuePairs (optional) key/value pairs for further 
+   * @param   furtherKeyValuePairs (optional) key/value pairs for further
    *          process variables
-   * @return  a map of process variables by passing a list of String 
+   * @return  a map of process variables by passing a list of String
    *          -> Object key value pairs.
    */
   public static Map<String, Object> withVariables(final String key, final Object value, final Object... furtherKeyValuePairs) {
-    if (key == null)
-        throw new IllegalArgumentException(format("Illegal call of withVariables(key = '%s', value = '%s', ...) - key must not be null!", key, value));
+    if (key == null) {
+      throw new IllegalArgumentException(format("Illegal call of withVariables(key = '%s', value = '%s', ...) - key must not be null!", key, value));
+    }
     final Map<String, Object> map = new HashMap<String, Object>();
     map.put(key, value);
     if (furtherKeyValuePairs != null) {
@@ -194,8 +208,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * @return  the only task of the last asserted process
    *          instance. May return null if no such task exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one task is delivered by the underlying 
-   *          query or in case no process instance was asserted 
+   *          than one task is delivered by the underlying
+   *          query or in case no process instance was asserted
    *          yet.
    */
   public static Task task() {
@@ -203,15 +217,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only task currently 
+   * Helper method to easily access the only task currently
    * available in the context of the given process instance.
    *
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
-   * @return  the only task of the process instance. May 
+   * @return  the only task of the process instance. May
    *          return null if no such task exists.
-   * @throws  java.lang.IllegalStateException in case more 
-   *          than one task is delivered by the underlying 
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one task is delivered by the underlying
    *          query.
    */
   public static Task task(ProcessInstance processInstance) {
@@ -219,17 +233,17 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only task with the 
-   * given taskDefinitionKey currently available in the context 
+   * Helper method to easily access the only task with the
+   * given taskDefinitionKey currently available in the context
    * of the last asserted process instance.
-   * 
+   *
    * @param   taskDefinitionKey the key of the task that should
-   *          be retrieved.                             
+   *          be retrieved.
    * @return  the only task of the last asserted process
    *          instance. May return null if no such task exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one task is delivered by the underlying 
-   *          query or in case no process instance was asserted 
+   *          than one task is delivered by the underlying
+   *          query or in case no process instance was asserted
    *          yet.
    */
   public static Task task(String taskDefinitionKey) {
@@ -238,18 +252,18 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only task with the 
-   * given taskDefinitionKey currently available in the context 
+   * Helper method to easily access the only task with the
+   * given taskDefinitionKey currently available in the context
    * of the given process instance.
    *
    * @param   taskDefinitionKey the key of the task that should
-   *          be retrieved.                             
+   *          be retrieved.
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
    * @return  the only task of the given process instance. May
    *          return null if no such task exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one task is delivered by the underlying 
+   *          than one task is delivered by the underlying
    *          query.
    */
   public static Task task(String taskDefinitionKey, ProcessInstance processInstance) {
@@ -258,19 +272,19 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only task compliant to 
-   * a given taskQuery and currently available in the context 
+   * Helper method to easily access the only task compliant to
+   * a given taskQuery and currently available in the context
    * of the last asserted process instance.
    *
    * @param   taskQuery the query with which the task should
    *          be retrieved. This query will be further narrowed
    *          to the last asserted process instance.
-   * @return  the only task of the last asserted process instance 
-   *          and compliant to the given query. May return null 
+   * @return  the only task of the last asserted process instance
+   *          and compliant to the given query. May return null
    *          in case no such task exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one task is delivered by the underlying 
-   *          query or in case no process instance was asserted 
+   *          than one task is delivered by the underlying
+   *          query or in case no process instance was asserted
    *          yet.
    */
   public static Task task(TaskQuery taskQuery) {
@@ -284,8 +298,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only task compliant to 
-   * a given taskQuery and currently available in the context 
+   * Helper method to easily access the only task compliant to
+   * a given taskQuery and currently available in the context
    * of the given process instance.
    *
    * @param   taskQuery the query with which the task should
@@ -293,11 +307,11 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *          to the given process instance.
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
-   * @return  the only task of the given process instance and 
-   *          compliant to the given query. May return null in 
+   * @return  the only task of the given process instance and
+   *          compliant to the given query. May return null in
    *          case no such task exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one task is delivered by the underlying 
+   *          than one task is delivered by the underlying
    *          query.
    */
   public static Task task(TaskQuery taskQuery, ProcessInstance processInstance) {
@@ -305,12 +319,12 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the process definition 
+   * Helper method to easily access the process definition
    * on which the last asserted process instance is based.
    *
-   * @return  the process definition on which the last 
+   * @return  the process definition on which the last
    *          asserted process instance is based.
-   * @throws  java.lang.IllegalStateException in case no 
+   * @throws  java.lang.IllegalStateException in case no
    *          process instance was asserted yet.
    */
   public static ProcessDefinition processDefinition() {
@@ -324,12 +338,12 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the process definition 
+   * Helper method to easily access the process definition
    * on which the given process instance is based.
    *
    * @param   processInstance the process instance for which
    *          the definition should be retrieved.
-   * @return  the process definition on which the given 
+   * @return  the process definition on which the given
    *          process instance is based.
    */
   public static ProcessDefinition processDefinition(ProcessInstance processInstance) {
@@ -338,12 +352,12 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the process definition with the 
+   * Helper method to easily access the process definition with the
    * given processDefinitionKey.
    *
-   * @param   processDefinitionKey the key of the process definition 
-   *          that should be retrieved.                             
-   * @return  the process definition with the given key. 
+   * @param   processDefinitionKey the key of the process definition
+   *          that should be retrieved.
+   * @return  the process definition with the given key.
    *          May return null if no such process definition exists.
    */
   public static ProcessDefinition processDefinition(String processDefinitionKey) {
@@ -352,15 +366,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the process definition compliant 
+   * Helper method to easily access the process definition compliant
    * to a given process definition query.
    *
-   * @param   processDefinitionQuery the query with which the process 
+   * @param   processDefinitionQuery the query with which the process
    *          definition should be retrieved.
-   * @return  the process definition compliant to the given query. May 
+   * @return  the process definition compliant to the given query. May
    *          return null in case no such process definition exists.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
-   *          than one process definition is delivered by the underlying 
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more
+   *          than one process definition is delivered by the underlying
    *          query.
    */
   public static ProcessDefinition processDefinition(ProcessDefinitionQuery processDefinitionQuery) {
@@ -368,15 +382,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only called process instance 
+   * Helper method to easily access the only called process instance
    * currently available in the context of the last asserted process
    * instance.
    *
    * @return  the only called process instance called by the last asserted process
    *          instance. May return null if no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one process instance is delivered by the underlying 
-   *          query or in case no process instance was asserted 
+   *          than one process instance is delivered by the underlying
+   *          query or in case no process instance was asserted
    *          yet.
    */
   public static ProcessInstance calledProcessInstance() {
@@ -384,15 +398,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only called process instance 
+   * Helper method to easily access the only called process instance
    * currently available in the context of the given process instance.
    *
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
-   * @return  the only called process instance called by the given process 
+   * @return  the only called process instance called by the given process
    *          instance. May return null if no such process instance exists.
-   * @throws  java.lang.IllegalStateException in case more 
-   *          than one process instance is delivered by the underlying 
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one process instance is delivered by the underlying
    *          query.
    */
   public static ProcessInstance calledProcessInstance(ProcessInstance processInstance) {
@@ -400,17 +414,17 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only called process instance with 
-   * the given processDefinitionKey currently available in the context 
+   * Helper method to easily access the only called process instance with
+   * the given processDefinitionKey currently available in the context
    * of the last asserted process instance.
    *
    * @param   processDefinitionKey the key of the process instance that should
-   *          be retrieved.                             
+   *          be retrieved.
    * @return  the only such process instance called by the last asserted process
    *          instance. May return null if no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one process instance is delivered by the underlying 
-   *          query or in case no process instance was asserted 
+   *          than one process instance is delivered by the underlying
+   *          query or in case no process instance was asserted
    *          yet.
    */
   public static ProcessInstance calledProcessInstance(String processDefinitionKey) {
@@ -419,18 +433,18 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only called process instance with the 
-   * given processDefinitionKey currently available in the context 
+   * Helper method to easily access the only called process instance with the
+   * given processDefinitionKey currently available in the context
    * of the given process instance.
    *
    * @param   processDefinitionKey the key of the process instance that should
-   *          be retrieved.                             
+   *          be retrieved.
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
-   * @return  the only such process instance called by the given process instance. 
+   * @return  the only such process instance called by the given process instance.
    *          May return null if no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one process instance is delivered by the underlying 
+   *          than one process instance is delivered by the underlying
    *          query.
    */
   public static ProcessInstance calledProcessInstance(String processDefinitionKey, ProcessInstance processInstance) {
@@ -439,17 +453,17 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only called process instance compliant to 
-   * a given processInstanceQuery and currently available in the context 
+   * Helper method to easily access the only called process instance compliant to
+   * a given processInstanceQuery and currently available in the context
    * of the last asserted process instance.
    *
    * @param   processInstanceQuery the query with which the called process instance should
-   *          be retrieved. This query will be further narrowed to the last asserted 
+   *          be retrieved. This query will be further narrowed to the last asserted
    *          process instance.
-   * @return  the only such process instance called by the last asserted process instance and 
+   * @return  the only such process instance called by the last asserted process instance and
    *          compliant to the given query. May return null in case no such task exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one process instance is delivered by the underlying query or in case no 
+   *          than one process instance is delivered by the underlying query or in case no
    *          process instance was asserted yet.
    */
   public static ProcessInstance calledProcessInstance(ProcessInstanceQuery processInstanceQuery) {
@@ -463,20 +477,20 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only called process instance compliant to 
-   * a given processInstanceQuery and currently available in the context of the given 
+   * Helper method to easily access the only called process instance compliant to
+   * a given processInstanceQuery and currently available in the context of the given
    * process instance.
    *
    * @param   processInstanceQuery the query with which the process instance should
-   *          be retrieved. This query will be further narrowed to the given process 
+   *          be retrieved. This query will be further narrowed to the given process
    *          instance.
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
-   * @return  the only such process instance called by the given process instance and 
-   *          compliant to the given query. May return null in 
+   * @return  the only such process instance called by the given process instance and
+   *          compliant to the given query. May return null in
    *          case no such process instance exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one instance is delivered by the underlying 
+   *          than one instance is delivered by the underlying
    *          query.
    */
   public static ProcessInstance calledProcessInstance(ProcessInstanceQuery processInstanceQuery, ProcessInstance processInstance) {
@@ -491,8 +505,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * @return  the only job of the last asserted process
    *          instance. May return null if no such job exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one job is delivered by the underlying 
-   *          query or in case no process instance was asserted 
+   *          than one job is delivered by the underlying
+   *          query or in case no process instance was asserted
    *          yet.
    */
   public static Job job() {
@@ -500,15 +514,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only job currently 
+   * Helper method to easily access the only job currently
    * available in the context of the given process instance.
    *
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
-   * @return  the only job of the process instance. May 
+   * @return  the only job of the process instance. May
    *          return null if no such task exists.
-   * @throws  java.lang.IllegalStateException in case more 
-   *          than one job is delivered by the underlying 
+   * @throws  java.lang.IllegalStateException in case more
+   *          than one job is delivered by the underlying
    *          query.
    */
   public static Job job(ProcessInstance processInstance) {
@@ -516,17 +530,17 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only job with the 
-   * given activityId currently available in the context 
+   * Helper method to easily access the only job with the
+   * given activityId currently available in the context
    * of the last asserted process instance.
    *
    * @param   activityId the id of the job that should
-   *          be retrieved.                             
+   *          be retrieved.
    * @return  the only job of the last asserted process
    *          instance. May return null if no such job exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one job is delivered by the underlying 
-   *          query or in case no process instance was asserted 
+   *          than one job is delivered by the underlying
+   *          query or in case no process instance was asserted
    *          yet.
    */
   public static Job job(String activityId) {
@@ -540,18 +554,18 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only job with the 
-   * given activityId currently available in the context 
+   * Helper method to easily access the only job with the
+   * given activityId currently available in the context
    * of the given process instance.
    *
    * @param   activityId the activityId of the job that should
-   *          be retrieved.                             
+   *          be retrieved.
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
    * @return  the only job of the given process instance. May
    *          return null if no such job exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one job is delivered by the underlying 
+   *          than one job is delivered by the underlying
    *          query.
    */
   public static Job job(String activityId, ProcessInstance processInstance) {
@@ -559,19 +573,19 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only job compliant to 
-   * a given jobQuery and currently available in the context 
+   * Helper method to easily access the only job compliant to
+   * a given jobQuery and currently available in the context
    * of the last asserted process instance.
    *
    * @param   jobQuery the query with which the job should
    *          be retrieved. This query will be further narrowed
    *          to the last asserted process instance.
-   * @return  the only job of the last asserted process instance 
-   *          and compliant to the given query. May return null 
+   * @return  the only job of the last asserted process instance
+   *          and compliant to the given query. May return null
    *          in case no such task exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one job is delivered by the underlying 
-   *          query or in case no process instance was asserted 
+   *          than one job is delivered by the underlying
+   *          query or in case no process instance was asserted
    *          yet.
    */
   public static Job job(JobQuery jobQuery) {
@@ -585,8 +599,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily access the only job compliant to 
-   * a given jobQuery and currently available in the context 
+   * Helper method to easily access the only job compliant to
+   * a given jobQuery and currently available in the context
    * of the given process instance.
    *
    * @param   jobQuery the query with which the job should
@@ -594,11 +608,11 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *          to the given process instance.
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
-   * @return  the only job of the given process instance and 
-   *          compliant to the given query. May return null in 
+   * @return  the only job of the given process instance and
+   *          compliant to the given query. May return null in
    *          case no such job exists.
    * @throws  java.lang.IllegalStateException in case more
-   *          than one job is delivered by the underlying 
+   *          than one job is delivered by the underlying
    *          query.
    */
   public static Job job(JobQuery jobQuery, ProcessInstance processInstance) {
@@ -606,13 +620,13 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily claim a task for a specific 
+   * Helper method to easily claim a task for a specific
    * assignee.
-   * 
+   *
    * @param   task Task to be claimed for an assignee
-   * @param   assigneeUserId userId of assignee for which 
+   * @param   assigneeUserId userId of assignee for which
    *          the task should be claimed
-   * @return  the assigned task - properly refreshed to its 
+   * @return  the assigned task - properly refreshed to its
    *          assigned state.
    */
   public static Task claim(Task task, String assigneeUserId) {
@@ -626,9 +640,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily unclaim a task.
-   * 
+   *
    * @param   task Task to be claimed for an assignee
-   * @return  the assigned task - properly refreshed to its 
+   * @return  the assigned task - properly refreshed to its
    *          unassigned state.
    */
   public static Task unclaim(Task task) {
@@ -641,13 +655,13 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily complete a task and pass some 
-   * process variables. 
-   * 
-   * @param   task Task to be completed 
-   * @param   variables Process variables to be passed to the 
-   *          process instance when completing the task. For 
-   *          setting those variables, you can use 
+   * Helper method to easily complete a task and pass some
+   * process variables.
+   *
+   * @param   task Task to be completed
+   * @param   variables Process variables to be passed to the
+   *          process instance when completing the task. For
+   *          setting those variables, you can use
    *          withVariables(String key, Object value, ...)
    */
   public static void complete(Task task, Map<String, Object> variables) {
@@ -658,26 +672,41 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
 
   /**
    * Helper method to easily complete a task.
-   * 
-   * @param   task Task to be completed 
+   *
+   * @param   task Task to be completed
    */
   public static void complete(Task task) {
-    if (task == null)
-      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s') - must not be null!", task));
+    if (task == null) {
+      throw new IllegalArgumentException(format("Illegal call of complete(task = '%s') - must not be null!", task));
+    }
     taskService().complete(task.getId());
   }
 
   /**
+   * Helper method to easily complete a case.
+   *
+   * @param caseExecution the case to complete
+   */
+  public static void complete(final CaseExecution caseExecution) {
+    if (caseExecution == null) {
+      throw new IllegalArgumentException("Illegal call of complete(caseExecution) - must not be null!");
+    }
+    caseService().completeCaseExecution(caseExecution.getId());
+  }
+
+  /**
    * Helper method to easily execute a job.
-   * 
+   *
    * @param   job Job to be executed.
    */
   public static void execute(Job job) {
-    if (job == null)
+    if (job == null) {
       throw new IllegalArgumentException(format("Illegal call of execute(job = '%s') - must not be null!", job));
-    Job current = jobQuery().jobId(job.getId()).singleResult();
-    if (current == null)
+    }
+    final Job current = jobQuery().jobId(job.getId()).singleResult();
+    if (current == null) {
       throw new IllegalStateException(format("Illegal state when calling execute(job = '%s') - job does not exist anymore!", job));
+    }
     managementService().executeJob(job.getId());
   }
 

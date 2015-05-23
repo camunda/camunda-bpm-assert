@@ -2,6 +2,7 @@ package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
@@ -33,7 +34,7 @@ public class ProcessEngineAssertions extends Assertions {
    *
    * @return  processEngine bound to the current testing thread
    * @throws  IllegalStateException in case a processEngine has not
-   *          been initialised yet and cannot be initialised with a 
+   *          been initialised yet and cannot be initialised with a
    *          default engine.
    */
   public static ProcessEngine processEngine() {
@@ -47,7 +48,7 @@ public class ProcessEngineAssertions extends Assertions {
       return processEngine;
     }
     String message = processEngines.size() == 0 ? "No ProcessEngine found to be " +
-      "registered with " + ProcessEngines.class.getSimpleName() + "!" 
+      "registered with " + ProcessEngines.class.getSimpleName() + "!"
       : String.format(processEngines.size() + " ProcessEngines initialized. Call %s.init" +
       "(ProcessEngine processEngine) first!", ProcessEngineAssertions.class.getSimpleName());
     throw new IllegalStateException(message);
@@ -75,7 +76,7 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given ProcessDefinition meets your expecations.
+   * Assert that... the given ProcessDefinition meets your expectations.
    *
    * @param   actual ProcessDefinition under test
    * @return  Assert object offering ProcessDefinition specific assertions.
@@ -85,7 +86,7 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given ProcessInstance meets your expecations.
+   * Assert that... the given ProcessInstance meets your expectations.
    *
    * @param   actual ProcessInstance under test
    * @return  Assert object offering ProcessInstance specific assertions.
@@ -105,7 +106,7 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given Job meets your expecations.
+   * Assert that... the given Job meets your expectations.
    *
    * @param   actual Job under test
    * @return  Assert object offering Job specific assertions.
@@ -114,4 +115,5 @@ public class ProcessEngineAssertions extends Assertions {
     return JobAssert.assertThat(processEngine(), actual);
   }
 
+  public static CaseInstanceAssert assertThat(final CaseInstance actual) { return CaseInstanceAssert.assertThat(processEngine(), actual); }
 }
