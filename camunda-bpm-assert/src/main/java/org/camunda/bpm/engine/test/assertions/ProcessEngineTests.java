@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.repository.CaseDefinitionQuery;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
@@ -166,6 +167,31 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    */
   public static ExecutionQuery executionQuery() {
     return runtimeService().createExecutionQuery();
+  }
+
+  /**
+   * Helper method to easily create a new CaseInstanceQuery.
+   * @return new CaseInstanceQuery for process engine bound to this testing thread
+   */
+  public static CaseInstanceQuery caseInstanceQuery() {
+    return caseService().createCaseInstanceQuery();
+  }
+
+  /**
+   * Helper method to easily create a new CaseExecutionQuery.
+   * @return new CaseExecutionQuery for process engine bound to this testing thread
+   */
+  public static CaseExecutionQuery caseExecutionQuery() {
+    return caseService().createCaseExecutionQuery();
+  }
+
+
+  /**
+   * Helper method to easily create a new CaseDefinitionQuery.
+   * @return new CaseExecutionQuery for process engine bound to this testing thread
+   */
+  public static CaseDefinitionQuery caseDefinitionQuery() {
+    return repositoryService().createCaseDefinitionQuery();
   }
 
   /**
@@ -675,6 +701,18 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
     if (task == null)
       throw new IllegalArgumentException(format("Illegal call of claim(task = '%s') - must not be null!", task));
     taskService().complete(task.getId());
+  }
+
+  /**
+   * Helper method to easily complete a case.
+   *
+   * @param caseExecution the case to complete
+   */
+  public static void complete(final CaseExecution caseExecution) {
+    if (caseExecution == null) {
+      throw new IllegalArgumentException("Illegal call of complete(caseExecution) - must not be null!");
+    }
+    caseService().completeCaseExecution(caseExecution.getId());
   }
 
   /**
