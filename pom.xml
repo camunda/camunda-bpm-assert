@@ -21,7 +21,7 @@
     </modules>
 
     <properties>
-        <camunda-bpm.version>7.2.0</camunda-bpm.version> 
+        <camunda-bpm.version>7.1.0-Final</camunda-bpm.version> 
         <!-- also works with 7.0.0-Final and any newer version, just use it with your own version -->
         <camunda-bpm-assert.version>${project.version}</camunda-bpm-assert.version>
 
