@@ -107,6 +107,16 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
+   * Helper method to easily access CaseService
+   *
+   * @return  CaseService of process engine bound to this testing thread
+   * @see     org.camunda.bpm.engine.CaseService
+   */
+  public static CaseService caseService() {
+    return processEngine().getCaseService();
+  }
+
+  /**
    * Helper method to easily create a new TaskQuery
    * 
    * @return  new TaskQuery for process engine bound to this testing thread
