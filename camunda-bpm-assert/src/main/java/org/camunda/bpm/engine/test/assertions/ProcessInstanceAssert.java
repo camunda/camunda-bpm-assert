@@ -104,9 +104,8 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
         activeActivityIds);
     if (exactly) {
         String[] sorted = activityIds.clone();
-        Arrays.sort(sorted);
       if (isWaitingAt) {
-        assertion.containsExactly(sorted);
+        assertion.containsOnly(sorted);
       } else {
         throw new UnsupportedOperationException(); 
         // "isNotWaitingAtExactly" is unsupported
