@@ -693,9 +693,9 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
-   * Helper method to easily complete a case.
+   * Helper method to easily complete a case execution.
    *
-   * @param caseExecution the case to complete
+   * @param caseExecution the case execution to complete
    */
   public static void complete(CaseExecution caseExecution) {
     if (caseExecution == null) {

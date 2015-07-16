@@ -3,7 +3,6 @@ package org.camunda.bpm.engine.test.assertions.cmmn;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -16,25 +15,44 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
  */
 public class CaseTaskAssertTest {
 
+  public static final String TASK_A = "PI_TaskA";
+
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-  @Ignore
   @Test
   @Deployment(resources = {
     "cmmn/TaskTest.cmmn"
   })
-  public void test() {
+  public void isActive_should_not_throw_exception_when_task_is_active() {
     //Given
-    CaseInstance caseInstance = givenStartedCase();
+    CaseInstance caseInstance = aCaseWithAnActiveTask();
     // When
-    complete(caseTask("PI_TaskA", caseInstance));
+    assertThat(caseInstance).task(TASK_A).isActive();
     // Then
-    assertThat(caseInstance).isActive();
-    assertThat(caseInstance).task("PI_TaskA").isCompleted();
+    // nothing should happen
   }
 
-  private CaseInstance givenStartedCase() {
+  @Test(expected = AssertionError.class)
+  @Deployment(resources = {
+    "cmmn/TaskTest.cmmn"
+  })
+  public void isActive_should_throw_AssertionError_when_task_is_not_active() {
+    //Given
+    CaseInstance caseInstance = aCaseWithACompletedTask();
+    // When
+    assertThat(caseInstance).task(TASK_A).isActive();
+    // Then
+    // AssertionError should be thrown
+  }
+
+  private CaseInstance aCaseWithACompletedTask() {
+    CaseInstance caseInstance = aCaseWithAnActiveTask();
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(TASK_A).singleResult().getId());
+    return caseInstance;
+  }
+
+  private CaseInstance aCaseWithAnActiveTask() {
     return caseService().createCaseInstanceByKey("Case_TaskTests");
   }
 }
