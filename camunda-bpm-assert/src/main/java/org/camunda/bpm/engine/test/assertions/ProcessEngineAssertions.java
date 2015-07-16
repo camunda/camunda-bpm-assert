@@ -8,6 +8,7 @@ import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.assertj.core.api.Assertions;
+import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
 
 import java.util.Map;
 

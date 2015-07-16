@@ -2,9 +2,11 @@ package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -105,4 +107,13 @@ public class ProcessEngineAssertionsTest {
     assertThat(jobAssert.getActual()).isSameAs(job);
   }
 
+  @Test
+  public void testAssertThat_CaseInstance() throws Exception {
+    //Given
+    CaseInstance caseInstance = Mockito.mock(CaseInstance.class);
+    // When
+    CaseInstanceAssert returnedAssert = assertThat(caseInstance);
+    // Then
+    assertThat(returnedAssert.getActual()).isSameAs(caseInstance);
+  }
 }
