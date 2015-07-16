@@ -708,11 +708,17 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param caseExecution the case to complete
    */
-  public static void complete(final CaseExecution caseExecution) {
+  public static void complete(CaseExecution caseExecution) {
     if (caseExecution == null) {
       throw new IllegalArgumentException("Illegal call of complete(caseExecution) - must not be null!");
     }
     caseService().completeCaseExecution(caseExecution.getId());
+  }
+
+  public static CaseExecution caseTask(String activityId, CaseInstance caseInstance) {
+    CaseExecution caseExecution = caseService().createCaseExecutionQuery().caseInstanceId(caseInstance.getCaseInstanceId()).activityId(activityId).singleResult();
+    assertThat(caseExecution).overridingErrorMessage("Task '"+activityId+"' not found!").isNotNull();
+    return caseExecution;
   }
 
   /**

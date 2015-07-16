@@ -44,6 +44,16 @@
             <organization>Holisticon AG</organization>
             <organizationUrl>http://holisticon.de</organizationUrl>
         </developer>
+        <developer>
+            <name>Martin Günther</name>
+            <organization>Holisticon AG</organization>
+            <organizationUrl>http://holisticon.de</organizationUrl>
+        </developer>
+        <developer>
+            <name>Malte Sörensen</name>
+            <organization>Holisticon AG</organization>
+            <organizationUrl>http://holisticon.de</organizationUrl>
+        </developer>
     </developers>
 
 </project>
