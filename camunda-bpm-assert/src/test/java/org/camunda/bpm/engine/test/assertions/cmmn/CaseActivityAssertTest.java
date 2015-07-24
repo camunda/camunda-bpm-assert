@@ -13,9 +13,10 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenter@holisticon.de>
  */
-public class CaseTaskAssertTest {
+public class CaseActivityAssertTest {
 
   public static final String TASK_A = "PI_TaskA";
+  public static final String TASK_B = "PI_HT_B";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
@@ -28,7 +29,7 @@ public class CaseTaskAssertTest {
     //Given
     CaseInstance caseInstance = aCaseWithAnActiveTask();
     // When
-    assertThat(caseInstance).task(TASK_A).isActive();
+    assertThat(caseInstance).activity(TASK_A).isActive();
     // Then
     // nothing should happen
   }
@@ -41,7 +42,33 @@ public class CaseTaskAssertTest {
     //Given
     CaseInstance caseInstance = aCaseWithACompletedTask();
     // When
-    assertThat(caseInstance).task(TASK_A).isActive();
+    assertThat(caseInstance).activity(TASK_A).isActive();
+    // Then
+    // AssertionError should be thrown
+  }
+
+  @Test
+  @Deployment(resources = {
+    "cmmn/TaskWithSentryTest.cmmn"
+  })
+  public void isAvailable_should_not_throw_exception_when_task_is_available() {
+    //Given
+    CaseInstance caseInstance = aCaseWithAnAvailbaleTask();
+    // When
+    assertThat(caseInstance).activity(TASK_B).isAvailable();
+    // Then
+    // nothing should happen
+  }
+
+  @Test(expected = AssertionError.class)
+  @Deployment(resources = {
+    "cmmn/TaskTest.cmmn"
+  })
+  public void isAvailable_should_throw_AssertionError_when_task_is_not_active() {
+    //Given
+    CaseInstance caseInstance = aCaseWithACompletedTask();
+    // When
+    assertThat(caseInstance).activity(TASK_A).isActive();
     // Then
     // AssertionError should be thrown
   }
@@ -50,6 +77,10 @@ public class CaseTaskAssertTest {
     CaseInstance caseInstance = aCaseWithAnActiveTask();
     caseService().completeCaseExecution(caseExecutionQuery().activityId(TASK_A).singleResult().getId());
     return caseInstance;
+  }
+
+  private CaseInstance aCaseWithAnAvailbaleTask() {
+    return caseService().createCaseInstanceByKey("Case_TaskWithSentryTests");
   }
 
   private CaseInstance aCaseWithAnActiveTask() {

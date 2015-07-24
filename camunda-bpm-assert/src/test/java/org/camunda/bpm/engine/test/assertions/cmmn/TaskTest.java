@@ -8,16 +8,19 @@ import org.junit.Test;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseTask;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
 
 /**
+ * This test is meant to help building the fluent API by providing simple test cases.
+ *
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenter@holisticon.de>
  */
 public class TaskTest {
 
   public static final String TASK_A = "PI_TaskA";
+  public static final String CASE_KEY = "Case_TaskTests";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
@@ -26,29 +29,43 @@ public class TaskTest {
   @Deployment(resources = {
     "cmmn/TaskTest.cmmn"
   })
+  /**
+   * Introduces:
+   * assertThat(CaseInstance)
+   * caseInstance.isActive()
+   * caseInstance.activity(id)
+   * activity.isActive()
+   */
   public void case_and_task_should_be_active() {
     // Given
     // case model is deployed
     // When
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey("Case_TaskTests");
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
     // Then
-    assertThat(caseInstance).isActive().task(TASK_A).isActive();
+    assertThat(caseInstance).isActive().activity(TASK_A).isActive();
   }
 
   @Test
   @Deployment(resources = {
     "cmmn/TaskTest.cmmn"
   })
+  /**
+   * Introduces:
+   * caseExecution(id, caseInstance)
+   * complete(caseExecution)
+   * caseInstance.isCompleted()
+   * activity.isCompleted()
+   */
   public void case_should_complete_when_task_is_completed() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
-    complete(caseTask(TASK_A, caseInstance));
+    complete(caseExecution(TASK_A, caseInstance));
     // Then
-    assertThat(caseInstance).isCompleted().task(TASK_A).isCompleted();
+    assertThat(caseInstance).isCompleted().activity(TASK_A).isCompleted();
   }
 
   private CaseInstance givenCaseIsCreated() {
-    return caseService().createCaseInstanceByKey("Case_TaskTests");
+    return caseService().createCaseInstanceByKey(CASE_KEY);
   }
 }

@@ -5,11 +5,8 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
-import org.camunda.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
 import org.camunda.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceEntity;
-import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
-import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.assertions.AbstractProcessAssert;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,27 +15,37 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenter@holisticon.de>
  */
-public class CaseTaskAssert extends AbstractProcessAssert<CaseTaskAssert, HistoricCaseActivityInstance> {
+//TODO check if this class should be renamed to HistoricCaseActivityAssert
+public class CaseActivityAssert extends AbstractProcessAssert<CaseActivityAssert, HistoricCaseActivityInstance> {
 
-  protected CaseTaskAssert(final ProcessEngine engine, final HistoricCaseActivityInstance actual) {
-    super(engine, actual, CaseTaskAssert.class);
+  public static CaseActivityAssert assertThat(final ProcessEngine engine, final HistoricCaseActivityInstance actual) {
+    return new CaseActivityAssert(engine, actual);
   }
 
-  public CaseTaskAssert isActive() {
+  protected CaseActivityAssert(final ProcessEngine engine, final HistoricCaseActivityInstance actual) {
+    super(engine, actual, CaseActivityAssert.class);
+  }
+
+  public CaseActivityAssert isAvailable() {
+    assertInState(CaseExecutionState.AVAILABLE);
+    return this;
+  }
+
+  public CaseActivityAssert isActive() {
     assertInState(CaseExecutionState.ACTIVE);
     return this;
   }
 
-  public CaseTaskAssert isCompleted() {
+  public CaseActivityAssert isCompleted() {
     assertInState(CaseExecutionState.COMPLETED);
     return this;
   }
 
-  private void assertInState(CaseExecutionState expectedState) {
+  void assertInState(CaseExecutionState expectedState) {
     HistoricCaseActivityInstanceEntity actual = (HistoricCaseActivityInstanceEntity) getActual();
     int currentState = actual.getCaseActivityInstanceState();
     Assertions.assertThat(currentState)
-      .overridingErrorMessage("Expected task " + toString(getActual()) + " to be " + expectedState + ", but it is " + CaseExecutionState.CASE_EXECUTION_STATES.get(actual))
+      .overridingErrorMessage("Expected task " + toString(getActual()) + " to be " + expectedState + ", but it is " + CaseExecutionState.CASE_EXECUTION_STATES.get(currentState))
       .isEqualTo(expectedState.getStateCode());
   }
 
