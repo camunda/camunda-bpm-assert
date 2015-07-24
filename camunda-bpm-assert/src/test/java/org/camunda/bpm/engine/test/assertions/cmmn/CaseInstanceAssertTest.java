@@ -83,7 +83,7 @@ public class CaseInstanceAssertTest {
     CaseInstance caseInstance = aCompletedCase();
     HistoricCaseActivityInstance pi_taskA = historyService().createHistoricCaseActivityInstanceQuery().caseActivityId(TASK_A).singleResult();
     // When
-    CaseTaskAssert caseTaskAssert = assertThat(caseInstance).task(TASK_A);
+    CaseActivityAssert caseTaskAssert = assertThat(caseInstance).activity(TASK_A);
     // Then
     HistoricCaseActivityInstance actual = caseTaskAssert.getActual();
     Assertions.assertThat(actual)
@@ -100,7 +100,7 @@ public class CaseInstanceAssertTest {
     CaseInstance caseInstance = aStartedCase();
     HistoricCaseActivityInstance pi_taskA = historyService().createHistoricCaseActivityInstanceQuery().caseActivityId(TASK_A).singleResult();
     // When
-    CaseTaskAssert caseTaskAssert = assertThat(caseInstance).task(TASK_A);
+    CaseActivityAssert caseTaskAssert = assertThat(caseInstance).activity(TASK_A);
     // Then
     HistoricCaseActivityInstance actual = caseTaskAssert.getActual();
     Assertions.assertThat(actual)

@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.repository.CaseDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.CaseInstance;
@@ -9,6 +10,7 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
+import org.camunda.bpm.engine.test.assertions.cmmn.CaseActivityAssert;
 import org.camunda.bpm.engine.test.util.CamundaBpmApi;
 
 import java.util.Map;
@@ -20,6 +22,8 @@ import java.util.Map;
  * In your code use import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.*;
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Martin Günther <martin.guenter@holisticon.de>
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 public class ProcessEngineAssertions extends Assertions {
 
@@ -141,6 +145,16 @@ public class ProcessEngineAssertions extends Assertions {
    */
   public static CaseInstanceAssert assertThat(final CaseInstance actual) {
     return CaseInstanceAssert.assertThat(processEngine(), actual);
+  }
+
+  /**
+   * Assert that... the given HistoricCaseActivityInstance meets your expectations.
+   *
+   * @param   actual HistoricCaseActivityInstance under test
+   * @return  Assert object offering CaseInstance specific assertions.
+   */
+  public static CaseActivityAssert assertThat(final HistoricCaseActivityInstance actual) {
+    return CaseActivityAssert.assertThat(processEngine(), actual);
   }
 
   /**

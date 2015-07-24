@@ -2,12 +2,10 @@ package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.camunda.bpm.engine.impl.cmmn.execution.CmmnActivityExecution;
-import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.assertions.AbstractProcessAssert;
@@ -36,10 +34,10 @@ public class CaseInstanceAssert extends AbstractProcessAssert<CaseInstanceAssert
     return this;
   }
 
-  public CaseTaskAssert task(String activityId) {
+  public CaseActivityAssert activity(String activityId) {
     HistoricCaseActivityInstance activityInstance = historicCaseActivityInstanceQuery().caseActivityId(activityId).singleResult();
     Assertions.assertThat(activityInstance).overridingErrorMessage("Task '" + activityId + "' not found!").isNotNull();
-    return new CaseTaskAssert(engine, activityInstance);
+    return new CaseActivityAssert(engine, activityInstance);
   }
 
   private void assertInState(CaseExecutionState expectedState) {

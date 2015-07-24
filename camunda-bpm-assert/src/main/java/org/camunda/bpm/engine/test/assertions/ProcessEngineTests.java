@@ -1,6 +1,8 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
+import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
 import org.camunda.bpm.engine.repository.CaseDefinitionQuery;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
@@ -21,6 +23,8 @@ import static java.lang.String.format;
  *
  * @see org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions
  * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Martin Günther <martin.guenter@holisticon.de>
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 public class ProcessEngineTests extends ProcessEngineAssertions {
 
@@ -715,11 +719,22 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
     caseService().completeCaseExecution(caseExecution.getId());
   }
 
-  public static CaseExecution caseTask(String activityId, CaseInstance caseInstance) {
+  public static CaseExecution caseExecution(String activityId, CaseInstance caseInstance) {
     CaseExecution caseExecution = caseService().createCaseExecutionQuery().caseInstanceId(caseInstance.getCaseInstanceId()).activityId(activityId).singleResult();
-    assertThat(caseExecution).overridingErrorMessage("Task '"+activityId+"' not found!").isNotNull();
+    assertThat(caseExecution).overridingErrorMessage("CaseExecution for activity '" + activityId + "' not found!").isNotNull();
     return caseExecution;
   }
+
+  public static HistoricCaseActivityInstance caseActivity(String activityId, CaseInstance caseInstance) {
+    HistoricCaseActivityInstance activityInstance = historicCaseActivityInstanceQuery().caseInstanceId(caseInstance.getCaseInstanceId()).caseActivityId(activityId).singleResult();
+    assertThat(activityInstance).overridingErrorMessage("ActivityInstance for activity '" + activityId + "' not found!").isNotNull();
+    return activityInstance;
+  }
+
+  private static HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
+    return historyService().createHistoricCaseActivityInstanceQuery();
+  }
+
 
   /**
    * Helper method to easily execute a job.
