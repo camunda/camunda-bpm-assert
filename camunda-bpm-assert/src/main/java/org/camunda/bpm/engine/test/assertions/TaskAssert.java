@@ -122,6 +122,39 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
       ).isEqualTo(taskDefinitionKey);
     return this;
   }
+  
+  /**
+   * Verifies the expectation that the {@link Task} has a specified form key.
+   * 
+   * @param formKey
+   *          the expected form key.
+   * @return this {@link TaskAsert}
+   */
+  public TaskAssert hasFormKey(String formKey) {
+    Task current = getInitializedExistingCurrent();
+    Assertions.assertThat(current.getFormKey())
+        .overridingErrorMessage("Expecting %s to have a form key %s, but found it to to have form key '%s'!", toString(current), formKey, current.getFormKey())
+        .isEqualTo(formKey);
+    return this;
+  }
+
+  protected Task getInitializedExistingCurrent() {
+    Assertions.assertThat(actual)
+      .overridingErrorMessage("Expecting assertion to be called on non-null actual, but found it to be null!")
+      .isNotNull();
+    Task current = getInitializedCurrent();
+    Assertions.assertThat(current)
+      .overridingErrorMessage(
+        "Expecting assertion to be called on non-null current state of actual %s, " +
+        "but found it to be null!",
+        actual)
+      .isNotNull();
+    return current;
+  }
+  protected Task getInitializedCurrent() {
+    return taskQuery().taskId(actual.getId()).initializeFormKeys().singleResult();
+  }
+
 
   /**
    * Verifies the internal id of a {@link Task}.
