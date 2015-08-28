@@ -8,62 +8,65 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * This test is meant to help building the fluent API by providing simple test
- * cases.
- * 
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class TaskTest {
+public class StageTest {
 
 	public static final String TASK_A = "PI_TaskA";
-	public static final String CASE_KEY = "Case_TaskTests";
+	public static final String STAGE_S = "PI_StageS";
 
 	@Rule
 	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
 	@Test
-	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
-	/**
-	 * Introduces:
-	 * assertThat(CaseInstance)
-	 * caseInstance.isActive()
-	 * caseInstance.activity(id)
-	 * activity.isActive()
-	 */
-	public void case_and_task_should_be_active() {
+	@Deployment(resources = { "cmmn/StageTest.cmmn" })
+	public void case_and_stage_and_task_should_be_active() {
 		// Given
 		// case model is deployed
 		// When
 		CaseInstance caseInstance = caseService().createCaseInstanceByKey(
-				CASE_KEY);
+				"Case_StageTests");
 		// Then
-		assertThat(caseInstance).isActive().task(TASK_A).isActive();
+		assertThat(caseInstance).isActive().stage(STAGE_S).isActive()
+				.task(TASK_A).isActive();
 	}
 
 	@Test
-	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
-	/**
-	 * Introduces:
-	 * caseExecution(id, caseInstance)
-	 * complete(caseExecution)
-	 * caseInstance.isCompleted()
-	 * activity.isCompleted()
-	 */
+	@Deployment(resources = { "cmmn/StageTest.cmmn" })
 	public void case_should_complete_when_task_is_completed() {
 		// Given
 		CaseInstance caseInstance = givenCaseIsCreated();
 		// When
 		complete(caseExecution(TASK_A, caseInstance));
 		// Then
-		assertThat(caseInstance).isCompleted().task(TASK_A).isCompleted();
+		assertThat(caseInstance).isCompleted().stage(STAGE_S).isCompleted()
+				.task(TASK_A).isCompleted();
+	}
+
+	@Test
+	@Ignore
+	@Deployment(resources = { "cmmn/StageTest.cmmn" })
+	public void case_should_complete_when_task_is_terminated() {
+		// Given
+		CaseInstance caseInstance = givenCaseIsCreated();
+		// When
+		// terinate(caseExecution(TASK_A, caseInstance));
+		// Then
+		assertThat(caseInstance).isCompleted().stage(STAGE_S).isCompleted();
 	}
 
 	private CaseInstance givenCaseIsCreated() {
-		return caseService().createCaseInstanceByKey(CASE_KEY);
+		return caseService().createCaseInstanceByKey("Case_StageTests");
 	}
+
+	private CaseInstance givenCaseIsCreatedAndTaskACompleted() {
+		return caseService().createCaseInstanceByKey("Case_StageTests");
+	}
+
 }
