@@ -80,6 +80,8 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
     complete(taskQuery().singleResult());
     // Then
     assertThat(processInstance).isWaitingAtExactly("UserTask_2", "UserTask_3");
+    // And
+    assertThat(processInstance).isWaitingAtExactly("UserTask_3", "UserTask_2");
   }
 
   @Test
