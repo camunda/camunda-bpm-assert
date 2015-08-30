@@ -85,6 +85,25 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   }
 
   /**
+   * Verifies the expectation that the {@link Task} is currently waiting to 
+   * be assigned to a specified candidate user.
+   * 
+   * @param   candidateUserId id of the candidate user the task is assigned to
+   * @return  this {@link TaskAssert}
+   */
+  public TaskAssert hasCandidateUser(final String candidateUserId) {
+    Assertions.assertThat(candidateUserId).isNotNull();
+    final Task current = getExistingCurrent();
+    final Task withUser = taskQuery().taskId(actual.getId()).taskCandidateUser(candidateUserId).singleResult();
+    Assertions.assertThat(withUser)
+        .overridingErrorMessage("Expecting %s to have candidate user '%s', but found it not to have that candidate user!",
+          toString(current),
+          candidateUserId)
+      .isNotNull();
+    return this;
+  }
+
+  /**
    * Verifies the due date of a {@link Task}.
    * 
    * @param   dueDate the date the task should be due at
