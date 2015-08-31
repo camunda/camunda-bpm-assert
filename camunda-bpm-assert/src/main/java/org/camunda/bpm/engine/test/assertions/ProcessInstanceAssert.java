@@ -565,34 +565,25 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
 
   /**
    * Enter into a chained map assert inspecting the variables currently
-   * available in the context of the process instance under test of this
-   * ProcessInstanceAssert.
+   * - or, for finished process instances, historically - available in the 
+   * context of the process instance under test of this ProcessInstanceAssert.
    *
    * @return  MapAssert<String, Object> inspecting the process variables. 
-   *          Inspecting a 'null' map in case no such variables are available.
+   *          Inspecting an empty map in case no such variables are available.
    */
   public MapAssert<String, Object> variables() {
-    return (MapAssert<String, Object>) Assertions.assertThat(runtimeService().getVariables(getExistingCurrent().getProcessInstanceId()));
-  }
-
-  /**
-   * Enter into a chained map assert inspecting the variables 
-   * available in the context of the (finished) process instance under test of this
-   * ProcessInstanceAssert.
-   *
-   * @return  MapAssert<String, Object> inspecting the process variables. 
-   *          Inspecting a 'null' map in case no such variables are available.
-   */
-  public MapAssert<String, Object> historicVariables() {
-    List<HistoricVariableInstance> result = 
-        historyService().createHistoricVariableInstanceQuery().processInstanceId(actual.getId()).list();
-    Map<String, Object> map = new HashMap<String, Object>();
-    for (HistoricVariableInstance instance : result) {
-      map.put(instance.getVariableName(), instance.getValue());
+    ProcessInstance current = getCurrent();
+    if (current != null) {
+      return (MapAssert<String, Object>) Assertions.assertThat(runtimeService().getVariables(current.getProcessInstanceId()));
+    } else {
+      List<HistoricVariableInstance> instances = historicVariableInstanceQuery().list();
+      Map<String, Object> map = new HashMap<String, Object>();
+      for (HistoricVariableInstance instance : instances) {
+        map.put(instance.getVariableName(), instance.getValue());
+      }
+      return (MapAssert<String, Object>) Assertions.assertThat(map);
     }
-    return (MapAssert<String, Object>) Assertions.assertThat(map);
   }
-  
   
   /* TaskQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override

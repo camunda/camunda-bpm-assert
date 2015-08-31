@@ -4,7 +4,7 @@
 
     <bean id="processEngineConfiguration" class="org.camunda.bpm.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
 
-        <property name="history" value="activity" />
+        <property name="history" value="audit" />
         <property name="databaseSchemaUpdate" value="true" />
         <property name="jobExecutorActivate" value="false" />
         <property name="expressionManager">
