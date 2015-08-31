@@ -572,16 +572,21 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    *          Inspecting an empty map in case no such variables are available.
    */
   public MapAssert<String, Object> variables() {
+    return (MapAssert<String, Object>) Assertions.assertThat(vars());
+  }
+  
+  /* Return variables map - independent of running/historic instance status */
+  protected Map<String, Object> vars() {
     ProcessInstance current = getCurrent();
     if (current != null) {
-      return (MapAssert<String, Object>) Assertions.assertThat(runtimeService().getVariables(current.getProcessInstanceId()));
+      return runtimeService().getVariables(current.getProcessInstanceId());
     } else {
       List<HistoricVariableInstance> instances = historicVariableInstanceQuery().list();
       Map<String, Object> map = new HashMap<String, Object>();
       for (HistoricVariableInstance instance : instances) {
         map.put(instance.getVariableName(), instance.getValue());
       }
-      return (MapAssert<String, Object>) Assertions.assertThat(map);
+      return map;
     }
   }
   
