@@ -29,6 +29,10 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
     );
     // Then
     assertThat(processInstance).hasNoVariables();
+    // When
+    complete(task(processInstance));
+    // Then
+    assertThat(processInstance).hasNoVariables();
   }
 
   @Test
@@ -47,6 +51,15 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
         assertThat(processInstance).hasNoVariables();
       }
     });
+    // When
+    complete(task(processInstance));
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasNoVariables();
+      }
+    });
   }
 
   @Test
@@ -58,6 +71,15 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasNoVariables", withVariables("firstVariable", "firstValue", "secondVariable", "secondValue")
     );
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasNoVariables();
+      }
+    });
+    // When
+    complete(task(processInstance));
     // Then
     expect(new Failure() {
       @Override

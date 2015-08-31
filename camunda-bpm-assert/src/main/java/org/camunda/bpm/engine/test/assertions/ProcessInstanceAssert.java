@@ -269,14 +269,21 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     boolean shouldHaveVariables = names != null;
     boolean shouldHaveSpecificVariables = names != null && names.length > 0;
 
-    ProcessInstance current = getExistingCurrent();
-    Map<String, Object> vars = runtimeService().getVariables(getExistingCurrent().getProcessInstanceId());
-    MapAssert<String, Object> assertion = (MapAssert<String, Object>) Assertions.assertThat(vars)
-      .overridingErrorMessage("Expecting %s to hold " + 
-        (shouldHaveVariables ? "process variables" + (shouldHaveSpecificVariables ? " %s, " : ", ") : "no variables at all, ") +
-        "instead we found it to hold " + (vars.isEmpty() ? "no variables at all." : "the variables %s."),
-        toString(current), shouldHaveSpecificVariables ? Arrays.asList(names) : vars.keySet(), vars.keySet()
-      );
+    Map<String, Object> vars = vars();
+    StringBuffer message = new StringBuffer();
+    message.append("Expecting %s to hold ");
+    message.append(shouldHaveVariables ? "process variables" 
+      + (shouldHaveSpecificVariables ? " %s, " : ", ") : "no variables at all, ");
+    message.append("instead we found it to hold " 
+      + (vars.isEmpty() ? "no variables at all." : "the variables %s."));
+    if (vars.isEmpty() && getCurrent() == null)
+      message.append(" (Please make sure you have set the history " +
+        "service of the engine to at least 'audit' or a higher level " +
+        "before making use of this assertion for historic instances!)");
+    
+    MapAssert<String, Object> assertion = variables()
+      .overridingErrorMessage(message.toString(), toString(actual), 
+        shouldHaveSpecificVariables ? Arrays.asList(names) : vars.keySet(), vars.keySet());
     if (shouldHaveVariables) {
       if (shouldHaveSpecificVariables) {
         assertion.containsKeys(names);

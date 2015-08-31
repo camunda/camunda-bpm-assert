@@ -31,6 +31,12 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
     assertThat(processInstance).hasVariables();
     // And
     assertThat(processInstance).hasVariables("aVariable");
+    // When
+    complete(task(processInstance));
+    // Then
+    assertThat(processInstance).hasVariables();
+    // And
+    assertThat(processInstance).hasVariables("aVariable");
   }
 
   @Test
@@ -42,6 +48,22 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasVariables", withVariables("aVariable", "aValue")
     );
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasVariables("anotherVariable");
+      }
+    });
+    // And
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasVariables("aVariable", "anotherVariable");
+      }
+    });
+    // When
+    complete(task(processInstance));
     // Then
     expect(new Failure() {
       @Override
@@ -75,6 +97,20 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
     assertThat(processInstance).hasVariables("secondVariable");
     // And
     assertThat(processInstance).hasVariables("firstVariable", "secondVariable");
+    // And
+    assertThat(processInstance).hasVariables("secondVariable", "firstVariable");
+    // When
+    complete(task(processInstance));
+    // Then
+    assertThat(processInstance).hasVariables();
+    // And
+    assertThat(processInstance).hasVariables("firstVariable");
+    // And
+    assertThat(processInstance).hasVariables("secondVariable");
+    // And
+    assertThat(processInstance).hasVariables("firstVariable", "secondVariable");
+    // And
+    assertThat(processInstance).hasVariables("secondVariable", "firstVariable");
   }
 
   @Test
@@ -114,6 +150,36 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
         assertThat(processInstance).hasVariables("firstVariable", "secondVariable", "anotherVariable");
       }
     });
+    // When
+    complete(task(processInstance));
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasVariables("anotherVariable");
+      }
+    });
+    // And
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasVariables("firstVariable", "anotherVariable");
+      }
+    });
+    // And
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasVariables("secondVariable", "anotherVariable");
+      }
+    });
+    // And
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasVariables("firstVariable", "secondVariable", "anotherVariable");
+      }
+    });
   }
   
   @Test
@@ -125,6 +191,22 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessInstanceAssert-hasVariables"
     );
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasVariables();
+      }
+    });
+    // And
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(processInstance).hasVariables("aVariable");
+      }
+    });
+    // When
+    complete(task(processInstance));
     // Then
     expect(new Failure() {
       @Override
