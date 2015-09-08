@@ -10,8 +10,8 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
-import org.camunda.bpm.engine.test.assertions.cmmn.CaseActivityAssert;
 import org.camunda.bpm.engine.test.util.CamundaBpmApi;
+import org.camunda.bpm.engine.test.assertions.cmmn.HistoricCaseActivityAssert;
 
 import java.util.Map;
 
@@ -153,8 +153,8 @@ public class ProcessEngineAssertions extends Assertions {
    * @param   actual HistoricCaseActivityInstance under test
    * @return  Assert object offering CaseInstance specific assertions.
    */
-  public static CaseActivityAssert assertThat(final HistoricCaseActivityInstance actual) {
-    return CaseActivityAssert.assertThat(processEngine(), actual);
+  public static HistoricCaseActivityAssert assertThat(final HistoricCaseActivityInstance actual) {
+    return HistoricCaseActivityAssert.assertThat(processEngine(), actual);
   }
 
   /**

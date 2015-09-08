@@ -15,16 +15,16 @@
           </cmmn:manualActivationRule>
         </cmmn:defaultControl>
         <cmmn:planItem definitionRef="HT_TaskA" id="PI_TaskA"/>
+        <cmmn:humanTask description="" id="HT_TaskA" isBlocking="true" name="A">
+          <cmmn:defaultControl>
+            <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a920">
+              <cmmn:condition id="f3953a0a-12ef-46f5-95ec-a0f60e0f45df" language="juel">
+                <cmmn:body>#{false}</cmmn:body>
+              </cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:defaultControl>
+        </cmmn:humanTask>
       </cmmn:stage>
-      <cmmn:humanTask description="" id="HT_TaskA" isBlocking="true" name="A">
-        <cmmn:defaultControl>
-          <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a920">
-            <cmmn:condition id="f3953a0a-12ef-46f5-95ec-a0f60e0f45df" language="juel">
-              <cmmn:body>#{false}</cmmn:body>
-            </cmmn:condition>
-          </cmmn:manualActivationRule>
-        </cmmn:defaultControl>
-      </cmmn:humanTask>
     </cmmn:casePlanModel>
   </cmmn:case>
 </cmmn:definitions>
