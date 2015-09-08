@@ -1,7 +1,7 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
-public class CaseActivityType {
+public interface CaseActivityType {
 
-	public static final String TASK = "humanTask";
-	public static final String STAGE = "stage";
+  String TASK = "humanTask";
+  String STAGE = "stage";
 }

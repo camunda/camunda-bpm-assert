@@ -4,7 +4,8 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 
 /**
- * Created by Malte on 28.08.2015.
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
+ * @author Martin Günther <martin.guenther@holisticon.de>
  */
 public abstract class AbstractCaseActivityAssert<S extends AbstractCaseActivityAssert<S, A>, A> extends AbstractCaseAssert<S, A> {
 
@@ -12,20 +13,15 @@ public abstract class AbstractCaseActivityAssert<S extends AbstractCaseActivityA
     super(engine, actual, selfType);
   }
 
-  @Override
-  public A getActual() {
-    return super.getActual();
-  }
-
-  public S isAvailable() {
-    assertInState(CaseExecutionState.AVAILABLE);
+  public S isActive() {
+    assertInState(CaseExecutionState.ACTIVE);
     return (S) this;
   }
 
   protected abstract void assertInState(CaseExecutionState available);
 
-  public S isActive() {
-    assertInState(CaseExecutionState.ACTIVE);
+  public S isAvailable() {
+    assertInState(CaseExecutionState.AVAILABLE);
     return (S) this;
   }
 

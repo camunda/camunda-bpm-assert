@@ -12,50 +12,47 @@ import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-// TODO check if this class should be renamed to HistoricCaseActivityAssert
 public class HistoricCaseActivityAssert extends AbstractCaseActivityAssert<HistoricCaseActivityAssert, HistoricCaseActivityInstance> {
+
+  protected HistoricCaseActivityAssert(final ProcessEngine engine,
+                                       final HistoricCaseActivityInstance actual) {
+    super(engine, actual, HistoricCaseActivityAssert.class);
+  }
 
 	public static HistoricCaseActivityAssert assertThat(final ProcessEngine engine,
 			final HistoricCaseActivityInstance actual) {
 		return new HistoricCaseActivityAssert(engine, actual);
 	}
 
-	protected HistoricCaseActivityAssert(final ProcessEngine engine,
-                                       final HistoricCaseActivityInstance actual) {
-		super(engine, actual, HistoricCaseActivityAssert.class);
+  @Override
+  protected void assertInState(CaseExecutionState expectedState) {
+    int currentState = getActualState();
+    Assertions
+      .assertThat(currentState)
+      .overridingErrorMessage(
+        "Expected task "
+          + toString(getActual())
+          + " to be "
+          + expectedState
+          + ", but it is "
+          + CaseExecutionState.CASE_EXECUTION_STATES
+          .get(currentState))
+      .isEqualTo(expectedState.getStateCode());
 	}
 
-	protected void assertInState(CaseExecutionState expectedState) {
-		HistoricCaseActivityInstanceEntity actual = (HistoricCaseActivityInstanceEntity) getActual();
-		int currentState = actual.getCaseActivityInstanceState();
-		Assertions
-				.assertThat(currentState)
-				.overridingErrorMessage(
-						"Expected task "
-								+ toString(getActual())
-								+ " to be "
-								+ expectedState
-								+ ", but it is "
-								+ CaseExecutionState.CASE_EXECUTION_STATES
-										.get(currentState))
-				.isEqualTo(expectedState.getStateCode());
-	}
+  protected int getActualState() {return ((HistoricCaseActivityInstanceEntity) getActual()).getCaseActivityInstanceState();}
 
 	@Override
-	protected CaseExecutionQuery caseExecutionQuery() {
-		return super.caseExecutionQuery().activityId(
-      getActual().getCaseActivityId());
-	}
+  protected HistoricCaseActivityInstance getCurrent() {
+    return historicCaseActivityInstanceQuery().singleResult();
+  }
 
-	@Override
-	protected HistoricCaseActivityInstance getCurrent() {
-		return historicCaseActivityInstanceQuery().singleResult();
-	}
-
-	protected HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
-		return historyService().createHistoricCaseActivityInstanceQuery()
-				.caseActivityInstanceId(getActual().getId());
-	}
+  //FIXME: untested in HistoricCaseActivityAssertTest
+  @Override
+  protected HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
+    return historyService().createHistoricCaseActivityInstanceQuery()
+      .caseActivityInstanceId(getActual().getId());
+  }
 
 	@Override
 	protected String toString(HistoricCaseActivityInstance caseExecution) {
@@ -64,5 +61,11 @@ public class HistoricCaseActivityAssert extends AbstractCaseActivityAssert<Histo
 				caseExecution.getClass().getSimpleName(),
 				caseExecution.getId(), caseExecution.getCaseDefinitionId(),
 				caseExecution.getCaseActivityType()) : null;
-	}
+  }
+
+  @Override
+  protected CaseExecutionQuery caseExecutionQuery() {
+    return super.caseExecutionQuery().activityId(
+      getActual().getCaseActivityId());
+  }
 }
