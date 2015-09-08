@@ -7,6 +7,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.historyS
 
 import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -77,10 +78,10 @@ public class CaseInstanceAssertTest {
 				.createHistoricCaseActivityInstanceQuery()
 				.caseActivityId(TASK_A).singleResult();
 		// When
-		CaseActivityAssert caseTaskAssert = assertThat(caseInstance).task(
-				TASK_A);
-		// Then
-		HistoricCaseActivityInstance actual = caseTaskAssert.getActual();
+    AbstractCaseActivityAssert caseTaskAssert = assertThat(caseInstance).task(
+      TASK_A);
+    // Then
+		HistoricCaseActivityInstance actual = (HistoricCaseActivityInstance) caseTaskAssert.getActual();
 		Assertions
 				.assertThat(actual)
 				.overridingErrorMessage(
@@ -94,14 +95,14 @@ public class CaseInstanceAssertTest {
 	public void task_should_return_CaseTaskAssert_for_given_activityId() {
 		// Given
 		CaseInstance caseInstance = aStartedCase();
-		HistoricCaseActivityInstance pi_taskA = historyService()
-				.createHistoricCaseActivityInstanceQuery()
-				.caseActivityId(TASK_A).singleResult();
+		CaseExecution pi_taskA = caseService()
+				.createCaseExecutionQuery()
+				.activityId(TASK_A).singleResult();
 		// When
-		CaseActivityAssert caseTaskAssert = assertThat(caseInstance).task(
+		CaseExecutionAssert caseTaskAssert = (CaseExecutionAssert) assertThat(caseInstance).task(
 				TASK_A);
 		// Then
-		HistoricCaseActivityInstance actual = caseTaskAssert.getActual();
+		CaseExecution actual = caseTaskAssert.getActual();
 		Assertions
 				.assertThat(actual)
 				.overridingErrorMessage(
@@ -133,4 +134,13 @@ public class CaseInstanceAssertTest {
 				historicCaseActivityInstance.getCaseActivityType()) : null;
 	}
 
+  protected String toString(
+    CaseExecution caseExecution) {
+    return caseExecution != null ? String.format("%s {"
+        + "id='%s', " + "caseDefinitionId='%s', " + "activityType='%s'"
+        + "}", caseExecution.getClass().getSimpleName(),
+      caseExecution.getId(),
+      caseExecution.getCaseDefinitionId(),
+      caseExecution.getActivityType()) : null;
+  }
 }

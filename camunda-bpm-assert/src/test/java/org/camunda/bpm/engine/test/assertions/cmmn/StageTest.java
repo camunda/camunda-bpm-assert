@@ -5,6 +5,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExec
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
 
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -33,7 +34,11 @@ public class StageTest {
 		CaseInstance caseInstance = caseService().createCaseInstanceByKey(
 				"Case_StageTests");
 		// Then
-		assertThat(caseInstance).isActive().stage(STAGE_S).isActive()
+
+    CaseExecution caseExecution = caseService().createCaseExecutionQuery().activityId(TASK_A).singleResult();
+    assertThat(caseExecution).isNotNull();
+
+    assertThat(caseInstance).isActive().stage(STAGE_S).isActive()
 				.task(TASK_A).isActive();
 	}
 

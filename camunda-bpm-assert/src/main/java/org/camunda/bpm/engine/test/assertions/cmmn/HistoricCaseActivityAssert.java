@@ -7,47 +7,25 @@ import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.camunda.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceEntity;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
-import org.camunda.bpm.engine.test.assertions.AbstractProcessAssert;
 
 /**
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
 // TODO check if this class should be renamed to HistoricCaseActivityAssert
-public class CaseActivityAssert extends
-		AbstractProcessAssert<CaseActivityAssert, HistoricCaseActivityInstance> {
+public class HistoricCaseActivityAssert extends AbstractCaseActivityAssert<HistoricCaseActivityAssert, HistoricCaseActivityInstance> {
 
-	public static CaseActivityAssert assertThat(final ProcessEngine engine,
+	public static HistoricCaseActivityAssert assertThat(final ProcessEngine engine,
 			final HistoricCaseActivityInstance actual) {
-		return new CaseActivityAssert(engine, actual);
+		return new HistoricCaseActivityAssert(engine, actual);
 	}
 
-	protected CaseActivityAssert(final ProcessEngine engine,
-			final HistoricCaseActivityInstance actual) {
-		super(engine, actual, CaseActivityAssert.class);
+	protected HistoricCaseActivityAssert(final ProcessEngine engine,
+                                       final HistoricCaseActivityInstance actual) {
+		super(engine, actual, HistoricCaseActivityAssert.class);
 	}
 
-	public CaseActivityAssert isAvailable() {
-		assertInState(CaseExecutionState.AVAILABLE);
-		return this;
-	}
-
-	public CaseActivityAssert isActive() {
-		assertInState(CaseExecutionState.ACTIVE);
-		return this;
-	}
-
-	public CaseActivityAssert isCompleted() {
-		assertInState(CaseExecutionState.COMPLETED);
-		return this;
-	}
-
-	public CaseActivityAssert isEnabled() {
-		assertInState(CaseExecutionState.ENABLED);
-		return this;
-	}
-
-	void assertInState(CaseExecutionState expectedState) {
+	protected void assertInState(CaseExecutionState expectedState) {
 		HistoricCaseActivityInstanceEntity actual = (HistoricCaseActivityInstanceEntity) getActual();
 		int currentState = actual.getCaseActivityInstanceState();
 		Assertions
@@ -63,24 +41,10 @@ public class CaseActivityAssert extends
 				.isEqualTo(expectedState.getStateCode());
 	}
 
-	public CaseActivityAssert activity(String activityId,
-			String caseExecutionType) {
-		HistoricCaseActivityInstance activityInstance = historicCaseActivityInstanceQuery()
-				.caseActivityId(activityId).singleResult();
-		Assertions
-				.assertThat(activityInstance)
-				.overridingErrorMessage(
-						caseExecutionType + " '" + activityId + "' not found!")
-				.isNotNull();
-		Assertions.assertThat(activityInstance.getCaseActivityType())
-				.isEqualTo(caseExecutionType);
-		return new CaseActivityAssert(engine, activityInstance);
-	}
-
 	@Override
 	protected CaseExecutionQuery caseExecutionQuery() {
 		return super.caseExecutionQuery().activityId(
-				getActual().getCaseActivityId());
+      getActual().getCaseActivityId());
 	}
 
 	@Override
@@ -88,15 +52,7 @@ public class CaseActivityAssert extends
 		return historicCaseActivityInstanceQuery().singleResult();
 	}
 
-	public CaseActivityAssert stage(String activityId) {
-		return activity(activityId, CaseActivityType.STAGE);
-	}
-
-	public CaseActivityAssert task(String activityId) {
-		return activity(activityId, CaseActivityType.TASK);
-	}
-
-	private HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
+	protected HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
 		return historyService().createHistoricCaseActivityInstanceQuery()
 				.caseActivityInstanceId(getActual().getId());
 	}

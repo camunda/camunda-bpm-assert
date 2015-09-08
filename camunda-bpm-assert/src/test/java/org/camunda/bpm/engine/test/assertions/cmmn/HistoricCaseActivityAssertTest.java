@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class CaseActivityAssertTest {
+public class HistoricCaseActivityAssertTest {
 
 	public static final String TASK_A = "PI_TaskA";
 	public static final String TASK_B = "PI_HT_B";
