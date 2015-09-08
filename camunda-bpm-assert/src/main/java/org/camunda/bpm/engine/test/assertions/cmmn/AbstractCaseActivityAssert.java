@@ -1,14 +1,12 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
-import org.camunda.bpm.engine.test.assertions.AbstractProcessAssert;
 
 /**
  * Created by Malte on 28.08.2015.
  */
-public abstract class AbstractCaseActivityAssert<S extends AbstractCaseActivityAssert<S, A>, A> extends AbstractCaseAssert<S, A>{
+public abstract class AbstractCaseActivityAssert<S extends AbstractCaseActivityAssert<S, A>, A> extends AbstractCaseAssert<S, A> {
 
   protected AbstractCaseActivityAssert(ProcessEngine engine, A actual, Class<?> selfType) {
     super(engine, actual, selfType);
@@ -38,6 +36,11 @@ public abstract class AbstractCaseActivityAssert<S extends AbstractCaseActivityA
 
   public S isEnabled() {
     assertInState(CaseExecutionState.ENABLED);
+    return (S) this;
+  }
+
+  public S isTerminated() {
+    assertInState(CaseExecutionState.TERMINATED);
     return (S) this;
   }
 
