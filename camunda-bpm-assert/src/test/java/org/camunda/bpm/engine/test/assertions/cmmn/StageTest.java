@@ -1,13 +1,11 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.manuallyStart;
 
-import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -29,16 +27,36 @@ public class StageTest {
 
 	@Test
 	@Deployment(resources = { "cmmn/StageTest.cmmn" })
-	public void case_and_stage_and_task_should_be_active() {
+	public void case_is_active_and_stage_and_task_should_be_enabled() {
 		// Given
 		// case model is deployed
 		// When
 		CaseInstance caseInstance = givenCaseIsCreated();
 		// Then
+		assertThat(caseInstance).isActive().stage(STAGE_S).isEnabled();
+		// check task not yet created
+		// .task(TASK_A).isEnabled();
+	}
 
-		CaseExecution caseExecution = caseService().createCaseExecutionQuery().activityId(TASK_A).singleResult();
-		assertThat(caseExecution).isNotNull();
+	@Test
+	@Deployment(resources = { "cmmn/StageTest.cmmn" })
+	public void stage_should_be_active_and_taske_enabled() {
+		// Given
+		CaseInstance caseInstance = givenCaseIsCreated();
+		// When
+		manuallyStart(caseExecution(STAGE_S, caseInstance));
+		// Then
+		assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isEnabled();
+	}
 
+	@Test
+	@Deployment(resources = { "cmmn/StageTest.cmmn" })
+	public void stage_and_task_should_be_active() {
+		// Given
+		CaseInstance caseInstance = givenCaseIsCreatedAndStageSActive();
+		// When
+		manuallyStart(caseExecution(TASK_A, caseInstance));
+		// Then
 		assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isActive();
 	}
 
@@ -46,7 +64,7 @@ public class StageTest {
 	@Deployment(resources = { "cmmn/StageTest.cmmn" })
 	public void case_should_complete_when_task_is_completed() {
 		// Given
-		CaseInstance caseInstance = givenCaseIsCreated();
+		CaseInstance caseInstance = givenCaseIsCreatedAndStageSActiveAndTaskAActive();
 		// When
 		complete(caseExecution(TASK_A, caseInstance));
 		// Then
@@ -58,23 +76,28 @@ public class StageTest {
 	@Deployment(resources = { "cmmn/StageTest.cmmn" })
 	public void case_should_complete_when_task_is_terminated() {
 		// Given
-		CaseInstance caseInstance = givenCaseIsCreated();
+		CaseInstance caseInstance = givenCaseIsCreatedAndStageSActiveAndTaskAActive();
 		// When
-		// terminate(caseExecution(TASK_A, caseInstance));
+		// terminate();
 		// Then
 		assertThat(caseInstance).isCompleted().stage(STAGE_S).isCompleted();
 	}
 
 	private CaseInstance givenCaseIsCreated() {
 		CaseInstance caseInstance = caseService().createCaseInstanceByKey("Case_StageTests");
+		return caseInstance;
+	}
+
+	private CaseInstance givenCaseIsCreatedAndStageSActive() {
+		CaseInstance caseInstance = givenCaseIsCreated();
 		manuallyStart(caseExecution(STAGE_S, caseInstance));
+		return caseInstance;
+	}
+
+	private CaseInstance givenCaseIsCreatedAndStageSActiveAndTaskAActive() {
+		CaseInstance caseInstance = givenCaseIsCreatedAndStageSActive();
 		manuallyStart(caseExecution(TASK_A, caseInstance));
 		return caseInstance;
 	}
 
-	private CaseInstance givenCaseIsCreatedAndTaskACompleted() {
-		CaseInstance caseInstance = givenCaseIsCreated();
-		complete(caseExecution(TASK_A, caseInstance));
-		return caseInstance;
-	}
 }
