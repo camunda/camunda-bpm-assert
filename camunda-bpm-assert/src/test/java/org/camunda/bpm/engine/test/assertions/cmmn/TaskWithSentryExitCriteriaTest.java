@@ -23,6 +23,9 @@ public class TaskWithSentryExitCriteriaTest {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
+  /**
+   * Introduces: 
+   */
   @Test
   @Deployment(resources = { "cmmn/TaskWithSentryTestExitCriteria.cmmn" })
   public void case_is_active_and_task_a_and_task_b_should_be_enabled() {
@@ -35,6 +38,10 @@ public class TaskWithSentryExitCriteriaTest {
     assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
   }
 
+  /**
+   * Introduces: 
+   * task.isTerminated()
+   */
   @Test
   @Deployment(resources = { "cmmn/TaskWithSentryTestExitCriteria.cmmn" })
   public void case_is_active_and_task_a_should_be_terminated_and_task_b_active() {

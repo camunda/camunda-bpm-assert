@@ -720,6 +720,19 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
+   * Helper method to easily disable a case execution.
+   * 
+   * @param caseExecution
+   *        the case execution to complete
+   */
+  public static void disable(CaseExecution caseExecution) {
+    if (caseExecution == null) {
+      throw new IllegalArgumentException("Illegal call of disable(caseExecution) - must not be null!");
+    }
+    caseService().disableCaseExecution(caseExecution.getId());
+  }
+
+  /**
    * Helper method to manually activate a case execution.
    *
    * @param caseExecution
