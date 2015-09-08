@@ -11,21 +11,18 @@ import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.test.assertions.AbstractProcessAssert;
 
 /**
- * Created by Malte on 28.08.2015.
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
+ * @author Martin Günther <martin.guenther@holisticon.de>
  */
+//FIXME: there are no tests for this class!
 public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A> extends AbstractProcessAssert<S, A> {
 	protected AbstractCaseAssert(ProcessEngine engine, A actual, Class<?> selfType) {
 		super(engine, actual, selfType);
 	}
 
-	@Override
-	public A getActual() {
-		return super.getActual();
-	}
-
-	public AbstractCaseActivityAssert activity(String activityId) {
-		return activity(activityId, "Activity");
-	}
+  public AbstractCaseActivityAssert activity(String activityId) {
+    return activity(activityId, "Activity");
+  }
 
 	public AbstractCaseActivityAssert activity(String activityId, String caseExecutionType) {
 
@@ -66,9 +63,12 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A> 
 		Assertions.assertThat(activityInstance.getCaseActivityType()).isEqualTo(caseExecutionType);
 
 		return new HistoricCaseActivityAssert(engine, activityInstance);
-	}
+  }
 
-	protected abstract HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery();
+  @Override
+  public A getActual() {
+    return super.getActual();
+  }
 
 	public AbstractCaseActivityAssert stage(String activityId) {
 		return activity(activityId, CaseActivityType.STAGE);
@@ -77,4 +77,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A> 
 	public AbstractCaseActivityAssert task(String activityId) {
 		return activity(activityId, CaseActivityType.TASK);
 	}
+
+  protected abstract HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery();
 }

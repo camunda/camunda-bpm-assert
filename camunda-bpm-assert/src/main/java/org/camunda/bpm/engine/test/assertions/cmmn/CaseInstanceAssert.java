@@ -12,8 +12,9 @@ import org.camunda.bpm.engine.runtime.CaseInstance;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class CaseInstanceAssert extends
-		AbstractCaseAssert<CaseInstanceAssert, CaseInstance> {
+public class
+  CaseInstanceAssert extends
+  AbstractCaseAssert<CaseInstanceAssert, CaseInstance> {
 
 	protected CaseInstanceAssert(final ProcessEngine engine,
 			final CaseInstance actual) {
@@ -30,16 +31,6 @@ public class CaseInstanceAssert extends
 		return this;
 	}
 
-	public CaseInstanceAssert isCompleted() {
-		assertInState(CaseExecutionState.COMPLETED);
-		return this;
-	}
-
-	public CaseInstanceAssert isEnabled() {
-		assertInState(CaseExecutionState.ENABLED);
-		return this;
-	}
-
 	private void assertInState(CaseExecutionState expectedState) {
 		CmmnActivityExecution caseExecution = (CmmnActivityExecution) caseExecutionQuery()
 				.caseExecutionId(getActual().getId()).singleResult();
@@ -52,21 +43,40 @@ public class CaseInstanceAssert extends
 								+ currentState).isEqualTo(expectedState);
 	}
 
-	@Override
-	protected CaseExecutionQuery caseExecutionQuery() {
-		return super.caseExecutionQuery().caseInstanceId(
-				getActual().getCaseInstanceId());
-	}
+  public CaseInstanceAssert isCompleted() {
+    assertInState(CaseExecutionState.COMPLETED);
+    return this;
+  }
 
-	@Override
-	protected CaseInstance getCurrent() {
-		return caseInstanceQuery().singleResult();
-	}
+  //FIXME: untested in CaseInstanceAssertTest
+  public CaseInstanceAssert isEnabled() {
+    assertInState(CaseExecutionState.ENABLED);
+    return this;
+  }
 
-	protected HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
-		return historyService().createHistoricCaseActivityInstanceQuery()
-				.caseInstanceId(getActual().getCaseInstanceId());
-	}
+  //FIXME: untested in CaseInstanceAssertTest
+  @Override
+  public AbstractCaseActivityAssert stage(String activityId) {
+    return activity(activityId, CaseActivityType.STAGE);
+  }
+
+  @Override
+  public AbstractCaseActivityAssert task(String activityId) {
+    return activity(activityId, CaseActivityType.TASK);
+  }
+
+  //FIXME: untested in CaseInstanceAssertTest
+  @Override
+  protected HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
+    return historyService().createHistoricCaseActivityInstanceQuery()
+      .caseInstanceId(getActual().getCaseInstanceId());
+  }
+
+  //FIXME: untested in CaseInstanceAssertTest
+  @Override
+  protected CaseInstance getCurrent() {
+    return caseInstanceQuery().singleResult();
+  }
 
 	@Override
 	protected String toString(CaseInstance caseInstance) {
@@ -77,12 +87,10 @@ public class CaseInstanceAssert extends
 				caseInstance.getBusinessKey()) : null;
 	}
 
-	public AbstractCaseActivityAssert stage(String activityId) {
-		return activity(activityId, CaseActivityType.STAGE);
-	}
-
-	public AbstractCaseActivityAssert task(String activityId) {
-		return activity(activityId, CaseActivityType.TASK);
-	}
+  @Override
+  protected CaseExecutionQuery caseExecutionQuery() {
+    return super.caseExecutionQuery().caseInstanceId(
+      getActual().getCaseInstanceId());
+  }
 
 }
