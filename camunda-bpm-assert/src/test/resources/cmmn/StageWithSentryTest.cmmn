@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
+                  id="Def_StageWithSentryTests" name="Stage with Sentry Tests"
+                  targetNamespace="http://www.trisotech.com/cmmn/definitions/_StageWithSentryTests">
+  <cmmn:case id="Case_StageWithSentryTests" name="Stage with Sentry Tests">
+    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_StageWithSentryTests" name="Stage with Sentry Tests">
+      <cmmn:planItem definitionRef="HT_A" id="PI_HT_A"/>
+      <cmmn:planItem definitionRef="S_StageS" entryCriteriaRefs="On_PI_HT_A_Complete" id="PI_StageS"/>
+      <cmmn:sentry id="On_PI_HT_A_Complete">
+        <cmmn:planItemOnPart sourceRef="PI_HT_A">
+          <cmmn:standardEvent>complete</cmmn:standardEvent>
+        </cmmn:planItemOnPart>
+      </cmmn:sentry>
+      <cmmn:humanTask description="" id="HT_A" isBlocking="true" name="A">
+      </cmmn:humanTask>
+      <cmmn:stage id="S_StageS" autoComplete="false" name="S">
+      </cmmn:stage>
+    </cmmn:casePlanModel>
+  </cmmn:case>
+</cmmn:definitions>
+
