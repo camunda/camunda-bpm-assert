@@ -36,7 +36,6 @@ public class StageWithSentryExitCriteriaTest {
     CaseInstance caseInstance = givenCaseIsCreated();
     // Then
     assertThat(caseInstance).isActive().stage(STAGE_S).isEnabled();
-    // TODO task(TASK_A).isAvailable();
     assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
   }
 
@@ -71,8 +70,7 @@ public class StageWithSentryExitCriteriaTest {
   }
 
   /**
-   * Introduces: 
-   * stage.isTerminated()
+   * Introduces: stage.isTerminated()
    */
   @Test
   @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })

@@ -26,11 +26,7 @@ public class StageTest {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   /**
-   * Introduces:
-   * assertThat(CaseInstance)
-   * caseInstance.isActive()
-   * caseInstance.stage(id)
-   * stage.isEnabled()
+   * Introduces: assertThat(CaseInstance) caseInstance.isActive() caseInstance.stage(id) stage.isEnabled()
    */
   @Test
   @Deployment(resources = { "cmmn/StageTest.cmmn" })
@@ -41,14 +37,10 @@ public class StageTest {
     CaseInstance caseInstance = givenCaseIsCreated();
     // Then
     assertThat(caseInstance).isActive().stage(STAGE_S).isEnabled();
-    // check task not yet created
-    // .task(TASK_A).isEnabled();
   }
 
   /**
-   * Introduces:
-   * manuallyStart(CaseExecution)
-   * stage.isActive()
+   * Introduces: manuallyStart(CaseExecution) stage.isActive()
    */
   @Test
   @Deployment(resources = { "cmmn/StageTest.cmmn" })
@@ -76,9 +68,7 @@ public class StageTest {
   }
 
   /**
-   * Introduces:
-   * complete(CaseExecution)
-   * stage.isCompleted()
+   * Introduces: complete(CaseExecution) stage.isCompleted()
    */
   @Test
   @Deployment(resources = { "cmmn/StageTest.cmmn" })
@@ -92,9 +82,7 @@ public class StageTest {
   }
 
   /**
-   * Introduces:
-   * disable(CaseExecution)
-   * stage.isDisabled()
+   * Introduces: disable(CaseExecution) stage.isDisabled()
    */
   @Test
   @Deployment(resources = { "cmmn/StageTest.cmmn" })
@@ -105,7 +93,6 @@ public class StageTest {
     disable(caseExecution(STAGE_S, caseInstance));
     // Then
     assertThat(caseInstance).isCompleted().stage(STAGE_S).isDisabled();
-    // TODO .task(TASK_A).isAvailable();
   }
 
   private CaseInstance givenCaseIsCreated() {
