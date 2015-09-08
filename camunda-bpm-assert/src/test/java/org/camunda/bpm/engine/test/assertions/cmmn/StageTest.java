@@ -1,9 +1,11 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.manuallyStart;
 
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
@@ -31,15 +33,13 @@ public class StageTest {
 		// Given
 		// case model is deployed
 		// When
-		CaseInstance caseInstance = caseService().createCaseInstanceByKey(
-				"Case_StageTests");
+		CaseInstance caseInstance = givenCaseIsCreated();
 		// Then
 
-    CaseExecution caseExecution = caseService().createCaseExecutionQuery().activityId(TASK_A).singleResult();
-    assertThat(caseExecution).isNotNull();
+		CaseExecution caseExecution = caseService().createCaseExecutionQuery().activityId(TASK_A).singleResult();
+		assertThat(caseExecution).isNotNull();
 
-    assertThat(caseInstance).isActive().stage(STAGE_S).isActive()
-				.task(TASK_A).isActive();
+		assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isActive();
 	}
 
 	@Test
@@ -50,8 +50,7 @@ public class StageTest {
 		// When
 		complete(caseExecution(TASK_A, caseInstance));
 		// Then
-		assertThat(caseInstance).isCompleted().stage(STAGE_S).isCompleted()
-				.task(TASK_A).isCompleted();
+		assertThat(caseInstance).isCompleted().stage(STAGE_S).isCompleted().task(TASK_A).isCompleted();
 	}
 
 	@Test
@@ -61,17 +60,21 @@ public class StageTest {
 		// Given
 		CaseInstance caseInstance = givenCaseIsCreated();
 		// When
-		// terinate(caseExecution(TASK_A, caseInstance));
+		// terminate(caseExecution(TASK_A, caseInstance));
 		// Then
 		assertThat(caseInstance).isCompleted().stage(STAGE_S).isCompleted();
 	}
 
 	private CaseInstance givenCaseIsCreated() {
-		return caseService().createCaseInstanceByKey("Case_StageTests");
+		CaseInstance caseInstance = caseService().createCaseInstanceByKey("Case_StageTests");
+		manuallyStart(caseExecution(STAGE_S, caseInstance));
+		manuallyStart(caseExecution(TASK_A, caseInstance));
+		return caseInstance;
 	}
 
 	private CaseInstance givenCaseIsCreatedAndTaskACompleted() {
-		return caseService().createCaseInstanceByKey("Case_StageTests");
+		CaseInstance caseInstance = givenCaseIsCreated();
+		complete(caseExecution(TASK_A, caseInstance));
+		return caseInstance;
 	}
-
 }

@@ -719,6 +719,19 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
     caseService().completeCaseExecution(caseExecution.getId());
   }
 
+  /**
+   * Helper method to manually activate a case execution.
+   *
+   * @param caseExecution
+   *        the case execution to avtivate
+   */
+  public static void manuallyStart(CaseExecution caseExecution) {
+    if (caseExecution == null) {
+      throw new IllegalArgumentException("Illegal call of manuallyStart(caseExecution) - must not be null!");
+    }
+    caseService().manuallyStartCaseExecution(caseExecution.getId());
+  }
+  
   public static CaseExecution caseExecution(String activityId, CaseInstance caseInstance) {
     CaseExecution caseExecution = caseService().createCaseExecutionQuery().caseInstanceId(caseInstance.getCaseInstanceId()).activityId(activityId).singleResult();
     assertThat(caseExecution).overridingErrorMessage("CaseExecution for activity '" + activityId + "' not found!").isNotNull();
