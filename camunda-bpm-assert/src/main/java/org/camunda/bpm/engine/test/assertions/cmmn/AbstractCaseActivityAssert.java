@@ -44,4 +44,9 @@ public abstract class AbstractCaseActivityAssert<S extends AbstractCaseActivityA
     return (S) this;
   }
 
+  public S isDisabled() {
+    assertInState(CaseExecutionState.DISABLED);
+    return (S) this;
+  }
+
 }

@@ -4,6 +4,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.ass
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.disable;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.manuallyStart;
 
 import org.camunda.bpm.engine.runtime.CaseInstance;
@@ -24,6 +25,13 @@ public class StageTest {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
+  /**
+   * Introduces:
+   * assertThat(CaseInstance)
+   * caseInstance.isActive()
+   * caseInstance.stage(id)
+   * stage.isEnabled()
+   */
   @Test
   @Deployment(resources = { "cmmn/StageTest.cmmn" })
   public void case_is_active_and_stage_and_task_should_be_enabled() {
@@ -37,6 +45,11 @@ public class StageTest {
     // .task(TASK_A).isEnabled();
   }
 
+  /**
+   * Introduces:
+   * manuallyStart(CaseExecution)
+   * stage.isActive()
+   */
   @Test
   @Deployment(resources = { "cmmn/StageTest.cmmn" })
   public void stage_should_be_active_and_taske_enabled() {
@@ -48,6 +61,9 @@ public class StageTest {
     assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isEnabled();
   }
 
+  /**
+   * Introduces:
+   */
   @Test
   @Deployment(resources = { "cmmn/StageTest.cmmn" })
   public void stage_and_task_should_be_active() {
@@ -59,6 +75,11 @@ public class StageTest {
     assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isActive();
   }
 
+  /**
+   * Introduces:
+   * complete(CaseExecution)
+   * stage.isCompleted()
+   */
   @Test
   @Deployment(resources = { "cmmn/StageTest.cmmn" })
   public void case_should_complete_when_task_is_completed() {
@@ -68,6 +89,23 @@ public class StageTest {
     complete(caseExecution(TASK_A, caseInstance));
     // Then
     assertThat(caseInstance).isCompleted().stage(STAGE_S).isCompleted().task(TASK_A).isCompleted();
+  }
+
+  /**
+   * Introduces:
+   * disable(CaseExecution)
+   * stage.isDisabled()
+   */
+  @Test
+  @Deployment(resources = { "cmmn/StageTest.cmmn" })
+  public void stage_and_task_should_be_disabled() {
+    // Given
+    CaseInstance caseInstance = givenCaseIsCreated();
+    // When
+    disable(caseExecution(STAGE_S, caseInstance));
+    // Then
+    assertThat(caseInstance).isCompleted().stage(STAGE_S).isDisabled();
+    // TODO .task(TASK_A).isAvailable();
   }
 
   private CaseInstance givenCaseIsCreated() {

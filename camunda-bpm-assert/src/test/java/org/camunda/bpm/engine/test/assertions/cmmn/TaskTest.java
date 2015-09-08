@@ -20,50 +20,49 @@ import org.junit.Test;
  */
 public class TaskTest {
 
-	public static final String TASK_A = "PI_TaskA";
-	public static final String CASE_KEY = "Case_TaskTests";
+  public static final String TASK_A = "PI_TaskA";
+  public static final String CASE_KEY = "Case_TaskTests";
 
-	@Rule
-	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+  @Rule
+  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-	@Test
-	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
-	/**
-	 * Introduces:
-	 * assertThat(CaseInstance)
-	 * caseInstance.isActive()
-	 * caseInstance.activity(id)
-	 * activity.isActive()
-	 */
-	public void case_and_task_should_be_active() {
-		// Given
-		// case model is deployed
-		// When
-		CaseInstance caseInstance = caseService().createCaseInstanceByKey(
-				CASE_KEY);
-		// Then
-		assertThat(caseInstance).isActive().task(TASK_A).isActive();
-	}
+  @Test
+  @Deployment(resources = { "cmmn/TaskTest.cmmn" })
+  /**
+   * Introduces:
+   * assertThat(CaseInstance)
+   * caseInstance.isActive()
+   * caseInstance.activity(id)
+   * task.isActive()
+   */
+  public void case_and_task_should_be_active() {
+    // Given
+    // case model is deployed
+    // When
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    // Then
+    assertThat(caseInstance).isActive().task(TASK_A).isActive();
+  }
 
-	@Test
-	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
-	/**
-	 * Introduces:
-	 * caseExecution(id, caseInstance)
-	 * complete(caseExecution)
-	 * caseInstance.isCompleted()
-	 * activity.isCompleted()
-	 */
-	public void case_should_complete_when_task_is_completed() {
-		// Given
-		CaseInstance caseInstance = givenCaseIsCreated();
-		// When
-		complete(caseExecution(TASK_A, caseInstance));
-		// Then
-		assertThat(caseInstance).isCompleted().task(TASK_A).isCompleted();
-	}
+  @Test
+  @Deployment(resources = { "cmmn/TaskTest.cmmn" })
+  /**
+   * Introduces:
+   * caseExecution(id, caseInstance)
+   * complete(caseExecution)
+   * caseInstance.isCompleted()
+   * task.isCompleted()
+   */
+  public void case_should_complete_when_task_is_completed() {
+    // Given
+    CaseInstance caseInstance = givenCaseIsCreated();
+    // When
+    complete(caseExecution(TASK_A, caseInstance));
+    // Then
+    assertThat(caseInstance).isCompleted().task(TASK_A).isCompleted();
+  }
 
-	private CaseInstance givenCaseIsCreated() {
-		return caseService().createCaseInstanceByKey(CASE_KEY);
-	}
+  private CaseInstance givenCaseIsCreated() {
+    return caseService().createCaseInstanceByKey(CASE_KEY);
+  }
 }

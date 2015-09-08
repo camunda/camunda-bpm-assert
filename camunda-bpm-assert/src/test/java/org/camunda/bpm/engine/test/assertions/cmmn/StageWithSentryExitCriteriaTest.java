@@ -24,6 +24,9 @@ public class StageWithSentryExitCriteriaTest {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
+  /**
+   * Introduces:
+   */
   @Test
   @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })
   public void case_is_active_and_task_a_and_task_b_should_be_enabled() {
@@ -33,10 +36,13 @@ public class StageWithSentryExitCriteriaTest {
     CaseInstance caseInstance = givenCaseIsCreated();
     // Then
     assertThat(caseInstance).isActive().stage(STAGE_S).isEnabled();
-    // TODO task(TASK_A).isEnabled();
+    // TODO task(TASK_A).isAvailable();
     assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
   }
 
+  /**
+   * Introduces:
+   */
   @Test
   @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })
   public void case_is_active_and_stage_s_should_be_active_and_task_a_and_task_b_enabled() {
@@ -49,6 +55,9 @@ public class StageWithSentryExitCriteriaTest {
     assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
   }
 
+  /**
+   * Introduces:
+   */
   @Test
   @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })
   public void case_is_active_and_stage_s_and_task_a_should_be_active_and_task_b_enabled() {
@@ -61,6 +70,10 @@ public class StageWithSentryExitCriteriaTest {
     assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
   }
 
+  /**
+   * Introduces: 
+   * stage.isTerminated()
+   */
   @Test
   @Deployment(resources = { "cmmn/StageWithSentryTestExitCriteria.cmmn" })
   public void case_is_active_and_stage_s_and_task_a_should_be_terminated_and_task_b_active() {
