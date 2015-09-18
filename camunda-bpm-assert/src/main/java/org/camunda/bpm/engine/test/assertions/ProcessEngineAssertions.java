@@ -1,16 +1,14 @@
 package org.camunda.bpm.engine.test.assertions;
 
-import org.camunda.bpm.engine.*;
-import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
+import org.assertj.core.api.Assertions;
+import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.repository.CaseDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
-import org.assertj.core.api.Assertions;
-import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
-import org.camunda.bpm.engine.test.assertions.cmmn.HistoricCaseActivityAssert;
+import org.camunda.bpm.engine.test.assertions.cmmn_new.TaskHolder;
 
 import java.util.Map;
 
@@ -32,13 +30,32 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
+   * Resets operations done via calling init(ProcessEngine processEngine)
+   * to its clean state - just as before calling init() for the first time.
+   */
+  public static void reset() {
+    ProcessEngineAssertions.processEngine.remove();
+    AbstractProcessAssert.resetLastAsserts();
+  }
+
+  /**
+   * Assert that... the given ProcessDefinition meets your expectations.
+   *
+   * @param   actual ProcessDefinition under test
+   * @return Assert object offering ProcessDefinition specific assertions.
+   */
+  public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
+    return ProcessDefinitionAssert.assertThat(processEngine(), actual);
+  }
+
+  /**
    * Retrieve the processEngine bound to the current testing thread
    * via calling init(ProcessEngine processEngine). In case no such
    * processEngine is bound yet, init(processEngine) is called with
    * a default process engine.
    *
-   * @return  processEngine bound to the current testing thread
-   * @throws  IllegalStateException in case a processEngine has not
+   * @return processEngine bound to the current testing thread
+   * @throws IllegalStateException in case a processEngine has not
    *          been initialised yet and cannot be initialised with a
    *          default engine.
    */
@@ -72,25 +89,6 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Resets operations done via calling init(ProcessEngine processEngine)
-   * to its clean state - just as before calling init() for the first time.
-   */
-  public static void reset() {
-    ProcessEngineAssertions.processEngine.remove();
-    AbstractProcessAssert.resetLastAsserts();
-  }
-
-  /**
-   * Assert that... the given ProcessDefinition meets your expectations.
-   *
-   * @param   actual ProcessDefinition under test
-   * @return  Assert object offering ProcessDefinition specific assertions.
-   */
-  public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
-    return ProcessDefinitionAssert.assertThat(processEngine(), actual);
-  }
-
-  /**
    * Assert that... the given ProcessInstance meets your expectations.
    *
    * @param   actual ProcessInstance under test
@@ -121,23 +119,12 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given CaseInstance meets your expectations.
-   *
-   * @param   actual CaseInstance under test
-   * @return  Assert object offering CaseInstance specific assertions.
+   * Start making assertions on a task
+   * @param caseTask the task assertions are to be made about
+   * @return TaskAssert object for given task
    */
-  public static CaseInstanceAssert assertThat(final CaseInstance actual) {
-    return CaseInstanceAssert.assertThat(processEngine(), actual);
-  }
-
-  /**
-   * Assert that... the given HistoricCaseActivityInstance meets your expectations.
-   *
-   * @param   actual HistoricCaseActivityInstance under test
-   * @return  Assert object offering CaseInstance specific assertions.
-   */
-  public static HistoricCaseActivityAssert assertThat(final HistoricCaseActivityInstance actual) {
-    return HistoricCaseActivityAssert.assertThat(processEngine(), actual);
+  public static org.camunda.bpm.engine.test.assertions.cmmn_new.TaskAssert assertThat(TaskHolder caseTask) {
+    return new org.camunda.bpm.engine.test.assertions.cmmn_new.TaskAssert(processEngine(), caseTask);
   }
 
   /**
