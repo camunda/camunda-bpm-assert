@@ -15,7 +15,7 @@
 | start(id)      |     x     |    x    |    x   |     x     |
 | complete(id)   |     x     |    x    |    x   |     x     |
 | humanTask(id)  |     x     |    x    |    x   |     x     |
-| caseTask(id)   |           |         |        |           |
+| caseTask(id)   |     x     |    x    |    x   |     x     |
 | processTask(id)|           |         |        |           |
 
 ## ProcessEngineAssertions

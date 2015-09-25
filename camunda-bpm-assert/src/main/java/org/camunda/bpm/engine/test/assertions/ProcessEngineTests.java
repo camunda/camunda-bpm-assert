@@ -15,6 +15,7 @@ import org.camunda.bpm.engine.test.assertions.cmmn.AbstractPlanItemHolder;
 import org.camunda.bpm.engine.test.assertions.cmmn.MilestoneHolder;
 import org.camunda.bpm.engine.test.assertions.cmmn.StageHolder;
 import org.camunda.bpm.engine.test.assertions.cmmn.TaskHolder;
+import org.camunda.bpm.model.cmmn.impl.CmmnModelConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -643,7 +644,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * Find a Task by its ID and check it is a Human Task
    */
   public static TaskHolder humanTask(String activityId, CaseInstance caseInstance) {
-    return planItemHolder(activityId, caseInstance, "humanTask", TaskHolder.class);
+    return planItemHolder(activityId, caseInstance, CmmnModelConstants.CMMN_ELEMENT_HUMAN_TASK, TaskHolder.class);
   }
 
   private static <T extends AbstractPlanItemHolder> T planItemHolder(String activityId, CaseInstance caseInstance, String type, Class<T> holderType) {
@@ -691,17 +692,24 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
+   * Find a Task by its ID and check it is a Case Task
+   */
+  public static TaskHolder caseTask(String activityId, CaseInstance caseInstance) {
+    return planItemHolder(activityId, caseInstance, CmmnModelConstants.CMMN_ELEMENT_CASE_TASK, TaskHolder.class);
+  }
+
+  /**
    * Find a Stage by its ID
    */
   public static StageHolder stage(String activityId, CaseInstance caseInstance) {
-    return planItemHolder(activityId, caseInstance, "stage", StageHolder.class);
+    return planItemHolder(activityId, caseInstance, CmmnModelConstants.CMMN_ELEMENT_STAGE, StageHolder.class);
   }
 
   /**
    * Find a Milestone by its ID
    */
   public static MilestoneHolder milestone(String activityId, CaseInstance caseInstance) {
-    return planItemHolder(activityId, caseInstance, "milestone", MilestoneHolder.class);
+    return planItemHolder(activityId, caseInstance, CmmnModelConstants.CMMN_ELEMENT_MILESTONE, MilestoneHolder.class);
   }
 
   /**

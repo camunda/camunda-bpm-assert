@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,31 +32,34 @@ public class TaskAssert extends AbstractCaseAssert<TaskAssert, TaskHolder> {
   }
 
   public TaskAssert isActive() {
-    //TODO move CaseExecution access to TaskHolder
-    assertThat(taskHolder.getActualCaseExecution()).isNotNull();
-    assertThat(taskHolder.getActualCaseExecution().isActive()).isTrue();
+    return isInState(CaseExecutionState.ACTIVE);
+  }
+
+  public TaskAssert isInState(CaseExecutionState expectedState) {
+    assertThat(actualState())
+      .overridingErrorMessage("Expecting %s to be active, but it is %s", actualType(), actualState())
+      .isEqualTo(expectedState);
     return this;
+  }
+
+  public CaseExecutionState actualState() {
+    return taskHolder.actualState();
+  }
+
+  public String actualType() {
+    return taskHolder.actualType();
   }
 
   public TaskAssert isAvailable() {
-    //TODO move CaseExecution access to TaskHolder
-    assertThat(taskHolder.getActualCaseExecution()).isNotNull();
-    assertThat(taskHolder.getActualCaseExecution().isAvailable()).isTrue();
-    return this;
+    return isInState(CaseExecutionState.AVAILABLE);
   }
 
   public TaskAssert isCompleted() {
-    //TODO move HistoricCaseExecutionInstance access to TaskHolder
-    assertThat(taskHolder.getActualHistoricCaseActivityInstance()).isNotNull();
-    assertThat(taskHolder.getActualHistoricCaseActivityInstance().isCompleted()).isTrue();
-    return this;
+    return isInState(CaseExecutionState.COMPLETED);
   }
 
   public TaskAssert isEnabled() {
-    //TODO move CaseExecution access to TaskHolder
-    assertThat(taskHolder.getActualCaseExecution()).isNotNull();
-    assertThat(taskHolder.getActualCaseExecution().isEnabled()).isTrue();
-    return this;
+    return isInState(CaseExecutionState.ENABLED);
   }
 
   @Override
@@ -67,4 +71,6 @@ public class TaskAssert extends AbstractCaseAssert<TaskAssert, TaskHolder> {
   protected String toString(TaskHolder object) {
     return null;
   }
+
+
 }

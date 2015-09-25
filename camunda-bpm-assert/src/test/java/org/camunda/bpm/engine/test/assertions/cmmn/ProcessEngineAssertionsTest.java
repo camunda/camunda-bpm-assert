@@ -60,7 +60,7 @@ public class ProcessEngineAssertionsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When trying to verify assertion on a task
-    TaskHolder caseTask = humanTask(ACTIVE_TASK, caseInstance);
+    TaskHolder caseTask = humanTask(ACTIVE_HUMAN_TASK, caseInstance);
     TaskAssert taskAssert = ProcessEngineTests.assertThat(caseTask);
 
     // Then a TaskAssert object for the given task is returned

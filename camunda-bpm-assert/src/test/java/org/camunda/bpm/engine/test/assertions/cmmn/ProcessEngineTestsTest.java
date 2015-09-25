@@ -25,6 +25,59 @@ public class ProcessEngineTestsTest {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
+  @Test
+  @Deployment(resources = {"cmmn/CaseTaskTests.cmmn"})
+  public void caseTask_should_find_active_tasks() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_CASE_TASK_TESTS);
+
+    // When getting an active case task
+    TaskHolder task = caseTask(ACTIVE_CASE_TASK, caseInstance);
+
+    // Then the TaskAssert should not be null
+    assertThat(task).isNotNull().isActive();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/CaseTaskTests.cmmn"})
+  public void caseTask_should_find_available_tasks() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_CASE_TASK_TESTS);
+
+    // When getting an available case task
+    TaskHolder task = caseTask(AVAILABLE_CASE_TASK, caseInstance);
+
+    // Then the TaskAssert should not be null
+    assertThat(task).isNotNull().isAvailable();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/CaseTaskTests.cmmn"})
+  public void caseTask_should_find_completed_tasks() {
+    // Given case model is deployed, case is started and a task has been completed
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_CASE_TASK_TESTS);
+    caseService().completeCaseExecution(caseExecutionQuery().activityId("foobar").singleResult().getId());
+
+    // When getting the completed case task
+    TaskHolder task = caseTask(ACTIVE_CASE_TASK, caseInstance);
+
+    // Then the TaskAssert should not be null
+    assertThat(task).isNotNull().isCompleted();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/CaseTaskTests.cmmn"})
+  public void caseTask_should_find_enabled_tasks() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_CASE_TASK_TESTS);
+
+    // When getting an enabled case task
+    TaskHolder task = caseTask(ENABLED_CASE_TASK, caseInstance);
+
+    // Then the TaskAssert should not be null
+    assertThat(task).isNotNull().isEnabled();
+  }
+
   @Deployment(resources = {"cmmn/StageTests.cmmn"})
   @Test
   public void complete_should_complete_active_stages() {
@@ -46,10 +99,10 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When trying to complete an active task
-    complete(humanTask(ACTIVE_TASK, caseInstance));
+    complete(humanTask(ACTIVE_HUMAN_TASK, caseInstance));
 
     // Then that task should be completed afterwards
-    HistoricCaseActivityInstance historicCaseActivityInstance = historyService().createHistoricCaseActivityInstanceQuery().caseActivityId(ACTIVE_TASK).completed().singleResult();
+    HistoricCaseActivityInstance historicCaseActivityInstance = historyService().createHistoricCaseActivityInstanceQuery().caseActivityId(ACTIVE_HUMAN_TASK).completed().singleResult();
     assertThat(historicCaseActivityInstance).isNotNull();
   }
 
@@ -72,7 +125,7 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When trying to complete an available human task
-    complete(humanTask(AVAILABLE_TASK, caseInstance));
+    complete(humanTask(AVAILABLE_HUMAN_TASK, caseInstance));
 
     // Then an execption should be raised
   }
@@ -95,10 +148,10 @@ public class ProcessEngineTestsTest {
   public void complete_should_fail_on_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
-    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_HUMAN_TASK).singleResult().getId());
 
     // When trying to complete the completed task
-    complete(humanTask(ACTIVE_TASK, caseInstance));
+    complete(humanTask(ACTIVE_HUMAN_TASK, caseInstance));
 
     // Then an exception should be raised
   }
@@ -122,7 +175,7 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When trying to complete an enabled human task
-    complete(humanTask(ENABLED_TASK, caseInstance));
+    complete(humanTask(ENABLED_HUMAN_TASK, caseInstance));
 
     // Then an exception should be raised
   }
@@ -134,7 +187,7 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When getting an active human task
-    TaskHolder task = humanTask(ACTIVE_TASK, caseInstance);
+    TaskHolder task = humanTask(ACTIVE_HUMAN_TASK, caseInstance);
 
     // Then the TaskAssert should not be null
     assertThat(task).isNotNull();
@@ -147,7 +200,7 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When getting an available human task
-    TaskHolder task = humanTask(AVAILABLE_TASK, caseInstance);
+    TaskHolder task = humanTask(AVAILABLE_HUMAN_TASK, caseInstance);
 
     // Then the TaskAssert should not be null
     assertThat(task).isNotNull();
@@ -158,10 +211,10 @@ public class ProcessEngineTestsTest {
   public void humanTask_should_find_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
-    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_HUMAN_TASK).singleResult().getId());
 
     // When getting the completed human task
-    TaskHolder task = humanTask(ACTIVE_TASK, caseInstance);
+    TaskHolder task = humanTask(ACTIVE_HUMAN_TASK, caseInstance);
 
     // Then the TaskAssert should not be null
     assertThat(task).isNotNull();
@@ -174,7 +227,7 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When getting an enabled human task
-    TaskHolder task = humanTask(ENABLED_TASK, caseInstance);
+    TaskHolder task = humanTask(ENABLED_HUMAN_TASK, caseInstance);
 
     // Then the TaskAssert should not be null
     assertThat(task).isNotNull();
@@ -278,7 +331,7 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When trying to complete an active human task
-    start(humanTask(ACTIVE_TASK, caseInstance));
+    start(humanTask(ACTIVE_HUMAN_TASK, caseInstance));
 
     // Then an execption should be raised
   }
@@ -302,7 +355,7 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When trying to complete an available human task
-    start(humanTask(AVAILABLE_TASK, caseInstance));
+    start(humanTask(AVAILABLE_HUMAN_TASK, caseInstance));
 
     // Then an execption should be raised
   }
@@ -325,10 +378,10 @@ public class ProcessEngineTestsTest {
   public void start_should_fail_on_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
-    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_HUMAN_TASK).singleResult().getId());
 
     // When trying to start the completed task
-    start(humanTask(ACTIVE_TASK, caseInstance));
+    start(humanTask(ACTIVE_HUMAN_TASK, caseInstance));
 
     // Then an exception should be raised
   }
@@ -354,10 +407,10 @@ public class ProcessEngineTestsTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When trying to start an enabled task
-    start(humanTask(ENABLED_TASK, caseInstance));
+    start(humanTask(ENABLED_HUMAN_TASK, caseInstance));
 
     // Then that task should be active afterwards
-    CaseExecution caseExecution = caseService().createCaseExecutionQuery().activityId(ENABLED_TASK).active().singleResult();
+    CaseExecution caseExecution = caseService().createCaseExecutionQuery().activityId(ENABLED_HUMAN_TASK).active().singleResult();
     assertThat(caseExecution).isNotNull();
   }
 

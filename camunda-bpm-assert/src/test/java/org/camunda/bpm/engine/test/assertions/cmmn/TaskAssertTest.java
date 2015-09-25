@@ -28,7 +28,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an available task's state to be active
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(AVAILABLE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(AVAILABLE_HUMAN_TASK, caseInstance));
     taskAssert.isActive();
 
     //an exception should be raised
@@ -39,10 +39,10 @@ public class TaskAssertTest {
   public void isActive_should_fail_for_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
-    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_HUMAN_TASK).singleResult().getId());
 
     //when testing a completed task's state to be active
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_HUMAN_TASK, caseInstance));
     taskAssert.isActive();
 
     //an exception should be raised
@@ -55,7 +55,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an enabled task's state to be active
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ENABLED_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ENABLED_HUMAN_TASK, caseInstance));
     taskAssert.isActive();
 
     //an exception should be raised
@@ -68,7 +68,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an active task's state to be active
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_HUMAN_TASK, caseInstance));
     taskAssert.isActive();
 
     //no exception should be raised
@@ -81,7 +81,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an active task's state to be available
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_HUMAN_TASK, caseInstance));
     taskAssert.isAvailable();
 
     //an exception should be raised
@@ -92,10 +92,10 @@ public class TaskAssertTest {
   public void isAvailable_should_fail_for_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
-    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_HUMAN_TASK).singleResult().getId());
 
     //when testing a completed task's state to be available
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_HUMAN_TASK, caseInstance));
     taskAssert.isAvailable();
 
     //an exception should be raised
@@ -108,7 +108,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an enabled task's state to be available
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ENABLED_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ENABLED_HUMAN_TASK, caseInstance));
     taskAssert.isAvailable();
 
     //an exception should be raised
@@ -121,7 +121,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an available task's state to be available
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(AVAILABLE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(AVAILABLE_HUMAN_TASK, caseInstance));
     taskAssert.isAvailable();
 
     //no exception should be raised
@@ -134,7 +134,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an active task's state to be completed
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_HUMAN_TASK, caseInstance));
     taskAssert.isCompleted();
 
     //an exception should be raised
@@ -147,7 +147,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an available task's state to be completed
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(AVAILABLE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(AVAILABLE_HUMAN_TASK, caseInstance));
     taskAssert.isCompleted();
 
     //an exception should be raised
@@ -160,7 +160,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an enabled task's state to be completed
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ENABLED_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ENABLED_HUMAN_TASK, caseInstance));
     taskAssert.isCompleted();
 
     //an exception should be raised
@@ -171,10 +171,10 @@ public class TaskAssertTest {
   public void isCompleted_should_not_fail_for_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
-    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_HUMAN_TASK).singleResult().getId());
 
     //when testing a completed task's state to be completed
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_HUMAN_TASK, caseInstance));
     taskAssert.isCompleted();
 
     //no exception should be raised
@@ -187,7 +187,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an active task's state to be enabled
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_HUMAN_TASK, caseInstance));
     taskAssert.isEnabled();
 
     //an exception should be raised
@@ -200,7 +200,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an available task's state to be enabled
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(AVAILABLE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(AVAILABLE_HUMAN_TASK, caseInstance));
     taskAssert.isEnabled();
 
     //an exception should be raised
@@ -211,10 +211,10 @@ public class TaskAssertTest {
   public void isEnabled_should_fail_for_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
-    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_HUMAN_TASK).singleResult().getId());
 
     //when testing a completed task's state to be enabled
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ACTIVE_HUMAN_TASK, caseInstance));
     taskAssert.isEnabled();
 
     //an exception should be raised
@@ -227,7 +227,7 @@ public class TaskAssertTest {
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     //when testing an enabled task's state to be enabled
-    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ENABLED_TASK, caseInstance));
+    TaskAssert taskAssert = new TaskAssert(processEngine(), humanTask(ENABLED_HUMAN_TASK, caseInstance));
     taskAssert.isEnabled();
 
     //no exception should be raised
