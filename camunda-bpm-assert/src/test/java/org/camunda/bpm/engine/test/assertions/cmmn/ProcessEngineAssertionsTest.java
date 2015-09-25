@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.assertions.cmmn_new;
+package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
@@ -11,7 +11,7 @@ import org.junit.runners.MethodSorters;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
-import static org.camunda.bpm.engine.test.assertions.cmmn_new.CmmnModelConstants.*;
+import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnModelConstants.*;
 /**
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */

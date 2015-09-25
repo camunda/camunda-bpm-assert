@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.assertions.cmmn_new;
+package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.assertj.core.api.AbstractObjectAssert;
 import org.camunda.bpm.engine.ProcessEngine;

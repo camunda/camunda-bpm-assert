@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.assertions.cmmn_new;
+package org.camunda.bpm.engine.test.assertions.cmmn;
 
 /**
  * Assertions for Variables.

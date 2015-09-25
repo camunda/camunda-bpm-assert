@@ -11,10 +11,10 @@ import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.camunda.bpm.engine.test.assertions.cmmn_new.AbstractPlanItemHolder;
-import org.camunda.bpm.engine.test.assertions.cmmn_new.MilestoneHolder;
-import org.camunda.bpm.engine.test.assertions.cmmn_new.StageHolder;
-import org.camunda.bpm.engine.test.assertions.cmmn_new.TaskHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn.AbstractPlanItemHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn.MilestoneHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn.StageHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn.TaskHolder;
 
 import java.util.HashMap;
 import java.util.Map;

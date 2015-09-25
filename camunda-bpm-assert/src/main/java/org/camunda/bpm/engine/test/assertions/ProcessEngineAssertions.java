@@ -8,9 +8,9 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
-import org.camunda.bpm.engine.test.assertions.cmmn_new.MilestoneHolder;
-import org.camunda.bpm.engine.test.assertions.cmmn_new.StageHolder;
-import org.camunda.bpm.engine.test.assertions.cmmn_new.TaskHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn.MilestoneHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn.StageHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn.TaskHolder;
 
 import java.util.Map;
 
@@ -125,8 +125,8 @@ public class ProcessEngineAssertions extends Assertions {
    * @param taskHolder the task assertions are to be made about
    * @return TaskAssert object for given task
    */
-  public static org.camunda.bpm.engine.test.assertions.cmmn_new.TaskAssert assertThat(TaskHolder taskHolder) {
-    return new org.camunda.bpm.engine.test.assertions.cmmn_new.TaskAssert(processEngine(), taskHolder);
+  public static org.camunda.bpm.engine.test.assertions.cmmn.TaskAssert assertThat(TaskHolder taskHolder) {
+    return new org.camunda.bpm.engine.test.assertions.cmmn.TaskAssert(processEngine(), taskHolder);
   }
 
   /**
@@ -136,8 +136,8 @@ public class ProcessEngineAssertions extends Assertions {
    * 		the stage assertions are to be made about
    * @return StageAssert object for given stage
    */
-  public static org.camunda.bpm.engine.test.assertions.cmmn_new.StageAssert assertThat(StageHolder stageHolder) {
-    return new org.camunda.bpm.engine.test.assertions.cmmn_new.StageAssert(processEngine(), stageHolder);
+  public static org.camunda.bpm.engine.test.assertions.cmmn.StageAssert assertThat(StageHolder stageHolder) {
+    return new org.camunda.bpm.engine.test.assertions.cmmn.StageAssert(processEngine(), stageHolder);
   }
 
   /**
@@ -147,8 +147,8 @@ public class ProcessEngineAssertions extends Assertions {
    * 		the milestone assertions are to be made about
    * @return StageAssert object for given stage
    */
-  public static org.camunda.bpm.engine.test.assertions.cmmn_new.MilestoneAssert assertThat(MilestoneHolder milestoneHolder) {
-    return new org.camunda.bpm.engine.test.assertions.cmmn_new.MilestoneAssert(processEngine(), milestoneHolder);
+  public static org.camunda.bpm.engine.test.assertions.cmmn.MilestoneAssert assertThat(MilestoneHolder milestoneHolder) {
+    return new org.camunda.bpm.engine.test.assertions.cmmn.MilestoneAssert(processEngine(), milestoneHolder);
   }
 
   /**

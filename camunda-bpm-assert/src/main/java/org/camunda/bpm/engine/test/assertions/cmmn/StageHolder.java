@@ -1,4 +1,4 @@
-package org.camunda.bpm.engine.test.assertions.cmmn_new;
+package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.runtime.CaseExecution;
