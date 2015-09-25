@@ -1,19 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
-                  id="Def_StageWithSentryTests" name="Stage with Sentry Tests"
-                  targetNamespace="http://www.trisotech.com/cmmn/definitions/_StageWithSentryTests">
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Def_StageWithSentryTests"
+                  name="Stage with Sentry Tests"
+                  targetNamespace="http://www.omg.org/spec/CMMN/20131201/MODEL"
+                  xsi:schemaLocation="http://www.omg.org/spec/CMMN/20131201/MODEL http://www.omg.org/spec/CMMN/20131201/CMMN10.xsd">
   <cmmn:case id="Case_StageWithSentryTests" name="Stage with Sentry Tests">
-    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_StageWithSentryTests" name="Stage with Sentry Tests">
-      <cmmn:planItem definitionRef="HT_A" id="PI_HT_A"/>
-      <cmmn:planItem definitionRef="S_StageS" entryCriteriaRefs="On_PI_HT_A_Complete" id="PI_StageS"/>
-      <cmmn:sentry id="On_PI_HT_A_Complete">
-        <cmmn:planItemOnPart sourceRef="PI_HT_A">
+    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_ProcessEngineTestsTest"
+                        name="ProcessEngineTestsTest">
+
+      <cmmn:planItem definitionRef="Stage_A" id="PI_Stage_A"/>
+      <cmmn:planItem definitionRef="Stage_B" entryCriteriaRefs="On_PI_Stage_A_Complete" id="PI_Stage_B"/>
+      <cmmn:planItem definitionRef="Stage_C" id="PI_Stage_C"/>
+
+      <cmmn:sentry id="On_PI_Stage_A_Complete">
+        <cmmn:planItemOnPart sourceRef="PI_Stage_A">
           <cmmn:standardEvent>complete</cmmn:standardEvent>
         </cmmn:planItemOnPart>
       </cmmn:sentry>
-      <cmmn:humanTask description="" id="HT_A" isBlocking="true" name="A">
-      </cmmn:humanTask>
-      <cmmn:stage id="S_StageS" autoComplete="false" name="S">
+
+      <cmmn:stage id="Stage_A" autoComplete="false" name="A">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="juel">
+              <cmmn:body>#{true}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+        <cmmn:planItem definitionRef="Stage_A_HT_A" id="PI_Stage_A_HT_A"/>
+        <cmmn:humanTask description="" id="Stage_A_HT_A" isBlocking="true" name="A/A"/>
+      </cmmn:stage>
+      <cmmn:stage id="Stage_B" autoComplete="false" name="B">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="juel">
+              <cmmn:body>#{true}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+        <cmmn:planItem definitionRef="Stage_B_HT_A" id="PI_Stage_B_HT_A"/>
+        <cmmn:humanTask description="" id="Stage_B_HT_A" isBlocking="true" name="B/A"/>
+      </cmmn:stage>
+      <cmmn:stage id="Stage_C" autoComplete="false" name="C">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule>
+            <cmmn:condition language="juel">
+              <cmmn:body>#{false}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+        <cmmn:planItem definitionRef="Stage_C_HT_A" id="PI_Stage_C_HT_A"/>
+        <cmmn:humanTask description="" id="Stage_C_HT_A" isBlocking="true" name="C/A"/>
       </cmmn:stage>
     </cmmn:casePlanModel>
   </cmmn:case>

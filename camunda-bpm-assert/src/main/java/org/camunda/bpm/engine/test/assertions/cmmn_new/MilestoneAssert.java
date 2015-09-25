@@ -3,19 +3,17 @@ package org.camunda.bpm.engine.test.assertions.cmmn_new;
 import org.camunda.bpm.engine.ProcessEngine;
 
 /**
- * Created by Malte on 18.09.2015.
+ * Assertions for Milestones.
+ *
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 public class MilestoneAssert extends AbstractCaseAssert<MilestoneAssert, Object> {
 
-  protected MilestoneAssert(ProcessEngine engine, Object actual, Class selfType) {
-    super(engine, actual, selfType);
+  public MilestoneAssert(ProcessEngine engine, MilestoneHolder actual) {
+    super(engine, actual, MilestoneAssert.class);
   }
 
-  public MilestoneAssert isAvailable() {
-    return this;
-  }
-
-  public MilestoneAssert isCompleted() {
+  public MilestoneAssert hasOccured() {
     return this;
   }
 

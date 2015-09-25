@@ -4,16 +4,15 @@ import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 
 /**
- * Provides an abstraction of human, case and process tasks.
+ * Provides an abstraction of Stages.
  * See superclass for explanations.
  *
- * @see AbstractPlanItemHolder
- *
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
+ * @see AbstractPlanItemHolder
  */
-public class TaskHolder extends AbstractPlanItemHolder {
+public class StageHolder extends AbstractPlanItemHolder {
 
-  public TaskHolder(CaseExecution caseExecution, HistoricCaseActivityInstance historicCaseActivityInstance) {
+  public StageHolder(CaseExecution caseExecution, HistoricCaseActivityInstance historicCaseActivityInstance) {
     super(caseExecution, historicCaseActivityInstance);
   }
 }

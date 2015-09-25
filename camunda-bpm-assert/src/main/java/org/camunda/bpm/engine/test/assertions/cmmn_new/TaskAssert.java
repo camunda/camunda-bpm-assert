@@ -5,15 +5,13 @@ import org.camunda.bpm.engine.ProcessEngine;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tha TaskAssert encapsulates all inspections on Human, Case and Process Tasks.
- * <p/>
- * Depending on the state of the task, it works either on a CaseExecution or on a HistoricCaseActivityInstance.
- * The actual class worked on is hidden, so that the test code is independent of this information.
+ * Assertions for Human, Case and Process Tasks.
+ *
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 public class TaskAssert extends AbstractCaseAssert<TaskAssert, TaskHolder> {
 
   private final TaskHolder taskHolder;
-
 
   public TaskAssert(ProcessEngine engine, TaskHolder taskHolder) {
     super(engine, taskHolder, TaskAssert.class);
@@ -33,20 +31,30 @@ public class TaskAssert extends AbstractCaseAssert<TaskAssert, TaskHolder> {
   }
 
   public TaskAssert isActive() {
+    //TODO move CaseExecution access to TaskHolder
     assertThat(taskHolder.getActualCaseExecution()).isNotNull();
     assertThat(taskHolder.getActualCaseExecution().isActive()).isTrue();
     return this;
   }
 
   public TaskAssert isAvailable() {
+    //TODO move CaseExecution access to TaskHolder
+    assertThat(taskHolder.getActualCaseExecution()).isNotNull();
+    assertThat(taskHolder.getActualCaseExecution().isAvailable()).isTrue();
     return this;
   }
 
   public TaskAssert isCompleted() {
+    //TODO move HistoricCaseExecutionInstance access to TaskHolder
+    assertThat(taskHolder.getActualHistoricCaseActivityInstance()).isNotNull();
+    assertThat(taskHolder.getActualHistoricCaseActivityInstance().isCompleted()).isTrue();
     return this;
   }
 
   public TaskAssert isEnabled() {
+    //TODO move CaseExecution access to TaskHolder
+    assertThat(taskHolder.getActualCaseExecution()).isNotNull();
+    assertThat(taskHolder.getActualCaseExecution().isEnabled()).isTrue();
     return this;
   }
 

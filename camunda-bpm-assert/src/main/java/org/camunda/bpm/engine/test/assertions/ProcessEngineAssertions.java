@@ -8,6 +8,8 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.assertions.cmmn_new.MilestoneHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn_new.StageHolder;
 import org.camunda.bpm.engine.test.assertions.cmmn_new.TaskHolder;
 
 import java.util.Map;
@@ -120,11 +122,33 @@ public class ProcessEngineAssertions extends Assertions {
 
   /**
    * Start making assertions on a task
-   * @param caseTask the task assertions are to be made about
+   * @param taskHolder the task assertions are to be made about
    * @return TaskAssert object for given task
    */
-  public static org.camunda.bpm.engine.test.assertions.cmmn_new.TaskAssert assertThat(TaskHolder caseTask) {
-    return new org.camunda.bpm.engine.test.assertions.cmmn_new.TaskAssert(processEngine(), caseTask);
+  public static org.camunda.bpm.engine.test.assertions.cmmn_new.TaskAssert assertThat(TaskHolder taskHolder) {
+    return new org.camunda.bpm.engine.test.assertions.cmmn_new.TaskAssert(processEngine(), taskHolder);
+  }
+
+  /**
+   * Start making assertions on a stage
+   *
+   * @param stageHolder
+   * 		the stage assertions are to be made about
+   * @return StageAssert object for given stage
+   */
+  public static org.camunda.bpm.engine.test.assertions.cmmn_new.StageAssert assertThat(StageHolder stageHolder) {
+    return new org.camunda.bpm.engine.test.assertions.cmmn_new.StageAssert(processEngine(), stageHolder);
+  }
+
+  /**
+   * Start making assertions on a milestone
+   *
+   * @param milestoneHolder
+   * 		the milestone assertions are to be made about
+   * @return StageAssert object for given stage
+   */
+  public static org.camunda.bpm.engine.test.assertions.cmmn_new.MilestoneAssert assertThat(MilestoneHolder milestoneHolder) {
+    return new org.camunda.bpm.engine.test.assertions.cmmn_new.MilestoneAssert(processEngine(), milestoneHolder);
   }
 
   /**

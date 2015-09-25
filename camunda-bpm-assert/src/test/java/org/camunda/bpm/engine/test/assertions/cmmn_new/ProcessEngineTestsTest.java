@@ -14,7 +14,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.ass
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
- * Created by Malte on 18.09.2015.
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProcessEngineTestsTest {
@@ -22,17 +22,38 @@ public class ProcessEngineTestsTest {
   public static final String ACTIVE_TASK = "PI_HT_A";
   public static final String AVAILABLE_TASK = "PI_HT_B";
   public static final String ENABLED_TASK = "PI_HT_C";
-  public static final String CASE_KEY = "Case_TaskWithSentryTests";
+  public static final String ACTIVE_STAGE = "PI_Stage_C";
+  public static final String AVAILABLE_STAGE = "PI_Stage_B";
+  public static final String ENABLED_STAGE = "PI_Stage_A";
+  public static final String OCCURRED_MILESTONE = "PI_MS_Occurred";
+  public static final String CREATED_MILESTONE = "PI_MS_Created";
+  public static final String CASE_TASK_WITH_SENTRY_TESTS = "Case_TaskWithSentryTests";
+  public static final String CASE_STAGE_WITH_SENTRY_TESTS = "Case_StageWithSentryTests";
+  public static final String CASE_MILESTONE_TESTS = "Case_MilestoneTests";
 
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  @Test
+  public void complete_should_complete_active_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When trying to complete an active task
+    complete(stage(ACTIVE_STAGE, caseInstance));
+
+    // Then that task should be completed afterwards
+    HistoricCaseActivityInstance historicCaseActivityInstance = historyService().createHistoricCaseActivityInstanceQuery().caseActivityId(ACTIVE_STAGE).completed().singleResult();
+    assertThat(historicCaseActivityInstance).isNotNull();
+  }
+
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   @Test
   public void complete_should_complete_active_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When trying to complete an active task
     complete(humanTask(ACTIVE_TASK, caseInstance));
@@ -43,10 +64,22 @@ public class ProcessEngineTestsTest {
   }
 
   @Test(expected = AssertionError.class)
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void complete_should_fail_on_available_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When trying to complete an available human task
+    complete(stage(AVAILABLE_STAGE, caseInstance));
+
+    // Then an execption should be raised
+  }
+
+  @Test(expected = AssertionError.class)
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void complete_should_fail_on_available_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When trying to complete an available human task
     complete(humanTask(AVAILABLE_TASK, caseInstance));
@@ -55,10 +88,23 @@ public class ProcessEngineTestsTest {
   }
 
   @Test(expected = AssertionError.class)
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void complete_should_fail_on_completed_stages() {
+    // Given case model is deployed, case is started and a task has been completed
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_STAGE).singleResult().getId());
+
+    // When trying to complete the completed task
+    complete(stage(ACTIVE_STAGE, caseInstance));
+
+    // Then an exception should be raised
+  }
+
+  @Test(expected = AssertionError.class)
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void complete_should_fail_on_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
     caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
 
     // When trying to complete the completed task
@@ -68,10 +114,22 @@ public class ProcessEngineTestsTest {
   }
 
   @Test(expected = AssertionError.class)
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void complete_should_fail_on_enabled_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When trying to complete an enabled human task
+    complete(stage(ENABLED_STAGE, caseInstance));
+
+    // Then an exception should be raised
+  }
+
+  @Test(expected = AssertionError.class)
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void complete_should_fail_on_enabled_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When trying to complete an enabled human task
     complete(humanTask(ENABLED_TASK, caseInstance));
@@ -83,60 +141,151 @@ public class ProcessEngineTestsTest {
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void humanTask_should_find_active_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When getting an active human task
-    TaskHolder caseTask = humanTask(ACTIVE_TASK, caseInstance);
+    TaskHolder task = humanTask(ACTIVE_TASK, caseInstance);
 
     // Then the TaskAssert should not be null
-    assertThat(caseTask).isNotNull();
+    assertThat(task).isNotNull();
   }
 
   @Test
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void humanTask_should_find_available_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When getting an available human task
-    TaskHolder caseTask = humanTask(AVAILABLE_TASK, caseInstance);
+    TaskHolder task = humanTask(AVAILABLE_TASK, caseInstance);
 
     // Then the TaskAssert should not be null
-    assertThat(caseTask).isNotNull();
+    assertThat(task).isNotNull();
   }
 
   @Test
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void humanTask_should_find_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
     caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
 
     // When getting the completed human task
-    TaskHolder caseTask = humanTask(ACTIVE_TASK, caseInstance);
+    TaskHolder task = humanTask(ACTIVE_TASK, caseInstance);
 
     // Then the TaskAssert should not be null
-    assertThat(caseTask).isNotNull();
+    assertThat(task).isNotNull();
   }
 
   @Test
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void humanTask_should_find_enabled_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When getting an enabled human task
-    TaskHolder caseTask = humanTask(ENABLED_TASK, caseInstance);
+    TaskHolder task = humanTask(ENABLED_TASK, caseInstance);
 
     // Then the TaskAssert should not be null
-    assertThat(caseTask).isNotNull();
+    assertThat(task).isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/MilestoneTests.cmmn"})
+  public void milestone_should_find_created_milestones() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_MILESTONE_TESTS);
+
+    // When getting an occurred milestone
+    MilestoneHolder milestone = milestone(CREATED_MILESTONE, caseInstance);
+
+    // Then the MilestoneAssert should not be null
+    assertThat(milestone).isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/MilestoneTests.cmmn"})
+  public void milestone_should_find_occurred_milestones() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_MILESTONE_TESTS);
+
+    // When getting an occurred milestone
+    MilestoneHolder milestone = milestone(OCCURRED_MILESTONE, caseInstance);
+
+    // Then the MilestoneAssert should not be null
+    assertThat(milestone).isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void stage_should_find_active_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When getting an active human stage
+    StageHolder stage = stage(ACTIVE_STAGE, caseInstance);
+
+    // Then the StageAssert should not be null
+    assertThat(stage).isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void stage_should_find_available_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When getting an available human stage
+    StageHolder stage = stage(AVAILABLE_STAGE, caseInstance);
+
+    // Then the StageAssert should not be null
+    assertThat(stage).isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void stage_should_find_completed_stages() {
+    // Given case model is deployed, case is started and a stage has been completed
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_STAGE).singleResult().getId());
+
+    // When getting the completed human stage
+    StageHolder stage = stage(ACTIVE_STAGE, caseInstance);
+
+    // Then the StageAssert should not be null
+    assertThat(stage).isNotNull();
+  }
+
+  @Test
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void stage_should_find_enabled_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When getting an enabled human stage
+    StageHolder stage = stage(ENABLED_STAGE, caseInstance);
+
+    // Then the StageAssert should not be null
+    assertThat(stage).isNotNull();
+  }
+
+  @Test(expected = AssertionError.class)
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void start_should_fail_on_active_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When trying to complete an active human stage
+    start(stage(ACTIVE_STAGE, caseInstance));
+
+    // Then an execption should be raised
   }
 
   @Test(expected = AssertionError.class)
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void start_should_fail_on_active_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When trying to complete an active human task
     start(humanTask(ACTIVE_TASK, caseInstance));
@@ -145,10 +294,22 @@ public class ProcessEngineTestsTest {
   }
 
   @Test(expected = AssertionError.class)
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void start_should_fail_on_available_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When trying to complete an available human stage
+    start(stage(AVAILABLE_STAGE, caseInstance));
+
+    // Then an execption should be raised
+  }
+
+  @Test(expected = AssertionError.class)
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void start_should_fail_on_available_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When trying to complete an available human task
     start(humanTask(AVAILABLE_TASK, caseInstance));
@@ -157,10 +318,23 @@ public class ProcessEngineTestsTest {
   }
 
   @Test(expected = AssertionError.class)
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void start_should_fail_on_completed_stages() {
+    // Given case model is deployed, case is started and a stage has been completed
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+    caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_STAGE).singleResult().getId());
+
+    // When trying to start the completed stage
+    start(stage(ACTIVE_STAGE, caseInstance));
+
+    // Then an exception should be raised
+  }
+
+  @Test(expected = AssertionError.class)
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void start_should_fail_on_completed_tasks() {
     // Given case model is deployed, case is started and a task has been completed
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
     caseService().completeCaseExecution(caseExecutionQuery().activityId(ACTIVE_TASK).singleResult().getId());
 
     // When trying to start the completed task
@@ -170,10 +344,24 @@ public class ProcessEngineTestsTest {
   }
 
   @Test
+  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  public void start_should_start_enabled_stages() {
+    // Given case model is deployed and case is started
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_WITH_SENTRY_TESTS);
+
+    // When trying to start an enabled stage
+    start(stage(ENABLED_STAGE, caseInstance));
+
+    // Then that stage should be active afterwards
+    CaseExecution caseExecution = caseService().createCaseExecutionQuery().activityId(ENABLED_STAGE).active().singleResult();
+    assertThat(caseExecution).isNotNull();
+  }
+
+  @Test
   @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
   public void start_should_start_enabled_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_TASK_WITH_SENTRY_TESTS);
 
     // When trying to start an enabled task
     start(humanTask(ENABLED_TASK, caseInstance));

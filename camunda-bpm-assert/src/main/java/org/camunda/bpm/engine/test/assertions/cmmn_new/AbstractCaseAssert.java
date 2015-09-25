@@ -10,6 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This base class provides common functions used or provided by all child classes.
+ *
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A> extends AbstractProcessAssert<S, A> {
 

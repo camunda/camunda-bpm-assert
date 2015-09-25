@@ -1,15 +1,14 @@
 ## ProcessEngineTests
-
-| CaseInstance     | active | completed | closed |
-|------------------|--------|-----------|--------|
-| caseInstance(id) |        |           |        |
   
 | Stage          | available | enabled | active | completed |
 |----------------|-----------|---------|--------|-----------|
-| start(id)      |           |         |        |           |
-| complete(id)   |           |         |        |           |
-| stage(id)      |           |         |        |           |
-| milestone(id)  |           |         |        |           |
+| start(id)      |     x     |    x    |    x   |     x     |
+| complete(id)   |     x     |    x    |    x   |     x     |
+| stage(id)      |     x     |    x    |    x   |     x     |
+
+| Milestone      | created | occurred |
+|----------------|---------|----------|
+| milestone(id)  |    x    |     x    |
 
 | Task           | available | enabled | active | completed |
 |----------------|-----------|---------|--------|-----------|
@@ -21,18 +20,18 @@
 
 ## ProcessEngineAssertions
 
-| entry points    | Task | Stage | CaseInstance |
-|-----------------|------|-------|--------------|
-| assertThat(...) |   x  |       |              |
+| entry points    | Task | Stage | CaseInstance | Milestone |
+|-----------------|------|-------|--------------|-----------|
+| assertThat(...) |   x  |   x   |              |     x     |
  
 ## TaskAssert
 
 | Task                | available | enabled | active | completed |
 |---------------------|-----------|---------|--------|-----------|
-| isAvailable()       |           |         |        |           |
-| isEnabled()         |           |         |        |           |
+| isAvailable()       |     x     |    x    |    x   |     x     |
+| isEnabled()         |     x     |    x    |    x   |     x     |
 | isActive()          |     x     |    x    |    x   |     x     |
-| isCompleted()       |           |         |        |           |
+| isCompleted()       |     x     |    x    |    x   |     x     |
 | hasAssignee()       |           |         |        |           |
 | hasCandidateUser()  |           |         |        |           |
 | hasCandidateGroup() |           |         |        |           |
@@ -54,7 +53,6 @@
 
 ## MilestoneAssert
 
-| Milestone     | available | completed |
-|---------------|-----------|-----------|
-| isAvailable() |           |           |
-| isCompleted() |           |           |
+| Milestone  | created | occurred |
+|------------|---------|----------|
+| hasOccured |         |          |

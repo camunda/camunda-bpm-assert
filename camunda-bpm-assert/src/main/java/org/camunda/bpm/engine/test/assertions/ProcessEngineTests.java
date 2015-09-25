@@ -11,6 +11,9 @@ import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.engine.test.assertions.cmmn_new.AbstractPlanItemHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn_new.MilestoneHolder;
+import org.camunda.bpm.engine.test.assertions.cmmn_new.StageHolder;
 import org.camunda.bpm.engine.test.assertions.cmmn_new.TaskHolder;
 
 import java.util.HashMap;
@@ -20,13 +23,13 @@ import static java.lang.String.format;
 
 /**
  * Convenience class to access all assertions camunda BPM Process Engine Assertions - PLUS a few helper methods.
- *
+ * <p/>
  * In your code use import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
  *
- * @see org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Martin Günther <martin.guenter@holisticon.de>
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
+ * @see org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions
  */
 public class ProcessEngineTests extends ProcessEngineAssertions {
 
@@ -139,7 +142,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
                                                   final Object... furtherKeyValuePairs) {
     if (key == null) {
       throw new IllegalArgumentException(format(
-        "Illegal call of withVariables(key = '%s', value = '%s', ...) - key must not be null!", key, value));
+        "Illegal call of withVariables(key = null, value = '%s', ...) - key must not be null!", value));
     }
     final Map<String, Object> map = new HashMap<String, Object>();
     map.put(key, value);
@@ -596,8 +599,8 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    */
   public static Task unclaim(Task task) {
     if (task == null)
-      throw new IllegalArgumentException(format("Illegal call " + "of unclaim(task = '%s') - task must "
-        + "not be null!", task));
+      throw new IllegalArgumentException("Illegal call " + "of unclaim(task = null) - task must "
+        + "not be null!");
     taskService().claim(task.getId(), null);
     return taskQuery().taskId(task.getId()).singleResult();
   }
@@ -627,31 +630,46 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   public static void complete(Task task) {
     if (task == null) {
       throw new IllegalArgumentException(
-        format("Illegal call of complete(task = '%s') - must not be null!", task));
+        "Illegal call of complete(task = null) - must not be null!");
     }
     taskService().complete(task.getId());
-  }
-
-  /**
-   * Find a Task by its ID and check it is a Human Task
-   */
-  public static TaskHolder humanTask(String activityId, CaseInstance caseInstance) {
-    CaseExecution caseExecution = caseExecution(activityId, caseInstance);
-    if (caseExecution != null) {
-      return new TaskHolder(caseExecution);
-    } else {
-      HistoricCaseActivityInstance historicCaseActivityInstance = historicCaseActivity(activityId, caseInstance);
-      Assertions
-        .assertThat(historicCaseActivityInstance)
-        .overridingErrorMessage("ActivityInstance for activity '" + activityId + "' not found!")
-        .isNotNull();
-      return new TaskHolder(historicCaseActivityInstance);
-    }
   }
 
   /******************
    * CMMN Extension
    ******************/
+
+  /**
+   * Find a Task by its ID and check it is a Human Task
+   */
+  public static TaskHolder humanTask(String activityId, CaseInstance caseInstance) {
+    return planItemHolder(activityId, caseInstance, "humanTask", TaskHolder.class);
+  }
+
+  private static <T extends AbstractPlanItemHolder> T planItemHolder(String activityId, CaseInstance caseInstance, String type, Class<T> holderType) {
+    CaseExecution caseExecution = caseExecution(activityId, caseInstance);
+    HistoricCaseActivityInstance historicCaseActivityInstance = historicCaseActivity(activityId, caseInstance);
+
+    if (caseExecution != null) {
+      Assertions
+        .assertThat(caseExecution.getActivityType())
+        .isEqualTo(type);
+    } else {
+      //no CaseExecution? Lets check if this thing even exists!
+      Assertions
+        .assertThat(historicCaseActivityInstance)
+        .overridingErrorMessage("Neither CaseExecution nor HistoricCaseActivityInstance for activity '" + activityId + "' found!")
+        .isNotNull();
+      Assertions
+        .assertThat(historicCaseActivityInstance.getCaseActivityType())
+        .isEqualTo(type);
+    }
+    try {
+      return holderType.getConstructor(CaseExecution.class, HistoricCaseActivityInstance.class).newInstance(caseExecution, historicCaseActivityInstance);
+    } catch (ReflectiveOperationException e) {
+      throw new RuntimeException("Could not create PlanItemHolder", e);
+    }
+  }
 
   private static CaseExecution caseExecution(String activityId, CaseInstance caseInstance) {
     return caseService().createCaseExecutionQuery().caseInstanceId(caseInstance.getCaseInstanceId())
@@ -673,24 +691,38 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
   }
 
   /**
+   * Find a Stage by its ID
+   */
+  public static StageHolder stage(String activityId, CaseInstance caseInstance) {
+    return planItemHolder(activityId, caseInstance, "stage", StageHolder.class);
+  }
+
+  /**
+   * Find a Milestone by its ID
+   */
+  public static MilestoneHolder milestone(String activityId, CaseInstance caseInstance) {
+    return planItemHolder(activityId, caseInstance, "milestone", MilestoneHolder.class);
+  }
+
+  /**
    * Complete a Human, Case or ProcessTask
    *
    */
-  public static void complete(TaskHolder caseTask) {
-    Assertions.assertThat(caseTask).isNotNull();
-    assertThat(caseTask.getActualCaseExecution()).isNotNull();
-    assertThat(((CaseExecutionEntity) caseTask.getActualCaseExecution()).getCurrentState()).isEqualTo(CaseExecutionState.ACTIVE);
-    caseService().completeCaseExecution(caseTask.getActualCaseExecution().getId());
+  public static void complete(AbstractPlanItemHolder planItemHolder) {
+    Assertions.assertThat(planItemHolder).isNotNull();
+    assertThat(planItemHolder.getActualCaseExecution()).isNotNull();
+    assertThat(((CaseExecutionEntity) planItemHolder.getActualCaseExecution()).getCurrentState()).isEqualTo(CaseExecutionState.ACTIVE);
+    caseService().completeCaseExecution(planItemHolder.getActualCaseExecution().getId());
   }
 
   /**
    * Start a Human, Case or ProcessTask
    */
-  public static void start(TaskHolder caseTask) {
-    Assertions.assertThat(caseTask).isNotNull();
-    assertThat(caseTask.getActualCaseExecution()).isNotNull();
-    assertThat(((CaseExecutionEntity) caseTask.getActualCaseExecution()).getCurrentState()).isEqualTo(CaseExecutionState.ENABLED);
-    caseService().manuallyStartCaseExecution(caseTask.getActualCaseExecution().getId());
+  public static void start(AbstractPlanItemHolder planItemHolder) {
+    Assertions.assertThat(planItemHolder).isNotNull();
+    assertThat(planItemHolder.getActualCaseExecution()).isNotNull();
+    assertThat(((CaseExecutionEntity) planItemHolder.getActualCaseExecution()).getCurrentState()).isEqualTo(CaseExecutionState.ENABLED);
+    caseService().manuallyStartCaseExecution(planItemHolder.getActualCaseExecution().getId());
   }
 
   /**
@@ -701,7 +733,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    */
   public static void execute(Job job) {
     if (job == null) {
-      throw new IllegalArgumentException(format("Illegal call of execute(job = '%s') - must not be null!", job));
+      throw new IllegalArgumentException("Illegal call of execute(job = null) - must not be null!");
     }
     final Job current = jobQuery().jobId(job.getId()).singleResult();
     if (current == null) {

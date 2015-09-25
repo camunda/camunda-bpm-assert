@@ -3,12 +3,17 @@ package org.camunda.bpm.engine.test.assertions.cmmn_new;
 import org.camunda.bpm.engine.ProcessEngine;
 
 /**
- * Created by Malte on 18.09.2015.
+ * Assertions for Stages.
+ *
+ * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 public class StageAssert extends AbstractCaseAssert<StageAssert, Object> {
 
-  protected StageAssert(ProcessEngine engine, Object actual, Class<?> selfType) {
-    super(engine, actual, selfType);
+  private final StageHolder stageHolder;
+
+  public StageAssert(ProcessEngine engine, StageHolder stageHolder) {
+    super(engine, stageHolder, StageAssert.class);
+    this.stageHolder = stageHolder;
   }
 
   public StageAssert isActive() {
