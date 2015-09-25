@@ -11,19 +11,13 @@ import org.junit.runners.MethodSorters;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
-
+import static org.camunda.bpm.engine.test.assertions.cmmn_new.CmmnModelConstants.*;
 /**
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProcessEngineAssertionsTest {
 
-  public static final String TASK_ID = "PI_HT_A";
-  public static final String CASE_DEF_WITH_TASKS = "Case_TaskWithSentryTests";
-  public static final String STAGE_ID = "PI_Stage_A";
-  public static final String CASE_DEF_WITH_STAGES = "Case_StageWithSentryTests";
-  public static final String MILESTONE_ID = "PI_MS_Occurred";
-  public static final String CASE_DEF_MILESTONE = "Case_MilestoneTests";
 
 
   @Rule
@@ -33,10 +27,10 @@ public class ProcessEngineAssertionsTest {
   @Test
   public void assertThat_should_return_MilestoneAssert_for_milestones() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_DEF_MILESTONE);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_MILESTONE_TESTS);
 
     // When trying to verify assertion on a task
-    MilestoneHolder milestone = milestone(MILESTONE_ID, caseInstance);
+    MilestoneHolder milestone = milestone(OCCURRED_MILESTONE, caseInstance);
     MilestoneAssert milestoneAssert = ProcessEngineTests.assertThat(milestone);
 
     // Then a TaskAssert object for the given task is returned
@@ -44,14 +38,14 @@ public class ProcessEngineAssertionsTest {
     assertThat(milestoneAssert.getActual()).isNotNull().isSameAs(milestone);
   }
 
-  @Deployment(resources = {"cmmn/StageWithSentryTest.cmmn"})
+  @Deployment(resources = {"cmmn/StageTests.cmmn"})
   @Test
   public void assertThat_should_return_StageAssert_for_stages() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_DEF_WITH_STAGES);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_STAGE_TESTS);
 
     // When trying to verify assertion on a stage
-    StageHolder stage = stage(STAGE_ID, caseInstance);
+    StageHolder stage = stage(ENABLED_STAGE, caseInstance);
     StageAssert taskAssert = ProcessEngineTests.assertThat(stage);
 
     // Then a TaskAssert object for the given task is returned
@@ -59,14 +53,14 @@ public class ProcessEngineAssertionsTest {
     assertThat(taskAssert.getActual()).isNotNull().isSameAs(stage);
   }
 
-  @Deployment(resources = {"cmmn/TaskWithSentryTest.cmmn"})
+  @Deployment(resources = {"cmmn/HumanTaskTests.cmmn"})
   @Test
   public void assertThat_should_return_TaskAssert_for_tasks() {
     // Given case model is deployed and case is started
-    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_DEF_WITH_TASKS);
+    CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_HUMAN_TASK_TESTS);
 
     // When trying to verify assertion on a task
-    TaskHolder caseTask = humanTask(TASK_ID, caseInstance);
+    TaskHolder caseTask = humanTask(ACTIVE_TASK, caseInstance);
     TaskAssert taskAssert = ProcessEngineTests.assertThat(caseTask);
 
     // Then a TaskAssert object for the given task is returned

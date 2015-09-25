@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Def_MilestoneTests"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Def_MilestoneTests"
                   name="Milestone Tests"
                   targetNamespace="http://www.omg.org/spec/CMMN/20131201/MODEL"
                   xsi:schemaLocation="http://www.omg.org/spec/CMMN/20131201/MODEL http://www.omg.org/spec/CMMN/20131201/CMMN10.xsd">
