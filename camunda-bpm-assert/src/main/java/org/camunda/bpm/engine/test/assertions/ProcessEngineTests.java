@@ -647,7 +647,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
     return planItemHolder(activityId, caseInstance, CmmnModelConstants.CMMN_ELEMENT_HUMAN_TASK, TaskHolder.class);
   }
 
-  private static <T extends AbstractPlanItemHolder> T planItemHolder(String activityId, CaseInstance caseInstance, String type, Class<T> holderType) {
+  public static <T extends AbstractPlanItemHolder> T planItemHolder(String activityId, CaseInstance caseInstance, String type, Class<T> holderType) {
     CaseExecution caseExecution = caseExecution(activityId, caseInstance);
     HistoricCaseActivityInstance historicCaseActivityInstance = historicCaseActivity(activityId, caseInstance);
 

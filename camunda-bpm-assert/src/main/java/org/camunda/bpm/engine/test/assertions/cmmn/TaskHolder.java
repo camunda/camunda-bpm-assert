@@ -1,9 +1,7 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
-import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.camunda.bpm.engine.impl.cmmn.execution.CmmnExecution;
-import org.camunda.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceEntity;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 
 /**
@@ -18,18 +16,6 @@ public class TaskHolder extends AbstractPlanItemHolder {
 
   public TaskHolder(CaseExecution caseExecution, HistoricCaseActivityInstance historicCaseActivityInstance) {
     super(caseExecution, historicCaseActivityInstance);
-  }
-
-  public CaseExecutionState actualState() {
-    if (actualCaseExecution != null) {
-      return ((CmmnExecution) actualCaseExecution).getCurrentState();
-    } else if (actualHistoricCaseActivityInstance != null) {
-      return CaseExecutionState.CASE_EXECUTION_STATES.get(
-        ((HistoricCaseActivityInstanceEntity) actualHistoricCaseActivityInstance).getCaseActivityInstanceState()
-      );
-    } else {
-      return null;
-    }
   }
 
   public boolean isActive() {
@@ -72,13 +58,4 @@ public class TaskHolder extends AbstractPlanItemHolder {
     }
   }
 
-  String actualType() {
-    if (actualCaseExecution != null) {
-      return actualCaseExecution.getActivityType();
-    } else if (actualHistoricCaseActivityInstance != null) {
-      return actualHistoricCaseActivityInstance.getCaseActivityType();
-    } else {
-      return null;
-    }
-  }
 }

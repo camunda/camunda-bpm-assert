@@ -1,5 +1,11 @@
+# CMMN Test Matrix
+
+The following matrixes show which assertions are planned and which of them are already implemented and tested. 
+
+Please note that this is not a replacement for a documentation :)
+
 ## ProcessEngineTests
-  
+
 | Stage          | available | enabled | active | completed |
 |----------------|-----------|---------|--------|-----------|
 | start(id)      |     x     |    x    |    x   |     x     |
@@ -24,6 +30,15 @@
 |-----------------|------|-------|--------------|-----------|
 | assertThat(...) |   x  |   x   |              |     x     |
  
+## CaseInstanceAssert
+
+| CaseInstance        | available | enabled | active | completed |
+|---------------------|-----------|---------|--------|-----------|
+| isAvailable()       |           |         |        |           |
+| isEnabled()         |           |         |        |           |
+| isActive()          |           |         |        |           |
+| isCompleted()       |           |         |        |           |
+
 ## TaskAssert
 
 | Task                | available | enabled | active | completed |
@@ -41,10 +56,10 @@
 
 | Stage          | available | enabled | active | completed |
 |----------------|-----------|---------|--------|-----------|
-| isAvailable()  |           |         |        |           |
-| isEnabled()    |           |         |        |           |
-| isActive()     |           |         |        |           |
-| isCompleted()  |           |         |        |           |
+| isAvailable()  |     x     |    x    |    x   |     x     |
+| isEnabled()    |     x     |    x    |    x   |     x     |
+| isActive()     |     x     |    x    |    x   |     x     |
+| isCompleted()  |     x     |    x    |    x   |     x     |
 | humanTask(id)  |           |         |        |           |
 | caseTask(id)   |           |         |        |           |
 | processTask(id)|           |         |        |           |
@@ -55,4 +70,4 @@
 
 | Milestone  | created | occurred |
 |------------|---------|----------|
-| hasOccured |         |          |
+| hasOccured |    x    |     x    |

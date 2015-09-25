@@ -5,7 +5,9 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.HistoricVariableInstance;
 import org.camunda.bpm.engine.history.HistoricVariableInstanceQuery;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
+import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.assertions.AbstractProcessAssert;
+import org.camunda.bpm.engine.test.assertions.ProcessEngineTests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,9 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
-public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A> extends AbstractProcessAssert<S, A> {
+public abstract class AbstractPlanItemAssert<S extends AbstractPlanItemAssert<S, A>, A extends AbstractPlanItemHolder> extends AbstractProcessAssert<S, A> {
 
-  protected AbstractCaseAssert(ProcessEngine engine, A actual, Class<?> selfType) {
+  protected AbstractPlanItemAssert(ProcessEngine engine, A actual, Class<?> selfType) {
     super(engine, actual, selfType);
   }
 
@@ -27,9 +29,13 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A> 
     return (S) this;
   }
 
-  protected abstract CaseExecutionState actualState();
+  public CaseExecutionState actualState() {
+    return getActual().actualState();
+  }
 
-  protected abstract String actualType();
+  public String actualType() {
+    return getActual().actualType();
+  }
 
   /**
    * Returns an Assert object for the given variable. Fails if the variable is not found.
@@ -45,4 +51,16 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A> 
   }
 
   protected HistoricVariableInstanceQuery getHistoricVariableInstanceQuery() {return historyService().createHistoricVariableInstanceQuery();}
+
+  @Override
+  protected A getCurrent() {
+    CaseInstance caseInstance = caseInstanceQuery().caseInstanceId(getActual().getCaseInstanceId()).singleResult();
+    return (A) ProcessEngineTests.planItemHolder(getActual().getId(), caseInstance, actualType(), getActual().getClass());
+  }
+
+  @Override
+  protected String toString(A object) {
+    return object.toString();
+  }
+
 }

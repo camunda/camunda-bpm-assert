@@ -1,29 +1,21 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 
 /**
  * Assertions for Milestones.
  *
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
-public class MilestoneAssert extends AbstractCaseAssert<MilestoneAssert, Object> {
+public class MilestoneAssert extends AbstractPlanItemAssert<MilestoneAssert, MilestoneHolder> {
 
   public MilestoneAssert(ProcessEngine engine, MilestoneHolder actual) {
     super(engine, actual, MilestoneAssert.class);
   }
 
-  public MilestoneAssert hasOccured() {
-    return this;
+  public MilestoneAssert hasOccurred() {
+    return isInState(CaseExecutionState.COMPLETED);
   }
 
-  @Override
-  protected Object getCurrent() {
-    return null;
-  }
-
-  @Override
-  protected String toString(Object object) {
-    return null;
-  }
 }
