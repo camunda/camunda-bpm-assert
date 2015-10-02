@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.*;
 
 /**
@@ -32,29 +31,15 @@ public class ProcessEngineAssertionsTest {
   }
 
   @Test
-  public void testProcessEngine() throws Exception {
-    // When
-    ProcessEngine returnedEngine = processEngine();
-    // Then
-    assertThat(returnedEngine).isNotNull().isSameAs(processEngine);
-  }
-
-  @Test
-  public void testInit() throws Exception {
+  public void testAssertThat_Job() throws Exception {
     // Given
-    reset();
+    Job job = Mockito.mock(Job.class);
     // When
-    init(processEngine);
+    JobAssert returnedAssert = assertThat(job);
     // Then
-    assertThat(ProcessEngineAssertions.processEngine()).isNotNull().isSameAs(processEngine);
-  }
-
-  @Test
-  public void testReset() throws Exception {
-    // When
-    reset();
-    // Then
-    assertThat(ProcessEngineTests.processEngine.get()).isNull();
+    assertThat(returnedAssert).isNotNull().isInstanceOf(JobAssert.class);
+    JobAssert jobAssert = assertThat(job);
+    assertThat(jobAssert.getActual()).isSameAs(job);
   }
 
   @Test
@@ -94,15 +79,29 @@ public class ProcessEngineAssertionsTest {
   }
 
   @Test
-  public void testAssertThat_Job() throws Exception {
+  public void testInit() throws Exception {
     // Given
-    Job job = Mockito.mock(Job.class);
+    reset();
     // When
-    JobAssert returnedAssert = assertThat(job);
+    init(processEngine);
     // Then
-    assertThat(returnedAssert).isNotNull().isInstanceOf(JobAssert.class);
-    JobAssert jobAssert = assertThat(job);
-    assertThat(jobAssert.getActual()).isSameAs(job);
+    assertThat(ProcessEngineAssertions.processEngine()).isNotNull().isSameAs(processEngine);
+  }
+
+  @Test
+  public void testProcessEngine() throws Exception {
+    // When
+    ProcessEngine returnedEngine = processEngine();
+    // Then
+    assertThat(returnedEngine).isNotNull().isSameAs(processEngine);
+  }
+
+  @Test
+  public void testReset() throws Exception {
+    // When
+    reset();
+    // Then
+    assertThat(ProcessEngineTests.processEngine.get()).isNull();
   }
 
 }

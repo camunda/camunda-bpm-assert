@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Def_MilestoneTests"
+                  name="Milestone Tests"
+                  targetNamespace="http://www.omg.org/spec/CMMN/20131201/MODEL"
+                  xsi:schemaLocation="http://www.omg.org/spec/CMMN/20131201/MODEL http://www.omg.org/spec/CMMN/20131201/CMMN10.xsd">
+  <cmmn:case id="Case_MilestoneTests" name="Milestone Tests">
+    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_MilestoneTests" name="Milestone Tests">
+
+      <cmmn:planItem id="PI_MS_Occurred" definitionRef="MS_Occurred"/>
+      <cmmn:planItem id="PI_MS_Created" definitionRef="MS_Created" entryCriteriaRefs="never"/>
+
+      <cmmn:sentry id="never">
+        <cmmn:ifPart>
+          <cmmn:condition>
+            <cmmn:body>${false}</cmmn:body>
+          </cmmn:condition>
+        </cmmn:ifPart>
+      </cmmn:sentry>
+
+      <cmmn:milestone id="MS_Occurred"/>
+      <cmmn:milestone id="MS_Created"/>
+
+    </cmmn:casePlanModel>
+  </cmmn:case>
+</cmmn:definitions>

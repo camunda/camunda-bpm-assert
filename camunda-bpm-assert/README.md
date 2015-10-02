@@ -7,12 +7,16 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 
 ### Table of Contents
 
- * [Assertions](#assertions)
+ * [BPMN Assertions](#assertions)
    * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasPassedInOrder](#processInstance-hasPassedInOrder), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [hasProcessDefinitionKey](#processInstance-hasProcessDefinitionKey), [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly), [isWaitingFor](#processInstance-isWaitingFor), [isNotWaitingFor](#processInstance-isNotWaitingFor)
    * for process definitions: [hasActiveInstances](#processDefinition-hasActiveInstances)
    * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasId](#task-hasId), [hasName](#task-hasName)
- 
+
+ * [CMMN Assertions](#cmmn-assertions)
+   * Please see the [Test Matrix](./cmmn-testmatrix.md) for an overview, which functions are currently available.
+   * Note: For debugging purposes, a CmmnTransformListener has been added in [camunda.cfg.xml](./test/resources/camunda.cfg.xml) that adds a SysOut-logger to all activities. There is currently no way to turn this off, execept removing this line. But this only affects the tests, you can safely use the assertions without having bazillions of lines printed to yourt console.   
+
  * [Helpers](#helpers)
    * [Claiming tasks](#helpers-claim)
    * [Unclaiming tasks](#helpers-unclaim)

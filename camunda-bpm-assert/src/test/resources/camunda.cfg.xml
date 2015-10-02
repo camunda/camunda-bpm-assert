@@ -13,6 +13,10 @@
         <property name="idGenerator">
             <bean class="org.camunda.bpm.engine.impl.persistence.StrongUuidGenerator"/>
         </property>
-
+      <property name="customPostCmmnTransformListeners">
+        <list>
+          <bean class="org.camunda.bpm.engine.test.assertions.helpers.LoggerCmmnTransformListener" />
+        </list>
+      </property>
     </bean>
 </beans>

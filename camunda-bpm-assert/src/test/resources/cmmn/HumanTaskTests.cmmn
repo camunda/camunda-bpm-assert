@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Def_HumanTaskTests"
+                  name="HumanTask Tests"
+                  targetNamespace="http://www.omg.org/spec/CMMN/20131201/MODEL"
+                  xsi:schemaLocation="http://www.omg.org/spec/CMMN/20131201/MODEL http://www.omg.org/spec/CMMN/20131201/CMMN10.xsd">
+  <cmmn:case id="Case_HumanTaskTests" name="HumanTask Tests">
+    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_HumanTaskTests" name="HumanTask Tests">
+      <cmmn:planItem definitionRef="HT_A" id="PI_HT_A"/>
+      <cmmn:planItem definitionRef="HT_B" entryCriteriaRefs="On_PI_HT_A_Complete" id="PI_HT_B"/>
+      <cmmn:planItem definitionRef="HT_C" id="PI_HT_C"/>
+      <cmmn:sentry id="On_PI_HT_A_Complete">
+        <cmmn:planItemOnPart sourceRef="PI_HT_A">
+          <cmmn:standardEvent>complete</cmmn:standardEvent>
+        </cmmn:planItemOnPart>
+      </cmmn:sentry>
+      <cmmn:humanTask description="" id="HT_A" isBlocking="true" name="A">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule id="MAR_HT_A">
+            <cmmn:condition id="Cond_MAR_HT_A" language="juel">
+              <cmmn:body>#{false}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:humanTask>
+      <cmmn:humanTask description="" id="HT_B" isBlocking="true" name="B">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule id="MAR_HT_B">
+            <cmmn:condition id="Cond_MAR_HT_B" language="juel">
+              <cmmn:body>#{false}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:humanTask>
+      <cmmn:humanTask description="" id="HT_C" isBlocking="true" name="C">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule id="MAR_HT_c">
+            <cmmn:condition id="Cond_MAR_HT_C" language="juel">
+              <cmmn:body>#{true}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:humanTask>
+    </cmmn:casePlanModel>
+  </cmmn:case>
+</cmmn:definitions>
+

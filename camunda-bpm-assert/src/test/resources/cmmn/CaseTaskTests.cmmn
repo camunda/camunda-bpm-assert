@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  id="Def_CaseTaskTests"
+                  name="CaseTask Tests"
+                  targetNamespace="http://www.omg.org/spec/CMMN/20131201/MODEL"
+                  xsi:schemaLocation="http://www.omg.org/spec/CMMN/20131201/MODEL http://www.omg.org/spec/CMMN/20131201/CMMN10.xsd">
+
+
+  <cmmn:case id="Case_CaseTaskTests" name="CaseTask Tests">
+    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_CaseTaskTests" name="CaseTask Tests">
+
+      <cmmn:planItem definitionRef="CT_A" id="PI_CT_A"/>
+      <cmmn:planItem definitionRef="CT_B" entryCriteriaRefs="On_PI_CT_A_Complete" id="PI_CT_B"/>
+      <cmmn:planItem definitionRef="CT_C" id="PI_CT_C"/>
+
+      <cmmn:sentry id="On_PI_CT_A_Complete">
+        <cmmn:planItemOnPart sourceRef="PI_CT_A">
+          <cmmn:standardEvent>complete</cmmn:standardEvent>
+        </cmmn:planItemOnPart>
+      </cmmn:sentry>
+
+      <cmmn:caseTask description="" id="CT_A" isBlocking="true" name="A" caseRef="dummyCase">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule id="MAR_CT_A">
+            <cmmn:condition id="Cond_MAR_CT_A" language="juel">
+              <cmmn:body>#{false}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:caseTask>
+
+      <cmmn:caseTask description="" id="CT_B" isBlocking="true" name="B" caseRef="dummyCase">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule id="MAR_CT_B">
+            <cmmn:condition id="Cond_MAR_CT_B" language="juel">
+              <cmmn:body>#{false}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:caseTask>
+
+      <cmmn:caseTask description="" id="CT_C" isBlocking="true" name="C" caseRef="dummyCase">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule id="MAR_CT_c">
+            <cmmn:condition id="Cond_MAR_CT_C" language="juel">
+              <cmmn:body>#{true}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:caseTask>
+    </cmmn:casePlanModel>
+  </cmmn:case>
+
+  <cmmn:case id="dummyCase">
+    <cmmn:casePlanModel>
+
+      <cmmn:planItem id="foobar" definitionRef="foo">
+        <cmmn:itemControl>
+          <cmmn:requiredRule>
+            <cmmn:condition>
+              <cmmn:body>${true}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:requiredRule>
+        </cmmn:itemControl>
+      </cmmn:planItem>
+      <cmmn:humanTask id="foo" isBlocking="true">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule>
+            <cmmn:condition>
+              <cmmn:body>${false}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:humanTask>
+
+    </cmmn:casePlanModel>
+  </cmmn:case>
+
+</cmmn:definitions>
+
