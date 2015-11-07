@@ -252,4 +252,21 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
     });
   }
 
+
+  @Test
+  @Deployment(resources = {
+    "TaskAssert-hasCandidateGroup.bpmn"
+  })
+  public void testHasCandidateGroup_WithAssignee() {
+    // Given
+    runtimeService().startProcessInstanceByKey(
+      "TaskAssert-hasCandidateGroup"
+    );
+    // When
+    final Task task = taskQuery().singleResult();
+    claim(task, "assignee");
+    // Then
+    assertThat(task).hasCandidateGroup("candidateGroup");
+  }
+
 }

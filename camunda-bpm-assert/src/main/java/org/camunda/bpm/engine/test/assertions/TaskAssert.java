@@ -2,13 +2,26 @@ package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.*;
+import org.camunda.bpm.engine.impl.ProcessEngineImpl;
+import org.camunda.bpm.engine.impl.cfg.ProcessEngineConfigurationImpl;
+import org.camunda.bpm.engine.impl.db.DbSqlSession;
+import org.camunda.bpm.engine.impl.interceptor.Command;
+import org.camunda.bpm.engine.impl.interceptor.CommandContext;
+import org.camunda.bpm.engine.impl.interceptor.CommandExecutor;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 import org.assertj.core.api.Assertions;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Assertions for a {@link Task}
@@ -16,6 +29,8 @@ import java.util.Date;
  * @author Rafael Cordones <rafael@cordones.me>
  */
 public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
+
+  private static final String CANDIDATES_QUERY = "SELECT GROUP_ID_, USER_ID_ FROM ACT_RU_IDENTITYLINK WHERE TASK_ID_ = ?";
 
   protected TaskAssert(final ProcessEngine engine, final Task actual) {
     super(engine, actual, TaskAssert.class);
@@ -73,33 +88,65 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    * @return  this {@link TaskAssert}
    */
   public TaskAssert hasCandidateGroup(final String candidateGroupId) {
-    Assertions.assertThat(candidateGroupId).isNotNull();
-    final Task current = getExistingCurrent();
-    final Task inGroup = taskQuery().taskId(actual.getId()).taskCandidateGroup(candidateGroupId).singleResult();
-    Assertions.assertThat(inGroup)
-        .overridingErrorMessage("Expecting %s to have candidate group '%s', but found it not to have that candidate group!",
-          toString(current),
-          candidateGroupId)
-      .isNotNull();
-    return this;
+    return hasCandidateGroups(candidateGroupId);
+  }
+
+  /**
+   * Verifies the expectation that the {@link Task} is currently waiting to
+   * be assigned to a user of the specified candidate groups.
+   *
+   * @param   candidateGroupIds ids of the candidate groups the task is assigned to
+   * @return  this {@link TaskAssert}
+   */
+  public TaskAssert hasCandidateGroups(final String... candidateGroupIds) {
+    return hasCandidates("GROUP_ID_", "candidate groups", candidateGroupIds);
   }
 
   /**
    * Verifies the expectation that the {@link Task} is currently waiting to 
    * be assigned to a specified candidate user.
-   * 
+   *
+   * @see #hasCandidateUsers(String...)
    * @param   candidateUserId id of the candidate user the task is assigned to
    * @return  this {@link TaskAssert}
    */
   public TaskAssert hasCandidateUser(final String candidateUserId) {
-    Assertions.assertThat(candidateUserId).isNotNull();
+   return hasCandidateUsers(candidateUserId);
+  }
+
+  /**
+   * Verifies the expectation that the {@link Task} is currently waiting to
+   * be assigned to all of the specified candidate users.
+   *
+   * @param candidateUserIds ids of the candidate users the task is assigned to
+   * @return this {@link TaskAssert}
+   */
+  public TaskAssert hasCandidateUsers(final String... candidateUserIds) {
+    return hasCandidates("USER_ID_", "candidate users", candidateUserIds);
+  }
+
+  /**
+   * Common implementation for candidate assertions, both candidate users and groups.
+   *
+   * @param field        the field in ACT_RU_IDENTITYLINK to query, one of GROUP_ID_ or USER_ID_.
+   * @param name         the name to display in the error message (candidate users, candidate groups).
+   * @param candidateIds the ids to assert on (either groups or users).
+   * @return this {@link TaskAssert}
+   */
+  private TaskAssert hasCandidates(String field, String name, String... candidateIds) {
+    Assertions.assertThat(candidateIds).isNotNull().isNotEmpty();
     final Task current = getExistingCurrent();
-    final Task withUser = taskQuery().taskId(actual.getId()).taskCandidateUser(candidateUserId).singleResult();
-    Assertions.assertThat(withUser)
-        .overridingErrorMessage("Expecting %s to have candidate user '%s', but found it not to have that candidate user!",
-          toString(current),
-          candidateUserId)
-      .isNotNull();
+
+    List<String> actualCandidateIds = findIdentityLinks(current.getId(), field);
+
+    Assertions.assertThat(actualCandidateIds)
+        .overridingErrorMessage("Expecting %s to have %s '%s', but found %s!",
+            toString(current),
+            name,
+            Arrays.asList(candidateIds),
+            actualCandidateIds)
+        .contains(candidateIds);
+
     return this;
   }
 
@@ -316,6 +363,48 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   @Override
   protected ProcessDefinitionQuery processDefinitionQuery() {
     return super.processDefinitionQuery().processDefinitionId(actual.getProcessDefinitionId());
+  }
+
+  /**
+   * Helper function that executes a native SQL query on QCT_RU_IDENTITYLINKS for current Task and field.
+   *
+   * @param field one of "GROUP_ID_", "USER_ID_"
+   * @return list of candidates ids for comparison
+   */
+  private List<String> findIdentityLinks(final String taskId, final String field) {
+    final ProcessEngineConfigurationImpl configuration = ((ProcessEngineImpl) engine).getProcessEngineConfiguration();
+    final CommandExecutor executor = configuration.getCommandExecutorTxRequired();
+
+    return configuration.getCommandExecutorTxRequired().execute(new Command<List<String>>() {
+      @Override
+      public List<String> execute(CommandContext commandContext) {
+        final List<String> actualCandidateGroups = new ArrayList<String>();
+        Connection c = commandContext
+            .getSession(DbSqlSession.class).getSqlSession().getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+          preparedStatement = c.prepareStatement(CANDIDATES_QUERY);
+          preparedStatement.setString(1, taskId);
+
+          final ResultSet resultSet = preparedStatement.executeQuery();
+
+          while (resultSet.next()) {
+            actualCandidateGroups.add(resultSet.getString(field));
+          }
+
+        } catch (SQLException e) {
+          throw new RuntimeException(e);
+        } finally {
+          try {
+            preparedStatement.close();
+          } catch (SQLException e) {
+            throw new RuntimeException(e);
+          }
+        }
+
+        return actualCandidateGroups;
+      }
+    });
   }
 
 }
