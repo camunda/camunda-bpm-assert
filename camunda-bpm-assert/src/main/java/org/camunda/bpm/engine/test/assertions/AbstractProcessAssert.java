@@ -10,9 +10,9 @@ import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
 import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.engine.test.util.CamundaBpmApi;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -85,6 +85,24 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     if (asserts == null)
       lastAsserts.set(asserts = new HashMap<Class<?>, AbstractProcessAssert>());
     return asserts;
+  }
+
+  /*
+   * Asserts that process engine supports the requested API version. Use method
+   * at the beginning of assertion implementations which require Camunda BPM API
+   * versions higher than Camunda BPM "7.0".
+   * 
+   * @param   api Camunda BPM API version e.g. '7.1', '7.2' etc.
+   * @throws  AssertionError if process engine does not support the requested API version
+   */
+  protected static void assertApi(String api) {
+    if (!CamundaBpmApi.supports(api)) {
+      throw new AssertionError(String.format("Requested method requires Camunda BPM %s or higher.", api));
+    }
+  }
+
+  protected static boolean supportsApi(String api) {
+    return CamundaBpmApi.supports(api);
   }
 
   protected RepositoryService repositoryService() {
