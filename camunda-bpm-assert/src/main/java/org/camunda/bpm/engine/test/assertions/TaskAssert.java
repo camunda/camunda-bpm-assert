@@ -69,20 +69,46 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    * Verifies the expectation that the {@link Task} is currently waiting to 
    * be assigned to a user of the specified candidate group.
    * 
-   * @param   candidateGroupId id of the candidate group the task is assigned to
+   * @param   candidateGroupId id of a candidate group the task is waiting to be assigned to
    * @return  this {@link TaskAssert}
+   * @since   Camunda BPM 7.0
    */
   public TaskAssert hasCandidateGroup(final String candidateGroupId) {
+    assertApi("7.0");
+    return hasCandidateGroup(candidateGroupId, true);
+  }
+
+  /**
+   * Verifies the expectation that the {@link Task} is currently associated to the 
+   * specified candidate group - no matter whether it is already assigned to a 
+   * specific user or not.
+   * 
+   * @param   candidateGroupId id of a candidate group the task is associated to
+   * @return  this {@link TaskAssert}
+   * @since   Camunda BPM 7.2
+   */
+  public TaskAssert hasCandidateGroupAssociated(final String candidateGroupId) {
+    assertApi("7.2");
+    return hasCandidateGroup(candidateGroupId, false);
+  }
+
+  private TaskAssert hasCandidateGroup(final String candidateGroupId, boolean unassignedOnly) {
     Assertions.assertThat(candidateGroupId).isNotNull();
     final Task current = getExistingCurrent();
-    final Task inGroup = taskQuery().taskId(actual.getId()).taskCandidateGroup(candidateGroupId).singleResult();
+    final TaskQuery taskQuery = taskQuery().taskId(actual.getId()).taskCandidateGroup(candidateGroupId);
+    if (unassignedOnly) {
+      isNotAssigned(); // Useful for better assertion error message in case of assigned task
+    } else {
+      taskQuery.includeAssignedTasks(); // Available from Camunda BPM 7.2 onwards
+    }
+    final Task inGroup = taskQuery.singleResult();
     Assertions.assertThat(inGroup)
-        .overridingErrorMessage("Expecting %s to have candidate group '%s', but found it not to have that candidate group!",
-          toString(current),
-          candidateGroupId)
+      .overridingErrorMessage("Expecting %s to have candidate group '%s', but found it not to have that candidate group!",
+        toString(current),
+        candidateGroupId)
       .isNotNull();
     return this;
-  }
+  }  
 
   /**
    * Verifies the expectation that the {@link Task} is currently waiting to 

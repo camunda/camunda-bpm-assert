@@ -6,6 +6,7 @@ import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.helpers.Failure;
 import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
+public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTestCase {
 
   private static final String CANDIDATE_GROUP = "candidateGroup";
   private static final String ASSIGNEE = "assignee";
@@ -22,27 +23,32 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
+  @Before
+  public void assumeApi() {
+    assumeApi("7.2");
+  }
+  
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_PreDefined_Success() {
+  public void testHasCandidateGroupAssociated_PreDefined_Success() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // Then
-    assertThat(processInstance).task().hasCandidateGroup(CANDIDATE_GROUP);
+    assertThat(processInstance).task().hasCandidateGroupAssociated("candidateGroup");
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_PreDefined_Failure() {
+  public void testHasCandidateGroupAssociated_PreDefined_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
     complete(taskQuery().singleResult());
@@ -50,76 +56,76 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateGroup(CANDIDATE_GROUP);
+        assertThat(processInstance).task().hasCandidateGroupAssociated("candidateGroup");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_Predefined_Removed_Failure() {
+  public void testHasCandidateGroupAssociated_Predefined_Removed_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
-    taskService().deleteCandidateGroup(taskQuery().singleResult().getId(), CANDIDATE_GROUP);
+    taskService().deleteCandidateGroup(taskQuery().singleResult().getId(), "candidateGroup");
     // Then
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateGroup(CANDIDATE_GROUP);
+        assertThat(processInstance).task().hasCandidateGroupAssociated("candidateGroup");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_PreDefined_Other_Failure() {
+  public void testHasCandidateGroupAssociated_PreDefined_Other_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
-    taskService().deleteCandidateGroup(taskQuery().singleResult().getId(), CANDIDATE_GROUP);
+    taskService().deleteCandidateGroup(taskQuery().singleResult().getId(), "candidateGroup");
     // Then
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateGroup("otherCandidateGroup");
+        assertThat(processInstance).task().hasCandidateGroupAssociated("otherCandidateGroup");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_ExplicitelySet_Success() {
+  public void testHasCandidateGroupAssociated_ExplicitelySet_Success() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
     complete(taskQuery().singleResult());
     // And
     taskService().addCandidateGroup(taskQuery().singleResult().getId(), "explicitCandidateGroupId");
     // Then
-    assertThat(processInstance).task().hasCandidateGroup("explicitCandidateGroupId");
+    assertThat(processInstance).task().hasCandidateGroupAssociated("explicitCandidateGroupId");
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_ExplicitelySet_Failure() {
+  public void testHasCandidateGroupAssociated_ExplicitelySet_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
     complete(taskQuery().singleResult());
@@ -127,19 +133,19 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateGroup(CANDIDATE_GROUP);
+        assertThat(processInstance).task().hasCandidateGroupAssociated("candidateGroup");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_ExplicitelySet_Removed_Failure() {
+  public void testHasCandidateGroupAssociated_ExplicitelySet_Removed_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
     complete(taskQuery().singleResult());
@@ -151,19 +157,19 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateGroup("explicitCandidateGroupId");
+        assertThat(processInstance).task().hasCandidateGroupAssociated("explicitCandidateGroupId");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_ExplicitelySet_Other_Failure() {
+  public void testHasCandidateGroupAssociated_ExplicitelySet_Other_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
     complete(taskQuery().singleResult());
@@ -174,36 +180,36 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateGroup("otherCandidateGroup");
+        assertThat(processInstance).task().hasCandidateGroupAssociated("otherCandidateGroup");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_MoreThanOne_Success() {
+  public void testHasCandidateGroupAssociated_MoreThanOne_Success() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
     taskService().addCandidateGroup(taskQuery().singleResult().getId(), "explicitCandidateGroupId");
     // Then
-    assertThat(processInstance).task().hasCandidateGroup(CANDIDATE_GROUP);
+    assertThat(processInstance).task().hasCandidateGroupAssociated("candidateGroup");
     // And
-    assertThat(processInstance).task().hasCandidateGroup("explicitCandidateGroupId");
+    assertThat(processInstance).task().hasCandidateGroupAssociated("explicitCandidateGroupId");
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_MoreThanOne_Failure() {
+  public void testHasCandidateGroupAssociated_MoreThanOne_Failure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
     taskService().addCandidateGroup(taskQuery().singleResult().getId(), "explicitCandidateGroupId");
@@ -211,37 +217,37 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateGroup("otherCandidateGroup");
+        assertThat(processInstance).task().hasCandidateGroupAssociated("otherCandidateGroup");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_Null_Failure() {
+  public void testHasCandidateGroupAssociated_Null_Failure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // Then
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateGroup(null);
+        assertThat(processInstance).task().hasCandidateGroupAssociated(null);
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_NonExistingTask_Failure() {
+  public void testHasCandidateGroupAssociated_NonExistingTask_Failure() {
     // Given
     runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateGroup"
+      "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
     final Task task = taskQuery().singleResult();
@@ -250,27 +256,44 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(task).hasCandidateGroup(CANDIDATE_GROUP);
+        assertThat(task).hasCandidateGroupAssociated("candidateGroup");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-      "TaskAssert-hasCandidateGroup.bpmn"
+      "TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
-  public void testHasCandidateGroup_Assigned_Failure() {
+  public void testHasCandidateGroupAssociated_Assigned_Success() {
     // Given
     final ProcessInstance pi = runtimeService().startProcessInstanceByKey(
-        "TaskAssert-hasCandidateGroup"
+        "TaskAssert-hasCandidateGroupAssociated"
     );
     // When
+    claim(task(pi), ASSIGNEE);
+    // Then
+    assertThat(task(pi)).hasCandidateGroupAssociated(CANDIDATE_GROUP);
+  }
+
+  @Test
+  @Deployment(resources = {
+    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  })
+  public void testHasCandidateGroupAssociated_Assigned_Failure() {
+    // Given
+    final ProcessInstance pi = runtimeService().startProcessInstanceByKey(
+      "TaskAssert-hasCandidateGroupAssociated"
+    );
+    // When
+    taskService().deleteCandidateGroup(task(pi).getId(), CANDIDATE_GROUP);
+    // And
     claim(task(pi), ASSIGNEE);
     // Then
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(task(pi)).hasCandidateGroup(CANDIDATE_GROUP);
+        assertThat(task(pi)).hasCandidateGroupAssociated(CANDIDATE_GROUP);
       }
     });
   }
