@@ -7,6 +7,7 @@ import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 
 import org.assertj.core.api.Assertions;
+import org.camunda.bpm.engine.test.util.CamundaBpmApi;
 
 import java.util.Map;
 
@@ -23,6 +24,22 @@ public class ProcessEngineAssertions extends Assertions {
   static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
 
   protected ProcessEngineAssertions() {
+  }
+
+  /*
+   * *Asserts* that process engine supports the requested API version. Use method
+   * at the beginning of static helper method implementations which require 
+   * Camunda BPM API versions higher than Camunda BPM "7.0".
+   * 
+   * @param   api Camunda BPM API version e.g. '7.1', '7.2' etc.
+   * @throws  AssertionError if process engine does not support the requested API version
+   */
+  protected static void assertApi(String api) {
+    AbstractProcessAssert.assertApi(api);
+  }
+
+  protected static boolean supportsApi(String api) {
+    return CamundaBpmApi.supports(api);
   }
 
   /**
