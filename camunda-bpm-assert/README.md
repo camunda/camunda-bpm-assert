@@ -11,7 +11,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
    * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasPassedInOrder](#processInstance-hasPassedInOrder), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [hasProcessDefinitionKey](#processInstance-hasProcessDefinitionKey), [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly), [isWaitingFor](#processInstance-isWaitingFor), [isNotWaitingFor](#processInstance-isNotWaitingFor)
    * for process definitions: [hasActiveInstances](#processDefinition-hasActiveInstances)
    * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
-   * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasCandidateGroupAssociated](#task-hasCandidateGroupAssociated), [hasCandidateUser](#task-hasCandidateUser), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasFormKey](#task-hasFormKey), [hasId](#task-hasId), [hasName](#task-hasName)
+   * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasCandidateGroupAssociated](#task-hasCandidateGroupAssociated), [hasCandidateUser](#task-hasCandidateUser), [hasCandidateUserAssociated](#task-hasCandidateUserAssociated), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasFormKey](#task-hasFormKey), [hasId](#task-hasId), [hasName](#task-hasName)
  
  * [Helpers](#helpers)
    * [Claiming tasks](#helpers-claim)
@@ -357,6 +357,23 @@ Assert that a task is currently waiting to be assigned to a specified candidate 
 
 ```java
 assertThat(task).hasCandidateUser("kermit");
+```
+
+Note that (in line with Camunda's interpretation of the term 
+'candidate') **assigned** tasks will not pass this assertion. 
+However, the next assertion discussed here, would pass:                      
+
+<a name="task-hasCandidateUserAssociated"/>
+#### Task: hasCandidateUserAssociated
+
+Use from Camunda BPM **7.2** on: 
+
+Assert the expectation that a task is currently associated to the 
+specified candidate user - no matter whether it is already assigned to a 
+specific user or not.
+
+```java
+assertThat(task).hasCandidateUserAssociated("kermit");
 ```
 
 <a name="task-hasDefinitionKey"/>

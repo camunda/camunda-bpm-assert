@@ -6,6 +6,7 @@ import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.helpers.Failure;
 import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -14,7 +15,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
+public class TaskAssertHasCandidateUserAssociatedTest extends ProcessAssertTestCase {
 
   private static final String CANDIDATE_USER = "candidateUser";
   private static final String ASSIGNEE = "assignee";
@@ -22,27 +23,32 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-  @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
-  })
-  public void testHasCandidateUserPreDefined_Success() {
-    // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
-    );
-    // Then
-    assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER);
+  @Before
+  public void assumeApi() {
+    assumeApi("7.2");
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_PreDefined_Failure() {
+  public void testhasCandidateUserAssociatedPreDefined_Success() {
+    // When
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "TaskAssert-hasCandidateUserAssociated"
+    );
+    // Then
+    assertThat(processInstance).task().hasCandidateUserAssociated(CANDIDATE_USER);
+  }
+
+  @Test
+  @Deployment(resources = {
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
+  })
+  public void testhasCandidateUserAssociated_PreDefined_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     complete(taskQuery().singleResult());
@@ -50,19 +56,19 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER);
+        assertThat(processInstance).task().hasCandidateUserAssociated(CANDIDATE_USER);
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_Predefined_Removed_Failure() {
+  public void testhasCandidateUserAssociated_Predefined_Removed_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     taskService().deleteCandidateUser(taskQuery().singleResult().getId(), CANDIDATE_USER);
@@ -70,19 +76,19 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER);
+        assertThat(processInstance).task().hasCandidateUserAssociated(CANDIDATE_USER);
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_PreDefined_Other_Failure() {
+  public void testhasCandidateUserAssociated_PreDefined_Other_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     taskService().deleteCandidateUser(taskQuery().singleResult().getId(), CANDIDATE_USER);
@@ -90,36 +96,36 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateUser("otherCandidateUser");
+        assertThat(processInstance).task().hasCandidateUserAssociated("otherCandidateUser");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_ExplicitelySet_Success() {
+  public void testhasCandidateUserAssociated_ExplicitelySet_Success() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     complete(taskQuery().singleResult());
     // And
     taskService().addCandidateUser(taskQuery().singleResult().getId(), "explicitCandidateUserId");
     // Then
-    assertThat(processInstance).task().hasCandidateUser("explicitCandidateUserId");
+    assertThat(processInstance).task().hasCandidateUserAssociated("explicitCandidateUserId");
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_ExplicitelySet_Failure() {
+  public void testhasCandidateUserAssociated_ExplicitelySet_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     complete(taskQuery().singleResult());
@@ -127,19 +133,19 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER);
+        assertThat(processInstance).task().hasCandidateUserAssociated(CANDIDATE_USER);
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_ExplicitelySet_Removed_Failure() {
+  public void testhasCandidateUserAssociated_ExplicitelySet_Removed_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     complete(taskQuery().singleResult());
@@ -151,19 +157,19 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateUser("explicitCandidateUserId");
+        assertThat(processInstance).task().hasCandidateUserAssociated("explicitCandidateUserId");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_ExplicitelySet_Other_Failure() {
+  public void testhasCandidateUserAssociated_ExplicitelySet_Other_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     complete(taskQuery().singleResult());
@@ -174,36 +180,36 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateUser("otherCandidateUser");
+        assertThat(processInstance).task().hasCandidateUserAssociated("otherCandidateUser");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_MoreThanOne_Success() {
+  public void testhasCandidateUserAssociated_MoreThanOne_Success() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     taskService().addCandidateUser(taskQuery().singleResult().getId(), "explicitCandidateUserId");
     // Then
-    assertThat(processInstance).task().hasCandidateUser(CANDIDATE_USER);
+    assertThat(processInstance).task().hasCandidateUserAssociated(CANDIDATE_USER);
     // And
-    assertThat(processInstance).task().hasCandidateUser("explicitCandidateUserId");
+    assertThat(processInstance).task().hasCandidateUserAssociated("explicitCandidateUserId");
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_MoreThanOne_Failure() {
+  public void testhasCandidateUserAssociated_MoreThanOne_Failure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     taskService().addCandidateUser(taskQuery().singleResult().getId(), "explicitCandidateUserId");
@@ -211,37 +217,37 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateUser("otherCandidateUser");
+        assertThat(processInstance).task().hasCandidateUserAssociated("otherCandidateUser");
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_Null_Failure() {
+  public void testhasCandidateUserAssociated_Null_Failure() {
     // When
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // Then
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).task().hasCandidateUser(null);
+        assertThat(processInstance).task().hasCandidateUserAssociated(null);
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_NonExistingTask_Failure() {
+  public void testhasCandidateUserAssociated_NonExistingTask_Failure() {
     // Given
     runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     final Task task = taskQuery().singleResult();
@@ -250,28 +256,46 @@ public class TaskAssertHasCandidateUserTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(task).hasCandidateUser(CANDIDATE_USER);
+        assertThat(task).hasCandidateUserAssociated(CANDIDATE_USER);
       }
     });
   }
 
   @Test
   @Deployment(resources = {
-    "TaskAssert-hasCandidateUser.bpmn"
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
   })
-  public void testHasCandidateUser_Assigned_Failure() {
+  public void testhasCandidateUserAssociated_Assigned_Success() {
     // Given
     runtimeService().startProcessInstanceByKey(
-      "TaskAssert-hasCandidateUser"
+      "TaskAssert-hasCandidateUserAssociated"
     );
     // When
     final Task task = taskQuery().singleResult();
     taskService().setAssignee(task.getId(), ASSIGNEE);
     // Then
+    assertThat(task).hasCandidateUserAssociated(CANDIDATE_USER);
+  }
+
+  @Test
+  @Deployment(resources = {
+    "TaskAssert-hasCandidateUserAssociated.bpmn"
+  })
+  public void testhasCandidateUserAssociated_Assigned_Failure() {
+    // Given
+    runtimeService().startProcessInstanceByKey(
+      "TaskAssert-hasCandidateUserAssociated"
+    );
+    // When
+    final Task task = taskQuery().singleResult();
+    taskService().deleteCandidateUser(task.getId(), CANDIDATE_USER);
+    // And
+    taskService().setAssignee(task.getId(), ASSIGNEE);
+    // Then
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(task).hasCandidateUser(CANDIDATE_USER);
+        assertThat(task).hasCandidateUserAssociated(CANDIDATE_USER);
       }
     });
   }

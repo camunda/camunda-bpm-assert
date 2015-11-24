@@ -114,13 +114,38 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    * Verifies the expectation that the {@link Task} is currently waiting to 
    * be assigned to a specified candidate user.
    * 
-   * @param   candidateUserId id of the candidate user the task is assigned to
+   * @param   candidateUserId id of a candidate user the task is waiting to be assigned to
    * @return  this {@link TaskAssert}
+   * @since   Camunda BPM 7.0
    */
   public TaskAssert hasCandidateUser(final String candidateUserId) {
+    return hasCandidateUser(candidateUserId, true);
+  }
+
+  /**
+   * Verifies the expectation that the {@link Task} is currently associated to the 
+   * specified candidate user - no matter whether it is already assigned to a 
+   * specific user or not.
+   *
+   * @param   candidateUserId id of a candidate user the task is associated to
+   * @return  this {@link TaskAssert}
+   * @since   Camunda BPM 7.2
+   */
+  public TaskAssert hasCandidateUserAssociated(final String candidateUserId) {
+    assertApi("7.2");
+    return hasCandidateUser(candidateUserId, false);
+  }
+
+  public TaskAssert hasCandidateUser(final String candidateUserId, boolean unassignedOnly) {
     Assertions.assertThat(candidateUserId).isNotNull();
     final Task current = getExistingCurrent();
-    final Task withUser = taskQuery().taskId(actual.getId()).taskCandidateUser(candidateUserId).singleResult();
+    final TaskQuery taskQuery = taskQuery().taskId(actual.getId()).taskCandidateUser(candidateUserId);
+    if (unassignedOnly) {
+      isNotAssigned(); // Useful for better assertion error message in case of assigned task
+    } else {
+      taskQuery.includeAssignedTasks(); // Available from Camunda BPM 7.2 onwards
+    }
+    final Task withUser = taskQuery.singleResult();
     Assertions.assertThat(withUser)
         .overridingErrorMessage("Expecting %s to have candidate user '%s', but found it not to have that candidate user!",
           toString(current),
