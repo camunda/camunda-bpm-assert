@@ -6,7 +6,9 @@ import org.camunda.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
+import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,6 +23,9 @@ import static org.mockito.Mockito.*;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CaseExecutionAssertTest {
+
+  @Rule
+  public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   public static final String ACTUAL_CASE_EXECUTION_ID = "f00";
 

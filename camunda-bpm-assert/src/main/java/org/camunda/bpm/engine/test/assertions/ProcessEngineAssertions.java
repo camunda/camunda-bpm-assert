@@ -4,11 +4,13 @@ import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.repository.CaseDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.assertj.core.api.Assertions;
+import org.camunda.bpm.engine.test.assertions.cmmn.CaseExecutionAssert;
 import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
 import org.camunda.bpm.engine.test.util.CamundaBpmApi;
 import org.camunda.bpm.engine.test.assertions.cmmn.HistoricCaseActivityAssert;
@@ -148,13 +150,13 @@ public class ProcessEngineAssertions extends Assertions {
   }
 
   /**
-   * Assert that... the given HistoricCaseActivityInstance meets your expectations.
+   * Assert that... the given CaseExecution meets your expectations.
    *
-   * @param   actual HistoricCaseActivityInstance under test
-   * @return  Assert object offering CaseInstance specific assertions.
+   * @param   actual CaseExecution under test
+   * @return  Assert object offering CaseExecution specific assertions.
    */
-  public static HistoricCaseActivityAssert assertThat(final HistoricCaseActivityInstance actual) {
-    return HistoricCaseActivityAssert.assertThat(processEngine(), actual);
+  public static CaseExecutionAssert assertThat(final CaseExecution actual) {
+    return CaseExecutionAssert.assertThat(processEngine(), actual);
   }
 
   /**

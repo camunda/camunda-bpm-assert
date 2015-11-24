@@ -750,18 +750,7 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
     assertThat(caseExecution).overridingErrorMessage("CaseExecution for activity '" + activityId + "' not found!").isNotNull();
     return caseExecution;
   }
-
-  public static HistoricCaseActivityInstance caseActivity(String activityId, CaseInstance caseInstance) {
-    HistoricCaseActivityInstance activityInstance = historicCaseActivityInstanceQuery().caseInstanceId(caseInstance.getCaseInstanceId()).caseActivityId(activityId).singleResult();
-    assertThat(activityInstance).overridingErrorMessage("ActivityInstance for activity '" + activityId + "' not found!").isNotNull();
-    return activityInstance;
-  }
-
-  private static HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
-    return historyService().createHistoricCaseActivityInstanceQuery();
-  }
-
-
+  
   /**
    * Helper method to easily execute a job.
    * 
