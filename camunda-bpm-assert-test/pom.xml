@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>camunda-bpm-assert</artifactId>
+    <artifactId>camunda-bpm-assert-test</artifactId>
 
     <parent>
         <groupId>org.camunda.bpm.extension</groupId>
@@ -19,11 +19,10 @@
             <artifactId>camunda-engine</artifactId>
             <!-- We always *compile* with the latest RELEASE (but *test* 
                  against the release configured with -Dcamunda-bpm.version) -->
-            <version>RELEASE</version>
         </dependency>
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
+            <groupId>org.camunda.bpm.extension</groupId>
+            <artifactId>camunda-bpm-assert</artifactId>
         </dependency>
 
     </dependencies>
@@ -33,16 +32,6 @@
             <name>Martin Schimak</name>
             <organization>plexiti GmbH</organization>
             <organizationUrl>http://plexiti.com</organizationUrl>
-        </developer>
-        <developer>
-            <name>Jan Galinski</name>
-            <organization>Holisticon AG</organization>
-            <organizationUrl>http://holisticon.de</organizationUrl>
-        </developer>
-        <developer>
-            <name>Simon Zambrovski</name>
-            <organization>Holisticon AG</organization>
-            <organizationUrl>http://holisticon.de</organizationUrl>
         </developer>
     </developers>
 

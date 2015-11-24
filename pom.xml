@@ -17,10 +17,14 @@
 
     <modules>
         <module>camunda-bpm-assert</module>
+        <module>camunda-bpm-assert-test</module>
         <module>camunda-bpm-assert-examples</module>
     </modules>
 
     <properties>
+
+        <!-- We always *compile* with the latest RELEASE (but *test* 
+             against the release configured with -Dcamunda-bpm.version) -->
         <camunda-bpm.version>RELEASE</camunda-bpm.version> 
 
         <!-- 
