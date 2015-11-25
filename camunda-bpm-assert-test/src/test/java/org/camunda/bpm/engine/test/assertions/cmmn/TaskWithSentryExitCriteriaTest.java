@@ -5,9 +5,13 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExec
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.manuallyStart;
 
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -15,13 +19,18 @@ import org.junit.Test;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class TaskWithSentryExitCriteriaTest {
+public class TaskWithSentryExitCriteriaTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_HT_A";
   public static final String TASK_B = "PI_HT_B";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Before
+  public void assumeApi() {
+    assumeApi("7.3");
+  }
 
   /**
    * Introduces: 
@@ -34,8 +43,8 @@ public class TaskWithSentryExitCriteriaTest {
     // When
     CaseInstance caseInstance = givenCaseIsCreated();
     // Then
-    assertThat(caseInstance).isActive().task(TASK_A).isEnabled();
-    assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
+    assertThat(caseInstance).isActive().humanTask(TASK_A).isEnabled();
+    assertThat(caseInstance).isActive().humanTask(TASK_B).isEnabled();
   }
 
   /**
@@ -48,10 +57,11 @@ public class TaskWithSentryExitCriteriaTest {
     // Given
     CaseInstance caseInstance = givenCaseIsCreatedAndTaskAActive();
     // When
+    CaseExecution taskA = caseExecution(TASK_A, caseInstance);
     manuallyStart(caseExecution(TASK_B, caseInstance));
     // Then
-    assertThat(caseInstance).isActive().task(TASK_A).isTerminated();
-    assertThat(caseInstance).isActive().task(TASK_B).isActive();
+    assertThat(taskA).isTerminated();
+    assertThat(caseInstance).isActive().humanTask(TASK_B).isActive();
   }
 
   private CaseInstance givenCaseIsCreated() {

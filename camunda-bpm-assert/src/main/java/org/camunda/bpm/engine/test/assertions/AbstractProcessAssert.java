@@ -270,4 +270,13 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return caseService().createCaseInstanceQuery();
   }
 
+  /* 
+   * HistoricCaseActivityInstanceQuery, unnarrowed. Narrow this to {@link CaseInstance} (or 
+   * {@link CaseDefinition}) by overriding this method in sub classes specialised to 
+   * verify a specific process engine domain class. 
+   */
+  protected HistoricCaseActivityInstanceQuery historicCaseActivityInstanceQuery() {
+    return historyService().createHistoricCaseActivityInstanceQuery();
+  }
+
 }

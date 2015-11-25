@@ -1,52 +1,63 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
+import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
- * @author Malte Sörensen <malte.soerensen@holisticon.de>
- * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, CaseInstance> {
+public class StageAssert extends AbstractCaseAssert<StageAssert, CaseExecution> {
 
-	protected CaseInstanceAssert(final ProcessEngine engine, final CaseInstance actual) {
-		super(engine, actual, CaseInstanceAssert.class);
+	protected StageAssert(final ProcessEngine engine, final CaseExecution actual) {
+		super(engine, actual, StageAssert.class);
 	}
 
-	public static CaseInstanceAssert assertThat(final ProcessEngine engine, final CaseInstance actual) {
-		return new CaseInstanceAssert(engine, actual);
+	public static StageAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
+		return new StageAssert(engine, actual);
 	}
 
 	@Override
-	public CaseInstanceAssert isActive() {
+	public StageAssert isAvailable() {
+		return super.isAvailable();
+	}
+
+	@Override
+	public StageAssert isEnabled() {
+		return super.isEnabled();
+	}
+
+	@Override
+	public StageAssert isDisabled() {
+		return super.isDisabled();
+	}
+
+	@Override
+	public StageAssert isActive() {
 		return super.isActive();
 	}
 
 	@Override
-	public CaseInstanceAssert isCompleted() {
+	public StageAssert isSuspended() {
+		return super.isSuspended();
+	}
+
+	@Override
+	public StageAssert isCompleted() {
 		return super.isCompleted();
 	}
 
 	@Override
-	public CaseInstanceAssert isClosed() {
-		return super.isClosed();
-	}
-
-	@Override
-	public CaseInstanceAssert isTerminated() {
-		return super.isTerminated();
-	}
-
-	@Override
-	public CaseInstanceAssert isFailed() {
+	public StageAssert isFailed() {
 		return super.isFailed();
 	}
 
 	@Override
-	public CaseInstanceAssert isSuspended() {
-		return super.isSuspended();
+	public StageAssert isTerminated() {
+		return super.isTerminated();
 	}
 
 	@Override
@@ -123,5 +134,5 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
 	public MilestoneAssert milestone() {
 		return super.milestone();
 	}
-	
+
 }

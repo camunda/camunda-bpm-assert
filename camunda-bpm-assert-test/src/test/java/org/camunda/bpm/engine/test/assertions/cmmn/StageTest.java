@@ -7,9 +7,13 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.disable;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.manuallyStart;
 
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -17,13 +21,18 @@ import org.junit.Test;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class StageTest {
+public class StageTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String STAGE_S = "PI_StageS";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Before
+  public void assumeApi() {
+    assumeApi("7.3");
+  }
 
   /**
    * Introduces: assertThat(CaseInstance) caseInstance.isActive() caseInstance.stage(id) stage.isEnabled()
@@ -50,7 +59,7 @@ public class StageTest {
     // When
     manuallyStart(caseExecution(STAGE_S, caseInstance));
     // Then
-    assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isEnabled();
+    assertThat(caseInstance).isActive().stage(STAGE_S).isActive().humanTask(TASK_A).isEnabled();
   }
 
   /**
@@ -64,7 +73,7 @@ public class StageTest {
     // When
     manuallyStart(caseExecution(TASK_A, caseInstance));
     // Then
-    assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isActive();
+    assertThat(caseInstance).isActive().stage(STAGE_S).isActive().humanTask(TASK_A).isActive();
   }
 
   /**
@@ -78,7 +87,7 @@ public class StageTest {
     // When
     complete(caseExecution(TASK_A, caseInstance));
     // Then
-    assertThat(caseInstance).isCompleted().stage(STAGE_S).isCompleted().task(TASK_A).isCompleted();
+    assertThat(caseInstance).isCompleted();
   }
 
   /**
@@ -90,9 +99,11 @@ public class StageTest {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
-    disable(caseExecution(STAGE_S, caseInstance));
+    CaseExecution stage = caseExecution(STAGE_S, caseInstance);
+    disable(stage);
     // Then
-    assertThat(caseInstance).isCompleted().stage(STAGE_S).isDisabled();
+    assertThat(caseInstance).isCompleted();
+    assertThat(stage).isDisabled();
   }
 
   private CaseInstance givenCaseIsCreated() {

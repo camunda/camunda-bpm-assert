@@ -6,9 +6,13 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseServ
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.manuallyStart;
 
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -16,13 +20,18 @@ import org.junit.Test;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class StageWithSentryTest {
+public class StageWithSentryTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_HT_A";
   public static final String STAGE_S = "PI_StageS";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Before
+  public void assumeApi() {
+    assumeApi("7.3");
+  }
 
   /**
    * Introduces: stage.isAvailable()
@@ -34,7 +43,7 @@ public class StageWithSentryTest {
     // When
     CaseInstance caseInstance = givenCaseIsCreated();
     // Then
-    assertThat(caseInstance).isActive().task(TASK_A).isEnabled();
+    assertThat(caseInstance).isActive().humanTask(TASK_A).isEnabled();
     assertThat(caseInstance).isActive().stage(STAGE_S).isAvailable();
   }
 
@@ -47,10 +56,12 @@ public class StageWithSentryTest {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
-    manuallyStart(caseExecution(TASK_A, caseInstance));
+    CaseExecution taskA;
+    manuallyStart(taskA = caseExecution(TASK_A, caseInstance));
     complete(caseExecution(TASK_A, caseInstance));
     // Then
-    assertThat(caseInstance).isActive().task(TASK_A).isCompleted();
+    assertThat(caseInstance).isActive();
+    assertThat(taskA).isCompleted();
     assertThat(caseInstance).isActive().stage(STAGE_S).isEnabled();
   }
 

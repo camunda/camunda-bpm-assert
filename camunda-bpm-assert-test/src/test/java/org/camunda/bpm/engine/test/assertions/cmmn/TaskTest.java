@@ -5,26 +5,32 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExec
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.complete;
 
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 /**
- * This test is meant to help building the fluent API by providing simple test
- * cases.
- * 
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class TaskTest {
+public class TaskTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String CASE_KEY = "Case_TaskTests";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Before
+  public void assumeApi() {
+    assumeApi("7.3");
+  }
 
   @Test
   @Deployment(resources = { "cmmn/TaskTest.cmmn" })
@@ -41,7 +47,7 @@ public class TaskTest {
     // When
     CaseInstance caseInstance = caseService().createCaseInstanceByKey(CASE_KEY);
     // Then
-    assertThat(caseInstance).isActive().task(TASK_A).isActive();
+    assertThat(caseInstance).isActive().humanTask(TASK_A).isActive();
   }
 
   @Test
@@ -57,12 +63,15 @@ public class TaskTest {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
-    complete(caseExecution(TASK_A, caseInstance));
+    CaseExecution taskA;
+    complete(taskA = caseExecution(TASK_A, caseInstance));
     // Then
-    assertThat(caseInstance).isCompleted().task(TASK_A).isCompleted();
+    assertThat(caseInstance).isCompleted();
+    assertThat(taskA).isCompleted();
   }
 
   private CaseInstance givenCaseIsCreated() {
     return caseService().createCaseInstanceByKey(CASE_KEY);
   }
+  
 }

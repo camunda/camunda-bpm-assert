@@ -1,7 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
-import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.repository.CaseDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.runtime.CaseExecution;
@@ -13,7 +12,6 @@ import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.test.assertions.cmmn.CaseExecutionAssert;
 import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
 import org.camunda.bpm.engine.test.util.CamundaBpmApi;
-import org.camunda.bpm.engine.test.assertions.cmmn.HistoricCaseActivityAssert;
 
 import java.util.Map;
 

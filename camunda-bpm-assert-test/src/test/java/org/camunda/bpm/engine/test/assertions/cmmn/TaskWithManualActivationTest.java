@@ -1,27 +1,33 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
- * This test is meant to help building the fluent API by providing simple test cases.
- * 
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
- * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class TaskWithManualActivationTest {
+public class TaskWithManualActivationTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String CASE_KEY = "Case_TaskTests";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Before
+  public void assumeApi() {
+    assumeApi("7.3");
+  }
 
   @Test
   @Deployment(resources = { "cmmn/TaskWithManualActivationTest.cmmn" })
@@ -54,9 +60,11 @@ public class TaskWithManualActivationTest {
     // Given
     CaseInstance caseInstance = givenCaseIsCreated();
     // When
-    disable(caseExecution(TASK_A, caseInstance));
+    CaseExecution taskA;
+    disable(taskA = caseExecution(TASK_A, caseInstance));
     // Then
-    assertThat(caseInstance).isCompleted().task(TASK_A).isDisabled();
+    assertThat(caseInstance).isCompleted();
+    assertThat(taskA).isDisabled();
   }
 
   private CaseInstance givenCaseIsCreated() {

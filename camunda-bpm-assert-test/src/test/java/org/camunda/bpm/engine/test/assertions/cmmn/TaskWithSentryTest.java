@@ -3,20 +3,19 @@ package org.camunda.bpm.engine.test.assertions.cmmn;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
- * This test is meant to help building the fluent API by providing simple test
- * cases.
- * 
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
- * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class TaskWithSentryTest {
+public class TaskWithSentryTest extends ProcessAssertTestCase {
 
 	public static final String TASK_A = "PI_HT_A";
 	public static final String TASK_B = "PI_HT_B";
@@ -24,6 +23,11 @@ public class TaskWithSentryTest {
 
 	@Rule
 	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+	@Before
+	public void assumeApi() {
+		assumeApi("7.3");
+	}
 
 	@Test
 	@Deployment(resources = { "cmmn/TaskWithSentryTest.cmmn" })

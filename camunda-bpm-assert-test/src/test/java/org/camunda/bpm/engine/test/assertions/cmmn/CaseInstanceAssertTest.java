@@ -1,29 +1,34 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExecutionQuery;
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.historyService;
-
 import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.Failure;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class CaseInstanceAssertTest {
+public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 
 	public static final String TASK_A = "PI_TaskA";
 
 	@Rule
 	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+	@Before
+	public void assumeApi() {
+		assumeApi("7.3");
+	}
 
 	@Test
 	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
@@ -58,49 +63,46 @@ public class CaseInstanceAssertTest {
 		// nothing should happen
 	}
 
-	@Test(expected = AssertionError.class)
+	@Test
 	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
 	public void isCompleted_should_throw_AssertionError_when_case_is_not_completed() {
 		// Given
-		CaseInstance caseInstance = aStartedCase();
-		// When
-		assertThat(caseInstance).isCompleted();
+		final CaseInstance caseInstance = aStartedCase();
 		// Then
-		// AssertionError should be thrown
+		expect(new Failure() {
+			@Override
+			public void when() {
+				assertThat(caseInstance).isCompleted();
+			}
+		});
 	}
 
 	@Test
 	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
 	public void task_should_return_CaseTaskAssert_for_completed_tasks() {
 		// Given
-		CaseInstance caseInstance = aCompletedCase();
-		HistoricCaseActivityInstance pi_taskA = historyService()
-				.createHistoricCaseActivityInstanceQuery()
-				.caseActivityId(TASK_A).singleResult();
+		CaseInstance caseInstance = aStartedCase();
+		CaseExecution taskA = caseExecution(TASK_A, caseInstance);
 		// When
-    AbstractCaseActivityAssert caseTaskAssert = assertThat(caseInstance).task(
-      TASK_A);
+		caseService().completeCaseExecution(caseExecutionQuery().activityId(TASK_A).singleResult().getId());
     // Then
-		HistoricCaseActivityInstance actual = (HistoricCaseActivityInstance) caseTaskAssert.getActual();
-		Assertions
-				.assertThat(actual)
-				.overridingErrorMessage(
-						"Expected case execution " + toString(actual)
-								+ " to be equal to " + toString(pi_taskA))
-				.isEqualToComparingOnlyGivenFields(pi_taskA, "id");
+		assertThat(taskA).isCompleted();
+		// And
+		assertThat(caseInstance).isCompleted();
 	}
 
 	@Test
 	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
-	public void task_should_return_CaseTaskAssert_for_given_activityId() {
+	public void task_should_return_HumanTaskAssert_for_given_activityId() {
 		// Given
 		CaseInstance caseInstance = aStartedCase();
 		CaseExecution pi_taskA = caseService()
 				.createCaseExecutionQuery()
 				.activityId(TASK_A).singleResult();
+		// Then
+		assertThat(caseInstance).isActive();
 		// When
-		CaseExecutionAssert caseTaskAssert = (CaseExecutionAssert) assertThat(caseInstance).task(
-				TASK_A);
+		HumanTaskAssert caseTaskAssert = assertThat(caseInstance).humanTask(TASK_A);
 		// Then
 		CaseExecution actual = caseTaskAssert.getActual();
 		Assertions

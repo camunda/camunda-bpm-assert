@@ -5,9 +5,13 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseExec
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.manuallyStart;
 
+import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -15,7 +19,7 @@ import org.junit.Test;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  * @author Martin Günther <martin.guenther@holisticon.de>
  */
-public class StageWithSentryExitCriteriaTest {
+public class StageWithSentryExitCriteriaTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_HT_A";
   public static final String TASK_B = "PI_HT_B";
@@ -23,6 +27,11 @@ public class StageWithSentryExitCriteriaTest {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
+
+  @Before
+  public void assumeApi() {
+    assumeApi("7.3");
+  }
 
   /**
    * Introduces:
@@ -36,7 +45,7 @@ public class StageWithSentryExitCriteriaTest {
     CaseInstance caseInstance = givenCaseIsCreated();
     // Then
     assertThat(caseInstance).isActive().stage(STAGE_S).isEnabled();
-    assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
+    assertThat(caseInstance).isActive().humanTask(TASK_B).isEnabled();
   }
 
   /**
@@ -50,8 +59,8 @@ public class StageWithSentryExitCriteriaTest {
     // When
     manuallyStart(caseExecution(STAGE_S, caseInstance));
     // Then
-    assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isEnabled();
-    assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
+    assertThat(caseInstance).isActive().stage(STAGE_S).isActive().humanTask(TASK_A).isEnabled();
+    assertThat(caseInstance).isActive().humanTask(TASK_B).isEnabled();
   }
 
   /**
@@ -65,8 +74,8 @@ public class StageWithSentryExitCriteriaTest {
     // When
     manuallyStart(caseExecution(TASK_A, caseInstance));
     // Then
-    assertThat(caseInstance).isActive().stage(STAGE_S).isActive().task(TASK_A).isActive();
-    assertThat(caseInstance).isActive().task(TASK_B).isEnabled();
+    assertThat(caseInstance).isActive().stage(STAGE_S).isActive().humanTask(TASK_A).isActive();
+    assertThat(caseInstance).isActive().humanTask(TASK_B).isEnabled();
   }
 
   /**
@@ -77,11 +86,16 @@ public class StageWithSentryExitCriteriaTest {
   public void case_is_active_and_stage_s_and_task_a_should_be_terminated_and_task_b_active() {
     // Given
     CaseInstance caseInstance = givenCaseIsCreatedAndStageSActiveAndTaskAActive();
+    CaseExecution taskA = caseExecution(TASK_A, caseInstance);
+    CaseExecution stageS = caseExecution(STAGE_S, caseInstance);
     // When
     manuallyStart(caseExecution(TASK_B, caseInstance));
     // Then
-    assertThat(caseInstance).isActive().stage(STAGE_S).isTerminated().task(TASK_A).isTerminated();
-    assertThat(caseInstance).isActive().task(TASK_B).isActive();
+    assertThat(caseInstance).isActive();
+    assertThat(taskA).isTerminated();
+    assertThat(stageS).isTerminated();
+    assertThat(caseInstance).isActive()
+      .humanTask(TASK_B).isActive();
   }
 
   private CaseInstance givenCaseIsCreated() {
