@@ -25,7 +25,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
 
   @Before
   public void assumeApi() {
-    assumeApi("7.2");
+    assumeApi("7.3");
   }
   
   @Test

@@ -85,10 +85,10 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    * 
    * @param   candidateGroupId id of a candidate group the task is associated to
    * @return  this {@link TaskAssert}
-   * @since   Camunda BPM 7.2
+   * @since   Camunda BPM 7.3
    */
   public TaskAssert hasCandidateGroupAssociated(final String candidateGroupId) {
-    assertApi("7.2");
+    assertApi("7.3");
     return hasCandidateGroup(candidateGroupId, false);
   }
 
@@ -99,7 +99,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     if (unassignedOnly) {
       isNotAssigned(); // Useful for better assertion error message in case of assigned task
     } else {
-      taskQuery.includeAssignedTasks(); // Available from Camunda BPM 7.2 onwards
+      taskQuery.includeAssignedTasks(); // Available from Camunda BPM 7.3 onwards
     }
     final Task inGroup = taskQuery.singleResult();
     Assertions.assertThat(inGroup)
@@ -129,10 +129,10 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    *
    * @param   candidateUserId id of a candidate user the task is associated to
    * @return  this {@link TaskAssert}
-   * @since   Camunda BPM 7.2
+   * @since   Camunda BPM 7.3
    */
   public TaskAssert hasCandidateUserAssociated(final String candidateUserId) {
-    assertApi("7.2");
+    assertApi("7.3");
     return hasCandidateUser(candidateUserId, false);
   }
 
@@ -143,7 +143,7 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
     if (unassignedOnly) {
       isNotAssigned(); // Useful for better assertion error message in case of assigned task
     } else {
-      taskQuery.includeAssignedTasks(); // Available from Camunda BPM 7.2 onwards
+      taskQuery.includeAssignedTasks(); // Available from Camunda BPM 7.3 onwards
     }
     final Task withUser = taskQuery.singleResult();
     Assertions.assertThat(withUser)
