@@ -12,7 +12,7 @@ public class MilestoneAssert extends AbstractCaseAssert<MilestoneAssert, CaseExe
 		super(engine, actual, MilestoneAssert.class);
 	}
 
-	public static MilestoneAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
+	protected static MilestoneAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
 		return new MilestoneAssert(engine, actual);
 	}
 

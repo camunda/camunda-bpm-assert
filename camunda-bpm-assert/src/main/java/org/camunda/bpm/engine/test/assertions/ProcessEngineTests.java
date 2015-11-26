@@ -1,9 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
 import org.camunda.bpm.engine.*;
-import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
-import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
-import org.camunda.bpm.engine.repository.CaseDefinitionQuery;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
@@ -171,31 +168,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    */
   public static ExecutionQuery executionQuery() {
     return runtimeService().createExecutionQuery();
-  }
-
-  /**
-   * Helper method to easily create a new CaseInstanceQuery.
-   * @return new CaseInstanceQuery for process engine bound to this testing thread
-   */
-  public static CaseInstanceQuery caseInstanceQuery() {
-    return caseService().createCaseInstanceQuery();
-  }
-
-  /**
-   * Helper method to easily create a new CaseExecutionQuery.
-   * @return new CaseExecutionQuery for process engine bound to this testing thread
-   */
-  public static CaseExecutionQuery caseExecutionQuery() {
-    return caseService().createCaseExecutionQuery();
-  }
-
-
-  /**
-   * Helper method to easily create a new CaseDefinitionQuery.
-   * @return new CaseExecutionQuery for process engine bound to this testing thread
-   */
-  public static CaseDefinitionQuery caseDefinitionQuery() {
-    return repositoryService().createCaseDefinitionQuery();
   }
 
   /**
@@ -707,50 +679,6 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
     taskService().complete(task.getId());
   }
 
-  /**
-   * Helper method to easily complete a case.
-   *
-   * @param caseExecution the case to complete
-   */
-  public static void complete(CaseExecution caseExecution) {
-    if (caseExecution == null) {
-      throw new IllegalArgumentException("Illegal call of complete(caseExecution) - must not be null!");
-    }
-    caseService().completeCaseExecution(caseExecution.getId());
-  }
-
-  /**
-   * Helper method to easily disable a case execution.
-   * 
-   * @param caseExecution
-   *        the case execution to complete
-   */
-  public static void disable(CaseExecution caseExecution) {
-    if (caseExecution == null) {
-      throw new IllegalArgumentException("Illegal call of disable(caseExecution) - must not be null!");
-    }
-    caseService().disableCaseExecution(caseExecution.getId());
-  }
-
-  /**
-   * Helper method to manually activate a case execution.
-   *
-   * @param caseExecution
-   *        the case execution to avtivate
-   */
-  public static void manuallyStart(CaseExecution caseExecution) {
-    if (caseExecution == null) {
-      throw new IllegalArgumentException("Illegal call of manuallyStart(caseExecution) - must not be null!");
-    }
-    caseService().manuallyStartCaseExecution(caseExecution.getId());
-  }
-  
-  public static CaseExecution caseExecution(String activityId, CaseInstance caseInstance) {
-    CaseExecution caseExecution = caseService().createCaseExecutionQuery().caseInstanceId(caseInstance.getCaseInstanceId()).activityId(activityId).singleResult();
-    assertThat(caseExecution).overridingErrorMessage("CaseExecution for activity '" + activityId + "' not found!").isNotNull();
-    return caseExecution;
-  }
-  
   /**
    * Helper method to easily execute a job.
    * 

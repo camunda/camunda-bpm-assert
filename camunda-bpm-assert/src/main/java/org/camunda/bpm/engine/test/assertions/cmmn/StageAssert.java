@@ -16,7 +16,7 @@ public class StageAssert extends AbstractCaseAssert<StageAssert, CaseExecution> 
 		super(engine, actual, StageAssert.class);
 	}
 
-	public static StageAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
+	protected static StageAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
 		return new StageAssert(engine, actual);
 	}
 

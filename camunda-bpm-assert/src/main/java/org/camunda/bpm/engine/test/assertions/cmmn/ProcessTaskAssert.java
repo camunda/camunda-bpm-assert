@@ -12,7 +12,7 @@ public class ProcessTaskAssert extends AbstractCaseAssert<ProcessTaskAssert, Cas
 		super(engine, actual, ProcessTaskAssert.class);
 	}
 
-	public static ProcessTaskAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
+	protected static ProcessTaskAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
 		return new ProcessTaskAssert(engine, actual);
 	}
 

@@ -12,7 +12,7 @@ public class HumanTaskAssert extends AbstractCaseAssert<HumanTaskAssert, CaseExe
 		super(engine, actual, HumanTaskAssert.class);
 	}
 
-	public static HumanTaskAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
+	protected static HumanTaskAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
 		return new HumanTaskAssert(engine, actual);
 	}
 

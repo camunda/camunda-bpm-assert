@@ -17,8 +17,8 @@
 
     <modules>
         <module>camunda-bpm-assert</module>
-        <module>camunda-bpm-assert-test</module>
-        <module>camunda-bpm-assert-examples</module>
+        <module>camunda-bpm-assert-bpmn-examples</module>
+        <module>camunda-bpm-assert-cmmn-examples</module>
     </modules>
 
     <properties>

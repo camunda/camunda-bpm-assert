@@ -14,7 +14,7 @@ public class CaseExecutionAssert extends AbstractCaseAssert<CaseExecutionAssert,
     super(engine, actual, CaseExecutionAssert.class);
   }
 
-  public static CaseExecutionAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
+  protected static CaseExecutionAssert assertThat(final ProcessEngine engine, final CaseExecution actual) {
     return new CaseExecutionAssert(engine, actual);
   }
 

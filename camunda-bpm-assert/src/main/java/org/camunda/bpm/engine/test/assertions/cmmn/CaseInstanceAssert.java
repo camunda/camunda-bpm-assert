@@ -15,7 +15,7 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
 		super(engine, actual, CaseInstanceAssert.class);
 	}
 
-	public static CaseInstanceAssert assertThat(final ProcessEngine engine, final CaseInstance actual) {
+	protected static CaseInstanceAssert assertThat(final ProcessEngine engine, final CaseInstance actual) {
 		return new CaseInstanceAssert(engine, actual);
 	}
 
