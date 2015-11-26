@@ -6,6 +6,7 @@ import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.engine.test.assertions.examples.jobannouncement.JobAnnouncement;
 import org.camunda.bpm.engine.test.assertions.examples.jobannouncement.JobAnnouncementService;
+import org.camunda.bpm.engine.test.util.CamundaBpmApiAwareTestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class JobAnnouncementProcessTest {
+public class JobAnnouncementProcessTest extends CamundaBpmApiAwareTestCase {
 
   @Rule
   public final ProcessEngineRule processEngineRule = new ProcessEngineRule();
@@ -94,9 +95,26 @@ public class JobAnnouncementProcessTest {
     assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
+    
+  }
 
-    assertThat(processDefinition()).hasActiveInstances(0);
+  @Test
+  @Deployment(resources = {
+    "camunda-testing-job-announcement.bpmn",
+    "camunda-testing-job-announcement-publication.bpmn"
+  })
+  public void testCandidateGroupAssociated() {
 
+    when(jobAnnouncement.getId()).thenReturn(1L);
+    when(jobAnnouncementService.findRequester(1L)).thenReturn("gonzo");
+    when(jobAnnouncementService.findEditor(1L)).thenReturn("fozzie");
+
+    final ProcessInstance processInstance = startProcess();
+
+    assumeApi("7.3");
+    assertThat(processInstance).task().hasCandidateGroupAssociated("engineering").isNotAssigned();
+    claim(task(), "fozzie");
+    assertThat(processInstance).task().hasCandidateGroupAssociated("engineering").isAssignedTo("fozzie");
   }
 
   @Test

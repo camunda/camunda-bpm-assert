@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.assertions;
 
+
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
@@ -7,45 +8,49 @@ import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import static java.lang.String.format;
-
 /**
- * Convenience class to access all assertions camunda BPM 
- * Process Engine Assertions - PLUS a few helper methods.
- * 
- * In your code use import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
- *
- * @see org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Martin Günther <martin.guenter@holisticon.de>
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
+ *   
+ * @deprecated Use org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests
+ *              or org.camunda.bpm.engine.test.assertions.cmmn.ProcessEngineTests
  */
+@Deprecated
 public class ProcessEngineTests extends ProcessEngineAssertions {
-
+  
   protected ProcessEngineTests() {}
+
+  /**
+   * Helper method to easily execute a job.
+   *
+   * @param   job Job to be executed.
+   */
+  public static void execute(Job job) {
+    org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.execute(job);
+  }
 
   /**
    * Helper method to easily access RuntimeService
    *
-   * @return  RuntimeService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.RuntimeService
+   * @return RuntimeService of process engine bound to this testing thread
+   * @see     RuntimeService
    */
   public static RuntimeService runtimeService() {
-    return processEngine().getRuntimeService();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.runtimeService();
   }
 
   /**
    * Helper method to easily access AuthorizationService
    *
-   * @return  AuthorizationService of process engine bound to this 
+   * @return AuthorizationService of process engine bound to this 
    *          testing thread
-   * @see     org.camunda.bpm.engine.AuthorizationService
+   * @see     AuthorizationService
    */
   public static AuthorizationService authorizationService() {
-    return processEngine().getAuthorizationService();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.authorizationService();
   }
 
   /**
@@ -55,147 +60,123 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * @see     org.camunda.bpm.engine.FormService
    */
   public static FormService formService() {
-    return processEngine().getFormService();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.formService();
   }
 
   /**
    * Helper method to easily access HistoryService
    *
-   * @return  HistoryService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.HistoryService
+   * @return HistoryService of process engine bound to this testing thread
+   * @see     HistoryService
    */
   public static HistoryService historyService() {
-    return processEngine().getHistoryService();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.historyService();
   }
 
   /**
    * Helper method to easily access IdentityService
    *
-   * @return  IdentityService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.IdentityService
+   * @return IdentityService of process engine bound to this testing thread
+   * @see     IdentityService
    */
   public static IdentityService identityService() {
-    return processEngine().getIdentityService();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.identityService();
   }
 
   /**
    * Helper method to easily access ManagementService
    *
-   * @return  ManagementService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.ManagementService
+   * @return ManagementService of process engine bound to this testing thread
+   * @see     ManagementService
    */
   public static ManagementService managementService() {
-    return processEngine().getManagementService();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.managementService();
   }
 
   /**
    * Helper method to easily access RepositoryService
    *
-   * @return  RepositoryService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.RepositoryService
+   * @return RepositoryService of process engine bound to this testing thread
+   * @see     RepositoryService
    */
   public static RepositoryService repositoryService() {
-    return processEngine().getRepositoryService();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.repositoryService();
   }
 
   /**
    * Helper method to easily access TaskService
    *
-   * @return  TaskService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.TaskService
+   * @return TaskService of process engine bound to this testing thread
+   * @see     TaskService
    */
   public static TaskService taskService() {
-    return processEngine().getTaskService();
-  }
-
-  /**
-   * Helper method to easily access CaseService
-   *
-   * @return  CaseService of process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.CaseService
-   */
-  public static CaseService caseService() {
-    return processEngine().getCaseService();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.taskService();
   }
 
   /**
    * Helper method to easily create a new TaskQuery
-   * 
-   * @return  new TaskQuery for process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.task.TaskQuery
+   *
+   * @return new TaskQuery for process engine bound to this testing thread
+   * @see     TaskQuery
    */
   public static TaskQuery taskQuery() {
-    return taskService().createTaskQuery();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.taskQuery();
   }
 
   /**
    * Helper method to easily create a new JobQuery
    *
-   * @return  new JobQuery for process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.runtime.JobQuery
+   * @return new JobQuery for process engine bound to this testing thread
+   * @see     JobQuery
    */
   public static JobQuery jobQuery() {
-    return managementService().createJobQuery();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.jobQuery();
   }
 
   /**
    * Helper method to easily create a new ProcessInstanceQuery
-   * 
-   * @return  new ProcessInstanceQuery for process engine bound to this 
+   *
+   * @return new ProcessInstanceQuery for process engine bound to this 
    *          testing thread
-   * @see     org.camunda.bpm.engine.runtime.ProcessInstanceQuery
+   * @see     ProcessInstanceQuery
    */
   public static ProcessInstanceQuery processInstanceQuery() {
-    return runtimeService().createProcessInstanceQuery();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processInstanceQuery();
   }
 
   /**
    * Helper method to easily create a new ProcessDefinitionQuery
-   * 
-   * @return  new ProcessDefinitionQuery for process engine bound to this 
+   *
+   * @return new ProcessDefinitionQuery for process engine bound to this 
    *          testing thread
-   * @see     org.camunda.bpm.engine.repository.ProcessDefinitionQuery
+   * @see     ProcessDefinitionQuery
    */
   public static ProcessDefinitionQuery processDefinitionQuery() {
-    return repositoryService().createProcessDefinitionQuery();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processDefinitionQuery();
   }
 
   /**
    * Helper method to easily create a new ExecutionQuery
    *
-   * @return  new ExecutionQuery for process engine bound to this testing thread
-   * @see     org.camunda.bpm.engine.runtime.ExecutionQuery
+   * @return new ExecutionQuery for process engine bound to this testing thread
+   * @see     ExecutionQuery
    */
   public static ExecutionQuery executionQuery() {
-    return runtimeService().createExecutionQuery();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.executionQuery();
   }
 
   /**
    * Helper method to easily construct a map of process variables
-   * 
+   *
    * @param   key (obligatory) key of first process variable
    * @param   value (obligatory) value of first process variable
    * @param   furtherKeyValuePairs (optional) key/value pairs for further 
    *          process variables
-   * @return  a map of process variables by passing a list of String 
+   * @return a map of process variables by passing a list of String 
    *          -> Object key value pairs.
    */
-  public static Map<String, Object> withVariables(final String key, final Object value, final Object... furtherKeyValuePairs) {
-    if (key == null)
-        throw new IllegalArgumentException(format("Illegal call of withVariables(key = '%s', value = '%s', ...) - key must not be null!", key, value));
-    final Map<String, Object> map = new HashMap<String, Object>();
-    map.put(key, value);
-    if (furtherKeyValuePairs != null) {
-      if (furtherKeyValuePairs.length % 2 != 0) {
-        throw new IllegalArgumentException(format("Illegal call of withVariables() - must have an even number of arguments, but found length = %s!", furtherKeyValuePairs.length + 2));
-      }
-      for (int i = 0; i < furtherKeyValuePairs.length; i += 2) {
-        if (!(furtherKeyValuePairs[i] instanceof String))
-          throw new IllegalArgumentException(format("Illegal call of withVariables() - keys must be strings, found object of type '%s'!", furtherKeyValuePairs[i] != null ? furtherKeyValuePairs[i].getClass().getName() : null));
-        map.put((String) furtherKeyValuePairs[i], furtherKeyValuePairs[i + 1]);
-      }
-    }
-    return map;
+  public static Map<String, Object> withVariables(String key, Object value, Object... furtherKeyValuePairs) {
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.withVariables(key, value, furtherKeyValuePairs);
   }
 
   /**
@@ -203,15 +184,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * available in the context of the last asserted process
    * instance.
    *
-   * @return  the only task of the last asserted process
+   * @return the only task of the last asserted process
    *          instance. May return null if no such task exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one task is delivered by the underlying 
    *          query or in case no process instance was asserted 
    *          yet.
    */
   public static Task task() {
-    return task(taskQuery());
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.task();
   }
 
   /**
@@ -220,33 +201,32 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
-   * @return  the only task of the process instance. May 
+   * @return the only task of the process instance. May 
    *          return null if no such task exists.
-   * @throws  java.lang.IllegalStateException in case more 
+   * @throws IllegalStateException in case more 
    *          than one task is delivered by the underlying 
    *          query.
    */
   public static Task task(ProcessInstance processInstance) {
-    return task(taskQuery(), processInstance);
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.task(processInstance);
   }
 
   /**
    * Helper method to easily access the only task with the 
    * given taskDefinitionKey currently available in the context 
    * of the last asserted process instance.
-   * 
+   *
    * @param   taskDefinitionKey the key of the task that should
    *          be retrieved.                             
-   * @return  the only task of the last asserted process
+   * @return the only task of the last asserted process
    *          instance. May return null if no such task exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one task is delivered by the underlying 
    *          query or in case no process instance was asserted 
    *          yet.
    */
   public static Task task(String taskDefinitionKey) {
-    assertThat(taskDefinitionKey).isNotNull();
-    return task(taskQuery().taskDefinitionKey(taskDefinitionKey));
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.task(taskDefinitionKey);
   }
 
   /**
@@ -258,15 +238,14 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *          be retrieved.                             
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
-   * @return  the only task of the given process instance. May
+   * @return the only task of the given process instance. May
    *          return null if no such task exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one task is delivered by the underlying 
    *          query.
    */
   public static Task task(String taskDefinitionKey, ProcessInstance processInstance) {
-    assertThat(taskDefinitionKey).isNotNull();
-    return task(taskQuery().taskDefinitionKey(taskDefinitionKey), processInstance);
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.task(taskDefinitionKey, processInstance);
   }
 
   /**
@@ -277,22 +256,16 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * @param   taskQuery the query with which the task should
    *          be retrieved. This query will be further narrowed
    *          to the last asserted process instance.
-   * @return  the only task of the last asserted process instance 
+   * @return the only task of the last asserted process instance 
    *          and compliant to the given query. May return null 
    *          in case no such task exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one task is delivered by the underlying 
    *          query or in case no process instance was asserted 
    *          yet.
    */
   public static Task task(TaskQuery taskQuery) {
-    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
-    if (lastAssert == null)
-      throw new IllegalStateException(
-        "Call a process instance assertion first - " +
-          "e.g. assertThat(processInstance)... !"
-      );
-    return task(taskQuery, lastAssert.getActual());
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.task(taskQuery);
   }
 
   /**
@@ -305,34 +278,28 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *          to the given process instance.
    * @param   processInstance the process instance for which
    *          a task should be retrieved.
-   * @return  the only task of the given process instance and 
+   * @return the only task of the given process instance and 
    *          compliant to the given query. May return null in 
    *          case no such task exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one task is delivered by the underlying 
    *          query.
    */
   public static Task task(TaskQuery taskQuery, ProcessInstance processInstance) {
-    return assertThat(processInstance).isNotNull().task(taskQuery).getActual();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.task(taskQuery, processInstance);
   }
 
   /**
    * Helper method to easily access the process definition 
    * on which the last asserted process instance is based.
    *
-   * @return  the process definition on which the last 
+   * @return the process definition on which the last 
    *          asserted process instance is based.
-   * @throws  java.lang.IllegalStateException in case no 
+   * @throws IllegalStateException in case no 
    *          process instance was asserted yet.
    */
   public static ProcessDefinition processDefinition() {
-    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
-    if (lastAssert == null)
-      throw new IllegalStateException(
-        "Call a process instance assertion first - " +
-          "e.g. assertThat(processInstance)... !"
-      );
-    return processDefinition(lastAssert.getActual());
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processDefinition();
   }
 
   /**
@@ -341,12 +308,11 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param   processInstance the process instance for which
    *          the definition should be retrieved.
-   * @return  the process definition on which the given 
+   * @return the process definition on which the given 
    *          process instance is based.
    */
   public static ProcessDefinition processDefinition(ProcessInstance processInstance) {
-    assertThat(processInstance).isNotNull();
-    return processDefinition(processDefinitionQuery().processDefinitionId(processInstance.getProcessDefinitionId()));
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processDefinition(processInstance);
   }
 
   /**
@@ -355,12 +321,11 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param   processDefinitionKey the key of the process definition 
    *          that should be retrieved.                             
-   * @return  the process definition with the given key. 
+   * @return the process definition with the given key. 
    *          May return null if no such process definition exists.
    */
   public static ProcessDefinition processDefinition(String processDefinitionKey) {
-    assertThat(processDefinitionKey).isNotNull();
-    return processDefinition(processDefinitionQuery().processDefinitionKey(processDefinitionKey));
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processDefinition(processDefinitionKey);
   }
 
   /**
@@ -369,14 +334,14 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param   processDefinitionQuery the query with which the process 
    *          definition should be retrieved.
-   * @return  the process definition compliant to the given query. May 
+   * @return the process definition compliant to the given query. May 
    *          return null in case no such process definition exists.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
+   * @throws ProcessEngineException in case more 
    *          than one process definition is delivered by the underlying 
    *          query.
    */
   public static ProcessDefinition processDefinition(ProcessDefinitionQuery processDefinitionQuery) {
-    return processDefinitionQuery.singleResult();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processDefinition(processDefinitionQuery);
   }
 
   /**
@@ -384,15 +349,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * currently available in the context of the last asserted process
    * instance.
    *
-   * @return  the only called process instance called by the last asserted process
+   * @return the only called process instance called by the last asserted process
    *          instance. May return null if no such process instance exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one process instance is delivered by the underlying 
    *          query or in case no process instance was asserted 
    *          yet.
    */
   public static ProcessInstance calledProcessInstance() {
-    return calledProcessInstance(processInstanceQuery());
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.calledProcessInstance();
   }
 
   /**
@@ -401,14 +366,14 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
-   * @return  the only called process instance called by the given process 
+   * @return the only called process instance called by the given process 
    *          instance. May return null if no such process instance exists.
-   * @throws  java.lang.IllegalStateException in case more 
+   * @throws IllegalStateException in case more 
    *          than one process instance is delivered by the underlying 
    *          query.
    */
   public static ProcessInstance calledProcessInstance(ProcessInstance processInstance) {
-    return calledProcessInstance(processInstanceQuery(), processInstance);
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.calledProcessInstance(processInstance);
   }
 
   /**
@@ -418,16 +383,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param   processDefinitionKey the key of the process instance that should
    *          be retrieved.                             
-   * @return  the only such process instance called by the last asserted process
+   * @return the only such process instance called by the last asserted process
    *          instance. May return null if no such process instance exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one process instance is delivered by the underlying 
    *          query or in case no process instance was asserted 
    *          yet.
    */
   public static ProcessInstance calledProcessInstance(String processDefinitionKey) {
-    assertThat(processDefinitionKey).isNotNull();
-    return calledProcessInstance(processInstanceQuery().processDefinitionKey(processDefinitionKey));
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.calledProcessInstance(processDefinitionKey);
   }
 
   /**
@@ -439,15 +403,14 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *          be retrieved.                             
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
-   * @return  the only such process instance called by the given process instance. 
+   * @return the only such process instance called by the given process instance. 
    *          May return null if no such process instance exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one process instance is delivered by the underlying 
    *          query.
    */
   public static ProcessInstance calledProcessInstance(String processDefinitionKey, ProcessInstance processInstance) {
-    assertThat(processDefinitionKey).isNotNull();
-    return calledProcessInstance(processInstanceQuery().processDefinitionKey(processDefinitionKey), processInstance);
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.calledProcessInstance(processDefinitionKey, processInstance);
   }
 
   /**
@@ -458,20 +421,14 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * @param   processInstanceQuery the query with which the called process instance should
    *          be retrieved. This query will be further narrowed to the last asserted 
    *          process instance.
-   * @return  the only such process instance called by the last asserted process instance and 
+   * @return the only such process instance called by the last asserted process instance and 
    *          compliant to the given query. May return null in case no such task exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one process instance is delivered by the underlying query or in case no 
    *          process instance was asserted yet.
    */
   public static ProcessInstance calledProcessInstance(ProcessInstanceQuery processInstanceQuery) {
-    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
-    if (lastAssert == null)
-      throw new IllegalStateException(
-        "Call a process instance assertion first - " +
-          "e.g. assertThat(processInstance)... !"
-      );
-    return calledProcessInstance(processInstanceQuery, lastAssert.getActual());
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.calledProcessInstance(processInstanceQuery);
   }
 
   /**
@@ -484,15 +441,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *          instance.
    * @param   processInstance the process instance for which
    *          a called process instance should be retrieved.
-   * @return  the only such process instance called by the given process instance and 
+   * @return the only such process instance called by the given process instance and 
    *          compliant to the given query. May return null in 
    *          case no such process instance exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one instance is delivered by the underlying 
    *          query.
    */
   public static ProcessInstance calledProcessInstance(ProcessInstanceQuery processInstanceQuery, ProcessInstance processInstance) {
-    return assertThat(processInstance).isNotNull().calledProcessInstance(processInstanceQuery).getActual();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.calledProcessInstance(processInstanceQuery, processInstance);
   }
 
   /**
@@ -500,15 +457,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * available in the context of the last asserted process
    * instance.
    *
-   * @return  the only job of the last asserted process
+   * @return the only job of the last asserted process
    *          instance. May return null if no such job exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one job is delivered by the underlying 
    *          query or in case no process instance was asserted 
    *          yet.
    */
   public static Job job() {
-    return job(jobQuery());
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.job();
   }
 
   /**
@@ -517,14 +474,14 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
-   * @return  the only job of the process instance. May 
+   * @return the only job of the process instance. May 
    *          return null if no such task exists.
-   * @throws  java.lang.IllegalStateException in case more 
+   * @throws IllegalStateException in case more 
    *          than one job is delivered by the underlying 
    *          query.
    */
   public static Job job(ProcessInstance processInstance) {
-    return job(jobQuery(), processInstance);
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.job(processInstance);
   }
 
   /**
@@ -534,21 +491,15 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *
    * @param   activityId the id of the job that should
    *          be retrieved.                             
-   * @return  the only job of the last asserted process
+   * @return the only job of the last asserted process
    *          instance. May return null if no such job exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one job is delivered by the underlying 
    *          query or in case no process instance was asserted 
    *          yet.
    */
   public static Job job(String activityId) {
-    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
-    if (lastAssert == null)
-      throw new IllegalStateException(
-        "Call a process instance assertion first - " +
-          "e.g. assertThat(processInstance)... !"
-      );
-    return job(activityId, lastAssert.getActual());
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.job(activityId);
   }
 
   /**
@@ -560,14 +511,14 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *          be retrieved.                             
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
-   * @return  the only job of the given process instance. May
+   * @return the only job of the given process instance. May
    *          return null if no such job exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one job is delivered by the underlying 
    *          query.
    */
   public static Job job(String activityId, ProcessInstance processInstance) {
-    return assertThat(processInstance).isNotNull().job(activityId).getActual();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.job(activityId, processInstance);
   }
 
   /**
@@ -578,22 +529,16 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    * @param   jobQuery the query with which the job should
    *          be retrieved. This query will be further narrowed
    *          to the last asserted process instance.
-   * @return  the only job of the last asserted process instance 
+   * @return the only job of the last asserted process instance 
    *          and compliant to the given query. May return null 
    *          in case no such task exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one job is delivered by the underlying 
    *          query or in case no process instance was asserted 
    *          yet.
    */
   public static Job job(JobQuery jobQuery) {
-    ProcessInstanceAssert lastAssert = AbstractProcessAssert.getLastAssert(ProcessInstanceAssert.class);
-    if (lastAssert == null)
-      throw new IllegalStateException(
-        "Call a process instance assertion first - " +
-          "e.g. assertThat(processInstance)... !"
-      );
-    return job(jobQuery, lastAssert.getActual());
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.job(jobQuery);
   }
 
   /**
@@ -606,91 +551,61 @@ public class ProcessEngineTests extends ProcessEngineAssertions {
    *          to the given process instance.
    * @param   processInstance the process instance for which
    *          a job should be retrieved.
-   * @return  the only job of the given process instance and 
+   * @return the only job of the given process instance and 
    *          compliant to the given query. May return null in 
    *          case no such job exists.
-   * @throws  java.lang.IllegalStateException in case more
+   * @throws IllegalStateException in case more
    *          than one job is delivered by the underlying 
    *          query.
    */
   public static Job job(JobQuery jobQuery, ProcessInstance processInstance) {
-    return assertThat(processInstance).isNotNull().job(jobQuery).getActual();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.job(jobQuery, processInstance);
   }
 
   /**
    * Helper method to easily claim a task for a specific 
    * assignee.
-   * 
+   *
    * @param   task Task to be claimed for an assignee
    * @param   assigneeUserId userId of assignee for which 
    *          the task should be claimed
-   * @return  the assigned task - properly refreshed to its 
+   * @return the assigned task - properly refreshed to its 
    *          assigned state.
    */
   public static Task claim(Task task, String assigneeUserId) {
-    if (task == null || assigneeUserId == null)
-      throw new IllegalArgumentException(format("Illegal call " +
-        "of claim(task = '%s', assigneeUserId = '%s') - both must " +
-        "not be null!", task, assigneeUserId));
-    taskService().claim(task.getId(), assigneeUserId);
-    return taskQuery().taskId(task.getId()).singleResult();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.claim(task, assigneeUserId);
   }
 
   /**
    * Helper method to easily unclaim a task.
-   * 
+   *
    * @param   task Task to be claimed for an assignee
-   * @return  the assigned task - properly refreshed to its 
+   * @return the assigned task - properly refreshed to its 
    *          unassigned state.
    */
   public static Task unclaim(Task task) {
-    if (task == null)
-      throw new IllegalArgumentException(format("Illegal call " +
-        "of unclaim(task = '%s') - task must " +
-        "not be null!", task));
-    taskService().claim(task.getId(), null);
-    return taskQuery().taskId(task.getId()).singleResult();
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.unclaim(task);
   }
 
   /**
    * Helper method to easily complete a task and pass some 
    * process variables. 
-   * 
-   * @param   task Task to be completed 
+   *  @param   task Task to be completed 
    * @param   variables Process variables to be passed to the 
    *          process instance when completing the task. For 
    *          setting those variables, you can use 
-   *          withVariables(String key, Object value, ...)
    */
   public static void complete(Task task, Map<String, Object> variables) {
-    if (task == null || variables == null)
-      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s', variables = '%s') - both must not be null!", task, variables));
-    taskService().complete(task.getId(), variables);
+    org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.complete(task, variables);
   }
 
   /**
    * Helper method to easily complete a task.
-   * 
+   *
    * @param   task Task to be completed 
    */
   public static void complete(Task task) {
-    if (task == null)
-      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s') - must not be null!", task));
-    taskService().complete(task.getId());
+    org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.complete(task);
   }
-
-  /**
-   * Helper method to easily execute a job.
-   * 
-   * @param   job Job to be executed.
-   */
-  public static void execute(Job job) {
-    if (job == null)
-      throw new IllegalArgumentException(format("Illegal call of execute(job = '%s') - must not be null!", job));
-    Job current = jobQuery().jobId(job.getId()).singleResult();
-    if (current == null)
-      throw new IllegalStateException(format("Illegal state when calling execute(job = '%s') - job does not exist anymore!", job));
-    managementService().executeJob(job.getId());
-  }
-
+  
 }

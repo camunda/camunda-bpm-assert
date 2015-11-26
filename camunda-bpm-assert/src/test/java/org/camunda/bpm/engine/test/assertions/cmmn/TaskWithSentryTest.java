@@ -23,11 +23,6 @@ public class TaskWithSentryTest extends ProcessAssertTestCase {
 	@Rule
 	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-	@Before
-	public void assumeApi() {
-		assumeApi("7.3");
-	}
-
 	@Test
 	@Deployment(resources = { "cmmn/TaskWithSentryTest.cmmn" })
 	public void task_b_should_be_available() {

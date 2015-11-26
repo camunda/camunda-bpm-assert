@@ -11,19 +11,35 @@
     </parent>
 
     <packaging>jar</packaging>
+    
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.camunda.bpm</groupId>
+                <artifactId>camunda-bom</artifactId>
+                <version>RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
         <dependency>
-            <groupId>org.camunda.bpm</groupId>
-            <artifactId>camunda-engine</artifactId>
-            <!-- We always *compile* with the latest RELEASE (but *test* 
-                 against the release configured with -Dcamunda-bpm.version) -->
-            <version>RELEASE</version>
-        </dependency>
-        <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.camunda.bpm</groupId>
+            <artifactId>camunda-engine</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

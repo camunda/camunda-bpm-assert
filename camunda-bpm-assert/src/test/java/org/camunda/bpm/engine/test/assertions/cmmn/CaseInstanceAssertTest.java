@@ -25,11 +25,6 @@ public class CaseInstanceAssertTest extends ProcessAssertTestCase {
 	@Rule
 	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-	@Before
-	public void assumeApi() {
-		assumeApi("7.3");
-	}
-
 	@Test
 	@Deployment(resources = { "cmmn/TaskTest.cmmn" })
 	public void isActive_should_not_throw_exception_when_case_is_active() {

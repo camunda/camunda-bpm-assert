@@ -5,13 +5,12 @@ import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
 import org.camunda.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionEntity;
-import org.camunda.bpm.engine.impl.cmmn.entity.runtime.CaseExecutionQueryImpl;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.camunda.bpm.engine.impl.persistence.entity.HistoricCaseActivityInstanceEntity;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
 import org.camunda.bpm.engine.runtime.CaseInstance;
-import org.camunda.bpm.engine.test.assertions.AbstractProcessAssert;
+import org.camunda.bpm.engine.test.assertions.bpmn.AbstractProcessAssert;
 import org.camunda.bpm.model.cmmn.impl.CmmnModelConstants;
 
 /**
@@ -23,7 +22,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 
 	protected AbstractCaseAssert(ProcessEngine engine, A actual, Class<?> selfType) {
 		super(engine, actual, selfType);
-		assertApi("7.2");
 	}
 
 	/* Verifies the expectation that the {@link CaseExecution} is 'available'.

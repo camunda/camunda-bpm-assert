@@ -6,41 +6,30 @@ import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.assertj.core.api.Assertions;
-import org.camunda.bpm.engine.test.util.CamundaBpmApi;
-
-import java.util.Map;
+import org.camunda.bpm.engine.test.assertions.bpmn.*;
 
 /**
- * Class meant to statically access all
- * camunda BPM Process Engine Assertions.
- * <p/>
- * In your code use import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.*;
- *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Martin Günther <martin.guenter@holisticon.de>
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
+ *   
+ * @deprecated Use org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests
+ *              or org.camunda.bpm.engine.test.assertions.cmmn.ProcessEngineTests
  */
+@Deprecated
 public class ProcessEngineAssertions extends Assertions {
-
-  static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
-
+  
   protected ProcessEngineAssertions() {
   }
 
-  /*
-   * *Asserts* that process engine supports the requested API version. Use method
-   * at the beginning of static helper method implementations which require 
-   * Camunda BPM API versions higher than Camunda BPM "7.0".
-   * 
-   * @param   api Camunda BPM API version e.g. '7.1', '7.2' etc.
-   * @throws  AssertionError if process engine does not support the requested API version
+  /**
+   * Assert that... the given Job meets your expectations.
+   *
+   * @param   actual Job under test
+   * @return Assert object offering Job specific assertions.
    */
-  protected static void assertApi(String api) {
-    AbstractProcessAssert.assertApi(api);
-  }
-
-  protected static boolean supportsApi(String api) {
-    return CamundaBpmApi.supports(api);
+  public static JobAssert assertThat(Job actual) {
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.assertThat(actual);
   }
 
   /**
@@ -49,26 +38,13 @@ public class ProcessEngineAssertions extends Assertions {
    * processEngine is bound yet, init(processEngine) is called with
    * a default process engine.
    *
-   * @return  processEngine bound to the current testing thread
-   * @throws  IllegalStateException in case a processEngine has not
+   * @return processEngine bound to the current testing thread
+   * @throws IllegalStateException in case a processEngine has not
    *          been initialised yet and cannot be initialised with a 
    *          default engine.
    */
   public static ProcessEngine processEngine() {
-    ProcessEngine processEngine = ProcessEngineAssertions.processEngine.get();
-    if (processEngine != null)
-      return processEngine;
-    Map<String, ProcessEngine> processEngines = ProcessEngines.getProcessEngines();
-    if (processEngines.size() == 1) {
-      processEngine = processEngines.values().iterator().next();
-      init(processEngine);
-      return processEngine;
-    }
-    String message = processEngines.size() == 0 ? "No ProcessEngine found to be " +
-      "registered with " + ProcessEngines.class.getSimpleName() + "!" 
-      : String.format(processEngines.size() + " ProcessEngines initialized. Call %s.init" +
-      "(ProcessEngine processEngine) first!", ProcessEngineAssertions.class.getSimpleName());
-    throw new IllegalStateException(message);
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processEngine();
   }
 
   /**
@@ -78,9 +54,8 @@ public class ProcessEngineAssertions extends Assertions {
    * @param   processEngine ProcessEngine which should be bound to the
    *          current testing thread.
    */
-  public static void init(final ProcessEngine processEngine) {
-    ProcessEngineAssertions.processEngine.set(processEngine);
-    AbstractProcessAssert.resetLastAsserts();
+  public static void init(ProcessEngine processEngine) {
+    org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.init(processEngine);
   }
 
   /**
@@ -88,48 +63,37 @@ public class ProcessEngineAssertions extends Assertions {
    * to its clean state - just as before calling init() for the first time.
    */
   public static void reset() {
-    ProcessEngineAssertions.processEngine.remove();
-    AbstractProcessAssert.resetLastAsserts();
+    org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.reset();
   }
 
   /**
    * Assert that... the given ProcessDefinition meets your expectations.
    *
    * @param   actual ProcessDefinition under test
-   * @return  Assert object offering ProcessDefinition specific assertions.
+   * @return Assert object offering ProcessDefinition specific assertions.
    */
-  public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
-    return ProcessDefinitionAssert.assertThat(processEngine(), actual);
+  public static ProcessDefinitionAssert assertThat(ProcessDefinition actual) {
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.assertThat(actual);
   }
 
   /**
    * Assert that... the given ProcessInstance meets your expectations.
    *
    * @param   actual ProcessInstance under test
-   * @return  Assert object offering ProcessInstance specific assertions.
+   * @return Assert object offering ProcessInstance specific assertions.
    */
-  public static ProcessInstanceAssert assertThat(final ProcessInstance actual) {
-    return ProcessInstanceAssert.assertThat(processEngine(), actual);
+  public static ProcessInstanceAssert assertThat(ProcessInstance actual) {
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.assertThat(actual);
   }
 
   /**
    * Assert that... the given Task meets your expectations.
    *
    * @param   actual Task under test
-   * @return  Assert object offering Task specific assertions.
+   * @return Assert object offering Task specific assertions.
    */
-  public static TaskAssert assertThat(final Task actual) {
-    return TaskAssert.assertThat(processEngine(), actual);
+  public static TaskAssert assertThat(Task actual) {
+    return org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.assertThat(actual);
   }
-
-  /**
-   * Assert that... the given Job meets your expectations.
-   *
-   * @param   actual Job under test
-   * @return  Assert object offering Job specific assertions.
-   */
-  public static JobAssert assertThat(final Job actual) {
-    return JobAssert.assertThat(processEngine(), actual);
-  }
-
+  
 }

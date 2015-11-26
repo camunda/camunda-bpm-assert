@@ -23,11 +23,6 @@ public class TaskTest extends ProcessAssertTestCase {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-  @Before
-  public void assumeApi() {
-    assumeApi("7.3");
-  }
-
   @Test
   @Deployment(resources = { "cmmn/TaskTest.cmmn" })
   /**

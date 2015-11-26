@@ -23,11 +23,6 @@ public class TaskWithManualActivationTest extends ProcessAssertTestCase {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-  @Before
-  public void assumeApi() {
-    assumeApi("7.3");
-  }
-
   @Test
   @Deployment(resources = { "cmmn/TaskWithManualActivationTest.cmmn" })
   public void task_should_be_enabled() {

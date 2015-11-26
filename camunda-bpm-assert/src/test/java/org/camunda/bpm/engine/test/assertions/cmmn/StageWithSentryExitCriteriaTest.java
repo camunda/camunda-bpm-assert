@@ -25,11 +25,6 @@ public class StageWithSentryExitCriteriaTest extends ProcessAssertTestCase {
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-  @Before
-  public void assumeApi() {
-    assumeApi("7.3");
-  }
-
   /**
    * Introduces:
    */

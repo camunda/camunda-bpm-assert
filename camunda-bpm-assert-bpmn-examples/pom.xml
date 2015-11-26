@@ -11,7 +11,7 @@
     </parent>
     
     <properties>
-        <camunda-bpm.version>7.1.0-Final</camunda-bpm.version>
+        <camunda-bpm.version>7.0.0-Final</camunda-bpm.version>
     </properties>
 
     <dependencies>
@@ -22,7 +22,52 @@
         <dependency>
             <groupId>org.camunda.bpm</groupId>
             <artifactId>camunda-engine</artifactId>
+            <version>${camunda-bpm.version}</version>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>7.1+</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>camunda-bpm.version</name>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.camunda.bpm</groupId>
+                        <artifactId>camunda-bom</artifactId>
+                        <version>${camunda-bpm.version}</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+        <profile>
+            <id>7.0</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>camunda-bpm.version</name>
+                    <value>7.0.0-Final</value>
+                </property>
+            </activation>
+            <dependencyManagement>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.camunda.bpm</groupId>
+                        <artifactId>camunda-bom</artifactId>
+                        <version>7.1.0-Final</version>
+                        <type>pom</type>
+                        <scope>import</scope>
+                    </dependency>
+                </dependencies>
+            </dependencyManagement>
+        </profile>
+    </profiles>
 
 </project>
