@@ -19,9 +19,7 @@ public class ProcessInstanceAssertHasProcessDefinitionKeyTest extends ProcessAss
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasProcessDefinitionKey-1.bpmn",
-    "ProcessInstanceAssert-hasProcessDefinitionKey-2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasProcessDefinitionKey-1.bpmn", "bpmn/ProcessInstanceAssert-hasProcessDefinitionKey-2.bpmn"
   })
   public void testHasProcessDefinitionKey_Success() {
     // When
@@ -33,9 +31,7 @@ public class ProcessInstanceAssertHasProcessDefinitionKeyTest extends ProcessAss
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasProcessDefinitionKey-1.bpmn",
-    "ProcessInstanceAssert-hasProcessDefinitionKey-2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasProcessDefinitionKey-1.bpmn", "bpmn/ProcessInstanceAssert-hasProcessDefinitionKey-2.bpmn"
   })
   public void testHasProcessDefinitionKey_Failure() {
     // Given

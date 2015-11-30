@@ -19,8 +19,7 @@ public class ProcessInstanceAssertIsEndedTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isEnded.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isEnded.bpmn"
   })
   public void testIsEnded_Success() {
     // Given
@@ -34,8 +33,7 @@ public class ProcessInstanceAssertIsEndedTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isEnded.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isEnded.bpmn"
   })
   public void testIsEnded_Failure() {
     // When

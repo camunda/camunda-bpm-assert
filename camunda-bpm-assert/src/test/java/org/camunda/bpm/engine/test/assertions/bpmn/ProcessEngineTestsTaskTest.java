@@ -26,8 +26,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_OnlyActivity_Success() {
     // Given
@@ -45,8 +44,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_OnlyActivity_Failure() {
     // Given
@@ -67,8 +65,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_TwoActivities_Failure() {
     // Given
@@ -93,8 +90,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskDefinitionKey_OnlyActivity_Success() {
     // Given
@@ -112,8 +108,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskDefinitionKey_TwoActivities_Success() {
     // Given
@@ -134,8 +129,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskDefinitionKey_OnlyActivity_Failure() {
     // Given
@@ -156,8 +150,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskQuery_OnlyActivity_Success() {
     // Given
@@ -175,8 +168,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskQuery_OnlyActivity_Failure() {
     // Given
@@ -197,8 +189,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskQuery_TwoActivities_Success() {
     // Given
@@ -219,8 +210,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskQuery_TwoActivities_Failure() {
     // Given
@@ -245,8 +235,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_processInstance_OnlyActivity_Success() {
     // Given
@@ -262,8 +251,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_TwoActivities_processInstance_Failure() {
     // Given
@@ -286,8 +274,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskDefinitionKey_processInstance_OnlyActivity_Success() {
     // Given
@@ -303,8 +290,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskDefinitionKey_processInstance_TwoActivities_Success() {
     // Given
@@ -324,8 +310,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskQuery_processInstance_OnlyActivity_Success() {
     // Given
@@ -341,8 +326,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskQuery_processInstance_TwoActivities_Success() {
     // Given
@@ -362,8 +346,7 @@ public class ProcessEngineTestsTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-task.bpmn"
   })
   public void testTask_taskQuery_processInstance_TwoActivities_Failure() {
     // Given

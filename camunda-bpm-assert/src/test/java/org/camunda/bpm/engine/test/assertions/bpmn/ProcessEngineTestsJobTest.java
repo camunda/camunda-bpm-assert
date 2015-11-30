@@ -27,8 +27,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_OnlyActivity_Success() {
     // Given
@@ -46,8 +45,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_OnlyActivity_Failure() {
     // Given
@@ -68,8 +66,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_TwoActivities_Failure() {
     // Given
@@ -96,8 +93,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_activityId_OnlyActivity_Success() {
     // Given
@@ -115,8 +111,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_activityId_TwoActivities_Success() {
     // Given
@@ -140,8 +135,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_activityId_OnlyActivity_Failure() {
     // Given
@@ -162,8 +156,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
   
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_jobQuery_OnlyActivity_Success() {
     // Given
@@ -181,8 +174,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_jobQuery_OnlyActivity_Failure() {
     // Given
@@ -203,8 +195,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_jobQuery_TwoActivities_Failure() {
     // Given
@@ -231,8 +222,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_processInstance_OnlyActivity_Success() {
     // Given
@@ -248,8 +238,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_TwoActivities_processInstance_Failure() {
     // Given
@@ -274,8 +263,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_jobDefinitionKey_processInstance_OnlyActivity_Success() {
     // Given
@@ -291,8 +279,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_jobDefinitionKey_processInstance_TwoActivities_Success() {
     // Given
@@ -314,8 +301,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_jobQuery_processInstance_OnlyActivity_Success() {
     // Given
@@ -331,8 +317,7 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
   })
   public void testJob_jobQuery_processInstance_TwoActivities_Failure() {
     // Given

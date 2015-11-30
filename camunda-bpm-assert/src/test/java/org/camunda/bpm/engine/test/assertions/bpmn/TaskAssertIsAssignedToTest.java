@@ -20,8 +20,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-isAssignedTo.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
   public void testIsAssignedTo_Success() {
     // Given
@@ -35,8 +34,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-isAssignedTo.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
   public void testIsAssignedTo_NotAssigned_Failure() {
     // Given
@@ -53,8 +51,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-isAssignedTo.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
   public void testIsAssignedTo_OtherAssignee_Failure() {
     // Given
@@ -73,8 +70,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-isAssignedTo.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
   public void testIsAssignedTo_Null_Failure() {
     // Given
@@ -93,8 +89,7 @@ public class TaskAssertIsAssignedToTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-isAssignedTo.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-isAssignedTo.bpmn"
   })
   public void testIsAssignedTo_NonExistingTask_Failure() {
     // Given

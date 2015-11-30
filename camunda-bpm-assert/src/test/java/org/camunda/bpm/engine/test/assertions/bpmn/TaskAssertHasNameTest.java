@@ -19,8 +19,7 @@ public class TaskAssertHasNameTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasName.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasName.bpmn"
   })
   public void testHasName_Success() {
     // When
@@ -32,8 +31,7 @@ public class TaskAssertHasNameTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasName.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasName.bpmn"
   })
   public void testHasName_Failure() {
     // When
@@ -50,8 +48,7 @@ public class TaskAssertHasNameTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasName.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasName.bpmn"
   })
   public void testHasName_Null_Failure() {
     // When

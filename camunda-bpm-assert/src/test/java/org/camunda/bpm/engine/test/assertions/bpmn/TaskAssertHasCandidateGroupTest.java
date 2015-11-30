@@ -23,8 +23,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_PreDefined_Success() {
     // When
@@ -36,8 +35,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_PreDefined_Failure() {
     // Given
@@ -56,8 +54,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_Predefined_Removed_Failure() {
     // Given
@@ -76,8 +73,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_PreDefined_Other_Failure() {
     // Given
@@ -96,8 +92,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_ExplicitelySet_Success() {
     // Given
@@ -113,8 +108,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_ExplicitelySet_Failure() {
     // Given
@@ -133,8 +127,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_ExplicitelySet_Removed_Failure() {
     // Given
@@ -157,8 +150,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_ExplicitelySet_Other_Failure() {
     // Given
@@ -180,8 +172,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_MoreThanOne_Success() {
     // When
@@ -197,8 +188,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_MoreThanOne_Failure() {
     // When
@@ -217,8 +207,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_Null_Failure() {
     // When
@@ -235,8 +224,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_NonExistingTask_Failure() {
     // Given
@@ -256,8 +244,7 @@ public class TaskAssertHasCandidateGroupTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-      "TaskAssert-hasCandidateGroup.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroup.bpmn"
   })
   public void testHasCandidateGroup_Assigned_Failure() {
     // Given

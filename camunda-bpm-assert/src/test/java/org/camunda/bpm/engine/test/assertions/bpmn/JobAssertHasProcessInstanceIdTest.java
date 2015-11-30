@@ -19,8 +19,7 @@ public class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasProcessInstanceId.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasProcessInstanceId.bpmn"
   })
   public void testHasProcessInstanceId_Success() {
     // When
@@ -34,8 +33,7 @@ public class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasProcessInstanceId.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasProcessInstanceId.bpmn"
   })
   public void testHasProcessInstanceId_Failure() {
     // When
@@ -54,8 +52,7 @@ public class JobAssertHasProcessInstanceIdTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasProcessInstanceId.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasProcessInstanceId.bpmn"
   })
   public void testHasProcessInstanceId_Error_Null() {
     // When

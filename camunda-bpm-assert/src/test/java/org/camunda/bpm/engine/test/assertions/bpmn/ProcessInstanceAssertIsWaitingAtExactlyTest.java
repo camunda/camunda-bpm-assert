@@ -19,8 +19,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAtExactly_Only_Activity_Success() {
     // When
@@ -32,8 +31,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAtExactly_Only_Activity_Failure() {
     // When
@@ -50,8 +48,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAtExactly_Non_Existing_Activity_Failure() {
     // When
@@ -68,8 +65,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAtExactly_Two_Activities_Success() {
     // Given
@@ -85,8 +81,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAtExactly_Two_Activities_Failure() {
     // Given
@@ -112,8 +107,7 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAtExactly_Null_Error() {
     // When

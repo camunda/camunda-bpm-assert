@@ -20,8 +20,7 @@ public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isStarted.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isStarted.bpmn"
   })
   public void testIsStarted_AndActive_Success() {
     // When
@@ -33,8 +32,7 @@ public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isStarted.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isStarted.bpmn"
   })
   public void testIsStarted_AndEnded_Success() {
     // Given
@@ -48,8 +46,7 @@ public class ProcessInstanceAssertIsStartedTest extends ProcessAssertTestCase {
   }
   
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isStarted.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isStarted.bpmn"
   })
   public void testIsStarted_Failure() {
     // When

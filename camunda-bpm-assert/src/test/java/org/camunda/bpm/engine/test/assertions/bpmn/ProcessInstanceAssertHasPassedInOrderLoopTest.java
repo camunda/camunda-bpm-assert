@@ -19,8 +19,7 @@ public class ProcessInstanceAssertHasPassedInOrderLoopTest extends ProcessAssert
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
   
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder-loop.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder-loop.bpmn"
   })
   public void testHasPassedInOrder_SeveralActivities_HistoricInstance() {
     // Given

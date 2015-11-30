@@ -19,8 +19,7 @@ public class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasExceptionMessage.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasExceptionMessage.bpmn"
   })
   public void testHasExceptionMessage_Success() {
     // Given
@@ -39,8 +38,7 @@ public class JobAssertHasExceptionMessageTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasExceptionMessage.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasExceptionMessage.bpmn"
   })
   public void testHasExceptionMessage_Failure() {
     // Given

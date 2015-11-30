@@ -21,8 +21,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
   public void testJob_Single_Success() {
     // Given
@@ -34,8 +33,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
   public void testJob_SingleWithQuery_Success() {
     // Given
@@ -47,8 +45,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
   public void testJob_MultipleWithQuery_Success() {
     // When
@@ -68,8 +65,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
   public void testJob_NotYet_Failure() {
     // When
@@ -86,8 +82,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
   public void testJob_Passed_Failure() {
     // Given
@@ -108,8 +103,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
   public void testJob_MultipleWithQuery_Failure() {
     // Given
@@ -129,8 +123,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
   public void testJob_MultipleWithTaskDefinitionKey_Success() {
     // When
@@ -147,8 +140,7 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-job.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
   })
   public void testJob_MultipleWithTaskDefinitionKey_Failure() {
     // When

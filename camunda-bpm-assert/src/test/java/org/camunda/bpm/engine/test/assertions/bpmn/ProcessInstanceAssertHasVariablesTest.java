@@ -19,8 +19,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasVariables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
   public void testHasVariables_One_Success() {
     // When
@@ -40,8 +39,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasVariables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
   public void testHasVariables_One_Failure() {
     // When
@@ -81,8 +79,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasVariables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
   public void testHasVariables_Two_Success() {
     // When
@@ -114,8 +111,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasVariables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
   public void testHasVariables_Two_Failure() {
     // When
@@ -183,8 +179,7 @@ public class ProcessInstanceAssertHasVariablesTest extends ProcessAssertTestCase
   }
   
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasVariables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasVariables.bpmn"
   })
   public void testHasVariables_None_Failure() {
     // When

@@ -25,8 +25,7 @@ public class ProcessEngineTestsUnclaimTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-unclaim.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-unclaim.bpmn"
   })
   public void testUnclaim_Success() {
     // Given
@@ -41,8 +40,7 @@ public class ProcessEngineTestsUnclaimTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-unclaim.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-unclaim.bpmn"
   })
   public void testUnclaim_Failure() {
     // Given
@@ -59,8 +57,7 @@ public class ProcessEngineTestsUnclaimTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-unclaim.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-unclaim.bpmn"
   })
   public void testUnclaim_AlreadyUnclaimed() {
     // Given

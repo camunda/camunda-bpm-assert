@@ -19,8 +19,7 @@ public class ProcessInstanceAssertIsWaitingAtTest extends ProcessAssertTestCase 
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAt_Only_Activity_Success() {
     // When
@@ -32,8 +31,7 @@ public class ProcessInstanceAssertIsWaitingAtTest extends ProcessAssertTestCase 
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAt_Only_Activity_Failure() {
     // When
@@ -50,8 +48,7 @@ public class ProcessInstanceAssertIsWaitingAtTest extends ProcessAssertTestCase 
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAt_Non_Existing_Activity_Failure() {
     // When
@@ -68,8 +65,7 @@ public class ProcessInstanceAssertIsWaitingAtTest extends ProcessAssertTestCase 
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAt_One_Of_Two_Activities_Success() {
     // Given
@@ -87,8 +83,7 @@ public class ProcessInstanceAssertIsWaitingAtTest extends ProcessAssertTestCase 
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAt_One_Of_Two_Activities_Failure() {
     // Given
@@ -107,8 +102,7 @@ public class ProcessInstanceAssertIsWaitingAtTest extends ProcessAssertTestCase 
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testIsWaitingAt_Null_Error() {
     // When

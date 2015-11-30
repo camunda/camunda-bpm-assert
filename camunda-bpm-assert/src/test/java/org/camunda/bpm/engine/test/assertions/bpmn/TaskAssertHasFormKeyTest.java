@@ -19,8 +19,7 @@ public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasFormKey.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasFormKey.bpmn"
   })
   public void testHasFormKey_Success() {
     // When
@@ -32,8 +31,7 @@ public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasFormKey.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasFormKey.bpmn"
   })
   public void testHasFormKey_Failure() {
     // When
@@ -50,8 +48,7 @@ public class TaskAssertHasFormKeyTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasFormKey.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasFormKey.bpmn"
   })
   public void testHasFormKey_Null_Failure() {
     // When

@@ -25,8 +25,7 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-claim.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"
   })
   public void testClaim_Success() {
     // Given
@@ -40,8 +39,7 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-claim.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"
   })
   public void testClaim_Failure() {
     // Given

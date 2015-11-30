@@ -27,8 +27,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-complete.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"
   })
   public void testComplete_Success() {
     // Given
@@ -42,8 +41,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-complete.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"
   })
   public void testComplete_Failure() {
     // Given
@@ -64,8 +62,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-complete.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"
   })
   public void testComplete_WithVariables_Success() {
     // Given
@@ -79,8 +76,7 @@ public class ProcessEngineTestsCompleteTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-complete.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-complete.bpmn"
   })
   public void testComplete_WithVariables_Failure() {
     // Given

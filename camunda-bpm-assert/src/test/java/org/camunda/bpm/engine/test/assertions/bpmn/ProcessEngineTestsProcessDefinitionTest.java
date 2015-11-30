@@ -43,8 +43,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
   public void testProcessDefinition_One_Definition() {
     // Given
@@ -68,8 +67,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
   public void testProcessDefinition_One_Definition_Via_ProcessInstance() {
     // When
@@ -84,8 +82,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
   public void testProcessDefinition_One_Definition_Via_ProcessDefinitionKey() {
     // When
@@ -102,8 +99,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
   public void testProcessDefinition_One_Definition_Via_ProcessDefinitionQuery() {
     // When
@@ -120,8 +116,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn"
   })
   public void testProcessDefinition_One_Definition_Instance_Ended() {
     // Given
@@ -140,8 +135,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn", "ProcessEngineTests-processDefinition2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn", "bpmn/ProcessEngineTests-processDefinition2.bpmn"
   })
   public void testProcessDefinition_Two_Definitions() {
     // Given
@@ -161,8 +155,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn", "ProcessEngineTests-processDefinition2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn", "bpmn/ProcessEngineTests-processDefinition2.bpmn"
   })
   public void testProcessDefinition_Two_Definitions_Via_ProcessInstance() {
     // Given
@@ -186,8 +179,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn", "ProcessEngineTests-processDefinition2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn", "bpmn/ProcessEngineTests-processDefinition2.bpmn"
   })
   public void testProcessDefinition_Two_Definitions_Via_ProcessDefinitionKey() {
     // Given
@@ -213,8 +205,7 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-processDefinition.bpmn", "ProcessEngineTests-processDefinition2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-processDefinition.bpmn", "bpmn/ProcessEngineTests-processDefinition2.bpmn"
   })
   public void testProcessDefinition_Two_Definitions_Via_ProcessDefinitionQuery() {
     // Given

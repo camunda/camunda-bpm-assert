@@ -19,8 +19,7 @@ public class ProcessInstanceAssertIsWaitingForTest extends ProcessAssertTestCase
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingFor.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingFor.bpmn"
   })
   public void testIsWaitingFor_One_Message_Success() {
     // When
@@ -32,8 +31,7 @@ public class ProcessInstanceAssertIsWaitingForTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingFor-2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingFor-2.bpmn"
   })
   public void testIsWaitingFor_Two_Messages_Success() {
     // When
@@ -45,8 +43,7 @@ public class ProcessInstanceAssertIsWaitingForTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingFor-2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingFor-2.bpmn"
   })
   public void testIsWaitingFor_One_Of_Two_Messages_Success() {
     // Given
@@ -67,8 +64,7 @@ public class ProcessInstanceAssertIsWaitingForTest extends ProcessAssertTestCase
   }
   
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingFor.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingFor.bpmn"
   })
   public void testIsWaitingFor_One_Message_Failure() {
     // Given
@@ -87,8 +83,7 @@ public class ProcessInstanceAssertIsWaitingForTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingFor.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingFor.bpmn"
   })
   public void testIsWaitingFor_Not_Waiting_For_One_Of_One_Failure() {
     // When
@@ -105,8 +100,7 @@ public class ProcessInstanceAssertIsWaitingForTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingFor.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingFor.bpmn"
   })
   public void testIsWaitingFor_Not_Waiting_For_One_Of_Two_Failure() {
     // When
@@ -123,8 +117,7 @@ public class ProcessInstanceAssertIsWaitingForTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingFor.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingFor.bpmn"
   })
   public void testIsWaitingFor_Null_Error() {
     // When

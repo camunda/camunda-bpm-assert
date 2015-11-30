@@ -20,8 +20,7 @@ public class JobAssertHasActivityIdTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasActivityId.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasActivityId.bpmn"
   })
   public void testHasActivityId_Success() {
     // Given
@@ -37,8 +36,7 @@ public class JobAssertHasActivityIdTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasActivityId.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasActivityId.bpmn"
   })
   public void testHasActivityId_Failure() {
     // Given
@@ -59,8 +57,7 @@ public class JobAssertHasActivityIdTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasActivityId.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasActivityId.bpmn"
   })
   public void testHasActivityId_Error_Null() {
     // Given

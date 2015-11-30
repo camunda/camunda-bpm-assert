@@ -18,8 +18,7 @@ public class JobAssertHasRetriesTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasRetries.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasRetries.bpmn"
   })
   public void testHasRetries_Success() {
     // Given
@@ -33,8 +32,7 @@ public class JobAssertHasRetriesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasRetries.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasRetries.bpmn"
   })
   public void testHasRetries_Failure() {
     // Given

@@ -19,8 +19,7 @@ public class TaskAssertHasIdTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasId.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasId.bpmn"
   })
   public void testHasId_Success() {
     // When
@@ -32,8 +31,7 @@ public class TaskAssertHasIdTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasId.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasId.bpmn"
   })
   public void testHasId_Failure() {
     // When
@@ -50,8 +48,7 @@ public class TaskAssertHasIdTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasId.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasId.bpmn"
   })
   public void testHasId_Null_Failure() {
     // When

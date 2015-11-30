@@ -19,8 +19,7 @@ public class TaskAssertHasDescriptionTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDescription.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDescription.bpmn"
   })
   public void testHasDescription_Success() {
     // When
@@ -32,8 +31,7 @@ public class TaskAssertHasDescriptionTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDescription.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDescription.bpmn"
   })
   public void testHasDescription_Failure() {
     // When
@@ -50,8 +48,7 @@ public class TaskAssertHasDescriptionTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDescription.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDescription.bpmn"
   })
   public void testHasDescription_Null_Failure() {
     // When

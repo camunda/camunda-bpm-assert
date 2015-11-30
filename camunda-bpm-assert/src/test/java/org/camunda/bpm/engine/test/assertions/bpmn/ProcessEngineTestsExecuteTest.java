@@ -20,8 +20,7 @@ public class ProcessEngineTestsExecuteTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-execute.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-execute.bpmn"
   })
   public void testExecute_Success() {
     // Given
@@ -41,8 +40,7 @@ public class ProcessEngineTestsExecuteTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessEngineTests-execute.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-execute.bpmn"
   })
   public void testExecute_Failure() {
     // Given

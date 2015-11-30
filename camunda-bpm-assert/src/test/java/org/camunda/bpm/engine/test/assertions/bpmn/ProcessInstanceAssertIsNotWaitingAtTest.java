@@ -19,8 +19,7 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isNotWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingAt.bpmn"
   })
   public void testIsNotWaitingAt_Only_Activity_Success() {
     // When
@@ -32,8 +31,7 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isNotWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingAt.bpmn"
   })
   public void testIsNotWaitingAt_Only_Activity_Failure() {
     // When
@@ -50,8 +48,7 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isNotWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingAt.bpmn"
   })
   public void testIsNotWaitingAt_Non_Existing_Activity_Success() {
     // When
@@ -63,8 +60,7 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isNotWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingAt.bpmn"
   })
   public void testIsNotWaitingAt_One_Of_Two_Activities_Success() {
     // Given
@@ -78,8 +74,7 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isNotWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingAt.bpmn"
   })
   public void testIsNotWaitingAt_One_Of_Two_Activities_Failure() {
     // Given
@@ -112,8 +107,7 @@ public class ProcessInstanceAssertIsNotWaitingAtTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isNotWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isNotWaitingAt.bpmn"
   })
   public void testIsNotWaitingAt_Null_Error() {
     // When

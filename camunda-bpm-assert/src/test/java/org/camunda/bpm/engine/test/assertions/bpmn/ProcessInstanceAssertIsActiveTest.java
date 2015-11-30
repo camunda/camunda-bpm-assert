@@ -19,8 +19,7 @@ public class ProcessInstanceAssertIsActiveTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isActive.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isActive.bpmn"
   })
   public void testIsActive_Success() {
     // When
@@ -32,8 +31,7 @@ public class ProcessInstanceAssertIsActiveTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isActive.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isActive.bpmn"
   })
   public void testIsActive_AfterActivation_Success() {
     // Given
@@ -49,8 +47,7 @@ public class ProcessInstanceAssertIsActiveTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isActive.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isActive.bpmn"
   })
   public void testIsActive_Failure() {
     // Given

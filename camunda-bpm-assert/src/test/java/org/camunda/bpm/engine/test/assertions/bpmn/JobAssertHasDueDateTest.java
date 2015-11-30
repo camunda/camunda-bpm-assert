@@ -21,8 +21,7 @@ public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasDueDate.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasDueDate.bpmn"
   })
   public void testHasDueDate_Success() {
     // When
@@ -36,8 +35,7 @@ public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasDueDate.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasDueDate.bpmn"
   })
   public void testHasDueDate_Failure() {
     // When
@@ -56,8 +54,7 @@ public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "JobAssert-hasDueDate.bpmn"
+  @Deployment(resources = {"bpmn/JobAssert-hasDueDate.bpmn"
   })
   public void testHasDueDate_Error_Null() {
     // When

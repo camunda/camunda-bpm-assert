@@ -19,8 +19,7 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-variables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-variables.bpmn"
   })
   public void testVariables_One_Success() {
     // When
@@ -36,8 +35,7 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-variables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-variables.bpmn"
   })
   public void testVariables_One_Changed_Success() {
     // When
@@ -55,8 +53,7 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-variables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-variables.bpmn"
   })
   public void testVariables_One_Failure() {
     // When
@@ -96,8 +93,7 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-variables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-variables.bpmn"
   })
   public void testVariables_Two_Success() {
     // When
@@ -125,8 +121,7 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-variables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-variables.bpmn"
   })
   public void testVariables_Two_Failure() {
     // When
@@ -194,8 +189,7 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-variables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-variables.bpmn"
   })
   public void testVariables_None_Success() {
     // When
@@ -211,8 +205,7 @@ public class ProcessInstanceAssertVariablesTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-variables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-variables.bpmn"
   })
   public void testVariables_None_Failure() {
     // When

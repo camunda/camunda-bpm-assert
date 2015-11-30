@@ -19,8 +19,7 @@ public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase 
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isSuspended.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isSuspended.bpmn"
   })
   public void testIsSuspended_Success() {
     // Given
@@ -34,8 +33,7 @@ public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase 
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isSuspended.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isSuspended.bpmn"
   })
   public void testIsSuspended_AfterStart_Failure() {
     // When
@@ -52,8 +50,7 @@ public class ProcessInstanceAssertIsSuspendedTest extends ProcessAssertTestCase 
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isSuspended.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isSuspended.bpmn"
   })
   public void testIsSuspended_AfterActivation_Failure() {
     // Given

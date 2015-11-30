@@ -23,8 +23,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
   
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_PreDefined_Success() {
     // When
@@ -36,8 +35,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_PreDefined_Failure() {
     // Given
@@ -56,8 +54,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_Predefined_Removed_Failure() {
     // Given
@@ -76,8 +73,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_PreDefined_Other_Failure() {
     // Given
@@ -96,8 +92,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_ExplicitelySet_Success() {
     // Given
@@ -113,8 +108,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_ExplicitelySet_Failure() {
     // Given
@@ -133,8 +127,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_ExplicitelySet_Removed_Failure() {
     // Given
@@ -157,8 +150,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_ExplicitelySet_Other_Failure() {
     // Given
@@ -180,8 +172,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_MoreThanOne_Success() {
     // When
@@ -197,8 +188,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_MoreThanOne_Failure() {
     // When
@@ -217,8 +207,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_Null_Failure() {
     // When
@@ -235,8 +224,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_NonExistingTask_Failure() {
     // Given
@@ -256,8 +244,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-      "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_Assigned_Success() {
     // Given
@@ -271,8 +258,7 @@ public class TaskAssertHasCandidateGroupAssociatedTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasCandidateGroupAssociated.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasCandidateGroupAssociated.bpmn"
   })
   public void testHasCandidateGroupAssociated_Assigned_Failure() {
     // Given

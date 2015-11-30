@@ -19,8 +19,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
   public void testHasPassedInOrder_OnlyActivity_RunningInstance_Success() {
     // Given
@@ -34,8 +33,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
   public void testHasPassedInOrder_OnlyActivity_RunningInstance_Failure() {
     // When
@@ -52,8 +50,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
   public void testHasPassedInOrder_ParallelActivities_RunningInstance_Success() {
     // Given
@@ -73,8 +70,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
   public void testHasPassedInOrder_ParallelActivities_RunningInstance_Failure() {
     // Given
@@ -109,8 +105,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
   public void testHasPassedInOrder_SeveralActivities_RunningInstance_Success() {
     // Given
@@ -140,8 +135,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
   public void testHasPassedInOrder_SeveralActivities_RunningInstance_Failure() {
     // Given
@@ -185,8 +179,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   }
   
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
   public void testHasPassedInOrder_SeveralActivities_HistoricInstance_Success() {
     // Given
@@ -216,8 +209,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasPassedInOrder.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasPassedInOrder.bpmn"
   })
   public void testHasPassedInOrder_SeveralActivities_HistoricInstance_Failure() {
     // Given
@@ -263,8 +255,7 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-isWaitingAt.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-isWaitingAt.bpmn"
   })
   public void testHasPassedInOrder_Null_Error() {
     // When

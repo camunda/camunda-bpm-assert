@@ -19,8 +19,7 @@ public class TaskAssertIsNotAssignedTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-isNotAssigned.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-isNotAssigned.bpmn"
   })
   public void testIsNotAssigned_Success() {
     // When
@@ -32,8 +31,7 @@ public class TaskAssertIsNotAssignedTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-isNotAssigned.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-isNotAssigned.bpmn"
   })
   public void testIsNotAssigned_Failure() {
     // Given

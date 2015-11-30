@@ -20,8 +20,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_Single_Success() {
     // When
@@ -31,8 +30,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_SingleWithQuery_Success() {
     // When
@@ -42,8 +40,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_MultipleWithQuery_Success() {
     // When
@@ -57,8 +54,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_NotYet_Failure() {
     // When
@@ -73,8 +69,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_Passed_Failure() {
     // Given
@@ -91,8 +86,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_MultipleWithQuery_Failure() {
     // When
@@ -113,8 +107,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_MultipleWithTaskDefinitionKey_Success() {
     // When
@@ -128,8 +121,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_MultipleWithTaskDefinitionKey_Failure() {
     // When
@@ -151,8 +143,7 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
 
 
   @Test
-  @Deployment(resources = {
-      "ProcessInstanceAssert-task.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
   })
   public void testTask_notWaitingAtTaskDefinitionKey() {
     final ProcessInstance processInstance = startProcess();

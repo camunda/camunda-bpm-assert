@@ -19,8 +19,7 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNoVariables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNoVariables.bpmn"
   })
   public void testHasNoVariables_None_Success() {
     // When
@@ -36,8 +35,7 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNoVariables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNoVariables.bpmn"
   })
   public void testHasNoVariables_One_Failure() {
     // When
@@ -63,8 +61,7 @@ public class ProcessInstanceAssertHasNoVariablesTest extends ProcessAssertTestCa
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNoVariables.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNoVariables.bpmn"
   })
   public void testHasNoVariables_Two_Failure() {
     // When

@@ -20,8 +20,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessDefinitionAssert-hasActiveInstances.bpmn"
+  @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
   public void testHasActiveInstances_One_Started_Success() {
     // Given
@@ -36,8 +35,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessDefinitionAssert-hasActiveInstances.bpmn"
+  @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
   public void testHasActiveInstances_One_Started_Failure() {
     // Given
@@ -64,8 +62,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessDefinitionAssert-hasActiveInstances.bpmn"
+  @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
   public void testHasActiveInstances_Two_Started_Success() {
     // Given
@@ -84,8 +81,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessDefinitionAssert-hasActiveInstances.bpmn"
+  @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
   public void testHasActiveInstances_Two_Started_Failure() {
     // Given
@@ -123,8 +119,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessDefinitionAssert-hasActiveInstances.bpmn"
+  @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
   public void testHasActiveInstances_Two_Started_One_Ended_Success() {
     // Given
@@ -145,8 +140,7 @@ public class ProcessDefinitionAssertHasActiveInstancesTest extends ProcessAssert
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessDefinitionAssert-hasActiveInstances.bpmn"
+  @Deployment(resources = {"bpmn/ProcessDefinitionAssert-hasActiveInstances.bpmn"
   })
   public void testHasActiveInstances_Two_Started_One_Ended_Failure() {
     // Given

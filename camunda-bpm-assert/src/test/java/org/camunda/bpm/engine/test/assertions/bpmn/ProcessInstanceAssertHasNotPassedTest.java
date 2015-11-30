@@ -19,8 +19,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNotPassed.bpmn"
   })
   public void testHasNotPassed_OnlyActivity_RunningInstance_Failure() {
     // Given
@@ -39,8 +38,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNotPassed.bpmn"
   })
   public void testHasNotPassed_OnlyActivity_RunningInstance_Success() {
     // When
@@ -54,8 +52,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNotPassed.bpmn"
   })
   public void testHasNotPassed_ParallelActivities_RunningInstance_Success() {
     // Given
@@ -73,8 +70,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNotPassed.bpmn"
   })
   public void testHasNotPassed_ParallelActivities_RunningInstance_Failure() {
     // Given
@@ -95,8 +91,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNotPassed.bpmn"
   })
   public void testHasNotPassed_SeveralActivities_RunningInstance_Success() {
     // Given
@@ -114,8 +109,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNotPassed.bpmn"
   })
   public void testHasNotPassed_SeveralActivities_HistoricInstance_Success() {
     // Given
@@ -135,8 +129,7 @@ public class ProcessInstanceAssertHasNotPassedTest extends ProcessAssertTestCase
   }
 
   @Test
-  @Deployment(resources = {
-    "ProcessInstanceAssert-hasNotPassed.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-hasNotPassed.bpmn"
   })
   public void testHasNotPassed_SeveralActivities_HistoricInstance_Failure() {
     // Given

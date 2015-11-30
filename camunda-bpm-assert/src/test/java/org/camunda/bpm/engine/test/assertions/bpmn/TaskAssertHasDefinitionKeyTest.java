@@ -19,8 +19,7 @@ public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDefinitionKey.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDefinitionKey.bpmn"
   })
   public void testHasDefinitionKey_Success() {
     // When
@@ -32,8 +31,7 @@ public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDefinitionKey.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDefinitionKey.bpmn"
   })
   public void testHasDefinitionKey_Failure() {
     // When
@@ -50,8 +48,7 @@ public class TaskAssertHasDefinitionKeyTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDefinitionKey.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDefinitionKey.bpmn"
   })
   public void testHasDefinitionKey_Null_Failure() {
     // When

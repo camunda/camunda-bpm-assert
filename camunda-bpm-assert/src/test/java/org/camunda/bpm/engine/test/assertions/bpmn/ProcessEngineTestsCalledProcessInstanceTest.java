@@ -19,9 +19,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {"ProcessEngineTests-calledProcessInstance-superProcess1.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess1.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_FirstOfTwoSequential_Success() {
     // Given
@@ -58,9 +56,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {"ProcessEngineTests-calledProcessInstance-superProcess1.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess1.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_SecondOfTwoSequential_Success() {
     // Given
@@ -99,9 +95,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {"ProcessEngineTests-calledProcessInstance-superProcess1.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess1.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_SecondOfTwoSequential_Failure() {
     // Given
@@ -164,9 +158,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {"ProcessEngineTests-calledProcessInstance-superProcess2.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess1.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_TwoOfTwoParallel_Success() {
     // When
@@ -188,9 +180,7 @@ public class ProcessEngineTestsCalledProcessInstanceTest extends ProcessAssertTe
   }
 
   @Test
-  @Deployment(resources = {"ProcessEngineTests-calledProcessInstance-superProcess2.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess1.bpmn",
-    "ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessEngineTests-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessEngineTests-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_TwoOfTwoParallel_Failure() {
     // When

@@ -19,9 +19,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {"ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_FirstOfTwoSequential_Success() {
     // When
@@ -47,9 +45,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   }
 
   @Test
-  @Deployment(resources = {"ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_SecondOfTwoSequential_Success() {
     // When
@@ -77,9 +73,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   }
 
   @Test
-  @Deployment(resources = {"ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_SecondOfTwoSequential_Failure() {
     // When
@@ -112,9 +106,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   }
 
   @Test
-  @Deployment(resources = {"ProcessInstanceAssert-calledProcessInstance-superProcess2.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_TwoOfTwoParallel_Success() {
     // When
@@ -140,9 +132,7 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
   }
 
   @Test
-  @Deployment(resources = {"ProcessInstanceAssert-calledProcessInstance-superProcess2.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn",
-    "ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
   })
   public void testCalledProcessInstance_TwoOfTwoParallel_Failure() {
     // When

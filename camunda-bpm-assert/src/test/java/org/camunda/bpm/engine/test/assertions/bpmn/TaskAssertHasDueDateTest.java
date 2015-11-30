@@ -22,8 +22,7 @@ public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDueDate.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDueDate.bpmn"
   })
   public void testHasDueDate_Success() {
     // Given
@@ -39,8 +38,7 @@ public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDueDate.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDueDate.bpmn"
   })
   public void testHasDueDate_Failure() {
     // Given
@@ -59,8 +57,7 @@ public class TaskAssertHasDueDateTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = {
-    "TaskAssert-hasDueDate.bpmn"
+  @Deployment(resources = {"bpmn/TaskAssert-hasDueDate.bpmn"
   })
   public void testHasDueDate_Null_Failure() {
     // When
