@@ -8,59 +8,48 @@ import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.CaseInstanceQuery;
+import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 
 /**
- * Convenience class to access all camunda *BPMN* and 
- * *CMMN* related Assertions PLUS a few helper methods =>
+ * Convenience class to access camunda *BPMN* and *CMMN* 
+ * related Assertions PLUS helper methods. Use it with a static import:
  *
- * import static org.camunda.bpm.engine.test.assertions.cmmn.ProcessEngineTests.*;
+ * import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.*;
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  * @author Martin Günther <martin.guenter@holisticon.de>
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
-public class ProcessEngineTests extends org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests {
-
-  /*
-   * *Asserts* that process engine supports the requested API version. Use 
-   * method at the beginning of CMMN related method implementations which 
-   * exceptionally require a Camunda BPM API versions higher than '7.2'
-   * 
-   * @param   api Camunda BPM API version e.g. '7.3', '7.4' etc.
-   * @throws  AssertionError if process engine does not support the requested API version
-   */
-  protected static void assertApi(String api) {
-    org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.assertApi(api);
-  }
-
+public class CmmnAwareTests extends BpmnAwareTests {
+  
   /**
    * Assert that... the given CaseInstance meets your expectations.
    *
    * @param   actual CaseInstance under test
-   * @return  Assert object offering CaseInstance specific assertions.
+   * @return Assert object offering CaseInstance specific assertions.
    */
-  public static CaseInstanceAssert assertThat(final CaseInstance actual) {
-    return CaseInstanceAssert.assertThat(processEngine(), actual);
+  public static CaseInstanceAssert assertThat(CaseInstance actual) {
+    return CmmnAwareAssertions.assertThat(actual);
   }
 
   /**
    * Assert that... the given CaseExecution meets your expectations.
    *
    * @param   actual CaseExecution under test
-   * @return  Assert object offering CaseExecution specific assertions.
+   * @return Assert object offering CaseExecution specific assertions.
    */
-  public static CaseExecutionAssert assertThat(final CaseExecution actual) {
-    return CaseExecutionAssert.assertThat(processEngine(), actual);
+  public static CaseExecutionAssert assertThat(CaseExecution actual) {
+    return CmmnAwareAssertions.assertThat(actual);
   }
 
   /**
    * Assert that... the given CaseDefinition meets your expectations.
    *
    * @param   actual ProcessDefinition under test
-   * @return  Assert object offering ProcessDefinition specific assertions.
+   * @return Assert object offering ProcessDefinition specific assertions.
    */
-  public static CaseDefinitionAssert assertThat(final CaseDefinition actual) {
-    return CaseDefinitionAssert.assertThat(processEngine(), actual);
+  public static CaseDefinitionAssert assertThat(CaseDefinition actual) {
+    return CmmnAwareAssertions.assertThat(actual);
   }
 
   /**

@@ -1,13 +1,8 @@
 package org.camunda.bpm.engine.test.util;
 
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.camunda.bpm.engine.test.util.CamundaBpmApi;
-import org.junit.Assume;
 import org.junit.Rule;
 import org.junit.Test;
-
-import static org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

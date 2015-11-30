@@ -1,11 +1,5 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.reset;
-import static org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.runtimeService;
-import static org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.task;
-import static org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.unclaim;
-
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -14,6 +8,8 @@ import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
+
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
  * @author Jens Kanschik

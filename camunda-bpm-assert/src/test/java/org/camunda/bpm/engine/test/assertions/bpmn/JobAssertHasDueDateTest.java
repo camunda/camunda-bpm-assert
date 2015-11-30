@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
-import static org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

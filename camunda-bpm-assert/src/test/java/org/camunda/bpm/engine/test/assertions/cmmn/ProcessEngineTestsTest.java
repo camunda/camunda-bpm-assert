@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 
-import static org.camunda.bpm.engine.test.assertions.cmmn.ProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

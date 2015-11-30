@@ -7,7 +7,6 @@ import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.camunda.bpm.engine.test.util.CamundaBpmApi;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,107 +14,22 @@ import java.util.Map;
 import static java.lang.String.format;
 
 /**
- * Convenience class to access all camunda *BPMN* 
- * related Assertions PLUS a few helper methods =>
+ * Convenience class to access only camunda *BPMN* related Assertions 
+ * PLUS helper methods. Usage is possible, if you only need BPMN Tests and 
+ * mandatory if you still use Camunda BPM <= 7.1. 
+ * 
+ * Use it with a static import:
  *
- * import static org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.*;
+ * import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+ *
+ * @see org.camunda.bpm.engine.test.assertions.ProcessEngineTests 
+ *      for full Camunda BPM Assertions functionality  
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class ProcessEngineTests extends org.camunda.bpm.engine.test.assertions.ProcessEngineTests {
+public class BpmnAwareTests extends BpmnAwareAssertions {
 
-  static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
-
-  protected ProcessEngineTests() {}
-
-  /**
-   * Retrieve the processEngine bound to the current testing thread
-   * via calling init(ProcessEngine processEngine). In case no such
-   * processEngine is bound yet, init(processEngine) is called with
-   * a default process engine.
-   *
-   * @return  processEngine bound to the current testing thread
-   * @throws  IllegalStateException in case a processEngine has not
-   *          been initialised yet and cannot be initialised with a 
-   *          default engine.
-   */
-  public static ProcessEngine processEngine() {
-    ProcessEngine processEngine = ProcessEngineTests.processEngine.get();
-    if (processEngine != null)
-      return processEngine;
-    Map<String, ProcessEngine> processEngines = ProcessEngines.getProcessEngines();
-    if (processEngines.size() == 1) {
-      processEngine = processEngines.values().iterator().next();
-      init(processEngine);
-      return processEngine;
-    }
-    String message = processEngines.size() == 0 ? "No ProcessEngine found to be " +
-      "registered with " + ProcessEngines.class.getSimpleName() + "!"
-      : String.format(processEngines.size() + " ProcessEngines initialized. Call %s.init" +
-      "(ProcessEngine processEngine) first!", ProcessEngineTests.class.getSimpleName());
-    throw new IllegalStateException(message);
-  }
-
-  /**
-   * Bind an instance of ProcessEngine to the current testing calls done
-   * in your test method.
-   *
-   * @param   processEngine ProcessEngine which should be bound to the
-   *          current testing thread.
-   */
-  public static void init(final ProcessEngine processEngine) {
-    ProcessEngineTests.processEngine.set(processEngine);
-    AbstractProcessAssert.resetLastAsserts();
-  }
-
-  /**
-   * Resets operations done via calling init(ProcessEngine processEngine)
-   * to its clean state - just as before calling init() for the first time.
-   */
-  public static void reset() {
-    ProcessEngineTests.processEngine.remove();
-    AbstractProcessAssert.resetLastAsserts();
-  }
-
-  /**
-   * Assert that... the given ProcessDefinition meets your expectations.
-   *
-   * @param   actual ProcessDefinition under test
-   * @return  Assert object offering ProcessDefinition specific assertions.
-   */
-  public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
-    return ProcessDefinitionAssert.assertThat(processEngine(), actual);
-  }
-
-  /**
-   * Assert that... the given ProcessInstance meets your expectations.
-   *
-   * @param   actual ProcessInstance under test
-   * @return  Assert object offering ProcessInstance specific assertions.
-   */
-  public static ProcessInstanceAssert assertThat(final ProcessInstance actual) {
-    return ProcessInstanceAssert.assertThat(processEngine(), actual);
-  }
-
-  /**
-   * Assert that... the given Task meets your expectations.
-   *
-   * @param   actual Task under test
-   * @return  Assert object offering Task specific assertions.
-   */
-  public static TaskAssert assertThat(final Task actual) {
-    return TaskAssert.assertThat(processEngine(), actual);
-  }
-
-  /**
-   * Assert that... the given Job meets your expectations.
-   *
-   * @param   actual Job under test
-   * @return  Assert object offering Job specific assertions.
-   */
-  public static JobAssert assertThat(final Job actual) {
-    return JobAssert.assertThat(processEngine(), actual);
-  }
+  protected BpmnAwareTests() {}
 
   /**
    * Helper method to easily access RuntimeService
@@ -771,22 +685,6 @@ public class ProcessEngineTests extends org.camunda.bpm.engine.test.assertions.P
     if (current == null)
       throw new IllegalStateException(format("Illegal state when calling execute(job = '%s') - job does not exist anymore!", job));
     managementService().executeJob(job.getId());
-  }
-
-  /*
-   * *Asserts* that process engine supports the requested API version. Use 
-   * method at the beginning of BPMN related method implementations which 
-   * exceptionally require a Camunda BPM API versions higher than '7.1'
-   * 
-   * @param   api Camunda BPM API version e.g. '7.2', '7.3' etc.
-   * @throws  AssertionError if process engine does not support the requested API version
-   */
-  protected static void assertApi(String api) {
-    AbstractProcessAssert.assertApi(api);
-  }
-
-  protected static boolean supportsApi(String api) {
-    return CamundaBpmApi.supports(api);
   }
 
 }

@@ -12,10 +12,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions.assertThat;
 import static org.mockito.Mockito.*;
 
-import static org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
@@ -50,7 +49,7 @@ public class ProcessEngineTestsTest {
     // When
     init(processEngine);
     // Then
-    Assertions.assertThat(org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processEngine()).isNotNull().isSameAs(processEngine);
+    Assertions.assertThat(BpmnAwareTests.processEngine()).isNotNull().isSameAs(processEngine);
   }
 
   @Test
@@ -58,7 +57,7 @@ public class ProcessEngineTestsTest {
     // When
     reset();
     // Then
-    assertThat(org.camunda.bpm.engine.test.assertions.bpmn.ProcessEngineTests.processEngine.get()).isNull();
+    assertThat(BpmnAwareTests.processEngine.get()).isNull();
   }
 
   @Test
