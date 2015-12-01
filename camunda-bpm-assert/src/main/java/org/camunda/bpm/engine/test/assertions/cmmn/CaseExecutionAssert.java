@@ -19,6 +19,51 @@ public class CaseExecutionAssert extends AbstractCaseAssert<CaseExecutionAssert,
   }
 
   @Override
+  public CaseExecutionAssert isAvailable() {
+    return super.isAvailable();
+  }
+
+  @Override
+  public CaseExecutionAssert isEnabled() {
+    return super.isEnabled();
+  }
+
+  @Override
+  public CaseExecutionAssert isDisabled() {
+    return super.isDisabled();
+  }
+
+  @Override
+  public CaseExecutionAssert isActive() {
+    return super.isActive();
+  }
+
+  @Override
+  public CaseExecutionAssert isSuspended() {
+    return super.isSuspended();
+  }
+
+  @Override
+  public CaseExecutionAssert isCompleted() {
+    return super.isCompleted();
+  }
+
+  @Override
+  public CaseExecutionAssert isClosed() {
+    return super.isClosed();
+  }
+
+  @Override
+  public CaseExecutionAssert isFailed() {
+    return super.isFailed();
+  }
+
+  @Override
+  public CaseExecutionAssert isTerminated() {
+    return super.isTerminated();
+  }
+
+  @Override
   public CaseInstanceAssert isCaseInstance() {
     return super.isCaseInstance();
   }
