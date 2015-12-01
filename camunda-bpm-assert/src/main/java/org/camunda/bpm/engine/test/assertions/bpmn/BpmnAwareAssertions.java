@@ -21,7 +21,7 @@ import org.camunda.bpm.engine.task.Task;
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class BpmnAwareAssertions extends AssertionsBaseImpl {
+public class BpmnAwareAssertions extends AbstractAssertions {
 
   protected BpmnAwareAssertions() {}
 

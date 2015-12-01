@@ -10,9 +10,7 @@ import java.util.Map;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-class AssertionsBaseImpl extends Assertions {
-
-  protected AssertionsBaseImpl() {}
+public abstract class AbstractAssertions extends Assertions {
 
   static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
 
@@ -28,7 +26,7 @@ class AssertionsBaseImpl extends Assertions {
    *          default engine.
    */
   public static ProcessEngine processEngine() {
-    ProcessEngine processEngine = AssertionsBaseImpl.processEngine.get();
+    ProcessEngine processEngine = AbstractAssertions.processEngine.get();
     if (processEngine != null)
       return processEngine;
     Map<String, ProcessEngine> processEngines = ProcessEngines.getProcessEngines();
@@ -52,7 +50,7 @@ class AssertionsBaseImpl extends Assertions {
    *          current testing thread.
    */
   public static void init(final ProcessEngine processEngine) {
-    AssertionsBaseImpl.processEngine.set(processEngine);
+    AbstractAssertions.processEngine.set(processEngine);
     AbstractProcessAssert.resetLastAsserts();
   }
 
@@ -61,7 +59,7 @@ class AssertionsBaseImpl extends Assertions {
    * to its clean state - just as before calling init() for the first time.
    */
   public static void reset() {
-    AssertionsBaseImpl.processEngine.remove();
+    AbstractAssertions.processEngine.remove();
     AbstractProcessAssert.resetLastAsserts();
   }
 
