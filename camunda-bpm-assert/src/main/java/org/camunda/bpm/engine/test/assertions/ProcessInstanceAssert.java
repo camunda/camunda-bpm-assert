@@ -39,11 +39,10 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   @Override
   protected String toString(ProcessInstance processInstance) {
     return processInstance != null ?
-      String.format("actual %s {" +
+      String.format("%s {" +
         "id='%s', " +
         "processDefinitionId='%s', " +
-        "businessKey='%s'" +
-        "}",
+        "businessKey='%s'}",
         ProcessInstance.class.getSimpleName(),
         processInstance.getId(),
         processInstance.getProcessDefinitionId(),
