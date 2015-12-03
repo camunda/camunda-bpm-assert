@@ -46,14 +46,13 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
    */
   protected A getExistingCurrent() {
     Assertions.assertThat(actual)
-      .overridingErrorMessage("Expecting assertion to be called on non-null actual, but found it to be null!")
+      .overridingErrorMessage("Expecting assertion to be called on non-null object, but found it to be null!")
       .isNotNull();
     A current =getCurrent();
     Assertions.assertThat(current)
       .overridingErrorMessage(
-        "Expecting assertion to be called on non-null current state of actual %s, " +
-        "but found it to be null!",
-        actual)
+        "Expecting %s to be unfinished, but found that it already finished!",
+        toString(actual))
       .isNotNull();
     return current;
   }
