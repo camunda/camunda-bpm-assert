@@ -1,4 +1,4 @@
-# ![camunda logo](http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png)&nbsp;camunda-bpm-assert <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert"><img align="right" src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert/badge.svg"/></a>
+# ![camunda logo](http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png)&nbsp;camunda-bpm-assert <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert"><img align="right" src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert/badge.svg"/></a><a href="https://travis-ci.org/camunda/camunda-bpm-assert"><img align="right" src="https://api.travis-ci.org/camunda/camunda-bpm-assert.svg"/></a>
 
 This little community-extension to [camunda BPM](http://camunda.org) wants to make it easier to write tests for BPMN process definitions executed with the camunda process engine. 
 For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](http://joel-costigliola.github.io/assertj/) rich assertions library for java are provided, 
@@ -88,7 +88,7 @@ Congrats! You are successfully using camunda-bpm-assert. Find a more detailed de
 * [Issue Tracker](https://github.com/camunda/camunda-bpm-assert/issues) 
 * [Roadmap](https://github.com/camunda/camunda-bpm-assert/issues/milestones?state=open&with_issues=no) 
 * [Download](https://github.com/camunda/camunda-bpm-assert/releases)
-* [Continuous Integration](https://plexiti-foss.ci.cloudbees.com/job/camunda-bpm-assert)
+* [Continuous Integration](https://travis-ci.org/camunda/camunda-bpm-assert)
 * [Questions at camunda BPM users list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-users)
 * [Feedback at camunda BPM dev list](https://groups.google.com/forum/?fromgroups#!forum/camunda-bpm-dev)
 * Want to **contribute**? You are very welcome! Please contact me directly via [eMail](mailto:martin.schimak@plexiti.com).
