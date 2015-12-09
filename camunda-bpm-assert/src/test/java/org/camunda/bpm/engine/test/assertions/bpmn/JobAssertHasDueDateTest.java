@@ -1,5 +1,6 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
+import org.camunda.bpm.engine.impl.calendar.DateTimeUtil;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions;
@@ -48,7 +49,7 @@ public class JobAssertHasDueDateTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(jobQuery().singleResult()).hasDueDate(new Date(1000));
+        assertThat(jobQuery().singleResult()).hasDueDate(DateTimeUtil.now().minusDays(1).toDate());
       }
     });
   }
