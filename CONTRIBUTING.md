@@ -13,7 +13,7 @@ If you would like to submit a pull request make sure to
 1. [Create an issue](./../../issues) for your work. Take care that your piece of work isn't too big. Usually adding one single assertion is big enough. 
 1. Fork camunda/camunda-bpm-assert and create a branch for your issue. Don't reuse existing branches. 
 1. Implement, document and test (see [What means DONE?](#what-means-done))
-1. If working on CMMN features, mark the method in the [CMMN.md](./camunda-bpm-assert/CMMN.md) with a :white_check_mark: `:white_check_mark:`
+1. If working on CMMN features, mark the method in the [Coverage_CMMN.md](./camunda-bpm-assert/Coverage_CMMN.md) with a :white_check_mark: `:white_check_mark:`
 1. Create a pull request
 
 ## What means DONE?
