@@ -1,6 +1,8 @@
-# AbstractCaseAssert
+# CMMN Coverage
 
-##  "Status" assertions
+## AbstractCaseAssert
+
+###  "Status" assertions
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
@@ -13,7 +15,7 @@
 - isClosed()
 - isFailed()
 
-## "Type" assertions
+### "Type" assertions
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
@@ -24,7 +26,7 @@
 - isCaseTask()
 - isMilestone()
 
-## "Chained" assert objects
+### "Chained" assert objects
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
@@ -47,27 +49,27 @@
 - milestone(activityId)
 - milestone()          
 
-## "Variable" assertions
+### "Variable" assertions
 
 - variables()
 - hasVariables(String... names)
 - hasNoVariables()
 
-# CaseDefinitionAssert
+## CaseDefinitionAssert
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
-# CaseExecutionAssert
+## CaseExecutionAssert
 
-## Make inherited methods available public
+### Make inherited methods available public
 
 - all "status" assertions
 - all "type" assertions
 - all "variable" assertions
 
-# CaseInstanceAssert 
+## CaseInstanceAssert 
 
-## Make inherited methods available public
+### Make inherited methods available public
 
 - isActive()
 - isCompleted()
@@ -79,24 +81,9 @@
 - all "chained" assert objects
 - all "variable" assertions
 
-# CaseTaskAssert
+## CaseTaskAssert
 
-## Make inherited methods available public
-
-- isAvailable()
-- isEnabled()
-- isDisabled()
-- isActive()
-- isSuspended()
-- isCompleted()
-- isFailed()
-- isTerminated()
-
-- all "variable" assertions
-
-# HumanTaskAssert
-
-## Make inherited methods available public
+### Make inherited methods available public
 
 - isAvailable()
 - isEnabled()
@@ -109,7 +96,22 @@
 
 - all "variable" assertions
 
-## "HumanTask" specific assertions
+## HumanTaskAssert
+
+### Make inherited methods available public
+
+- isAvailable()
+- isEnabled()
+- isDisabled()
+- isActive()
+- isSuspended()
+- isCompleted()
+- isFailed()
+- isTerminated()
+
+- all "variable" assertions
+
+### "HumanTask" specific assertions
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
@@ -119,39 +121,24 @@
 - hasCandidateGroup(groupId)
 - hasCandidateGroupAssociated(groupId)
 
-# MilestoneAssert
+## MilestoneAssert
 
-## Make inherited methods available public
+### Make inherited methods available public
 
 - isAvailable()
 - isSuspended()
 - isCompleted()
 - isTerminated()
 
-## Milestone specific assertions
+### Milestone specific assertions
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
 - hasOccured()
 
-# ProcessTaskAssert
+## ProcessTaskAssert
 
-## Make inherited methods available public
-
-- isAvailable()
-- isEnabled()
-- isDisabled()
-- isActive()
-- isSuspended()
-- isCompleted()
-- isFailed()
-- isTerminated()
-
-- all "variable" assertions
-
-# StageAssert
-
-## Make inherited methods available public
+### Make inherited methods available public
 
 - isAvailable()
 - isEnabled()
@@ -164,18 +151,33 @@
 
 - all "variable" assertions
 
-# CmmnAwareAssertions
+## StageAssert
+
+### Make inherited methods available public
+
+- isAvailable()
+- isEnabled()
+- isDisabled()
+- isActive()
+- isSuspended()
+- isCompleted()
+- isFailed()
+- isTerminated()
+
+- all "variable" assertions
+
+## CmmnAwareAssertions
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
 - assertThat(caseExecution)
 - assertThat(caseDefinition)
 
-# CmmnAwareTests
+## CmmnAwareTests
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
-## "Service" retrievers
+### "Service" retrievers
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
@@ -184,7 +186,7 @@
 - caseExecutionQuery()
 - caseDefinitionQuery()
 
-## "Status" changers
+### "Status" changers
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
@@ -192,7 +194,7 @@
 - disable(caseExecution)
 - manuallyStart(caseExecution)
 
-## "CaseExecution" finders
+### "CaseExecution" finders
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
