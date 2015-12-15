@@ -2,17 +2,18 @@
 
 There are several ways in which you may contribute to this project.
 
-* [File issues](link-to-issue-tracker)
+* [File issues](./../../issues)
 * [Submit a pull requests](#submit-a-pull-request)
+* [What means DONE?](#what-means-done)
 
 ## Submit a Pull Request
 
 If you would like to submit a pull request make sure to 
 
-1. [Create an issue](link-to-issue-tracker) for your work. Take care that your piece of work isn't too big. Usually adding one single assertion is big enough. 
+1. [Create an issue](./../../issues) for your work. Take care that your piece of work isn't too big. Usually adding one single assertion is big enough. 
 1. Fork camunda/camunda-bpm-assert and create a branch for your issue. Don't reuse existing branches. 
-1. Implement, document and test (see [What means DONE?](#what-means-done-))
-1. If working on CMMN features, mark the method in the [CMMN.md](./CMMN.md) with a :white_check_mark: `:white_check_mark:`
+1. Implement, document and test (see [What means DONE?](#what-means-done))
+1. If working on CMMN features, mark the method in the [CMMN.md](./camunda-bpm-assert/CMMN.md) with a :white_check_mark: `:white_check_mark:`
 1. Create a pull request
 
 ## What means DONE?
@@ -22,7 +23,7 @@ If you would like to submit a pull request make sure to
     - Use small commit
     - Use [semantic commit messages](http://seesparkbox.com/foundry/semantic_commit_messages) AKA [Karma commit message style](http://karma-runner.github.io/0.13/dev/git-commit-msg.html) 
 * Javadoc has been created or changed accordingly
-* It is documented in the [README.md](./README.md) - not the top-level one, but the one inside the camunda-bpm-assert folder
+* It is documented in the [README.md](./camunda-bpm-assert/README.md) - not the top-level one, but the one inside the camunda-bpm-assert folder
 * It is thoroughly tested. 
     'What's _thoroughly_?' you might ask, well, here's the answer:
     - One test class for each method. E.g. if you are going to work on `CaseInstanceAssert.isActive()` you will have a test class `CaseInstanceAssertIsActiveTest` containing all tests for the `isActive()` method.
