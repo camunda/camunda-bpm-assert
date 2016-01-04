@@ -87,9 +87,9 @@ public class CmmnAwareTests extends BpmnAwareTests {
   }
 
   /**
-   * Helper method to easily complete a case.
+   * Helper method to easily complete a CaseExecution.
    *
-   * @param caseExecution the case to complete
+   * @param caseExecution the CaseExecution to complete
    */
   public static void complete(CaseExecution caseExecution) {
     if (caseExecution == null) {
@@ -112,10 +112,10 @@ public class CmmnAwareTests extends BpmnAwareTests {
   }
 
   /**
-   * Helper method to manually activate a case execution.
+   * Helper method to manually start a case execution.
    *
    * @param caseExecution
-   *        the case execution to avtivate
+   *        the case execution to start
    */
   public static void manuallyStart(CaseExecution caseExecution) {
     if (caseExecution == null) {
