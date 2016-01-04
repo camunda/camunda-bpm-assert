@@ -20,6 +20,14 @@ import org.camunda.bpm.model.cmmn.impl.CmmnModelConstants;
  */
 public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A extends CaseExecution> extends AbstractProcessAssert<S, A> {
 
+	/*
+	 * Delivers the the actual object under test.
+	 */
+	public A getActual() {
+		return actual;
+	}
+
+
 	protected AbstractCaseAssert(ProcessEngine engine, A actual, Class<?> selfType) {
 		super(engine, actual, selfType);
 	}
@@ -200,7 +208,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	}
 
 	/*
-	 * Retrieve a chained {@link CaseExecution} currently available in the context of 
+	 * Retrieve a child {@link CaseExecution} currently available in the context of
 	 * the actual caseExecution under test of this AbstractCaseAssert. The query is 
 	 * automatically narrowed down to the actual caseExecution under test of this 
 	 * assertion.
@@ -214,7 +222,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	 *          one CaseExecution is delivered by the query (after being narrowed 
 	 *          to the actual 'parent' CaseExecution)
 	 */
-	protected A caseExecution(final CaseExecutionQuery query) {
+	protected CaseExecutionAssert caseExecution(final CaseExecutionQuery query) {
 		if (query == null)
 			throw new IllegalArgumentException("Illegal call of caseExecution(query = 'null') - but must not be null!");
 		isNotNull();
@@ -222,7 +230,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 		A caseExecution = (A) query.singleResult();
 		if (caseExecution != null)
 			Assertions.assertThat(caseExecution.getParentId()).isEqualTo(actual.getId());
-		return caseExecution;
+		return new CaseExecutionAssert(engine, caseExecution);
 	}
 
 	/*
@@ -240,7 +248,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	 *          one CaseExecution is delivered by the query (after being narrowed 
 	 *          to the actual 'parent' CaseExecution)
 	 */
-	protected A caseExecution(final String activityId) {
+	protected CaseExecutionAssert caseExecution(final String activityId) {
 		return caseExecution(caseExecutionQuery().activityId(activityId));
 	}
 
@@ -256,15 +264,15 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	 *          one CaseExecution is delivered by the query (after being narrowed 
 	 *          to the actual 'parent' CaseExecution)
 	 */
-	protected A caseExecution() {
+	protected CaseExecutionAssert caseExecution() {
 		return caseExecution(caseExecutionQuery());
 	}
 
 	/*
 	 * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
-   * one 'humanTask' currently available in the context of the actual caseExecution 
-   * under test of this AbstractCaseAssert. The query is automatically narrowed down 
-   * to the actual caseExecution under test of this assertion as well as to the type 
+   * one 'humanTask' currently available in the context of the actual caseExecution
+   * under test of this AbstractCaseAssert. The query is automatically narrowed down
+   * to the actual caseExecution under test of this assertion as well as to the type
    * 'humanTask'.
 	 *
 	 * Change visibility to public for those inheriting classes for whose 
@@ -281,15 +289,15 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	 *          to the actual 'parent' CaseExecution)
 	 */
 	protected HumanTaskAssert humanTask(final CaseExecutionQuery query) {
-		CaseExecution caseExecution = caseExecution(query);
+		CaseExecution caseExecution = caseExecution(query).getActual(); //TODO extract and use lookup code from caseExecution(query)
 		return CaseExecutionAssert.assertThat(engine, caseExecution).isHumanTask();
 	}
 
 	/*
 	 * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
-   * one 'humanTask' currently available in the context of the actual caseExecution 
-   * under test of this AbstractCaseAssert. The query is automatically narrowed down 
-   * to the actual caseExecution under test of this assertion as well as to the type 
+   * one 'humanTask' currently available in the context of the actual caseExecution
+   * under test of this AbstractCaseAssert. The query is automatically narrowed down
+   * to the actual caseExecution under test of this assertion as well as to the type
    * 'humanTask'.
 	 *
 	 * Change visibility to public for those inheriting classes for whose 
@@ -311,9 +319,9 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 
 	/*
 	 * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
-   * one 'humanTask' currently available in the context of the actual caseExecution 
-   * under test of this AbstractCaseAssert. The query is automatically narrowed down 
-   * to the actual caseExecution under test of this assertion as well as to the type 
+   * one 'humanTask' currently available in the context of the actual caseExecution
+   * under test of this AbstractCaseAssert. The query is automatically narrowed down
+   * to the actual caseExecution under test of this assertion as well as to the type
    * 'humanTask'.
 	 *
 	 * Change visibility to public for those inheriting classes for whose 
@@ -350,7 +358,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	 *          to the actual 'parent' CaseExecution)
 	 */
 	protected CaseTaskAssert caseTask(final CaseExecutionQuery query) {
-		CaseExecution caseExecution = caseExecution(query);
+		CaseExecution caseExecution = caseExecution(query).getActual(); //TODO extract and use lookup code from caseExecution(query)
 		return CaseExecutionAssert.assertThat(engine, caseExecution).isCaseTask();
 	}
 
@@ -416,7 +424,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	 *          to the actual 'parent' CaseExecution)
 	 */
 	protected ProcessTaskAssert processTask(final CaseExecutionQuery query) {
-		CaseExecution caseExecution = caseExecution(query);
+		CaseExecution caseExecution = caseExecution(query).getActual(); //TODO extract and use lookup code from caseExecution(query)
 		return CaseExecutionAssert.assertThat(engine, caseExecution).isProcessTask();
 	}
 
@@ -482,7 +490,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	 *          to the actual 'parent' CaseExecution)
 	 */
 	protected StageAssert stage(final CaseExecutionQuery query) {
-		CaseExecution caseExecution = caseExecution(query);
+		CaseExecution caseExecution = caseExecution(query).getActual(); //TODO extract and use lookup code from caseExecution(query)
 		return CaseExecutionAssert.assertThat(engine, caseExecution).isStage();
 	}
 
@@ -548,7 +556,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
 	 *          to the actual 'parent' CaseExecution)
 	 */
 	protected MilestoneAssert milestone(final CaseExecutionQuery query) {
-		CaseExecution caseExecution = caseExecution(query);
+		CaseExecution caseExecution = caseExecution(query).getActual(); //TODO extract and use lookup code from caseExecution(query)
 		return CaseExecutionAssert.assertThat(engine, caseExecution).isMilestone();
 	}
 

@@ -124,11 +124,19 @@ public class CmmnAwareTests extends BpmnAwareTests {
     caseService().manuallyStartCaseExecution(caseExecution.getId());
   }
 
-  // TODO: this is the only method so far to retrieve caseExecutions - should follow known pattern
+	/**
+     * Helper method to find any {@link CaseExecution} in the context of a CaseInstance.
+     * @param activityId activity to find
+     * @param caseInstance CaseInstance to search in
+     * @return CaseExecution or null
+     */
   public static CaseExecution caseExecution(String activityId, CaseInstance caseInstance) {
-    CaseExecution caseExecution = caseService().createCaseExecutionQuery().caseInstanceId(caseInstance.getCaseInstanceId()).activityId(activityId).singleResult();
-    assertThat(caseExecution).overridingErrorMessage("CaseExecution for activity '" + activityId + "' not found!").isNotNull();
-    return caseExecution;
+    assertThat(activityId).isNotNull();
+    return caseExecution(caseExecutionQuery().activityId(activityId), caseInstance);
+  }
+
+  public static CaseExecution caseExecution(CaseExecutionQuery caseExecutionQuery, CaseInstance caseInstance) {
+    return assertThat(caseInstance).isNotNull().caseExecution(caseExecutionQuery).getActual();
   }
 
 }
