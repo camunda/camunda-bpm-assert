@@ -21,7 +21,7 @@ import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 public class CmmnAwareTests extends BpmnAwareTests {
-  
+
   /**
    * Assert that... the given CaseInstance meets your expectations.
    *
@@ -136,7 +136,7 @@ public class CmmnAwareTests extends BpmnAwareTests {
   }
 
   public static CaseExecution caseExecution(CaseExecutionQuery caseExecutionQuery, CaseInstance caseInstance) {
-    return assertThat(caseInstance).isNotNull().caseExecution(caseExecutionQuery).getActual();
+    return assertThat(caseInstance).isNotNull().descendantCaseExecution(caseExecutionQuery).getActual();
   }
 
 }
