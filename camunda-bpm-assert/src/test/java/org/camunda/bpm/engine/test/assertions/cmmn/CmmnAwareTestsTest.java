@@ -1,5 +1,14 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
+import static org.camunda.bpm.engine.test.assertions.helpers.CamundaMatchers.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.*;
+import static org.powermock.api.mockito.PowerMockito.verifyNoMoreInteractions;
+
 import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.CaseService;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -13,21 +22,17 @@ import org.camunda.bpm.engine.runtime.CaseInstanceQuery;
 import org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions;
 import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 import org.camunda.bpm.engine.test.assertions.helpers.CaseExecutionQueryFluentAnswer;
+import org.camunda.bpm.engine.test.util.CamundaBpmApiAwareTestCase;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import static org.camunda.bpm.engine.test.assertions.helpers.CamundaMatchers.*;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.*;
-import static org.powermock.api.mockito.PowerMockito.verifyNoMoreInteractions;
+//import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 
 /**
  * You will notice that this test class does not cover all methods.
@@ -39,10 +44,13 @@ import static org.powermock.api.mockito.PowerMockito.verifyNoMoreInteractions;
  */
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({CmmnAwareAssertions.class, BpmnAwareTests.class, CmmnAwareTests.class, AbstractAssertions.class})
-public class CmmnAwareTestsTest {
+public class CmmnAwareTestsTest extends CamundaBpmApiAwareTestCase {
 
 	public static final String ACTIVITY_ID = "FOO";
 	public static final String CASE_INSTANCE_ID = "BAR";
+
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
 	@Mock
 	private CaseInstance caseInstance;
@@ -233,17 +241,74 @@ public class CmmnAwareTestsTest {
 	}
 
 	@Test
-	public void complete_should_() throws Exception {
+	public void completeCaseExecution_should_throw_IAE_for_null_arg() throws Exception {
+		thrown.expect(IllegalArgumentException.class);
 
+		CmmnAwareTests.complete((CaseExecution) null);
 	}
 
 	@Test
-	public void disable_should_() throws Exception {
+	public void completeCaseExecution_should_delegate_to_caseService() throws Exception {
+		//prepare and mock static methods
+		//because we need control over the CaseService created
+		mockStatic(AbstractAssertions.class);
+		ProcessEngine processEngine = mock(ProcessEngine.class);
+		when(AbstractAssertions.processEngine()).thenReturn(processEngine);
+		CaseService caseService = mock(CaseService.class);
+		when(processEngine.getCaseService()).thenReturn(caseService);
 
+		when(caseExecution.getId()).thenReturn("baz");
+
+		CmmnAwareTests.complete(caseExecution);
+
+		verify(caseService).completeCaseExecution("baz");
 	}
 
 	@Test
-	public void manuallyStart_should_() throws Exception {
+	public void disableCaseExecution_should_throw_IAE_for_null_arg() throws Exception {
+		thrown.expect(IllegalArgumentException.class);
 
+		CmmnAwareTests.disable((CaseExecution) null);
+	}
+
+	@Test
+	public void disableCaseExecution_should_delegate_to_caseService() throws Exception {
+		//prepare and mock static methods
+		//because we need control over the CaseService created
+		mockStatic(AbstractAssertions.class);
+		ProcessEngine processEngine = mock(ProcessEngine.class);
+		when(AbstractAssertions.processEngine()).thenReturn(processEngine);
+		CaseService caseService = mock(CaseService.class);
+		when(processEngine.getCaseService()).thenReturn(caseService);
+
+		when(caseExecution.getId()).thenReturn("baz");
+
+		CmmnAwareTests.disable(caseExecution);
+
+		verify(caseService).disableCaseExecution("baz");
+	}
+
+	@Test
+	public void manuallyStartCaseExecution_should_throw_IAE_for_null_arg() throws Exception {
+		thrown.expect(IllegalArgumentException.class);
+
+		CmmnAwareTests.manuallyStart((CaseExecution) null);
+	}
+
+	@Test
+	public void manuallyStartCaseExecution_should_delegate_to_caseService() throws Exception {
+		//prepare and mock static methods
+		//because we need control over the CaseService created
+		mockStatic(AbstractAssertions.class);
+		ProcessEngine processEngine = mock(ProcessEngine.class);
+		when(AbstractAssertions.processEngine()).thenReturn(processEngine);
+		CaseService caseService = mock(CaseService.class);
+		when(processEngine.getCaseService()).thenReturn(caseService);
+
+		when(caseExecution.getId()).thenReturn("baz");
+
+		CmmnAwareTests.manuallyStart(caseExecution);
+
+		verify(caseService).manuallyStartCaseExecution("baz");
 	}
 }
