@@ -6,6 +6,18 @@
    * for case definitions: [assertThat](#assertthat-casedefinition)
  
  * [Helpers](#helpers)
+   * retrieve CaseService
+     * [caseService()](#caseService)
+   * lookup things
+     * [caseExecution()](#caseExecution-String-CaseInstance)
+     * [caseExecution()](#caseExecution-CaseExecutionQuery-CaseInstance)
+     * [caseInstanceQuery()](#caseInstanceQuery)
+     * [caseExecutionQuery()](#caseExecutionQuery)
+     * [caseDefinitionQuery()](#caseDefinitionQuery)
+   * manage lifecycles
+     * [complete()](#complete-CaseExecution)
+     * [disable()](#disable-CaseExecution)
+     * [manuallyStart()](#manuallyStart-CaseExecution)
 
 ## Assertions
 
@@ -51,7 +63,7 @@ Shortcut for retrieving the process engine's CaseService.
     caseService()
   
   
-## caseInstanceQuery()
+### caseInstanceQuery()
 
 Helper method to easily create a new CaseInstanceQuery. The query is naked and will return all available CaseInstances. 
 Please note that, in a test context, there is usually only one CaseInstance. Exceptions are sub-cases started via case tasks.
@@ -63,7 +75,7 @@ Can be used with [assertThat(CaseInstance)](#assertthat-caseinstance), e.g,
     assertThat(caseInstanceQuery().caseInstanceBusinessKey("foo").singleResult())
     
     
-## caseExecutionQuery()
+### caseExecutionQuery()
 
 Helper method to easily create a new CaseExecutionQuery. The query is naked and will return all available CaseExecutions. 
 
@@ -74,7 +86,7 @@ Can be used with [assertThat(CaseExecution)](#assertthat-caseexecution), e.g.
     assertThat(caseExecutionQuery().activityId("foo").singleResult())
 
 
-## caseDefinitionQuery()
+### caseDefinitionQuery()
 
 Helper method to easily create a new CaseDefinitionQuery.
 
@@ -85,28 +97,28 @@ Can be used with [assertThat(CaseDefinition)](#assertthat-casedefinition), e.g.
     assertThat(caseDefinitionQuery().caseDefinitionKey("foo").singleResult())
     
 
-## complete(CaseExecution)
+### complete(CaseExecution)
     
 Helper method to easily complete a caseExecution.
 
     complete(caseExecution)    
     
 
-## disable(CaseExecution)
+### disable(CaseExecution)
 
 Helper method to easily disable a case execution.
 
     disable(caseExecution)
 
 
-## manuallyStart(CaseExecution)
+### manuallyStart(CaseExecution)
 
 Helper method to easily manually start a case execution.
 
     manuallyStart(caseExecution)
 
 
-## caseExecution(String, CaseInstance)
+### caseExecution(String, CaseInstance)
 
 Helper method to find any CaseExecution in the context of a CaseInstance.
 A CaseExecution is used very often. Its activityId is the same as its planItem ID from the CMMN file.
@@ -118,7 +130,7 @@ You can further work with the found CaseExecution by passing it as argument to o
     complete(caseExecution("foo", caseInstance))
 
 
-## caseExecution(CaseExecutionQuery, CaseInstance)
+### caseExecution(CaseExecutionQuery, CaseInstance)
 
 Helper method to find any CaseExecution in the context of a CaseInstance.
 
