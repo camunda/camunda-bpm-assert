@@ -135,6 +135,12 @@ public class CmmnAwareTests extends BpmnAwareTests {
     return caseExecution(caseExecutionQuery().activityId(activityId), caseInstance);
   }
 
+  /**
+   * Helper method to find any {@link CaseExecution} in the context of a CaseInstance
+   * @param caseExecutionQuery query for narrowing down on the CaseExecution to find
+   * @param caseInstance CaseInstance to search in
+   * @return CaseExecution or null
+     */
   public static CaseExecution caseExecution(CaseExecutionQuery caseExecutionQuery, CaseInstance caseInstance) {
     return assertThat(caseInstance).isNotNull().descendantCaseExecution(caseExecutionQuery).getActual();
   }
