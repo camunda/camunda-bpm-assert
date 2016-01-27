@@ -12,12 +12,12 @@ import org.mockito.stubbing.Answer;
  */
 public class CaseExecutionQueryFluentAnswer implements Answer<CaseExecutionQuery> {
 
-	@Override
-	public CaseExecutionQuery answer(InvocationOnMock invocationOnMock) throws Throwable {
-		if (invocationOnMock.getMethod().getReturnType().isAssignableFrom(CaseExecutionQuery.class)) {
-			return (CaseExecutionQuery) invocationOnMock.getMock();
-		} else {
-			return null;
-		}
-	}
+  @Override
+  public CaseExecutionQuery answer(InvocationOnMock invocationOnMock) throws Throwable {
+    if (invocationOnMock.getMethod().getReturnType().isAssignableFrom(CaseExecutionQuery.class)) {
+      return (CaseExecutionQuery) invocationOnMock.getMock();
+    } else {
+      return null;
+    }
+  }
 }

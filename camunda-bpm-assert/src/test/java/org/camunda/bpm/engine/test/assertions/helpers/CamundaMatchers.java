@@ -10,15 +10,15 @@ import org.mockito.Matchers;
  */
 public class CamundaMatchers extends Matchers {
 
-	public static CaseInstance anyCaseInstance() {
-		return any(CaseInstance.class);
-	}
+  public static CaseInstance anyCaseInstance() {
+    return any(CaseInstance.class);
+  }
 
-	public static CaseExecution anyCaseExecution() {
-		return any(CaseExecution.class);
-	}
+  public static CaseExecution anyCaseExecution() {
+    return any(CaseExecution.class);
+  }
 
-	public static CaseExecutionQuery anyCaseExecutionQuery() {
-		return any(CaseExecutionQuery.class);
-	}
+  public static CaseExecutionQuery anyCaseExecutionQuery() {
+    return any(CaseExecutionQuery.class);
+  }
 }
