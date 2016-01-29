@@ -13,7 +13,7 @@
 Assert that a human task is currently 'active':
 
 ```java
-assertThat(caseInstance).humanTask(""PI_TaskA"").isActive();
+assertThat(caseInstance).humanTask("PI_TaskA").isActive();
 ```
 <a name="humanTask-isAvailable"/>
 #### HumanTask: isAvailable
@@ -21,7 +21,7 @@ assertThat(caseInstance).humanTask(""PI_TaskA"").isActive();
 Assert that a human task is currently 'available':
 
 ```java
-assertThat(caseInstance).humanTask(""PI_TaskA"").isAvailable();
+assertThat(caseInstance).humanTask("PI_TaskA").isAvailable();
 ```
 <a name="humanTask-isCompleted"/>
 #### HumanTask: isCompleted
@@ -29,7 +29,7 @@ assertThat(caseInstance).humanTask(""PI_TaskA"").isAvailable();
 Assert that a human task is currently 'completed':
 
 ```java
-assertThat(caseInstance).humanTask(""PI_TaskA"").isCompleted();
+assertThat(caseInstance).humanTask("PI_TaskA").isCompleted();
 ```
 <a name="humanTask-isDisabled"/>
 #### HumanTask: isDisabled
@@ -37,7 +37,7 @@ assertThat(caseInstance).humanTask(""PI_TaskA"").isCompleted();
 Assert that a human task is currently 'disabled':
 
 ```java
-assertThat(caseInstance).humanTask(""PI_TaskA"").isDisabled();
+assertThat(caseInstance).humanTask("PI_TaskA").isDisabled();
 ```
 <a name="humanTask-isEnabled"/>
 #### HumanTask: isEnabled
@@ -45,7 +45,7 @@ assertThat(caseInstance).humanTask(""PI_TaskA"").isDisabled();
 Assert that a human task is currently 'enabled':
 
 ```java
-assertThat(caseInstance).humanTask(""PI_TaskA"").isEnabled();
+assertThat(caseInstance).humanTask("PI_TaskA").isEnabled();
 ```
 <a name="humanTask-isTerminated"/>
 #### HumanTask: isTerminated
@@ -53,7 +53,7 @@ assertThat(caseInstance).humanTask(""PI_TaskA"").isEnabled();
 Assert that a human task is currently 'terminated':
 
 ```java
-assertThat(caseInstance).humanTask(""PI_TaskA"").isTerminated();
+assertThat(caseInstance).humanTask("PI_TaskA").isTerminated();
 ```
 
 
