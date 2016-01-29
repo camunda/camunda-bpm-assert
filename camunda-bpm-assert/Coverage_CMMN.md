@@ -100,14 +100,14 @@
 
 ### Make inherited methods available public
 
-- isAvailable()
-- isEnabled()
-- isDisabled()
-- isActive()
+- isAvailable() :white_check_mark:
+- isEnabled() :white_check_mark:
+- isDisabled() :white_check_mark:
+- isActive() :white_check_mark:
 - isSuspended()
-- isCompleted()
+- isCompleted() :white_check_mark:
 - isFailed()
-- isTerminated()
+- isTerminated() :white_check_mark:
 
 - all "variable" assertions
 
