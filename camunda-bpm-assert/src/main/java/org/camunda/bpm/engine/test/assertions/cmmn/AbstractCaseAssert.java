@@ -1,6 +1,9 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
+import java.util.Map;
+
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.MapAssert;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
@@ -24,10 +27,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     super(engine, actual, selfType);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'available'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'available'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -35,10 +38,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.AVAILABLE);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'enabled'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'enabled'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -46,10 +49,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.ENABLED);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'disabled'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'disabled'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -57,10 +60,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.DISABLED);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'active'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'active'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -68,10 +71,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.ACTIVE);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'suspended'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'suspended'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -79,10 +82,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.SUSPENDED);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'completed'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'completed'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -90,10 +93,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.COMPLETED);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'closed'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'closed'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -101,10 +104,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.CLOSED);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'failed'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'failed'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -112,10 +115,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.FAILED);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is 'terminated'.
+  /* Verifies the expectation that the {@link CaseExecution} is 'terminated'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this status makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this status makes sense
    * 
    * @return this
    */
@@ -123,11 +126,11 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return hasState(CaseExecutionState.TERMINATED);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is the 
-	 * 'case' instance.
+  /* Verifies the expectation that the {@link CaseExecution} is the 
+   * 'case' instance.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this assertion makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this assertion makes sense
    * 
    * @return this
    */
@@ -139,10 +142,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return CaseInstanceAssert.assertThat(engine, (CaseInstance) actual);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is a 'stage' 
+  /* Verifies the expectation that the {@link CaseExecution} is a 'stage' 
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this assertion makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this assertion makes sense
    * 
    * @return this
    */
@@ -151,10 +154,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return StageAssert.assertThat(engine, actual);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is a 'humanTask' 
+  /* Verifies the expectation that the {@link CaseExecution} is a 'humanTask' 
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this assertion makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this assertion makes sense
    * 
    * @return this
    */
@@ -163,10 +166,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return HumanTaskAssert.assertThat(engine, actual);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is a 'processTask' 
+  /* Verifies the expectation that the {@link CaseExecution} is a 'processTask' 
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this assertion makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this assertion makes sense
    * 
    * @return this
    */
@@ -175,10 +178,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return ProcessTaskAssert.assertThat(engine, actual);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is a 'caseTask' 
+  /* Verifies the expectation that the {@link CaseExecution} is a 'caseTask' 
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this assertion makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this assertion makes sense
    * 
    * @return this
    */
@@ -187,10 +190,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return CaseTaskAssert.assertThat(engine, actual);
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is a 'milestone' 
+  /* Verifies the expectation that the {@link CaseExecution} is a 'milestone' 
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this assertion makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this assertion makes sense
    * 
    * @return this
    */
@@ -200,19 +203,19 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /*
-	 * Retrieve a chained {@link CaseExecution} currently available in the context of 
-	 * the actual caseExecution under test of this AbstractCaseAssert. The query is 
-	 * automatically narrowed down to the actual caseExecution under test of this 
+   * Retrieve a chained {@link CaseExecution} currently available in the context of 
+   * the actual caseExecution under test of this AbstractCaseAssert. The query is 
+   * automatically narrowed down to the actual caseExecution under test of this 
    * assertion.
    * 
-	 * @param   query CaseExecutionQuery further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion.
-	 * @return  the only CaseExecution resulting  from the given search. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   query CaseExecutionQuery further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion.
+   * @return  the only CaseExecution resulting  from the given search. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected A caseExecution(final CaseExecutionQuery query) {
     if (query == null)
@@ -226,59 +229,59 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /*
-	 * Retrieve a chained {@link CaseExecution} currently available in the context of 
-	 * the actual caseExecution under test of this AbstractCaseAssert. The query is 
-	 * automatically narrowed down to the actual caseExecution under test of this 
+   * Retrieve a chained {@link CaseExecution} currently available in the context of 
+   * the actual caseExecution under test of this AbstractCaseAssert. The query is 
+   * automatically narrowed down to the actual caseExecution under test of this 
    * assertion.
    * 
-	 * @param   activityId activity id further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion.
-	 * @return  the only CaseExecution with the given activity id. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   activityId activity id further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion.
+   * @return  the only CaseExecution with the given activity id. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected A caseExecution(final String activityId) {
     return caseExecution(caseExecutionQuery().activityId(activityId));
   }
 
   /*
-	 * Retrieve a chained {@link CaseExecution} currently available in the context of 
-	 * the actual caseExecution under test of this AbstractCaseAssert. The query is 
-	 * automatically narrowed down to the actual caseExecution under test of this 
+   * Retrieve a chained {@link CaseExecution} currently available in the context of 
+   * the actual caseExecution under test of this AbstractCaseAssert. The query is 
+   * automatically narrowed down to the actual caseExecution under test of this 
    * assertion.
    * 
-	 * @return  the only CaseExecution existing in the context of this case execution. 
-	 * 					A 'null' CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @return  the only CaseExecution existing in the context of this case execution. 
+   * 					A 'null' CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected A caseExecution() {
     return caseExecution(caseExecutionQuery());
   }
 
   /*
-	 * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
    * one 'humanTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'humanTask'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   query CaseExecutionQuery further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'humanTask'.
-	 * @return  the only CaseExecution resulting from the given search. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   query CaseExecutionQuery further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'humanTask'.
+   * @return  the only CaseExecution resulting from the given search. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected HumanTaskAssert humanTask(final CaseExecutionQuery query) {
     CaseExecution caseExecution = caseExecution(query);
@@ -289,68 +292,68 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /*
-	 * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
    * one 'humanTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'humanTask'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   activityId activity if further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'humanTask'.
-	 * @return  the only CaseExecution with the given activitiy id. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   activityId activity if further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'humanTask'.
+   * @return  the only CaseExecution with the given activitiy id. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected HumanTaskAssert humanTask(final String activityId) {
     return humanTask(caseExecutionQuery().activityId(activityId));
   }
 
   /*
-	 * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly 
    * one 'humanTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'humanTask'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @return  the only CaseExecution existing in the context of this case execution.
-	 * 					A 'null' CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @return  the only CaseExecution existing in the context of this case execution.
+   * 					A 'null' CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected HumanTaskAssert humanTask() {
     return humanTask(caseExecutionQuery());
   }
 
   /*
-	 * Enter into a chained {@link CaseTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link CaseTaskAssert} inspecting the one and mostly 
    * one 'caseTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'caseTask'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   query CaseExecutionQuery further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'caseTask'.
-	 * @return  the only CaseExecution resulting from the given search. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   query CaseExecutionQuery further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'caseTask'.
+   * @return  the only CaseExecution resulting from the given search. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected CaseTaskAssert caseTask(final CaseExecutionQuery query) {
     CaseExecution caseExecution = caseExecution(query);
@@ -358,65 +361,65 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /*
-	 * Enter into a chained {@link CaseTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link CaseTaskAssert} inspecting the one and mostly 
    * one 'caseTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'caseTask'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   activityId activity if further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'caseTask'.
-	 * @return  the only CaseExecution with the given activitiy id. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   activityId activity if further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'caseTask'.
+   * @return  the only CaseExecution with the given activitiy id. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected CaseTaskAssert caseTask(final String activityId) {
     return caseTask(caseExecutionQuery().activityId(activityId));
   }
 
   /*
-	 * Enter into a chained {@link CaseTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link CaseTaskAssert} inspecting the one and mostly 
    * one 'caseTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'caseTask'.
-	 *
-	 * @return  the only CaseExecution existing in the context of this case execution.
-	 * 					A 'null' CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * 
+   * @return  the only CaseExecution existing in the context of this case execution.
+   * 					A 'null' CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected CaseTaskAssert caseTask() {
     return caseTask(caseExecutionQuery());
   }
 
   /*
-	 * Enter into a chained {@link ProcessTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link ProcessTaskAssert} inspecting the one and mostly 
    * one 'processTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'processTask'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   query CaseExecutionQuery further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'processTask'.
-	 * @return  the only CaseExecution resulting from the given search. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   query CaseExecutionQuery further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'processTask'.
+   * @return  the only CaseExecution resulting from the given search. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected ProcessTaskAssert processTask(final CaseExecutionQuery query) {
     CaseExecution caseExecution = caseExecution(query);
@@ -424,65 +427,65 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /*
-	 * Enter into a chained {@link ProcessTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link ProcessTaskAssert} inspecting the one and mostly 
    * one 'processTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'processTask'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   activityId activity if further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'processTask'.
-	 * @return  the only CaseExecution with the given activitiy id. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   activityId activity if further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'processTask'.
+   * @return  the only CaseExecution with the given activitiy id. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected ProcessTaskAssert processTask(final String activityId) {
     return processTask(caseExecutionQuery().activityId(activityId));
   }
 
   /*
-	 * Enter into a chained {@link ProcessTaskAssert} inspecting the one and mostly 
+   * Enter into a chained {@link ProcessTaskAssert} inspecting the one and mostly 
    * one 'processTask' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'processTask'.
    * 
-	 * @return  the only CaseExecution existing in the context of this case execution.
-	 * 					A 'null' CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @return  the only CaseExecution existing in the context of this case execution.
+   * 					A 'null' CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected ProcessTaskAssert processTask() {
     return processTask(caseExecutionQuery());
   }
 
   /*
-	 * Enter into a chained {@link StageAssert} inspecting the one and mostly 
+   * Enter into a chained {@link StageAssert} inspecting the one and mostly 
    * one 'stage' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'stage'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   query CaseExecutionQuery further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'stage'.
-	 * @return  the only CaseExecution resulting from the given search. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   query CaseExecutionQuery further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'stage'.
+   * @return  the only CaseExecution resulting from the given search. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected StageAssert stage(final CaseExecutionQuery query) {
     CaseExecution caseExecution = caseExecution(query);
@@ -490,65 +493,65 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /*
-	 * Enter into a chained {@link StageAssert} inspecting the one and mostly 
+   * Enter into a chained {@link StageAssert} inspecting the one and mostly 
    * one 'stage' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'stage'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   activityId activity if further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'stage'.
-	 * @return  the only CaseExecution with the given activitiy id. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   activityId activity if further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'stage'.
+   * @return  the only CaseExecution with the given activitiy id. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected StageAssert stage(final String activityId) {
     return stage(caseExecutionQuery().activityId(activityId));
   }
 
   /*
-	 * Enter into a chained {@link StageAssert} inspecting the one and mostly 
+   * Enter into a chained {@link StageAssert} inspecting the one and mostly 
    * one 'stage' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'stage'.
    * 
-	 * @return  the only CaseExecution existing in the context of this case execution.
-	 * 					A 'null' CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @return  the only CaseExecution existing in the context of this case execution.
+   * 					A 'null' CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected StageAssert stage() {
     return stage(caseExecutionQuery());
   }
 
   /*
-	 * Enter into a chained {@link MilestoneAssert} inspecting the one and mostly 
+   * Enter into a chained {@link MilestoneAssert} inspecting the one and mostly 
    * one 'milestone' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'milestone'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   query CaseExecutionQuery further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'milestone'.
-	 * @return  the only CaseExecution resulting from the given search. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   query CaseExecutionQuery further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'milestone'.
+   * @return  the only CaseExecution resulting from the given search. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected MilestoneAssert milestone(final CaseExecutionQuery query) {
     CaseExecution caseExecution = caseExecution(query);
@@ -556,48 +559,48 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /*
-	 * Enter into a chained {@link MilestoneAssert} inspecting the one and mostly 
+   * Enter into a chained {@link MilestoneAssert} inspecting the one and mostly 
    * one 'milestone' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'milestone'.
    * 
-	 * Change visibility to public for those inheriting classes for whose 
-	 * underlying objects under test this method makes sense
+   * Change visibility to public for those inheriting classes for whose 
+   * underlying objects under test this method makes sense
    * 
-	 * @param   activityId activity if further narrowing down the search for 
-	 * 					caseExecutions. The query is automatically narrowed down to the 
-	 * 					actual 'parent' CaseExecution under test of this assertion as well as 
-	 * 					to the type 'milestone'.
-	 * @return  the only CaseExecution with the given activitiy id. A 'null' 
-	 * 					CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @param   activityId activity if further narrowing down the search for 
+   * 					caseExecutions. The query is automatically narrowed down to the 
+   * 					actual 'parent' CaseExecution under test of this assertion as well as 
+   * 					to the type 'milestone'.
+   * @return  the only CaseExecution with the given activitiy id. A 'null' 
+   * 					CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected MilestoneAssert milestone(final String activityId) {
     return milestone(caseExecutionQuery().activityId(activityId));
   }
 
   /*
-	 * Enter into a chained {@link MilestoneAssert} inspecting the one and mostly 
+   * Enter into a chained {@link MilestoneAssert} inspecting the one and mostly 
    * one 'milestone' currently available in the context of the actual caseExecution 
    * under test of this AbstractCaseAssert. The query is automatically narrowed down 
    * to the actual caseExecution under test of this assertion as well as to the type 
    * 'milestone'.
    * 
-	 * @return  the only CaseExecution existing in the context of this case execution.
-	 * 					A 'null' CaseExecution in case no such CaseExecution is available.
-	 * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
-	 *          one CaseExecution is delivered by the query (after being narrowed 
-	 *          to the actual 'parent' CaseExecution)
+   * @return  the only CaseExecution existing in the context of this case execution.
+   * 					A 'null' CaseExecution in case no such CaseExecution is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one CaseExecution is delivered by the query (after being narrowed 
+   *          to the actual 'parent' CaseExecution)
    */
   protected MilestoneAssert milestone() {
     return milestone(caseExecutionQuery());
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is currently 
-	 * in the specified state
+  /* Verifies the expectation that the {@link CaseExecution} is currently 
+   * in the specified state
    * 
    * @param state of the case execution
    * @return this {@link TaskAssert}
@@ -607,14 +610,14 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     CaseExecution current = getCurrent();
 		int actualState = current != null
 				? ((CaseExecutionEntity) current).getState()
-				: ((HistoricCaseActivityInstanceEntity) getHistoric()).getCaseActivityInstanceState();
+        : ((HistoricCaseActivityInstanceEntity) getHistoric()).getCaseActivityInstanceState();
     Assertions
         .assertThat(actualState)
         .overridingErrorMessage(
-						String.format(
-								"Expected %s to be in state '%s', but found it to be '%s'!",
-								toString(actual),
-								state,
+            String.format(
+                "Expected %s to be in state '%s', but found it to be '%s'!",
+                toString(actual),
+                state,
 								CaseExecutionState.CASE_EXECUTION_STATES.get(actualState)
 						))
 				.isEqualTo(state.getStateCode());
@@ -623,7 +626,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     return self;
   }
 
-	/* Verifies the expectation that the {@link CaseExecution} is of specified type
+  /* Verifies the expectation that the {@link CaseExecution} is of specified type
    * 
    * @param type of the case execution
    * @return this {@link TaskAssert}
@@ -681,18 +684,42 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
     if (caseExecution != null) {
 			return !actual.getCaseInstanceId().equals(actual.getId())
 				? String.format("%s {id='%s', activityId='%s' }",
-					caseExecution.getActivityType(), 
-					caseExecution.getId(),
-					caseExecution .getActivityId(),
-					caseExecution.getCaseInstanceId())
+          caseExecution.getActivityType(),
+          caseExecution.getId(),
+          caseExecution.getActivityId(),
+          caseExecution.getCaseInstanceId())
 				: String.format("%s {id='%s', activityId='%s'" +
 					(((CaseInstance) caseExecution).getBusinessKey() != null ? ", businessKey='%s'}" : "}"), 
-					CaseInstance.class.getSimpleName(),
-					caseExecution.getId(),
-					caseExecution.getActivityId(),
+              CaseInstance.class.getSimpleName(),
+              caseExecution.getId(),
+              caseExecution.getActivityId(),
               ((CaseInstance) caseExecution).getBusinessKey());
     }
     return null;
   }
 
+  /**
+   * Enter into a chained map assert inspecting the variables currently available in the context of the case instance
+   * under test of this AbstractCaseAssert.
+   * 
+   * @return MapAssert<String, Object> inspecting the case variables. Inspecting an empty map in case no such variables
+   *         are available.
+   */
+  public MapAssert<String, Object> variables() {
+    return (MapAssert<String, Object>) Assertions.assertThat(vars());
+  }
+
+  /* Return variables map - independent of running/historic instance status */
+  protected Map<String, Object> vars() {
+    A current = getCurrent();
+    if (current != null) {
+      return caseService().getVariables(current.getId());
+    } else {
+      return getHistoricVariablesMap();
+    }
+  }
+
+  protected Map<String, Object> getHistoricVariablesMap() {
+    throw new UnsupportedOperationException();
+  }
 }
