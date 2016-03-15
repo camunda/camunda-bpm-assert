@@ -109,7 +109,7 @@
 - isFailed()
 - :white_check_mark: isTerminated()
 
-- all "variable" assertions
+- :white_check_mark: all "variable" assertions
 
 ### "HumanTask" specific assertions
 
