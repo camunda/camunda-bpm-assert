@@ -81,8 +81,138 @@ public class HumanTaskAssertVariablesTest extends ProcessAssertTestCase {
     });
   }
 
+  @Test
+  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
+  public void testHasVariables_Success() {
+    // Given
+    final CaseInstance caseInstance = createCaseInstance();
+
+    // When
+    setVariablesOnHumanTask();
+
+    // Then
+    assertThat(caseInstance).humanTask(TASK_A).hasVariables("aVariable", "bVariable");
+    // And
+    assertThat(caseInstance).humanTask(TASK_A).hasVariables("aVariable");
+    // And
+    assertThat(caseInstance).humanTask(TASK_A).hasVariables("bVariable");
+    // And
+    assertThat(caseInstance).humanTask(TASK_A).hasVariables();
+  }
+
+  @Test
+  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
+  public void testHasVariables_Failure() {
+    // Given
+    final CaseInstance caseInstance = createCaseInstance();
+
+    // When
+
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(caseInstance).humanTask(TASK_A).hasVariables();
+      }
+    });
+  }
+
+  @Test
+  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
+  public void testHasNoVariables_Success() {
+    // Given
+    final CaseInstance caseInstance = createCaseInstance();
+
+    // When
+
+    // Then
+    assertThat(caseInstance).humanTask(TASK_A).hasNoVariables();
+  }
+
+  @Test
+  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
+  public void testHasNoVariables_Failure() {
+    // Given
+    final CaseInstance caseInstance = createCaseInstance();
+
+    // When
+    setVariablesOnHumanTask();
+
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(caseInstance).humanTask(TASK_A).hasNoVariables();
+      }
+    });
+  }
+
+  @Test
+  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
+  public void testVariables_Success_NoHumanTaskVariables() {
+    // Given
+    final CaseInstance caseInstance = createCaseInstanceWithVariable();
+
+    // When
+
+    // Then
+    assertThat(caseInstance).humanTask(TASK_A).variables().isEmpty();
+  }
+
+  @Test
+  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
+  public void testVariables_Failure_NoHumanTaskVariables() {
+    // Given
+    final CaseInstance caseInstance = createCaseInstanceWithVariable();
+
+    // When
+
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(caseInstance).humanTask(TASK_A).variables().isNotEmpty();
+      }
+    });
+  }
+
+  @Test
+  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
+  public void testHasNoVariables_Success_NoHumanTaskVariables() {
+    // Given
+    final CaseInstance caseInstance = createCaseInstanceWithVariable();
+
+    // When
+
+    // Then
+    assertThat(caseInstance).humanTask(TASK_A).hasNoVariables();
+  }
+
+  @Test
+  @Deployment(resources = { "cmmn/HumanTaskAssert-variables.cmmn" })
+  public void testHasVariables_Failure_NoHumanTaskVariables() {
+    // Given
+    final CaseInstance caseInstance = createCaseInstanceWithVariable();
+
+    // When
+
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        assertThat(caseInstance).humanTask(TASK_A).hasVariables();
+      }
+    });
+  }
+
   private CaseInstance createCaseInstance() {
     return caseService().createCaseInstanceByKey(CASE_KEY);
+  }
+
+  private CaseInstance createCaseInstanceWithVariable() {
+    CaseInstance caseInstance = createCaseInstance();
+    caseExecution(caseInstance.getActivityId()).setVariable("aVariable", "aValue");
+    return caseInstance;
   }
 
   private void setAVariableOnHumanTaskAndCompleteHumanTask() {

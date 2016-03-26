@@ -1,9 +1,5 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
-import java.util.Map;
-
-import org.assertj.core.api.Assertions;
-import org.assertj.core.api.MapAssert;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.camunda.bpm.engine.runtime.CaseExecution;
@@ -100,31 +96,6 @@ public class HumanTaskAssert extends AbstractCaseAssert<HumanTaskAssert, CaseExe
   @Override
   public HumanTaskAssert isTerminated() {
     return super.isTerminated();
-  }
-
-  /**
-   * Enter into a chained map assert inspecting the variables currently available in the context of the case instance
-   * under test of this HumanTaskAssert.
-   * 
-   * @return MapAssert<String, Object> inspecting the human task variables. Inspecting an empty map in case no such variables
-   *         are available.
-   */
-  public MapAssert<String, Object> variables() {
-    return (MapAssert<String, Object>) Assertions.assertThat(vars());
-  }
-
-  /* Return variables map - independent of running/historic instance status */
-  protected Map<String, Object> vars() {
-    CaseExecution current = getCurrent();
-    if (current != null) {
-      return caseService().getVariables(current.getId());
-    } else {
-      return getHistoricVariablesMap();
-    }
-  }
-
-  protected Map<String, Object> getHistoricVariablesMap() {
-    throw new UnsupportedOperationException();
   }
 
 }
