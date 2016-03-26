@@ -14,13 +14,13 @@
 Assert that a human task holds at least one case variable:
 
 ```java
-assertThat(humanTask).hasVariables();
+assertThat(caseInstance).humanTask("PI_TaskA").hasVariables();
 ```
 
 Assert that a human task holds - aside potential other variables - one or more specified case variables:
 
 ```java
-assertThat(humanTask)
+assertThat(caseInstance).humanTask("PI_TaskA")
   .hasVariables("approved")
   .hasVariables("jobAnnouncementId", "approved");
 ```
@@ -31,7 +31,7 @@ assertThat(humanTask)
 Assert that a human task holds no case variables at all:
 
 ```java
-assertThat(humanTask).hasNoVariables();
+assertThat(caseInstance).humanTask("PI_TaskA").hasNoVariables();
 ```
 
 <a name="humanTask-isActive"/>
