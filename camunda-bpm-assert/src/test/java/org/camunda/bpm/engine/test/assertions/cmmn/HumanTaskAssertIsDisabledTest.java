@@ -22,7 +22,7 @@ public class HumanTaskAssertIsDisabledTest extends ProcessAssertTestCase {
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssertisDisabledTest.cmmn" })
+  @Deployment(resources = { "cmmn/HumanTaskAssertIsDisabledTest.cmmn" })
   public void testIsDisabled_Success() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
@@ -38,7 +38,7 @@ public class HumanTaskAssertIsDisabledTest extends ProcessAssertTestCase {
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssertisDisabledTest.cmmn" })
+  @Deployment(resources = { "cmmn/HumanTaskAssertIsDisabledTest.cmmn" })
   public void testIsDisabled_Failure() {
     // Given
     // When
