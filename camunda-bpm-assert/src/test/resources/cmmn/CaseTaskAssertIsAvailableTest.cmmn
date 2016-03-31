@@ -18,7 +18,7 @@
           </cmmn:manualActivationRule>
         </cmmn:defaultControl>
       </cmmn:caseTask>
-      <cmmn:caseTask description="" id="CT_TaskB" isBlocking="true" name="B" caseRef="Case_CaseTaskAssertIsAvailableTest_CaseC">
+      <cmmn:caseTask description="" id="CT_TaskB" isBlocking="true" name="B" caseRef="Case_CaseTaskAssertIsAvailableTest_CaseB">
         <cmmn:defaultControl>
           <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a921">
             <cmmn:condition id="f3953a0a-12ef-46f5-95ec-a0f60e0f45d2" language="juel"><cmmn:body>#{false}</cmmn:body></cmmn:condition>
@@ -34,18 +34,6 @@
         <cmmn:defaultControl>
           <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a922">
             <cmmn:condition id="f3953a0a-12ef-46f5-95ec-a0f60e0f45d1" language="juel"><cmmn:body>#{false}</cmmn:body></cmmn:condition>
-          </cmmn:manualActivationRule>
-        </cmmn:defaultControl>
-      </cmmn:humanTask>
-    </cmmn:casePlanModel>
-  </cmmn:case>
-  <cmmn:case id="Case_CaseTaskAssertIsAvailableTest_CaseC" name="CaseTaskAssertIsAvailable Test CaseC">
-    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_CaseTaskAssertIsAvailableTest_CaseC" name="CaseTaskAssertIsAvailable Test CaseC">
-      <cmmn:planItem definitionRef="HT_TaskC" id="PI_TaskC_HT"/>
-      <cmmn:humanTask description="" id="HT_TaskC" isBlocking="true" name="A">
-        <cmmn:defaultControl>
-          <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a923">
-            <cmmn:condition id="f3953a0a-12ef-46f5-95ec-a0f60e0f45d3" language="juel"><cmmn:body>#{false}</cmmn:body></cmmn:condition>
           </cmmn:manualActivationRule>
         </cmmn:defaultControl>
       </cmmn:humanTask>
