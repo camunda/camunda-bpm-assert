@@ -5,6 +5,7 @@
    * for case executions: [assertThat](#assertthat-caseexecution)
    * for case definitions: [assertThat](#assertthat-casedefinition)
    * for human tasks: [isActive](#humanTask-isActive), [isAvailable](#humanTask-isAvailable), [isCompleted](#humanTask-isCompleted), [isDisabled](#humanTask-isDisabled), [isEnabled](#humanTask-isEnabled), [isTerminated](#humanTask-isTerminated), [hasVariables](#humanTask-hasVariables), [hasNoVariables](#humanTask-hasNoVariables)
+   * for case tasks: [isActive](#caseTask-isActive), [isAvailable](#caseTask-isAvailable), [isCompleted](#caseTask-isCompleted), [isDisabled](#caseTask-isDisabled), [isEnabled](#caseTask-isEnabled), [isTerminated](#caseTask-isTerminated)
  
  * [Helpers](#helpers)
    * retrieve CaseService
@@ -129,6 +130,80 @@ Assert that a human task is currently 'terminated':
 
 ```java
 assertThat(caseInstance).humanTask("PI_TaskA").isTerminated();
+```
+<a name="caseTask-hasVariables"/>
+#### Instance: hasVariables
+
+Assert that a case task holds at least one case variable:
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA").hasVariables();
+```
+
+Assert that a case task holds - aside potential other variables - one or more specified case variables:
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA")
+  .hasVariables("approved")
+  .hasVariables("jobAnnouncementId", "approved");
+```
+
+<a name="caseTask-hasNoVariables"/>
+#### Instance: hasNoVariables
+
+Assert that a case task holds no case variables at all:
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA").hasNoVariables();
+```
+
+<a name="caseTask-isActive"/>
+#### CaseTask: isActive
+
+Assert that a case task is currently 'active':
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA").isActive();
+```
+<a name="caseTask-isAvailable"/>
+#### CaseTask: isAvailable
+
+Assert that a case task is currently 'available':
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA").isAvailable();
+```
+<a name="caseTask-isCompleted"/>
+#### CaseTask: isCompleted
+
+Assert that a case task is currently 'completed':
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA").isCompleted();
+```
+<a name="caseTask-isDisabled"/>
+#### CaseTask: isDisabled
+
+Assert that a case task is currently 'disabled':
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA").isDisabled();
+```
+<a name="caseTask-isEnabled"/>
+#### CaseTask: isEnabled
+
+Assert that a case task is currently 'enabled':
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA").isEnabled();
+```
+<a name="caseTask-isTerminated"/>
+#### CaseTask: isTerminated
+
+Assert that a case task is currently 'terminated':
+
+```java
+assertThat(caseInstance).caseTask("PI_TaskA").isTerminated();
 ```
 
 ## Helpers
