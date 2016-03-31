@@ -86,7 +86,7 @@
 ### Make inherited methods available public
 
 - :white_check_mark: isAvailable()
-- isEnabled()
+- :white_check_mark: isEnabled()
 - :white_check_mark: isDisabled()
 - :white_check_mark: isActive()
 - isSuspended()
