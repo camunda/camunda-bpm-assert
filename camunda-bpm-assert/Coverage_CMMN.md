@@ -90,7 +90,7 @@
 - isDisabled()
 - :white_check_mark: isActive()
 - isSuspended()
-- isCompleted()
+- :white_check_mark: isCompleted()
 - isFailed()
 - isTerminated()
 
