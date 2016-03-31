@@ -87,7 +87,7 @@
 
 - :white_check_mark: isAvailable()
 - isEnabled()
-- isDisabled()
+- :white_check_mark: isDisabled()
 - :white_check_mark: isActive()
 - isSuspended()
 - :white_check_mark: isCompleted()
