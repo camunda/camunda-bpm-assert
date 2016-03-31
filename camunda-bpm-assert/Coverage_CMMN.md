@@ -92,7 +92,7 @@
 - isSuspended()
 - :white_check_mark: isCompleted()
 - isFailed()
-- isTerminated()
+- :white_check_mark: isTerminated()
 
 - all "variable" assertions
 
