@@ -177,6 +177,8 @@
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
+:white_check_mark:
+
 ### "Service" retrievers
 
 (Implementation, systematical tests, javadoc and markdown documentation)
@@ -204,3 +206,4 @@
 - caseExecution(parent)
 - caseExecution(activityId, parent)
 - caseExecution(query, parent)
+- descendantCaseExecution(query)
