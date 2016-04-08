@@ -57,7 +57,7 @@ Following this statement, you can fluently continue with your assertions, e.g.
     assertThat(caseExecution).isNotNull();
 
 <a name="humanTask-hasVariables"/>
-#### Instance: hasVariables
+#### HumanTask: hasVariables
 
 Assert that a human task holds at least one case variable:
 
@@ -74,7 +74,7 @@ assertThat(caseInstance).humanTask("PI_TaskA")
 ```
 
 <a name="humanTask-hasNoVariables"/>
-#### Instance: hasNoVariables
+#### HumanTask: hasNoVariables
 
 Assert that a human task holds no case variables at all:
 
