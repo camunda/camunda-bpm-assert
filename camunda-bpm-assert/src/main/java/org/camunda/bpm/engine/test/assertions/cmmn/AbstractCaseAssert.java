@@ -1,6 +1,10 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
+import java.util.Arrays;
+import java.util.Map;
+
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.MapAssert;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstance;
 import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
@@ -11,6 +15,7 @@ import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.assertions.bpmn.AbstractProcessAssert;
+import org.camunda.bpm.engine.test.assertions.bpmn.TaskAssert;
 import org.camunda.bpm.model.cmmn.impl.CmmnModelConstants;
 
 /**
@@ -26,7 +31,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   public A getActual() {
     return actual;
   }
-
 
   protected AbstractCaseAssert(ProcessEngine engine, A actual, Class<?> selfType) {
     super(engine, actual, selfType);
@@ -152,8 +156,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   protected CaseInstanceAssert isCaseInstance() {
     Assertions.assertThat(actual).isNotNull();
     Assertions.assertThat(actual.getCaseInstanceId())
-      .overridingErrorMessage("Expected %s to be the case instance, but found it not to be!")
-      .isEqualTo(actual.getId());
+        .overridingErrorMessage("Expected %s to be the case instance, but found it not to be!").isEqualTo(actual.getId());
     return CaseInstanceAssert.assertThat(engine, (CaseInstance) actual);
   }
 
@@ -651,19 +654,16 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   private S hasState(CaseExecutionState state) {
     Assertions.assertThat(actual).isNotNull();
     CaseExecution current = getCurrent();
-    int actualState = current != null
-      ? ((CaseExecutionEntity) current).getState()
-      : ((HistoricCaseActivityInstanceEntity) getHistoric()).getCaseActivityInstanceState();
+    int actualState = current != null ? ((CaseExecutionEntity) current).getState()
+        : ((HistoricCaseActivityInstanceEntity) getHistoric()).getCaseActivityInstanceState();
     Assertions
-      .assertThat(actualState)
-      .overridingErrorMessage(
-        String.format(
-          "Expected %s to be in state '%s', but found it to be '%s'!",
-          toString(actual),
-          state,
-          CaseExecutionState.CASE_EXECUTION_STATES.get(actualState)
-        ))
-      .isEqualTo(state.getStateCode());
+        .assertThat(actualState)
+        .overridingErrorMessage(
+            String.format(
+                "Expected %s to be in state '%s', but found it to be '%s'!",
+                toString(actual),
+                state,
+                CaseExecutionState.CASE_EXECUTION_STATES.get(actualState))).isEqualTo(state.getStateCode());
     @SuppressWarnings("unchecked")
     S self = (S) this;
     return self;
@@ -678,15 +678,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   private S hasType(String type) {
     Assertions.assertThat(actual).isNotNull();
     Assertions
-      .assertThat(actual.getActivityType())
-      .overridingErrorMessage(
-        String.format(
-          "Expected %s to be a '%s', but found it to be a '%s'!",
-          toString(actual),
-          type,
-          actual.getActivityType()
-        ))
-      .isEqualTo(type);
+        .assertThat(actual.getActivityType())
+        .overridingErrorMessage(
+            String.format("Expected %s to be a '%s', but found it to be a '%s'!", toString(actual), type, actual.getActivityType()))
+        .isEqualTo(type);
     @SuppressWarnings("unchecked")
     S self = (S) this;
     return self;
@@ -707,10 +702,10 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    **/
   protected HistoricCaseActivityInstance getHistoric() {
     Assertions.assertThat(actual).isNotNull();
-    HistoricCaseActivityInstance historicCaseActivityInstance =
-      historicCaseActivityInstanceQuery().caseExecutionId(actual.getId()).singleResult();
-    String message = "Please make sure you have set the history service of the engine to " +
-      "at least level 'activity' or a higher level before making use of this assertion!";
+    HistoricCaseActivityInstance historicCaseActivityInstance = historicCaseActivityInstanceQuery().caseExecutionId(actual.getId())
+        .singleResult();
+    String message = "Please make sure you have set the history service of the engine to "
+        + "at least level 'activity' or a higher level before making use of this assertion!";
     Assertions.assertThat(historicCaseActivityInstance).overridingErrorMessage(message).isNotNull();
     return historicCaseActivityInstance;
   }
@@ -734,20 +729,81 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   @Override
   protected String toString(A caseExecution) {
     if (caseExecution != null) {
-      return !actual.getCaseInstanceId().equals(actual.getId())
-        ? String.format("%s {id='%s', activityId='%s' }",
-        caseExecution.getActivityType(),
-        caseExecution.getId(),
-        caseExecution .getActivityId(),
-        caseExecution.getCaseInstanceId())
-        : String.format("%s {id='%s', activityId='%s'" +
-          (((CaseInstance) caseExecution).getBusinessKey() != null ? ", businessKey='%s'}" : "}"),
-        CaseInstance.class.getSimpleName(),
-        caseExecution.getId(),
-        caseExecution.getActivityId(),
-        ((CaseInstance) caseExecution).getBusinessKey());
+      return !actual.getCaseInstanceId().equals(actual.getId()) ? String.format(
+          "%s {id='%s', activityId='%s' }",
+          caseExecution.getActivityType(),
+          caseExecution.getId(),
+          caseExecution.getActivityId(),
+          caseExecution.getCaseInstanceId())
+          : String.format(
+              "%s {id='%s', activityId='%s'" + (((CaseInstance) caseExecution).getBusinessKey() != null ? ", businessKey='%s'}"
+                  : "}"),
+              CaseInstance.class.getSimpleName(),
+              caseExecution.getId(),
+              caseExecution.getActivityId(),
+              ((CaseInstance) caseExecution).getBusinessKey());
     }
     return null;
+  }
+
+  /**
+   * Enter into a chained map assert inspecting the variables currently available in the context of the case instance
+   * under test of this AbstractCaseAssert.
+   * 
+   * @return MapAssert<String, Object> inspecting the case instance variables. Inspecting an empty map in case no such variables
+   *         are available.
+   */
+  protected MapAssert<String, Object> variables() {
+    return (MapAssert<String, Object>) Assertions.assertThat(vars());
+  }
+
+  /* Return variables map - independent of running/historic instance status */
+  protected Map<String, Object> vars() {
+    CaseExecution current = getCurrent();
+    if (current != null) {
+      return caseService().getVariables(current.getId());
+    } else {
+      return getHistoricVariablesMap();
+    }
+  }
+
+  private Map<String, Object> getHistoricVariablesMap() {
+    throw new UnsupportedOperationException();
+  }
+
+  protected S hasVars(String[] names) {
+    boolean shouldHaveVariables = names != null;
+    boolean shouldHaveSpecificVariables = names != null && names.length > 0;
+
+    Map<String, Object> vars = vars();
+    StringBuffer message = new StringBuffer();
+    message.append("Expecting %s to hold ");
+    message.append(shouldHaveVariables ? "case variables" + (shouldHaveSpecificVariables ? " %s, "
+        : ", ")
+        : "no variables at all, ");
+    message.append("instead we found it to hold " + (vars.isEmpty() ? "no variables at all."
+        : "the variables %s."));
+    if (vars.isEmpty() && getCurrent() == null)
+      message.append(" (Please make sure you have set the history " + "service of the engine to at least 'audit' or a higher level "
+          + "before making use of this assertion for historic instances!)");
+
+    MapAssert<String, Object> assertion = variables().overridingErrorMessage(
+        message.toString(),
+        toString(actual),
+        shouldHaveSpecificVariables ? Arrays.asList(names)
+            : vars.keySet(),
+        vars.keySet());
+    if (shouldHaveVariables) {
+      if (shouldHaveSpecificVariables) {
+        assertion.containsKeys(names);
+      } else {
+        assertion.isNotEmpty();
+      }
+    } else {
+      assertion.isEmpty();
+    }
+    S self = (S) this;
+    return self;
   }
 
 }
