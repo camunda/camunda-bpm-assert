@@ -5,7 +5,7 @@
    * for case executions: [assertThat](#assertthat-caseexecution)
    * for case definitions: [assertThat](#assertthat-casedefinition)
    * for human tasks: [isActive](#humanTask-isActive), [isAvailable](#humanTask-isAvailable), [isCompleted](#humanTask-isCompleted), [isDisabled](#humanTask-isDisabled), [isEnabled](#humanTask-isEnabled), [isTerminated](#humanTask-isTerminated), [hasVariables](#humanTask-hasVariables), [hasNoVariables](#humanTask-hasNoVariables)
-   * for milestones: [isAvailable](#milestone-isAvailable)
+   * for milestones: [isAvailable](#milestone-isAvailable), [isCompleted](#milestone-isCompleted)
  
  * [Helpers](#helpers)
    * retrieve CaseService
@@ -139,6 +139,17 @@ Assert that a milestone is currently 'available':
 ```java
 assertThat(caseInstance).milestone("M_ImportantState").isAvailable();
 ```
+<a name="milestone-isCompleted"/>
+#### Milestone: isCompleted
+
+Assert that a milestone is currently 'completed':
+
+```java
+assertThat(caseInstance).milestone("M_ImportantState").isCompleted();
+```
+
+N.B.: A milestone that is completed (= has reached the Completed state) is sometimes also said to _have occurred_.
+This is because the transition leading to the Completed state is labelled _occur_. 
 
 ## Helpers
 
