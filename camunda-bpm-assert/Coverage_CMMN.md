@@ -123,18 +123,10 @@
 
 ## MilestoneAssert
 
-### Make inherited methods available public
-
 - isAvailable()
 - isSuspended()
 - isCompleted()
 - isTerminated()
-
-### Milestone specific assertions
-
-(Implementation, systematical tests, javadoc and markdown documentation)
-
-- hasOccured()
 
 ## ProcessTaskAssert
 
