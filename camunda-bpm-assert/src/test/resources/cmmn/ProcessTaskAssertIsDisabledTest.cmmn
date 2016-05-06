@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
+                  id="Def_ProcessTaskAssertIsDisabledTest" name="ProcessTaskAssertisDisabled Test"
+                  targetNamespace="http://www.trisotech.com/cmmn/definitions/ProcessTaskAssertIsDisabledTest">
+  <cmmn:case id="Case_ProcessTaskAssertIsDisabledTest" name="ProcessTaskAssertisDisabled Test">
+    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_ProcessTaskAssertIsDisabledTest" name="ProcessTaskAssertisDisabled Test">
+      <cmmn:planItem definitionRef="HT_TaskA" id="PI_TaskA"/>
+      <cmmn:processTask description="" id="HT_TaskA" isBlocking="true" name="A" processRef="ProcessTaskAssert-calledProcess">
+      </cmmn:processTask>
+    </cmmn:casePlanModel>
+  </cmmn:case>
+</cmmn:definitions>
