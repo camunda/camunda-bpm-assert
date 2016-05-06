@@ -127,6 +127,8 @@
 - isCompleted()
 - isTerminated()
 
+:white_check_mark:
+
 ## ProcessTaskAssert
 
 ### Make inherited methods available public
