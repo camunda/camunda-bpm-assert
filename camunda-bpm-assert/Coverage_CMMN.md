@@ -124,7 +124,6 @@
 ## MilestoneAssert
 
 - isAvailable()
-- isSuspended()
 - isCompleted()
 - isTerminated()
 
