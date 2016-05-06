@@ -138,8 +138,6 @@
 
 ## ProcessTaskAssert
 
-### Make inherited methods available public
-
 - isAvailable()
 - isEnabled()
 - isDisabled()
@@ -150,6 +148,8 @@
 - isTerminated()
 
 - all "variable" assertions
+
+:white_check_mark:
 
 ## StageAssert
 
