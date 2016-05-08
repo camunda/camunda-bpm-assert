@@ -193,7 +193,7 @@
 (Implementation, systematical tests, javadoc and markdown documentation)
 
 - complete(caseExecution)
-- complete(caseExecution, variables)
+- :white_check_mark: complete(caseExecution, variables)
 - disable(caseExecution)
 - manuallyStart(caseExecution)
 
@@ -211,4 +211,4 @@
 
 ### static helper methods
 
-- withVariables(key, value, furtherKeyValuePairs)
+- :white_check_mark: withVariables(key, value, furtherKeyValuePairs)
