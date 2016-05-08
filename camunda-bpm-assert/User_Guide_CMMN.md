@@ -4,9 +4,8 @@
    * for case instances: [assertThat](#assertthat-caseinstance)
    * for case executions: [assertThat](#assertthat-caseexecution)
    * for case definitions: [assertThat](#assertthat-casedefinition)
-   * for case tasks: [hasVariables](#caseTask-hasVariables), [hasNoVariables](#caseTask-hasNoVariables)
    * for human tasks: [isActive](#humanTask-isActive), [isAvailable](#humanTask-isAvailable), [isCompleted](#humanTask-isCompleted), [isDisabled](#humanTask-isDisabled), [isEnabled](#humanTask-isEnabled), [isTerminated](#humanTask-isTerminated), [hasVariables](#humanTask-hasVariables), [hasNoVariables](#humanTask-hasNoVariables)
-   * for case tasks: [isActive](#caseTask-isActive), [isAvailable](#caseTask-isAvailable), [isCompleted](#caseTask-isCompleted), [isDisabled](#caseTask-isDisabled), [isEnabled](#caseTask-isEnabled), [isTerminated](#caseTask-isTerminated)
+   * for case tasks: [isActive](#caseTask-isActive), [isAvailable](#caseTask-isAvailable), [isCompleted](#caseTask-isCompleted), [isDisabled](#caseTask-isDisabled), [isEnabled](#caseTask-isEnabled), [isTerminated](#caseTask-isTerminated), [hasVariables](#caseTask-hasVariables), [hasNoVariables](#caseTask-hasNoVariables)
  
  * [Helpers](#helpers)
    * retrieve CaseService
