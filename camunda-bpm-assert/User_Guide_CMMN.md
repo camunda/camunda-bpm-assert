@@ -239,7 +239,7 @@ You can also easily combine it with [caseExecutionQuery()](#caseexecutionquery),
     caseExecution(caseExecutionQuery().variableValueEquals("foo","bar"), caseInstance)
 
 <a name="helpers-variables"/>
-#### Making assertions on the case variables map of an case execution
+### Making assertions on the case variables map of an case execution
 
 You can retrieve a "chained" case variables map assert inspecting all the case variables 
 available in the context of a case execution...
