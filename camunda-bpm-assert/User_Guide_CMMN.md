@@ -57,32 +57,6 @@ Following this statement, you can fluently continue with your assertions, e.g.
 
     assertThat(caseExecution).isNotNull();
 
-<a name="caseTask-hasVariables"/>
-#### CaseTask: hasVariables
-
-Assert that a case task holds at least one case variable:
-
-```java
-assertThat(caseInstance).caseTask("PI_TaskA").hasVariables();
-```
-
-Assert that a case task holds - aside potential other variables - one or more specified case variables:
-
-```java
-assertThat(caseInstance).caseTask("PI_TaskA")
-  .hasVariables("approved")
-  .hasVariables("jobAnnouncementId", "approved");
-```
-
-<a name="caseTask-hasNoVariables"/>
-#### CaseTask: hasNoVariables
-
-Assert that a case task holds no case variables at all:
-
-```java
-assertThat(caseInstance).caseTask("PI_TaskA").hasNoVariables();
-```
-
 <a name="humanTask-hasVariables"/>
 #### HumanTask: hasVariables
 
@@ -157,8 +131,9 @@ Assert that a human task is currently 'terminated':
 ```java
 assertThat(caseInstance).humanTask("PI_TaskA").isTerminated();
 ```
+
 <a name="caseTask-hasVariables"/>
-#### Instance: hasVariables
+#### CaseTask: hasVariables
 
 Assert that a case task holds at least one case variable:
 
@@ -174,8 +149,8 @@ assertThat(caseInstance).caseTask("PI_TaskA")
   .hasVariables("jobAnnouncementId", "approved");
 ```
 
-<a name="caseTask-hasNoVariables"/>
-#### Instance: hasNoVariables
+<a name="caseTask-hasNoVariables"/> 
+#### CaseTask: hasNoVariables
 
 Assert that a case task holds no case variables at all:
 
