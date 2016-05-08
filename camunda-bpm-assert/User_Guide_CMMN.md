@@ -17,6 +17,7 @@
      * [caseDefinitionQuery()](#caseDefinitionQuery)
    * manage lifecycles
      * [complete()](#complete-CaseExecution)
+     * [complete(caseExecution, variables)](#helpers-complete-variables)
      * [disable()](#disable-CaseExecution)
      * [manuallyStart()](#manuallyStart-CaseExecution)
    * lookup variables
@@ -180,6 +181,22 @@ Helper method to easily complete a caseExecution.
 
     complete(caseExecution)    
     
+<a name="helpers-complete-variables"/>
+#### complete(caseExecution, variables)
+
+You can directly construct a map of case variables by passing a sequence 
+of key/value pairs to the static helper method "withVariables":
+
+```java
+Map<String, Object> variables = withVariables("documentId", 5, "approved", true); 
+```
+
+You can therefore e.g. write
+
+```java
+complete(caseExecution, withVariables("documentId", 5, "approved", true)); 
+```
+
 
 ### disable(CaseExecution)
 

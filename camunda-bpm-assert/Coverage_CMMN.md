@@ -193,6 +193,7 @@
 (Implementation, systematical tests, javadoc and markdown documentation)
 
 - complete(caseExecution)
+- complete(caseExecution, variables)
 - disable(caseExecution)
 - manuallyStart(caseExecution)
 
@@ -207,3 +208,7 @@
 - caseExecution(activityId, parent)
 - caseExecution(query, parent)
 - descendantCaseExecution(query)
+
+### static helper methods
+
+- withVariables(key, value, furtherKeyValuePairs)
