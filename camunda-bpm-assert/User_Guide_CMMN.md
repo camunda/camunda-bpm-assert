@@ -314,4 +314,4 @@ assertThat(caseExecution).variables()
 ```
 
 You may want to compare that with the other possibility to assert whether a case execution 
-[hasVariables](#humanTask-hasVariables)/[hasNoVariables](#humanTask-hasNoVariables) (without leaving your current CaseAssert). 
+    [hasVariables](#humanTask-hasVariables)/[hasNoVariables](#humanTask-hasNoVariables) (without leaving your current CaseAssert). 
