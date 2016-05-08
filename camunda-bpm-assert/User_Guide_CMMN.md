@@ -182,7 +182,7 @@ Helper method to easily complete a caseExecution.
     complete(caseExecution)    
     
 <a name="helpers-complete-variables"/>
-#### complete(caseExecution, variables)
+### complete(caseExecution, variables)
 
 You can directly construct a map of case variables by passing a sequence 
 of key/value pairs to the static helper method "withVariables":
