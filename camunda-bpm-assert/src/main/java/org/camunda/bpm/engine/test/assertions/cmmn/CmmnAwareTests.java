@@ -10,6 +10,10 @@ import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.CaseInstanceQuery;
 import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 
+import java.util.Map;
+
+import static java.lang.String.format;
+
 /**
  * Convenience class to access camunda *BPMN* and *CMMN* 
  * related Assertions PLUS helper methods. Use it with a static import:
@@ -143,6 +147,37 @@ public class CmmnAwareTests extends BpmnAwareTests {
      */
   public static CaseExecution caseExecution(CaseExecutionQuery caseExecutionQuery, CaseInstance caseInstance) {
     return assertThat(caseInstance).isNotNull().descendantCaseExecution(caseExecutionQuery).getActual();
+  }
+
+  /**
+   * Helper method to easily complete a caseExecution and pass some
+   * case variables.
+   *
+   * @param   caseExecution CaseExecution to be completed
+   * @param   variables Case variables to be passed to the
+   *          case instance when completing the caseExecution. For
+   *          setting those variables, you can use
+   *          {@link #withVariables(String, Object, Object...)}
+   */
+  public static void complete(CaseExecution caseExecution, Map<String, Object> variables) {
+    if (caseExecution == null || variables == null) {
+      throw new IllegalArgumentException(format("Illegal call of complete(caseExecution = '%s', variables = '%s') - both must not be null!", caseExecution, variables));
+    }
+    caseService().withCaseExecution(caseExecution.getId()).setVariables(variables).complete();
+  }
+
+  /**
+   * Helper method to easily construct a map of case variables
+   *
+   * @param   key (obligatory) key of first case variable
+   * @param   value (obligatory) value of first case variable
+   * @param   furtherKeyValuePairs (optional) key/value pairs for further
+   *          case variables
+   * @return  a map of case variables by passing a list of String
+   *          -> Object key value pairs.
+   */
+  public static Map<String, Object> withVariables(final String key, final Object value, final Object... furtherKeyValuePairs) {
+    return BpmnAwareTests.withVariables(key,value,furtherKeyValuePairs);
   }
 
 }
