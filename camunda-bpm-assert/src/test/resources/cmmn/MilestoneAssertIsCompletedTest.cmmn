@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
+                  id="_4062973c-a12e-4992-8631-18f0b1f7311b" name="Drawing 1" targetNamespace="http://www.trisotech.com/cmmn/definitions/_4062973c-a12e-4992-8631-18f0b1f7311b">
+    <cmmn:case id="MilestoneAssertIsCompletedTest">
+    <cmmn:casePlanModel autoComplete="true" id="_b70a29d0-52f0-4f65-a1d1-47130791b832">
+            <cmmn:planItem definitionRef="PID__1516678a-0fb0-4586-99b1-2b35336c67a3" id="PI_TaskA"/>
+            <cmmn:planItem definitionRef="PID__bc9919ad-5b07-4fb5-85fc-b3bb3bc4ff4d" entryCriteriaRefs="_cf6057cb-b409-4363-a177-92df6bbee2b7" id="Milestone">
+                
+            </cmmn:planItem>
+            <cmmn:sentry id="_cf6057cb-b409-4363-a177-92df6bbee2b7">
+                <cmmn:planItemOnPart id="_db4acf8d-40c1-4e1f-b9c9-ad3510e605f8" sourceRef="PI_TaskA">
+                    <cmmn:standardEvent>complete</cmmn:standardEvent>
+                </cmmn:planItemOnPart>
+            </cmmn:sentry>
+            <cmmn:humanTask id="PID__1516678a-0fb0-4586-99b1-2b35336c67a3" isBlocking="true">
+                <cmmn:defaultControl>
+                    <cmmn:requiredRule id="_7a98952a-a040-49a8-b479-1df83da3309e">
+                        <cmmn:condition id="bbe1c437-0e31-4941-b556-d9380905b775">
+              <cmmn:body>${true}</cmmn:body>
+            </cmmn:condition>
+                    </cmmn:requiredRule>
+                    <cmmn:manualActivationRule id="e0b48876-fe8d-442f-8bf1-467db41846fe">
+                        <cmmn:condition id="d5d8fcd6-1356-4685-9ef2-a477eaa98fb2">
+              <cmmn:body>${false}</cmmn:body>
+            </cmmn:condition>
+                    </cmmn:manualActivationRule>
+                </cmmn:defaultControl>
+            </cmmn:humanTask>
+            <cmmn:milestone id="PID__bc9919ad-5b07-4fb5-85fc-b3bb3bc4ff4d"/>
+        </cmmn:casePlanModel>
+  </cmmn:case>
+    
+    
+</cmmn:definitions>

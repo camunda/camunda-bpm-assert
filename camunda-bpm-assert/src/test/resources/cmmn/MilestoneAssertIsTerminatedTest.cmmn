@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler" id="_4062973c-a12e-4992-8631-18f0b1f7311b" name="Drawing 1" targetNamespace="http://www.trisotech.com/cmmn/definitions/_4062973c-a12e-4992-8631-18f0b1f7311b">
+    <cmmn:case id="MilestoneAssertIsTerminatedTest">
+        <cmmn:casePlanModel autoComplete="true" id="_b70a29d0-52f0-4f65-a1d1-47130791b832">
+            <cmmn:planItem definitionRef="PID__1516678a-0fb0-4586-99b1-2b35336c67a3" id="PI_TaskA"/>
+            <cmmn:planItem definitionRef="PID__f522601b-00cb-49eb-a762-f30549b8cfa2" exitCriteriaRefs="_08a26e6b-1ed4-4157-9a2f-ca63f450b4f3"
+                           id="Stage">
+
+            </cmmn:planItem>
+            <cmmn:sentry id="_08a26e6b-1ed4-4157-9a2f-ca63f450b4f3">
+                <cmmn:planItemOnPart id="_db4acf8d-40c1-4e1f-b9c9-ad3510e605f8" sourceRef="PI_TaskA">
+                    <cmmn:standardEvent>complete</cmmn:standardEvent>
+                </cmmn:planItemOnPart>
+            </cmmn:sentry>
+            <cmmn:humanTask id="PID__1516678a-0fb0-4586-99b1-2b35336c67a3" isBlocking="true">
+                <cmmn:defaultControl>
+                    <cmmn:requiredRule id="_73124fbd-074f-4ecd-9beb-59bd095bca1b">
+                        <cmmn:condition id="_20b89f27-d461-48f7-a0c1-006999ad3eb9">
+                            <cmmn:body>${true}</cmmn:body>
+                        </cmmn:condition>
+                    </cmmn:requiredRule>
+                    <cmmn:manualActivationRule id="_4e4b6c1b-a4af-4002-9c2e-345b0f145250">
+                        <cmmn:condition id="_4821a975-64f8-4dce-b7b1-f717c1ccf5eb">
+                            <cmmn:body>${false}</cmmn:body>
+                        </cmmn:condition>
+                    </cmmn:manualActivationRule>
+                </cmmn:defaultControl>
+            </cmmn:humanTask>
+            <cmmn:stage autoComplete="false" id="PID__f522601b-00cb-49eb-a762-f30549b8cfa2">
+                <cmmn:defaultControl>
+                    <cmmn:manualActivationRule>
+                        <cmmn:condition>
+                            <cmmn:body>${false}</cmmn:body>
+                        </cmmn:condition>
+                    </cmmn:manualActivationRule>
+                </cmmn:defaultControl>
+                <cmmn:planItem definitionRef="PID__bc9919ad-5b07-4fb5-85fc-b3bb3bc4ff4d" entryCriteriaRefs="_6b754114-55aa-4aff-85cb-4dd19b3c4592"
+                               id="Milestone">
+
+                </cmmn:planItem>
+                <cmmn:planItem definitionRef="PID__6db44200-6527-4f4a-b2d3-e08cb5ce336a" id="PI_TaskB"/>
+                <cmmn:sentry id="_6b754114-55aa-4aff-85cb-4dd19b3c4592">
+                    <cmmn:planItemOnPart id="_7f53412d-8ca9-43c3-aa79-19bf14b2e4d4" sourceRef="PI_TaskB">
+                        <cmmn:standardEvent>complete</cmmn:standardEvent>
+                    </cmmn:planItemOnPart>
+                </cmmn:sentry>
+                <cmmn:milestone id="PID__bc9919ad-5b07-4fb5-85fc-b3bb3bc4ff4d"/>
+                <cmmn:humanTask id="PID__6db44200-6527-4f4a-b2d3-e08cb5ce336a" isBlocking="true"/>
+            </cmmn:stage>
+        </cmmn:casePlanModel>
+    </cmmn:case>
+
+
+</cmmn:definitions>
