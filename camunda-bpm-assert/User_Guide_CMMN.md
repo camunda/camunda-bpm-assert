@@ -6,6 +6,7 @@
    * for case definitions: [assertThat](#assertthat-casedefinition)
    * for human tasks: [isActive](#humanTask-isActive), [isAvailable](#humanTask-isAvailable), [isCompleted](#humanTask-isCompleted), [isDisabled](#humanTask-isDisabled), [isEnabled](#humanTask-isEnabled), [isTerminated](#humanTask-isTerminated), [hasVariables](#humanTask-hasVariables), [hasNoVariables](#humanTask-hasNoVariables)
    * for milestones: [isAvailable](#milestone-isAvailable), [isCompleted](#milestone-isCompleted), [isTerminated](#milestone-isTerminated)
+   * for process tasks: [isActive](#processTask-isActive), [isAvailable](#processTask-isAvailable), [isCompleted](#processTask-isCompleted), [isDisabled](#processTask-isDisabled), [isEnabled](#processTask-isEnabled), [isTerminated](#processTask-isTerminated), [hasVariables](#processTask-hasVariables), [hasNoVariables](#processTask-hasNoVariables)
  
  * [Helpers](#helpers)
    * retrieve CaseService
@@ -157,6 +158,81 @@ Assert that a milestone is currently 'terminated':
 
 ```java
 assertThat(caseInstance).milestone("M_ImportantState").isTerminated();
+```
+
+<a name="processTask-hasVariables"/>
+#### ProcessTask: hasVariables
+
+Assert that a process task holds at least one case variable:
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA").hasVariables();
+```
+
+Assert that a process task holds - aside potential other variables - one or more specified case variables:
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA")
+  .hasVariables("approved")
+  .hasVariables("jobAnnouncementId", "approved");
+```
+
+<a name="processTask-hasNoVariables"/>
+#### ProcessTask: hasNoVariables
+
+Assert that a process task holds no case variables at all:
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA").hasNoVariables();
+```
+
+<a name="processTask-isActive"/>
+#### ProcessTask: isActive
+
+Assert that a process task is currently 'active':
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA").isActive();
+```
+<a name="processTask-isAvailable"/>
+#### ProcessTask: isAvailable
+
+Assert that a process task is currently 'available':
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA").isAvailable();
+```
+<a name="processTask-isCompleted"/>
+#### ProcessTask: isCompleted
+
+Assert that a process task is currently 'completed':
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA").isCompleted();
+```
+<a name="processTask-isDisabled"/>
+#### ProcessTask: isDisabled
+
+Assert that a process task is currently 'disabled':
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA").isDisabled();
+```
+<a name="processTask-isEnabled"/>
+#### ProcessTask: isEnabled
+
+Assert that a process task is currently 'enabled':
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA").isEnabled();
+```
+<a name="processTask-isTerminated"/>
+#### ProcessTask: isTerminated
+
+Assert that a process task is currently 'terminated':
+
+```java
+assertThat(caseInstance).processTask("PI_TaskA").isTerminated();
 ```
 
 ## Helpers
