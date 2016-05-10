@@ -20,6 +20,7 @@
      * [caseDefinitionQuery()](#caseDefinitionQuery)
    * manage lifecycles
      * [complete()](#complete-CaseExecution)
+     * [complete(caseExecution, variables)](#helpers-complete-variables)
      * [disable()](#disable-CaseExecution)
      * [manuallyStart()](#manuallyStart-CaseExecution)
    * lookup variables
@@ -360,6 +361,22 @@ Helper method to easily complete a caseExecution.
 
     complete(caseExecution)    
     
+<a name="helpers-complete-variables"/>
+### complete(caseExecution, variables)
+
+You can directly construct a map of case variables by passing a sequence 
+of key/value pairs to the static helper method "withVariables":
+
+```java
+Map<String, Object> variables = withVariables("documentId", 5, "approved", true); 
+```
+
+You can therefore e.g. write
+
+```java
+complete(caseExecution, withVariables("documentId", 5, "approved", true)); 
+```
+
 
 ### disable(CaseExecution)
 
@@ -402,7 +419,7 @@ You can also easily combine it with [caseExecutionQuery()](#caseexecutionquery),
     caseExecution(caseExecutionQuery().variableValueEquals("foo","bar"), caseInstance)
 
 <a name="helpers-variables"/>
-#### Making assertions on the case variables map of an case execution
+### Making assertions on the case variables map of an case execution
 
 You can retrieve a "chained" case variables map assert inspecting all the case variables 
 available in the context of a case execution...

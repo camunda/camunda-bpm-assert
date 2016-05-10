@@ -186,6 +186,7 @@
 (Implementation, systematical tests, javadoc and markdown documentation)
 
 - complete(caseExecution)
+- :white_check_mark: complete(caseExecution, variables)
 - disable(caseExecution)
 - manuallyStart(caseExecution)
 
@@ -200,3 +201,7 @@
 - caseExecution(activityId, parent)
 - caseExecution(query, parent)
 - descendantCaseExecution(query)
+
+### static helper methods
+
+- :white_check_mark: withVariables(key, value, furtherKeyValuePairs)
