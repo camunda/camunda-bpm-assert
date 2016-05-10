@@ -85,16 +85,16 @@
 
 ### Make inherited methods available public
 
-- isAvailable()
-- isEnabled()
-- isDisabled()
-- isActive()
+- :white_check_mark: isAvailable()
+- :white_check_mark: isEnabled()
+- :white_check_mark: isDisabled()
+- :white_check_mark: isActive()
 - isSuspended()
-- isCompleted()
+- :white_check_mark: isCompleted()
 - isFailed()
-- isTerminated()
+- :white_check_mark: isTerminated()
 
-- all "variable" assertions
+- :white_check_mark: all "variable" assertions
 
 ## HumanTaskAssert
 
