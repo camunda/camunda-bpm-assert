@@ -5,11 +5,12 @@ jdk:
   - oraclejdk7
   - openjdk6
 env:
-  - CAM_VERSION=LATEST
-  - CAM_VERSION=7.4.0
-  - CAM_VERSION=7.3.0
-  - CAM_VERSION=7.2.0
-  - CAM_VERSION=7.1.0-Final
-  - CAM_VERSION=7.0.0-Final  
+  - CAMUNDA=RELEASE
+  - CAMUNDA=7.5.0
+  - CAMUNDA=7.4.0
+  - CAMUNDA=7.3.0
+  - CAMUNDA=7.2.0
+  - CAMUNDA=7.1.0-Final
+  - CAMUNDA=7.0.0-Final  
 install: true
-script: mvn -Dcamunda-bpm.version=$CAM_VERSION
+script: mvn -Dcamunda-bpm.version=$CAMUNDA
