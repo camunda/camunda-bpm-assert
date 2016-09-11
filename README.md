@@ -10,7 +10,7 @@ assertThat(task).hasCandidateGroup("Sales").isNotAssigned();
 Furthermore a set of static helper methods is provided to make it easier to drive through a process. Based on the [80/20 principle](https://en.wikipedia.org/wiki/Pareto_principle) the library reaches out to make those things simple you need really often. You will e.g. often have a a single open task instance in your process instance. Then just write
  
 ```groovy
-complete(task(instance));
+complete(task(instance), withVariables("approved", true));
 ```
 
 <img src="http://camunda.github.io/camunda-bpm-assert/resources/images/spaghetti-test.jpg" align="left" width="400"><br/>The goal? More **readable code** - less **spaghetti tests**!<br/>The increased readability will make it much easier to dig through your test code, the next time you need to change it will ultimately come. And your increased efficiency will make your organisational stakeholders happy, too! :smile:<br/></img>
