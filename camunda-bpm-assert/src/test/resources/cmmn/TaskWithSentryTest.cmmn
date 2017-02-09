@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
+                  id="Def_TaskWithSentryTests" name="Task with Sentry Tests"
+                  targetNamespace="http://www.trisotech.com/cmmn/definitions/_TaskWithSentryTests">
+  <cmmn:case id="Case_TaskWithSentryTests" name="Task with Sentry Tests">
+    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_TaskWithSentryTests" name="Task with Sentry Tests">
+      <cmmn:planItem definitionRef="HT_A" id="PI_HT_A"/>
+      <cmmn:planItem definitionRef="HT_B" entryCriteriaRefs="On_PI_HT_A_Complete" id="PI_HT_B"/>
+      <cmmn:sentry id="On_PI_HT_A_Complete">
+        <cmmn:planItemOnPart sourceRef="PI_HT_A">
+          <cmmn:standardEvent>complete</cmmn:standardEvent>
+        </cmmn:planItemOnPart>
+      </cmmn:sentry>
+      <cmmn:humanTask description="" id="HT_A" isBlocking="true" name="A">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule id="MAR_HT_A">
+            <cmmn:condition id="Cond_MAR_HT_A" language="juel">
+              <cmmn:body>#{false}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:humanTask>
+      <cmmn:humanTask description="" id="HT_B" isBlocking="true" name="B">
+        <cmmn:defaultControl>
+          <cmmn:manualActivationRule id="MAR_HT_B">
+            <cmmn:condition id="Cond_MAR_HT_B" language="juel">
+              <cmmn:body>#{false}</cmmn:body>
+            </cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:defaultControl>
+      </cmmn:humanTask>
+    </cmmn:casePlanModel>
+  </cmmn:case>
+</cmmn:definitions>
+

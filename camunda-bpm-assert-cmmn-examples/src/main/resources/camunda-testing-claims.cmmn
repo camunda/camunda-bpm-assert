@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/CMMN/20131201/MODEL" id="Test"
+             targetNamespace="http://bpmn.io/schema/cmmn">
+    <case
+            id="Case_c4018f7f-fe28-4c90-8496-82f49b98ff87" name="Claims File">
+        <casePlanModel id="_c4018f7f-fe28-4c90-8496-82f49b98ff87" name="Claims File"
+                       autoComplete="true"
+                       exitCriteriaRefs="f2e573cf-1fe1-420d-9306-cd6a25043c0e a97f0e00-584e-494f-8713-70ef26e90af8">
+            <planItem id="PI_9ac3a348-65a2-4154-8594-0d915460e37b"
+                      definitionRef="_9ac3a348-65a2-4154-8594-0d915460e37b"/>
+            <planItem id="PI_6f0ede2a-df0c-4360-90e0-91952ebfa143"
+                      definitionRef="_6f0ede2a-df0c-4360-90e0-91952ebfa143"
+                      entryCriteriaRefs="_8d46f06b-91a7-41f3-b141-0d0fed77bb57">
+            </planItem>
+            <planItem id="PI_d9ea109d-5044-4d01-a8f9-11f5a6076413"
+                      definitionRef="_d9ea109d-5044-4d01-a8f9-11f5a6076413"/>
+            <planItem id="PI_afe1c3d8-010a-4abe-ac67-b7842f8f7541"
+                      definitionRef="_afe1c3d8-010a-4abe-ac67-b7842f8f7541"
+                      entryCriteriaRefs="_37d97cf5-daa8-4400-9775-46dc17506a10">
+            </planItem>
+            <planItem id="PI_65aa16c4-f283-496d-8602-a8ee8da729e4"
+                      definitionRef="_65aa16c4-f283-496d-8602-a8ee8da729e4"/>
+            <planItem id="PI_3a672032-6e64-4850-9fa3-836d4ec7f890"
+                      definitionRef="_3a672032-6e64-4850-9fa3-836d4ec7f890"/>
+            <planItem id="PI_5a4e5400-5d8a-4b40-8b3c-a71909ff0e1e"
+                      definitionRef="_5a4e5400-5d8a-4b40-8b3c-a71909ff0e1e"
+                      entryCriteriaRefs="_40fd9b74-d346-4766-9eb2-750b8c8efb07">
+            </planItem>
+            <planItem id="PI_08d41d03-4e67-4d67-835e-298022cf9da7"
+                      definitionRef="_08d41d03-4e67-4d67-835e-298022cf9da7"/>
+            <planItem id="PI_b9a161e7-6a82-4c75-85e0-c589ff2e0ce4"
+                      definitionRef="_b9a161e7-6a82-4c75-85e0-c589ff2e0ce4"
+                      entryCriteriaRefs="aea8fd0b-06b6-4760-805d-ce95081b1352">
+            </planItem>
+            <planItem id="PI_9c6513c0-5f87-42b7-a013-3f8bc01114cc"
+                      definitionRef="_9c6513c0-5f87-42b7-a013-3f8bc01114cc"/>
+            <planItem id="PI_30510b39-6769-4ac3-8021-a2c63c390262"
+                      definitionRef="_30510b39-6769-4ac3-8021-a2c63c390262"
+                      entryCriteriaRefs="_76a3c4ae-3128-4efb-8be8-aa4bf3568b52">
+            </planItem>
+            <sentry id="_8d46f06b-91a7-41f3-b141-0d0fed77bb57">
+                <planItemOnPart id="_b7633c69-2b16-43e1-a27c-ab9168ba37fd"
+                                sourceRef="PI_30510b39-6769-4ac3-8021-a2c63c390262">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </sentry>
+            <sentry id="_76a3c4ae-3128-4efb-8be8-aa4bf3568b52">
+                <planItemOnPart id="_8ae36fd6-97a3-4224-8745-fbf6bebd9e37"
+                                sourceRef="PI_e93c0ab2-1ee9-4c0f-8d4b-56c45b8c442a">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </sentry>
+            <sentry id="aea8fd0b-06b6-4760-805d-ce95081b1352"/>
+            <sentry id="_40fd9b74-d346-4766-9eb2-750b8c8efb07">
+                <planItemOnPart id="_9f17f30a-1098-4506-adb1-66726a9177e9"
+                                sourceRef="PI_396aae9a-6752-4352-9d4a-1b3f44cf64a6">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </sentry>
+            <sentry id="_37d97cf5-daa8-4400-9775-46dc17506a10">
+                <planItemOnPart id="_61ace1cb-ce38-4b67-993c-113fbf49b582"
+                                sourceRef="PI_65aa16c4-f283-496d-8602-a8ee8da729e4">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </sentry>
+            <sentry id="f2e573cf-1fe1-420d-9306-cd6a25043c0e">
+                <planItemOnPart id="_2f2f3ce0-14a6-41cf-ab5d-3615c50909f7"
+                                sourceRef="PI_d9ea109d-5044-4d01-a8f9-11f5a6076413">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </sentry>
+            <sentry id="a97f0e00-584e-494f-8713-70ef26e90af8">
+                <planItemOnPart id="_d849e3e6-49fb-46d9-97f4-6418033e9a84"
+                                sourceRef="PI_afe1c3d8-010a-4abe-ac67-b7842f8f7541">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </sentry>
+            <sentry id="f4a06800-9e54-48ff-b3ea-4b44fe57dfda">
+                <planItemOnPart id="_c41fd70c-7756-4b18-bb59-5fefcbb2978a"
+                                sourceRef="PI_30510b39-6769-4ac3-8021-a2c63c390262">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </sentry>
+            <sentry id="_23d7afed-704a-4fc4-82fa-25ef1c819b3f">
+                <planItemOnPart id="_d9b2c2c6-3e21-4b30-8929-778a009b07ac"
+                                sourceRef="PI_5a4e5400-5d8a-4b40-8b3c-a71909ff0e1e">
+                    <standardEvent>complete</standardEvent>
+                </planItemOnPart>
+            </sentry>
+            <planningTable id="_113d8f0b95-edee-44e2-9b7d-413659ef5d1c"/>
+            <stage id="_9ac3a348-65a2-4154-8594-0d915460e37b"
+                   name="Identify Responsabilities"
+                   autoComplete="false">
+                <planItem id="PI_e93c0ab2-1ee9-4c0f-8d4b-56c45b8c442a"
+                          definitionRef="_e93c0ab2-1ee9-4c0f-8d4b-56c45b8c442a"/>
+            </stage>
+            <humanTask id="_6f0ede2a-df0c-4360-90e0-91952ebfa143"
+                       name="Change&#10;Responsibilities">
+                <defaultControl>
+                    <repetitionRule id="be2a3079-a45a-4bd6-b7ae-ab1ba1244fe3"/>
+                </defaultControl>
+            </humanTask>
+            <userEvent id="_d9ea109d-5044-4d01-a8f9-11f5a6076413" name=""/>
+            <milestone id="_afe1c3d8-010a-4abe-ac67-b7842f8f7541"
+                       name="Claim &#10;Processed"/>
+            <userEvent id="_65aa16c4-f283-496d-8602-a8ee8da729e4" name=""/>
+            <stage id="_3a672032-6e64-4850-9fa3-836d4ec7f890"
+                   name="Attach Base Information"
+                   autoComplete="false">
+                <planItem id="PI_396aae9a-6752-4352-9d4a-1b3f44cf64a6"
+                          definitionRef="_396aae9a-6752-4352-9d4a-1b3f44cf64a6"
+                          entryCriteriaRefs="f4a06800-9e54-48ff-b3ea-4b44fe57dfda">
+                </planItem>
+                <planItem id="PI_76401331-3f83-4957-9fe9-5b18fc838a66"
+                          definitionRef="_76401331-3f83-4957-9fe9-5b18fc838a66"
+                          entryCriteriaRefs="_4801e901-e2cd-40a8-b5ca-0c4d40cae50a">
+                </planItem>
+                <sentry id="_4801e901-e2cd-40a8-b5ca-0c4d40cae50a">
+                    <planItemOnPart id="_4f26c633-cc11-4aa0-8be9-23bf5ab38893"
+                                    sourceRef="PI_396aae9a-6752-4352-9d4a-1b3f44cf64a6">
+                        <standardEvent>complete</standardEvent>
+                    </planItemOnPart>
+                </sentry>
+                <planningTable id="_3d8f0b95-edee-44e2-9b7d-413659ef5d1c"/>
+                <humanTask id="_396aae9a-6752-4352-9d4a-1b3f44cf64a6"
+                           name="Create Claims&#10;Notification">
+                    <defaultControl>
+                        <requiredRule id="c9b27425-4bae-40c2-8ddb-687898a949cf"/>
+                    </defaultControl>
+                </humanTask>
+                <processTask id="_76401331-3f83-4957-9fe9-5b18fc838a66"
+                             name="Request Missing&#10;Documents" isBlocking="false">
+                    <defaultControl>
+                        <repetitionRule id="_32f38313-7372-4606-a499-32a6fa40cec7"/>
+                    </defaultControl>
+                </processTask>
+            </stage>
+            <milestone id="_5a4e5400-5d8a-4b40-8b3c-a71909ff0e1e"
+                       name="Base&#10;Information&#10;Attached"/>
+            <stage id="_08d41d03-4e67-4d67-835e-298022cf9da7" name="Process Claims"
+                   autoComplete="true">
+                <planItem id="PI_5e3ee3af-d251-49fe-b058-4471b32b585f"
+                          definitionRef="_5e3ee3af-d251-49fe-b058-4471b32b585f"
+                          entryCriteriaRefs="_23d7afed-704a-4fc4-82fa-25ef1c819b3f">
+                </planItem>
+                <planningTable id="_288a43dd-290f-4bc8-a846-f542c4fbebb1"/>
+                <caseTask id="_5e3ee3af-d251-49fe-b058-4471b32b585f"
+                          name="Create&#10;Claim"
+                          isBlocking="false"/>
+            </stage>
+            <humanTask id="_b9a161e7-6a82-4c75-85e0-c589ff2e0ce4"
+                       name="Review&#10;Documents"
+                       isBlocking="false">
+                <defaultControl>
+                    <repetitionRule id="_28d1e170-f7a4-42c2-9f7d-00dadd3d1b2a"/>
+                </defaultControl>
+            </humanTask>
+            <processTask id="_9c6513c0-5f87-42b7-a013-3f8bc01114cc"
+                         name="Create&#10;Letter"
+                         isBlocking="false">
+                <defaultControl>
+                    <repetitionRule id="f1beca5f-c568-4c67-87dd-0eae1c76dc26"/>
+                </defaultControl>
+            </processTask>
+            <processTask id="_e93c0ab2-1ee9-4c0f-8d4b-56c45b8c442a"
+                         name="Identify&#10;Responsibilities" isBlocking="false">
+                <defaultControl>
+                    <requiredRule id="_9e542073-bdbb-40a1-9e81-659c8cfaa1ab"/>
+                </defaultControl>
+            </processTask>
+            <milestone id="_30510b39-6769-4ac3-8021-a2c63c390262"
+                       name="Responsibilities&#10;Identified"/>
+        </casePlanModel>
+    </case>
+</definitions>
