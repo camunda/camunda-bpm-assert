@@ -1,12 +1,24 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
-                  id="Def_ProcessTaskAssertIsDisabledTest" name="ProcessTaskAssertisDisabled Test"
-                  targetNamespace="http://www.trisotech.com/cmmn/definitions/ProcessTaskAssertIsDisabledTest">
-  <cmmn:case id="Case_ProcessTaskAssertIsDisabledTest" name="ProcessTaskAssertisDisabled Test">
-    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_ProcessTaskAssertIsDisabledTest" name="ProcessTaskAssertisDisabled Test">
-      <cmmn:planItem definitionRef="HT_TaskA" id="PI_TaskA"/>
-      <cmmn:processTask description="" id="HT_TaskA" isBlocking="true" name="A" processRef="ProcessTaskAssert-calledProcess">
-      </cmmn:processTask>
-    </cmmn:casePlanModel>
-  </cmmn:case>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cmmn:definitions author="" exporter="CMMN Modeler" id="Def_ProcessTaskAssertIsDisabledTest" name="ProcessTaskAssertisDisabled Test" targetNamespace="http://www.trisotech.com/cmmn/definitions/ProcessTaskAssertIsDisabledTest" xmlns="http://www.trisotech.com/cmmn/definitions/ProcessTaskAssertIsDisabledTest" xmlns:trisob="http://www.trisotech.com/2014/triso/bpmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:rss="http://purl.org/rss/2.0/" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:trisofeed="http://trisotech.com/feed" xmlns:trisocmmn="http://www.trisotech.com/2014/triso/cmmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC">
+    <cmmn:case name="ProcessTaskAssertisDisabled Test" id="Case_ProcessTaskAssertIsDisabledTest">
+        <cmmn:casePlanModel autoComplete="false" name="ProcessTaskAssertisDisabled Test" id="CPM_ProcessTaskAssertIsDisabledTest">
+            <cmmn:planItem definitionRef="PID_PI_TaskA" id="PI_TaskA"/>
+            <cmmn:processTask processRef="ProcessTaskAssert-calledProcess" isBlocking="true" name="A" id="PID_PI_TaskA"/>
+        </cmmn:casePlanModel>
+    </cmmn:case>
+    <cmmndi:CMMNDI>
+        <cmmndi:CMMNDiagram name="ProcessTaskAssertisDisabled Test" id="PCPM_ProcessTaskAssertIsDisabledTest" sharedStyle="b83a2104-d5d8-40e4-a107-1738451318bc">
+            <cmmndi:Size height="500.0" width="550.0"/>
+            <cmmndi:CMMNShape cmmnElementRef="CPM_ProcessTaskAssertIsDisabledTest" id="_74faacc9-742e-4bb7-a47e-f584980ce02c">
+                <dc:Bounds height="156.0" width="250.0" x="150.0" y="150.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_TaskA" id="_dc1921df-01cc-4962-984c-96778ded7995">
+                <dc:Bounds height="76.0" width="96.0" x="190.0" y="190.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+        </cmmndi:CMMNDiagram>
+        <cmmndi:CMMNStyle fontFamily="Arial,Helvetica,sans-serif" id="b83a2104-d5d8-40e4-a107-1738451318bc"/>
+    </cmmndi:CMMNDI>
 </cmmn:definitions>
+

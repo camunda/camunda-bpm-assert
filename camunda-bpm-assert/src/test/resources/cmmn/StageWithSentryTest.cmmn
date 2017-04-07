@@ -1,21 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
-                  id="Def_StageWithSentryTests" name="Stage with Sentry Tests"
-                  targetNamespace="http://www.trisotech.com/cmmn/definitions/_StageWithSentryTests">
-  <cmmn:case id="Case_StageWithSentryTests" name="Stage with Sentry Tests">
-    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_StageWithSentryTests" name="Stage with Sentry Tests">
-      <cmmn:planItem definitionRef="HT_A" id="PI_HT_A"/>
-      <cmmn:planItem definitionRef="S_StageS" entryCriteriaRefs="On_PI_HT_A_Complete" id="PI_StageS"/>
-      <cmmn:sentry id="On_PI_HT_A_Complete">
-        <cmmn:planItemOnPart sourceRef="PI_HT_A">
-          <cmmn:standardEvent>complete</cmmn:standardEvent>
-        </cmmn:planItemOnPart>
-      </cmmn:sentry>
-      <cmmn:humanTask description="" id="HT_A" isBlocking="true" name="A">
-      </cmmn:humanTask>
-      <cmmn:stage id="S_StageS" autoComplete="false" name="S">
-      </cmmn:stage>
-    </cmmn:casePlanModel>
-  </cmmn:case>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cmmn:definitions author="" exporter="CMMN Modeler" id="Def_StageWithSentryTests" name="Stage with Sentry Tests" targetNamespace="http://www.trisotech.com/cmmn/definitions/_StageWithSentryTests" xmlns="http://www.trisotech.com/cmmn/definitions/_StageWithSentryTests" xmlns:trisob="http://www.trisotech.com/2014/triso/bpmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:rss="http://purl.org/rss/2.0/" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:trisofeed="http://trisotech.com/feed" xmlns:trisocmmn="http://www.trisotech.com/2014/triso/cmmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC">
+    <cmmn:case name="Stage with Sentry Tests" id="Case_StageWithSentryTests">
+        <cmmn:casePlanModel autoComplete="false" name="Stage with Sentry Tests" id="CPM_StageWithSentryTests">
+            <cmmn:planItem definitionRef="PID_PI_HT_A" id="PI_HT_A"/>
+            <cmmn:planItem definitionRef="PID_PI_StageS" id="PI_StageS">
+                <cmmn:entryCriterion sentryRef="On_PI_HT_A_Complete" id="N65560_entry1"/>
+            </cmmn:planItem>
+            <cmmn:sentry id="On_PI_HT_A_Complete">
+                <cmmn:planItemOnPart sourceRef="PI_HT_A" id="_5e619215-c580-4fc2-bf50-e88c47209f9a">
+                    <cmmn:standardEvent>complete</cmmn:standardEvent>
+                </cmmn:planItemOnPart>
+            </cmmn:sentry>
+            <cmmn:humanTask isBlocking="true" name="A" id="PID_PI_HT_A"/>
+            <cmmn:stage autoComplete="false" name="S" id="PID_PI_StageS"/>
+        </cmmn:casePlanModel>
+    </cmmn:case>
+    <cmmndi:CMMNDI>
+        <cmmndi:CMMNDiagram name="Stage with Sentry Tests" id="PCPM_StageWithSentryTests" sharedStyle="fe32bf0b-0b5c-4752-b720-e901e167b531">
+            <cmmndi:Size height="500.0" width="680.0"/>
+            <cmmndi:CMMNShape cmmnElementRef="CPM_StageWithSentryTests" id="_8fcd0ab1-13e3-4736-9571-c9cf5f06830e">
+                <dc:Bounds height="156.0" width="380.0" x="150.0" y="150.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_HT_A" id="_46fbda95-ebae-444b-a7ea-6d59cff14631">
+                <dc:Bounds height="76.0" width="96.0" x="190.0" y="190.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_StageS" isCollapsed="true" id="_e2f0bbcd-2126-4ecf-b7b0-62d495912785">
+                <dc:Bounds height="76.0" width="134.0" x="356.0" y="192.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="N65560_entry1" id="_148e0242-d59b-4e06-a499-6fd858de0d05">
+                <dc:Bounds height="28.0" width="20.0" x="346.0" y="214.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNEdge cmmnElementRef="_5e619215-c580-4fc2-bf50-e88c47209f9a" isStandardEventVisible="true" targetCMMNElementRef="N65560_entry1" id="_c8b6dbfb-377a-49cb-84c8-7586200bf4fb">
+                <di:waypoint x="286.0" y="228.0"/>
+                <di:waypoint x="346.0" y="228.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNEdge>
+        </cmmndi:CMMNDiagram>
+        <cmmndi:CMMNStyle fontFamily="Arial,Helvetica,sans-serif" id="fe32bf0b-0b5c-4752-b720-e901e167b531"/>
+    </cmmndi:CMMNDI>
 </cmmn:definitions>
 

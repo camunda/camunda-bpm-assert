@@ -1,37 +1,75 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
-                  id="Def_CaseTaskAssertIsEnabledTest" name="CaseTaskAssertIsEnabled Test"
-                  targetNamespace="http://www.trisotech.com/cmmn/definitions/CaseTaskAssertIsEnabledTest">
-  <cmmn:case id="Case_CaseTaskAssertIsEnabledTest" name="CaseTaskAssertIsEnabled Test">
-    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_CaseTaskAssertIsEnabledTest" name="CaseTaskAssertIsEnabled Test">
-      <cmmn:planItem definitionRef="CT_TaskA" id="PI_TaskA"/>
-      <cmmn:planItem definitionRef="CT_TaskB" entryCriteriaRefs="On_PI_CT_A_Complete" id="PI_TaskB"/>
-      <cmmn:sentry id="On_PI_CT_A_Complete">
-        <cmmn:planItemOnPart sourceRef="PI_TaskA">
-          <cmmn:standardEvent>complete</cmmn:standardEvent>
-        </cmmn:planItemOnPart>
-      </cmmn:sentry>
-      <cmmn:caseTask description="" id="CT_TaskA" isBlocking="true" name="A" caseRef="Case_CaseTaskAssertIsEnabledTest_CaseB">
-        <cmmn:defaultControl>
-          <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a920">
-            <cmmn:condition id="f3953a0a-12ef-46f5-95ec-a0f60e0f45df" language="juel"><cmmn:body>#{false}</cmmn:body></cmmn:condition>
-          </cmmn:manualActivationRule>
-        </cmmn:defaultControl>
-      </cmmn:caseTask>
-      <cmmn:caseTask description="" id="CT_TaskB" isBlocking="true" name="B" caseRef="Case_CaseTaskAssertIsEnabledTest_CaseB">
-      </cmmn:caseTask>
-    </cmmn:casePlanModel>
-  </cmmn:case>
-  <cmmn:case id="Case_CaseTaskAssertIsEnabledTest_CaseB" name="CaseTaskAssertIsEnabled Test CaseB">
-    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_CaseTaskAssertIsEnabledTest_CaseB" name="CaseTaskAssertIsEnabled Test CaseB">
-      <cmmn:planItem definitionRef="HT_TaskB" id="PI_TaskB_HT"/>
-      <cmmn:humanTask description="" id="HT_TaskB" isBlocking="true" name="A">
-        <cmmn:defaultControl>
-          <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a922">
-            <cmmn:condition id="f3953a0a-12ef-46f5-95ec-a0f60e0f45d1" language="juel"><cmmn:body>#{false}</cmmn:body></cmmn:condition>
-          </cmmn:manualActivationRule>
-        </cmmn:defaultControl>
-      </cmmn:humanTask>
-    </cmmn:casePlanModel>
-  </cmmn:case>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cmmn:definitions author="" exporter="CMMN Modeler" id="Def_CaseTaskAssertIsEnabledTest" name="CaseTaskAssertIsEnabled Test" targetNamespace="http://www.trisotech.com/cmmn/definitions/CaseTaskAssertIsEnabledTest" xmlns="http://www.trisotech.com/cmmn/definitions/CaseTaskAssertIsEnabledTest" xmlns:trisob="http://www.trisotech.com/2014/triso/bpmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:rss="http://purl.org/rss/2.0/" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:trisofeed="http://trisotech.com/feed" xmlns:trisocmmn="http://www.trisotech.com/2014/triso/cmmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC">
+    <cmmn:case name="CaseTaskAssertIsEnabled Test" id="Case_CaseTaskAssertIsEnabledTest">
+        <cmmn:casePlanModel autoComplete="false" name="CaseTaskAssertIsEnabled Test" id="CPM_CaseTaskAssertIsEnabledTest">
+            <cmmn:planItem definitionRef="PID_PI_TaskA" id="PI_TaskA"/>
+            <cmmn:planItem definitionRef="PID_PI_TaskB" id="PI_TaskB">
+                <cmmn:entryCriterion sentryRef="On_PI_CT_A_Complete" id="N65560_entry1"/>
+            </cmmn:planItem>
+            <cmmn:sentry id="On_PI_CT_A_Complete">
+                <cmmn:planItemOnPart sourceRef="PI_TaskA" id="_0d009401-28e9-44bf-83e1-9ed1b4d269aa">
+                    <cmmn:standardEvent>complete</cmmn:standardEvent>
+                </cmmn:planItemOnPart>
+            </cmmn:sentry>
+            <cmmn:caseTask caseRef="Case_CaseTaskAssertIsEnabledTest_CaseB" isBlocking="true" name="A" id="PID_PI_TaskA">
+                <cmmn:defaultControl>
+                    <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a920">
+                        <cmmn:condition language="juel" id="f3953a0a-12ef-46f5-95ec-a0f60e0f45df">#{false}</cmmn:condition>
+                    </cmmn:manualActivationRule>
+                </cmmn:defaultControl>
+            </cmmn:caseTask>
+            <cmmn:caseTask caseRef="Case_CaseTaskAssertIsEnabledTest_CaseB" isBlocking="true" name="B" id="PID_PI_TaskB"/>
+        </cmmn:casePlanModel>
+    </cmmn:case>
+    <cmmn:case name="CaseTaskAssertIsEnabled Test CaseB" id="Case_CaseTaskAssertIsEnabledTest_CaseB">
+        <cmmn:casePlanModel autoComplete="false" name="CaseTaskAssertIsEnabled Test CaseB" id="CPM_CaseTaskAssertIsEnabledTest_CaseB">
+            <cmmn:planItem definitionRef="PID_PI_TaskB_HT" id="PI_TaskB_HT"/>
+            <cmmn:humanTask isBlocking="true" name="A" id="PID_PI_TaskB_HT">
+                <cmmn:defaultControl>
+                    <cmmn:manualActivationRule id="_c814f81f-04ff-4100-bb88-63b1acc5a922">
+                        <cmmn:condition language="juel" id="f3953a0a-12ef-46f5-95ec-a0f60e0f45d1">#{false}</cmmn:condition>
+                    </cmmn:manualActivationRule>
+                </cmmn:defaultControl>
+            </cmmn:humanTask>
+        </cmmn:casePlanModel>
+    </cmmn:case>
+    <cmmndi:CMMNDI>
+        <cmmndi:CMMNDiagram name="CaseTaskAssertIsEnabled Test" id="PCPM_CaseTaskAssertIsEnabledTest" sharedStyle="a30d1f59-e696-4438-a917-d9d21ebaaccc">
+            <cmmndi:Size height="500.0" width="642.0"/>
+            <cmmndi:CMMNShape cmmnElementRef="CPM_CaseTaskAssertIsEnabledTest" id="_2de6ce08-a61f-4c92-867a-7632c7bdc125">
+                <dc:Bounds height="156.0" width="342.0" x="150.0" y="150.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_TaskA" id="_0ab2c0a3-aca6-44b2-88e3-1be82863b8b6">
+                <dc:Bounds height="76.0" width="96.0" x="190.0" y="190.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_TaskB" id="_81e7e96f-600e-4972-a69a-a557d029e107">
+                <dc:Bounds height="76.0" width="96.0" x="356.0" y="190.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="N65560_entry1" id="_82b1ec8a-a5c6-4c67-bbd2-6c35ab65a5ae">
+                <dc:Bounds height="28.0" width="20.0" x="346.0" y="214.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNEdge cmmnElementRef="_0d009401-28e9-44bf-83e1-9ed1b4d269aa" isStandardEventVisible="true" targetCMMNElementRef="N65560_entry1" id="_7e18b05a-1935-473b-9f7c-ab58efea67d4">
+                <di:waypoint x="286.0" y="228.0"/>
+                <di:waypoint x="346.0" y="228.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNEdge>
+        </cmmndi:CMMNDiagram>
+        <cmmndi:CMMNDiagram name="CaseTaskAssertIsEnabled Test CaseB" id="PCPM_CaseTaskAssertIsEnabledTest_CaseB" sharedStyle="a30d1f59-e696-4438-a917-d9d21ebaaccc">
+            <cmmndi:Size height="500.0" width="550.0"/>
+            <cmmndi:CMMNShape cmmnElementRef="CPM_CaseTaskAssertIsEnabledTest_CaseB" id="_5f51079c-b95b-4561-9f8e-afc7008f6651">
+                <dc:Bounds height="156.0" width="250.0" x="150.0" y="150.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_TaskB_HT" id="_2e864ad3-a85d-411f-a768-9397de0c9ad8">
+                <dc:Bounds height="76.0" width="96.0" x="190.0" y="190.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+        </cmmndi:CMMNDiagram>
+        <cmmndi:CMMNStyle fontFamily="Arial,Helvetica,sans-serif" id="a30d1f59-e696-4438-a917-d9d21ebaaccc"/>
+    </cmmndi:CMMNDI>
 </cmmn:definitions>
+

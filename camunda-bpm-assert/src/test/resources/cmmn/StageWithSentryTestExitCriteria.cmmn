@@ -1,24 +1,53 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<cmmn:definitions xmlns:cmmn="http://www.omg.org/spec/CMMN/20131201/MODEL" author="" exporter="CMMN Modeler"
-                  id="Def_StageWithSentryExitCriteriaTest" name="Stage with Sentry Tests and Exit Criteria"
-                  targetNamespace="http://www.trisotech.com/cmmn/definitions/_StageWithSentryExitCriteriaTest">
-  <cmmn:case id="Case_StageWithSentryExitCriteriaTest" name="Stage with Sentry Tests and Exit Criteria">
-    <cmmn:casePlanModel autoComplete="false" description="" id="CPM_StageWithSentryExitCriteriaTest" name="Stage with Sentry Tests and Exit Criteria">
-      <cmmn:planItem definitionRef="S_StageS" id="PI_StageS" exitCriteriaRefs="On_PI_HT_B_ManualStart"/>
-      <cmmn:planItem definitionRef="HT_B" id="PI_HT_B"/>
-      <cmmn:sentry id="On_PI_HT_B_ManualStart">
-        <cmmn:planItemOnPart sourceRef="PI_HT_B">
-          <cmmn:standardEvent>manualStart</cmmn:standardEvent>
-        </cmmn:planItemOnPart>
-      </cmmn:sentry>
-      <cmmn:stage id="S_StageS" autoComplete="false" name="S">
-        <cmmn:planItem definitionRef="HT_A" id="PI_HT_A"/>
-        <cmmn:humanTask description="" id="HT_A" isBlocking="true" name="A">
-        </cmmn:humanTask>
-      </cmmn:stage>
-      <cmmn:humanTask description="" id="HT_B" isBlocking="true" name="B">
-      </cmmn:humanTask>
-    </cmmn:casePlanModel>
-  </cmmn:case>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<cmmn:definitions author="" exporter="CMMN Modeler" id="Def_StageWithSentryExitCriteriaTest" name="Stage with Sentry Tests and Exit Criteria" targetNamespace="http://www.trisotech.com/cmmn/definitions/_StageWithSentryExitCriteriaTest" xmlns="http://www.trisotech.com/cmmn/definitions/_StageWithSentryExitCriteriaTest" xmlns:trisob="http://www.trisotech.com/2014/triso/bpmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:rss="http://purl.org/rss/2.0/" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:trisofeed="http://trisotech.com/feed" xmlns:trisocmmn="http://www.trisotech.com/2014/triso/cmmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC">
+    <cmmn:case name="Stage with Sentry Tests and Exit Criteria" id="Case_StageWithSentryExitCriteriaTest">
+        <cmmn:casePlanModel autoComplete="false" name="Stage with Sentry Tests and Exit Criteria" id="CPM_StageWithSentryExitCriteriaTest">
+            <cmmn:planItem definitionRef="PID_PI_StageS" id="PI_StageS">
+                <cmmn:exitCriterion sentryRef="On_PI_HT_B_ManualStart" id="N65556_exit1"/>
+            </cmmn:planItem>
+            <cmmn:planItem definitionRef="PID_PI_HT_B" id="PI_HT_B"/>
+            <cmmn:sentry id="On_PI_HT_B_ManualStart">
+                <cmmn:planItemOnPart sourceRef="PI_HT_B" id="b254176d-d8e3-4542-bdb0-8108bf73188a">
+                    <cmmn:standardEvent>manualStart</cmmn:standardEvent>
+                </cmmn:planItemOnPart>
+            </cmmn:sentry>
+            <cmmn:stage autoComplete="false" name="S" id="PID_PI_StageS">
+                <cmmn:planItem definitionRef="PID_PI_HT_A" id="PI_HT_A"/>
+                <cmmn:humanTask isBlocking="true" name="A" id="PID_PI_HT_A"/>
+            </cmmn:stage>
+            <cmmn:humanTask isBlocking="true" name="B" id="PID_PI_HT_B"/>
+        </cmmn:casePlanModel>
+    </cmmn:case>
+    <cmmndi:CMMNDI>
+        <cmmndi:CMMNDiagram name="Stage with Sentry Tests and Exit Criteria" id="PCPM_StageWithSentryExitCriteriaTest" sharedStyle="afb871cd-d2ae-4dd7-8398-d3114fa72884">
+            <cmmndi:Size height="576.0" width="762.0"/>
+            <cmmndi:CMMNShape cmmnElementRef="CPM_StageWithSentryExitCriteriaTest" id="_ce0acc5f-f743-4d3e-9a4e-8086dc832903">
+                <dc:Bounds height="276.0" width="462.0" x="150.0" y="150.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_StageS" isCollapsed="false" id="_d90d0986-d2cd-405f-bc45-810d531b59f2">
+                <dc:Bounds height="196.0" width="216.0" x="190.0" y="190.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_HT_A" id="_86c6994f-a4ef-4dc3-9779-a69e6bc64c8d">
+                <dc:Bounds height="76.0" width="96.0" x="250.0" y="250.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="PI_HT_B" id="_3cbf7d9a-7413-4bfa-ba03-60bade1c4149">
+                <dc:Bounds height="76.0" width="96.0" x="476.0" y="250.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNShape cmmnElementRef="N65556_exit1" id="_7385d524-6a2a-46ce-a964-50166972972b">
+                <dc:Bounds height="28.0" width="20.0" x="396.0" y="274.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNShape>
+            <cmmndi:CMMNEdge cmmnElementRef="b254176d-d8e3-4542-bdb0-8108bf73188a" isStandardEventVisible="true" targetCMMNElementRef="N65556_exit1" id="_e1fcba51-47ac-4c06-9eec-bf7888c524bc">
+                <di:waypoint x="416.0" y="288.0"/>
+                <di:waypoint x="476.0" y="288.0"/>
+                <cmmndi:CMMNLabel/>
+            </cmmndi:CMMNEdge>
+        </cmmndi:CMMNDiagram>
+        <cmmndi:CMMNStyle fontFamily="Arial,Helvetica,sans-serif" id="afb871cd-d2ae-4dd7-8398-d3114fa72884"/>
+    </cmmndi:CMMNDI>
 </cmmn:definitions>
 
