@@ -1,31 +1,42 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<cmmn:definitions author="" exporter="CMMN Modeler" id="Def_StageTests" name="Stage Tests" targetNamespace="http://www.trisotech.com/cmmn/definitions/StageTests" xmlns="http://www.trisotech.com/cmmn/definitions/StageTests" xmlns:trisob="http://www.trisotech.com/2014/triso/bpmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:rss="http://purl.org/rss/2.0/" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:trisofeed="http://trisotech.com/feed" xmlns:trisocmmn="http://www.trisotech.com/2014/triso/cmmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC">
-    <cmmn:case name="Stage Tests" id="Case_StageTests">
-        <cmmn:casePlanModel autoComplete="false" name="Stage Tests" id="CPM_StageTests">
-            <cmmn:planItem definitionRef="PID_PI_StageS" id="PI_StageS"/>
-            <cmmn:stage autoComplete="false" name="S" id="PID_PI_StageS">
-                <cmmn:planItem definitionRef="PID_PI_TaskA" id="PI_TaskA"/>
-                <cmmn:humanTask isBlocking="true" name="A" id="PID_PI_TaskA"/>
-            </cmmn:stage>
-        </cmmn:casePlanModel>
-    </cmmn:case>
-    <cmmndi:CMMNDI>
-        <cmmndi:CMMNDiagram name="Stage Tests" id="PCPM_StageTests" sharedStyle="c8e4a14d-22df-4a40-ad4a-7b0152c640ae">
-            <cmmndi:Size height="576.0" width="596.0"/>
-            <cmmndi:CMMNShape cmmnElementRef="CPM_StageTests" id="_22a5e301-5866-40e2-9978-6d25cccc2ea7">
-                <dc:Bounds height="276.0" width="296.0" x="150.0" y="150.0"/>
-                <cmmndi:CMMNLabel/>
-            </cmmndi:CMMNShape>
-            <cmmndi:CMMNShape cmmnElementRef="PI_StageS" isCollapsed="false" id="_421692d5-8162-4a8a-a941-441ac83a3ab6">
-                <dc:Bounds height="196.0" width="216.0" x="190.0" y="190.0"/>
-                <cmmndi:CMMNLabel/>
-            </cmmndi:CMMNShape>
-            <cmmndi:CMMNShape cmmnElementRef="PI_TaskA" id="_ad068218-30c4-46cc-a281-e025b1e5bb91">
-                <dc:Bounds height="76.0" width="96.0" x="250.0" y="250.0"/>
-                <cmmndi:CMMNLabel/>
-            </cmmndi:CMMNShape>
-        </cmmndi:CMMNDiagram>
-        <cmmndi:CMMNStyle fontFamily="Arial,Helvetica,sans-serif" id="c8e4a14d-22df-4a40-ad4a-7b0152c640ae"/>
-    </cmmndi:CMMNDI>
+<?xml version="1.0" encoding="UTF-8"?>
+<cmmn:definitions xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:cmmn="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns="http://www.trisotech.com/cmmn/definitions/StageTests" xmlns:trisob="http://www.trisotech.com/2014/triso/bpmn" xmlns:rss="http://purl.org/rss/2.0/" xmlns:trisofeed="http://trisotech.com/feed" xmlns:trisocmmn="http://www.trisotech.com/2014/triso/cmmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" id="Def_StageTests" name="Stage Tests" targetNamespace="http://www.trisotech.com/cmmn/definitions/StageTests" exporter="Camunda Modeler" exporterVersion="1.4.0" author="">
+  <cmmn:case id="Case_StageTests" name="Stage Tests">
+    <cmmn:casePlanModel id="CPM_StageTests" name="Stage Tests" autoComplete="false">
+      <cmmn:planItem id="PI_StageS" definitionRef="PID_PI_StageS">
+        <cmmn:itemControl id="PlanItemControl_0u1k7js">
+          <cmmn:manualActivationRule id="ManualActivationRule_1fecwzc">
+            <cmmn:condition id="Expression_161fejs">${true}</cmmn:condition>
+          </cmmn:manualActivationRule>
+        </cmmn:itemControl>
+      </cmmn:planItem>
+      <cmmn:stage id="PID_PI_StageS" name="S" autoComplete="false">
+        <cmmn:planItem id="PI_TaskA" definitionRef="PID_PI_TaskA">
+          <cmmn:itemControl id="PlanItemControl_0k5w9tq">
+            <cmmn:manualActivationRule id="ManualActivationRule_0yqw2ln">
+              <cmmn:condition id="Expression_1278cdx">${true}</cmmn:condition>
+            </cmmn:manualActivationRule>
+          </cmmn:itemControl>
+        </cmmn:planItem>
+        <cmmn:humanTask id="PID_PI_TaskA" name="A" />
+      </cmmn:stage>
+    </cmmn:casePlanModel>
+  </cmmn:case>
+  <cmmndi:CMMNDI>
+    <cmmndi:CMMNDiagram sharedStyle="c8e4a14d-22df-4a40-ad4a-7b0152c640ae" id="PCPM_StageTests" name="Stage Tests">
+      <cmmndi:Size xsi:type="dc:Dimension" width="596" height="576" />
+      <cmmndi:CMMNShape id="_22a5e301-5866-40e2-9978-6d25cccc2ea7" cmmnElementRef="CPM_StageTests">
+        <dc:Bounds x="150" y="150" width="296" height="276" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="_421692d5-8162-4a8a-a941-441ac83a3ab6" cmmnElementRef="PI_StageS" isCollapsed="false">
+        <dc:Bounds x="190" y="190" width="216" height="196" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+      <cmmndi:CMMNShape id="_ad068218-30c4-46cc-a281-e025b1e5bb91" cmmnElementRef="PI_TaskA">
+        <dc:Bounds x="250" y="250" width="96" height="76" />
+        <cmmndi:CMMNLabel />
+      </cmmndi:CMMNShape>
+    </cmmndi:CMMNDiagram>
+    <cmmndi:CMMNStyle id="c8e4a14d-22df-4a40-ad4a-7b0152c640ae" fontFamily="Arial,Helvetica,sans-serif" />
+  </cmmndi:CMMNDI>
 </cmmn:definitions>
-
