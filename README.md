@@ -27,7 +27,7 @@ complete(task(instance), withVariables("approved", true));
 <dependency>
     <groupId>org.camunda.bpm.extension</groupId>
     <artifactId>camunda-bpm-assert</artifactId>
-    <version>1.2</version> <!-- Use 2.0-alpha1 for the CMMN assertions preview! -->
+    <version>1.2</version> <!-- Use 2.0-alpha2 for the CMMN assertions preview! -->
     <scope>test</scope>
 </dependency>
 ```
