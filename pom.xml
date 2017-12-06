@@ -25,7 +25,7 @@
 
         <!-- We always *compile* against the latest release (but *test*
              against the release configured with -Dcamunda-bpm.version) -->
-        <camunda-bpm.version>7.6.0</camunda-bpm.version>
+        <camunda-bpm.version>7.8.0</camunda-bpm.version>
 
         <!-- 
             Camunda BPM Assert simply works - with all released versions of 
