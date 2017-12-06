@@ -6,12 +6,8 @@ jdk:
   - openjdk6
 env:
   - CAMUNDA=LATEST
+  - CAMUNDA=7.8.0
+  - CAMUNDA=7.7.0
   - CAMUNDA=7.6.0
-  - CAMUNDA=7.5.0
-  - CAMUNDA=7.4.0
-  - CAMUNDA=7.3.0
-  - CAMUNDA=7.2.0
-  - CAMUNDA=7.1.0-Final
-  - CAMUNDA=7.0.0-Final  
 install: true
 script: mvn -Dcamunda-bpm.version=$CAMUNDA
