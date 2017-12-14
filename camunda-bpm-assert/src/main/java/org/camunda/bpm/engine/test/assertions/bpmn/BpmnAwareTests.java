@@ -2,6 +2,7 @@ package org.camunda.bpm.engine.test.assertions.bpmn;
 
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.externaltask.LockedExternalTask;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
@@ -9,6 +10,7 @@ import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static java.lang.String.format;
@@ -110,6 +112,16 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
    */
   public static TaskService taskService() {
     return processEngine().getTaskService();
+  }
+  
+  /**
+   * Helper method to easily access ExternalTaskService
+   *
+   * @return ExternalTaskService of process engine bound to this testing thread
+   * @see org.camunda.bpm.engine.ExternalTaskService
+   */
+  public static ExternalTaskService externalTaskService() {
+    return processEngine().getExternalTaskService();
   }
 
   /**
@@ -685,6 +697,38 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
     if (current == null)
       throw new IllegalStateException(format("Illegal state when calling execute(job = '%s') - job does not exist anymore!", job));
     managementService().executeJob(job.getId());
+  }
+
+  /**
+   * Helper method to easily fetch and lock external tasks from a given topic using a given workerId. The tasks
+   * will be locked for 10 seconds.
+   *
+   * @param workerId WorkerId to use for locking the external task
+   * @param topic    Name of the topic to query external tasks from
+   * @return list of external tasks locked for the given workerId
+   */
+  public static List<LockedExternalTask> fetchAndLock(String workerId, String topic, int maxResults) {
+    if (workerId == null || topic == null) {
+      throw new IllegalArgumentException(format("Illegal call of fetchAndLock(workerId = '%s', topic = '%s') - must " +
+        "not be null!", workerId, topic));
+    }
+    return externalTaskService().fetchAndLock(maxResults, workerId)
+      .topic(topic, 10000L)
+      .execute();
+  }
+
+  /**
+   * Helper method to easily complete a locked external task.
+   *
+   * @param lockedExternalTask an external Task that was locked using the {@link #fetchAndLock(String, String, int)}
+   *                           method
+   */
+  public static void completeExternalTask(LockedExternalTask lockedExternalTask) {
+    if (lockedExternalTask == null) {
+      throw new IllegalArgumentException(format("Illegal call of complete(lockedExternalTask = '%s') - must not" +
+        " be null!", lockedExternalTask));
+    }
+    externalTaskService().complete(lockedExternalTask.getId(), lockedExternalTask.getWorkerId());
   }
 
 }
