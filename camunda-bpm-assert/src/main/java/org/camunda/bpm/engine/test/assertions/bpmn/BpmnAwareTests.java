@@ -658,7 +658,7 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
    */
   public static void complete(Task task, Map<String, Object> variables) {
     if (task == null || variables == null)
-      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s', variables = '%s') - both must not be null!", task, variables));
+      throw new IllegalArgumentException(format("Illegal call of complete(task = '%s', variables = '%s') - both must not be null!", task, variables));
     taskService().complete(task.getId(), variables);
   }
 
@@ -669,7 +669,7 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
    */
   public static void complete(Task task) {
     if (task == null)
-      throw new IllegalArgumentException(format("Illegal call of claim(task = '%s') - must not be null!", task));
+      throw new IllegalArgumentException(format("Illegal call of complete(task = '%s') - must not be null!", task));
     taskService().complete(task.getId());
   }
 
