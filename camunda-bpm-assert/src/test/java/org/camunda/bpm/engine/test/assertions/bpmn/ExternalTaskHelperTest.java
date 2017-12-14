@@ -10,8 +10,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareAssertions.assertThat;
-import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.fail;
-import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.runtimeService;
+import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
 
 public class ExternalTaskHelperTest {
 
@@ -30,7 +29,7 @@ public class ExternalTaskHelperTest {
     );
 
     // When
-    List<LockedExternalTask> lockedExternalTasks = BpmnAwareTests.fetchAndLock(WORKER_ID, TOPIC, 1);
+    List<LockedExternalTask> lockedExternalTasks = fetchAndLock(WORKER_ID, TOPIC, 1);
 
     // Then
     assertThat(lockedExternalTasks).hasSize(1);
@@ -40,7 +39,7 @@ public class ExternalTaskHelperTest {
   @Test
   public void fetchAndLockShouldThrowIllegalArgumentException() {
     try {
-      BpmnAwareTests.fetchAndLock(null, TOPIC, 1);
+      fetchAndLock(null, TOPIC, 1);
       fail("IllegalArgumentException expected as workerId is null");
     } catch (IllegalArgumentException e) {
       assertThat(e).hasMessageContaining("Illegal call of fetchAndLock(workerId = 'null', topic = 'testTopic') - must" +
@@ -57,11 +56,11 @@ public class ExternalTaskHelperTest {
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ExternalTaskHelperTest-fetchAndLock"
     );
-    List<LockedExternalTask> lockedExternalTasks = BpmnAwareTests.fetchAndLock(WORKER_ID, TOPIC, 1);
+    List<LockedExternalTask> lockedExternalTasks = fetchAndLock(WORKER_ID, TOPIC, 1);
     assertThat(processInstance).hasNotPassed("externalTask");
 
     // When
-    BpmnAwareTests.completeExternalTask(lockedExternalTasks.get(0));
+    completeExternalTask(lockedExternalTasks.get(0));
 
     // Then
     assertThat(processInstance).hasPassed("externalTask");
@@ -71,7 +70,7 @@ public class ExternalTaskHelperTest {
   public void completeAndLockShouldThrowIllegalArgumentException() {
     LockedExternalTask lockedExternalTask = null;
     try {
-      BpmnAwareTests.completeExternalTask(lockedExternalTask);
+      completeExternalTask(lockedExternalTask);
       fail("IllegalArgumentException expected as workerId is null");
     } catch (IllegalArgumentException e) {
       assertThat(e).hasMessageContaining("Illegal call of complete(lockedExternalTask = 'null') - must not be null");
