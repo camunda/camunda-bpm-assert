@@ -29,6 +29,8 @@
    * [Accessing jobs in the context of a process instance under test](#helpers-job-last)
    * [Accessing called process instances in the context of a process instance under test](#helpers-called-process-instance-last)
    * [Accessing process definitions](#helpers-process-definition)
+   * [Fetch and lock external tasks](#helpers-fetch-and-lock)
+   * [Complete external tasks](#helpers-complete-external-tasks)
 
 <a name="assertions"/>
 ## Assertions
@@ -771,4 +773,23 @@ instance of its own process definition you can therefore e.g. write ...
 ```java
 assertThat(processDefinition()).hasActiveInstances(1);
 ```
-                           
+
+<a name="helpers-fetch-and-lock"/>
+#### Fetch and lock external tasks
+
+You can directly execute a fetchAndLock for a maximum number of external tasks of a given topic. The tasks are locked
+ for 10 seconds for the specified workerId.
+
+```
+List<LockedExternalTask> lockedExternalTasks = fetchAndLock("myWorkerId", "myTopic", 1);
+```
+ 
+
+<a name="helpers-complete-external-tasks"/>
+#### Complete locked external tasks
+
+You can complete external tasks, that have been locked, f.e. by using the fetchAndLock method.
+
+```
+completeExternalTask(myLockedExternalTask);
+```
