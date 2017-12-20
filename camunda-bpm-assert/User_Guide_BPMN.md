@@ -170,13 +170,13 @@ assertThat(processInstance).hasProcessDefinitionKey("myProcessDefinitionKey");
 <a name="processInstance-isWaitingAt"/>
 #### Instance: isWaitingAt
 
-Assert that a process instance is currently waiting at a specified activity:
+Assert that a process instance is currently waiting at a specified activity Id:
 
 ```java
 assertThat(processInstance).isWaitingAt("edit");
 ```
 
-Assert that a process instance is currently waiting at several specified activities:
+Assert that a process instance is currently waiting at several specified activity Ids:
 
 ```java
 assertThat(processInstance).isWaitingAt("edit", "correct");
@@ -185,13 +185,13 @@ assertThat(processInstance).isWaitingAt("edit", "correct");
 <a name="processInstance-isNotWaitingAt"/>
 #### Instance: isNotWaitingAt
 
-Assert that a process instance is currently NOT waiting at a specified activity:
+Assert that a process instance is currently NOT waiting at a specified activity Id:
 
 ```java
 assertThat(processInstance).isNotWaitingAt("edit");
 ```
 
-Assert that a process instance is currently NOT waiting at several specified activities:
+Assert that a process instance is currently NOT waiting at several specified activity Ids:
 
 ```java
 assertThat(processInstance).isNotWaitingAt("edit", "correct");
@@ -200,13 +200,13 @@ assertThat(processInstance).isNotWaitingAt("edit", "correct");
 <a name="processInstance-isWaitingAtExactly"/>
 #### Instance: isWaitingAtExactly
 
-Assert that a process instance is currently waiting at exactly one specified activity:
+Assert that a process instance is currently waiting at exactly one specified activity Id:
 
 ```java
 assertThat(processInstance).isWaitingAtExactly("edit");
 ```
 
-Assert that a process instance is currently waiting at exactly the several specified activities:
+Assert that a process instance is currently waiting at exactly the several specified activity Ids:
 
 ```java
 assertThat(processInstance).isWaitingAtExactly("edit", "correct");
