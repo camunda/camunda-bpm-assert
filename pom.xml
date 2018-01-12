@@ -17,8 +17,6 @@
 
     <modules>
         <module>camunda-bpm-assert</module>
-        <module>camunda-bpm-assert-java7</module>
-        <module>camunda-bpm-assert-java8</module>
         <module>camunda-bpm-assert-bpmn-examples</module>
         <module>camunda-bpm-assert-cmmn-examples</module>
     </modules>
@@ -191,6 +189,30 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+      <profile>
+          <id>java7</id>
+          <activation>
+              <activeByDefault>false</activeByDefault>
+              <jdk>1.7</jdk>
+          </activation>
+          <modules>
+              <module>camunda-bpm-assert-java7</module>
+          </modules>
+      </profile>
+      <profile>
+          <id>java8</id>
+          <activation>
+              <activeByDefault>false</activeByDefault>
+              <jdk>1.8</jdk>
+          </activation>
+          <modules>
+              <module>camunda-bpm-assert-java7</module>
+              <module>camunda-bpm-assert-java8</module>
+          </modules>
+      </profile>
+    </profiles>
 
     <repositories>
         <repository>
