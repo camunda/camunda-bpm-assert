@@ -17,6 +17,8 @@
 
     <modules>
         <module>camunda-bpm-assert</module>
+        <module>camunda-bpm-assert-java7</module>
+        <module>camunda-bpm-assert-java8</module>
         <module>camunda-bpm-assert-bpmn-examples</module>
         <module>camunda-bpm-assert-cmmn-examples</module>
     </modules>
@@ -46,11 +48,12 @@
         <version.mockito>1.10.19</version.mockito>
         <version.powermock>1.6.4</version.powermock>
         <version.junit>4.12</version.junit>
-        <version.assertj>1.7.1</version.assertj>
+
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
             <dependency>
                 <groupId>org.camunda.bpm</groupId>
                 <artifactId>camunda-bom</artifactId>
@@ -58,15 +61,29 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!-- camunda bpm testing -->
+
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>camunda-bpm-assert</artifactId>
+                <artifactId>camunda-bpm-assert-java6</artifactId>
                 <version>${project.version}</version>
                 <scope>compile</scope>
             </dependency>
 
-           <dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>camunda-bpm-assert-java7</artifactId>
+                <version>${project.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>camunda-bpm-assert-java8</artifactId>
+                <version>${project.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
                 <version>${version.slf4j}</version>
@@ -123,17 +140,12 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.assertj</groupId>
-                <artifactId>assertj-core</artifactId>
-                <version>${version.assertj}</version>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
                 <version>1.3.168</version>
                 <scope>test</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

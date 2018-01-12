@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>org.camunda.bpm.extension</groupId>
-            <artifactId>camunda-bpm-assert</artifactId>
+            <artifactId>camunda-bpm-assert-java6</artifactId>
         </dependency>
         <dependency>
             <groupId>org.camunda.bpm</groupId>
