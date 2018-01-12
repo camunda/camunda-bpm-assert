@@ -211,30 +211,6 @@
         </repository>
     </repositories>
 
-    <profiles>
-        <profile>
-            <id>7.0</id>
-            <activation>
-                <activeByDefault>false</activeByDefault>
-                <property>
-                    <name>camunda-bpm.version</name>
-                    <value>7.0.0-Final</value>
-                </property>
-            </activation>
-            <dependencyManagement>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.camunda.bpm</groupId>
-                        <artifactId>camunda-bom</artifactId>
-                        <version>7.1.0-Final</version>
-                        <type>pom</type>
-                        <scope>import</scope>
-                    </dependency>
-                </dependencies>
-            </dependencyManagement>
-        </profile>
-    </profiles>
-
     <scm>
         <connection>scm:git:git@github.com:camunda/camunda-bpm-assert.git</connection>
         <url>scm:git:git@github.com:camunda/camunda-bpm-assert.git</url>
