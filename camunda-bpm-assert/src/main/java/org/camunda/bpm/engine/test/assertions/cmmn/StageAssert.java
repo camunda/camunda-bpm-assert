@@ -1,11 +1,8 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.history.HistoricCaseActivityInstanceQuery;
-import org.camunda.bpm.engine.impl.cmmn.execution.CaseExecutionState;
 import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
-import org.camunda.bpm.engine.runtime.CaseInstance;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

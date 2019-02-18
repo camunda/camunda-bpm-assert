@@ -13,7 +13,6 @@ import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.camunda.bpm.engine.test.util.CamundaBpmApi;
 
 import java.util.*;
 
@@ -24,8 +23,8 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
 
   protected ProcessEngine engine;
 
-  private static ThreadLocal<Map<Class<?>, AbstractProcessAssert>>
-    lastAsserts = new ThreadLocal<Map<Class<?>, AbstractProcessAssert>>();
+  private static ThreadLocal<Map<Class<?>, AbstractProcessAssert<?, ?>>>
+    lastAsserts = new ThreadLocal<Map<Class<?>, AbstractProcessAssert<?, ?>>>();
 
   protected AbstractProcessAssert(ProcessEngine engine, A actual, Class<?> selfType) {
     super(actual, selfType);
@@ -74,37 +73,19 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
   }
 
   @SuppressWarnings("unchecked")
-  public static <S extends AbstractProcessAssert> S getLastAssert(Class<S> assertClass) {
+  protected static <S extends AbstractProcessAssert<?, ?>> S getLastAssert(Class<S> assertClass) {
     return (S) getLastAsserts().get(assertClass);
   }
 
-  private static void setLastAssert(Class<?> assertClass, AbstractProcessAssert assertInstance) {
+  private static void setLastAssert(Class<?> assertClass, AbstractProcessAssert<?, ?> assertInstance) {
     getLastAsserts().put(assertClass, assertInstance);
   }
 
-  private static Map<Class<?>, AbstractProcessAssert> getLastAsserts() {
-    Map<Class<?>, AbstractProcessAssert> asserts = lastAsserts.get();
+  private static Map<Class<?>, AbstractProcessAssert<?, ?>> getLastAsserts() {
+    Map<Class<?>, AbstractProcessAssert<?, ?>> asserts = lastAsserts.get();
     if (asserts == null)
-      lastAsserts.set(asserts = new HashMap<Class<?>, AbstractProcessAssert>());
+      lastAsserts.set(asserts = new HashMap<Class<?>, AbstractProcessAssert<?, ?>>());
     return asserts;
-  }
-
-  /*
-   * *Asserts* that process engine supports the requested API version. Use 
-   * method at the beginning of BPMN related method implementations which 
-   * exceptionally require a Camunda BPM API versions higher than '7.1'
-   * 
-   * @param   api Camunda BPM API version e.g. '7.2', '7.3' etc.
-   * @throws  AssertionError if process engine does not support the requested API version
-   */
-  protected static void assertApi(String api) {
-    if (!CamundaBpmApi.supports(api)) {
-      throw new AssertionError(String.format("Requested method requires Camunda BPM %s or higher.", api));
-    }
-  }
-
-  protected static boolean supportsApi(String api) {
-    return CamundaBpmApi.supports(api);
   }
 
   protected RepositoryService repositoryService() {

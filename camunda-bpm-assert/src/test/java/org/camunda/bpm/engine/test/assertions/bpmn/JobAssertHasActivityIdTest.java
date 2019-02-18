@@ -3,7 +3,7 @@ package org.camunda.bpm.engine.test.assertions.bpmn;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
-import org.camunda.bpm.engine.test.assertions.ProcessEngineAssertions;
+import org.camunda.bpm.engine.test.assertions.ProcessEngineTests;
 import org.camunda.bpm.engine.test.assertions.helpers.Failure;
 import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
@@ -72,7 +72,7 @@ public class JobAssertHasActivityIdTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        ProcessEngineAssertions.assertThat(job()).hasActivityId(null);
+        ProcessEngineTests.assertThat(job()).hasActivityId(null);
       }
     });
   }

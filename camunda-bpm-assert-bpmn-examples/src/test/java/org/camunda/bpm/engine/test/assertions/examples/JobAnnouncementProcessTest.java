@@ -6,7 +6,6 @@ import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.engine.test.assertions.examples.jobannouncement.JobAnnouncement;
 import org.camunda.bpm.engine.test.assertions.examples.jobannouncement.JobAnnouncementService;
-import org.camunda.bpm.engine.test.util.CamundaBpmApiAwareTestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.*;
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class JobAnnouncementProcessTest extends CamundaBpmApiAwareTestCase {
+public class JobAnnouncementProcessTest {
 
   @Rule
   public final ProcessEngineRule processEngineRule = new ProcessEngineRule();
@@ -111,7 +110,6 @@ public class JobAnnouncementProcessTest extends CamundaBpmApiAwareTestCase {
 
     final ProcessInstance processInstance = startProcess();
 
-    assumeApi("7.3");
     assertThat(processInstance).task().hasCandidateGroupAssociated("engineering").isNotAssigned();
     claim(task(), "fozzie");
     assertThat(processInstance).task().hasCandidateGroupAssociated("engineering").isAssignedTo("fozzie");

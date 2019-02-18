@@ -3,7 +3,6 @@ package org.camunda.bpm.engine.test.util;
 import org.camunda.bpm.engine.history.HistoricActivityInstance;
 
 import java.util.Comparator;
-import java.util.IllegalFormatException;
 import java.util.UUID;
 
 /**

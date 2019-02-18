@@ -9,6 +9,9 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

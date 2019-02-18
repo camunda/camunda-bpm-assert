@@ -7,6 +7,8 @@ import org.junit.runners.Parameterized;
 import java.util.*;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>

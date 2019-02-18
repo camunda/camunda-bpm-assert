@@ -2,8 +2,6 @@ package org.camunda.bpm.engine.test.assertions.helpers;
 
 
 import org.assertj.core.util.Lists;
-import org.camunda.bpm.engine.test.util.CamundaBpmApi;
-import org.junit.Assume;
 
 import static org.assertj.core.api.Assertions.fail;
 

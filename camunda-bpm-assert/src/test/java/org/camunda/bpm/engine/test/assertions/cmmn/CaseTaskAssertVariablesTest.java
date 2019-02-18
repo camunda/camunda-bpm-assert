@@ -11,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 
 public class CaseTaskAssertVariablesTest extends ProcessAssertTestCase {

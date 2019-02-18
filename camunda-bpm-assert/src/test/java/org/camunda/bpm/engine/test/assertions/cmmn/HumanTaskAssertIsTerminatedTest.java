@@ -5,7 +5,6 @@ import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExe
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
 
-import org.camunda.bpm.engine.runtime.CaseExecution;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -29,7 +28,7 @@ public class HumanTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
     // Given
     // case model is deployed
     final CaseInstance caseInstance = givenCaseIsCreated();
-    CaseExecution taskB = caseExecution(TASK_B, caseInstance);
+    caseExecution(TASK_B, caseInstance);
     // When
     complete(caseExecution(TASK_A, caseInstance));
     // Then

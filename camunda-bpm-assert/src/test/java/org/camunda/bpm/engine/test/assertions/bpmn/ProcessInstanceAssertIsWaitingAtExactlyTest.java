@@ -118,8 +118,8 @@ public class ProcessInstanceAssertIsWaitingAtExactlyTest extends ProcessAssertTe
     expect(new Failure() {
       @Override
       public void when() {
-        //noinspection NullArgumentToVariableArgMethod
-        assertThat(processInstance).isWaitingAtExactly(null);
+        String[] waitingAt = null;
+        assertThat(processInstance).isWaitingAtExactly(waitingAt);
       }
     });
     // And

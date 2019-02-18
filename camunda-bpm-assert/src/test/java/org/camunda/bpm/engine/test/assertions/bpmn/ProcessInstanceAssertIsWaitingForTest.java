@@ -135,7 +135,8 @@ public class ProcessInstanceAssertIsWaitingForTest extends ProcessAssertTestCase
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).isWaitingFor(null);
+        String[] waitingFor = null;
+        assertThat(processInstance).isWaitingFor(waitingFor);
       }
     });
     // And

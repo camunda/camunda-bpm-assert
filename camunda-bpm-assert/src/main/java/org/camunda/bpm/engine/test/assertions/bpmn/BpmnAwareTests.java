@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
 
+import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
@@ -27,9 +28,49 @@ import static java.lang.String.format;
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public class BpmnAwareTests extends BpmnAwareAssertions {
+public class BpmnAwareTests extends AbstractAssertions {
 
   protected BpmnAwareTests() {}
+  
+  /**
+   * Assert that... the given ProcessDefinition meets your expectations.
+   *
+   * @param   actual ProcessDefinition under test
+   * @return  Assert object offering ProcessDefinition specific assertions.
+   */
+  public static ProcessDefinitionAssert assertThat(final ProcessDefinition actual) {
+    return ProcessDefinitionAssert.assertThat(processEngine(), actual);
+  }
+
+  /**
+   * Assert that... the given ProcessInstance meets your expectations.
+   *
+   * @param   actual ProcessInstance under test
+   * @return  Assert object offering ProcessInstance specific assertions.
+   */
+  public static ProcessInstanceAssert assertThat(final ProcessInstance actual) {
+    return ProcessInstanceAssert.assertThat(processEngine(), actual);
+  }
+
+  /**
+   * Assert that... the given Task meets your expectations.
+   *
+   * @param   actual Task under test
+   * @return  Assert object offering Task specific assertions.
+   */
+  public static TaskAssert assertThat(final Task actual) {
+    return TaskAssert.assertThat(processEngine(), actual);
+  }
+
+  /**
+   * Assert that... the given Job meets your expectations.
+   *
+   * @param   actual Job under test
+   * @return  Assert object offering Job specific assertions.
+   */
+  public static JobAssert assertThat(final Job actual) {
+    return JobAssert.assertThat(processEngine(), actual);
+  }
 
   /**
    * Helper method to easily access RuntimeService
@@ -239,7 +280,7 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
    *          yet.
    */
   public static Task task(String taskDefinitionKey) {
-    assertThat(taskDefinitionKey).isNotNull();
+    Assertions.assertThat(taskDefinitionKey).isNotNull();
     return task(taskQuery().taskDefinitionKey(taskDefinitionKey));
   }
 
@@ -259,7 +300,7 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
    *          query.
    */
   public static Task task(String taskDefinitionKey, ProcessInstance processInstance) {
-    assertThat(taskDefinitionKey).isNotNull();
+    Assertions.assertThat(taskDefinitionKey).isNotNull();
     return task(taskQuery().taskDefinitionKey(taskDefinitionKey), processInstance);
   }
 
@@ -353,7 +394,7 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
    *          May return null if no such process definition exists.
    */
   public static ProcessDefinition processDefinition(String processDefinitionKey) {
-    assertThat(processDefinitionKey).isNotNull();
+    Assertions.assertThat(processDefinitionKey).isNotNull();
     return processDefinition(processDefinitionQuery().processDefinitionKey(processDefinitionKey));
   }
 
@@ -420,7 +461,7 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
    *          yet.
    */
   public static ProcessInstance calledProcessInstance(String processDefinitionKey) {
-    assertThat(processDefinitionKey).isNotNull();
+    Assertions.assertThat(processDefinitionKey).isNotNull();
     return calledProcessInstance(processInstanceQuery().processDefinitionKey(processDefinitionKey));
   }
 
@@ -440,7 +481,7 @@ public class BpmnAwareTests extends BpmnAwareAssertions {
    *          query.
    */
   public static ProcessInstance calledProcessInstance(String processDefinitionKey, ProcessInstance processInstance) {
-    assertThat(processDefinitionKey).isNotNull();
+    Assertions.assertThat(processDefinitionKey).isNotNull();
     return calledProcessInstance(processInstanceQuery().processDefinitionKey(processDefinitionKey), processInstance);
   }
 

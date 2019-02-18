@@ -1,6 +1,5 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
-import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.withVariables;
 import static org.camunda.bpm.engine.test.assertions.helpers.CamundaMatchers.*;
 import static org.mockito.Mockito.any;
@@ -22,7 +21,6 @@ import org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions;
 import org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests;
 import org.camunda.bpm.engine.test.assertions.helpers.CamundaMatchers;
 import org.camunda.bpm.engine.test.assertions.helpers.CaseExecutionQueryFluentAnswer;
-import org.camunda.bpm.engine.test.util.CamundaBpmApiAwareTestCase;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,8 +39,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Malte Sörensen <malte.soerensen@holisticon.de>
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({CmmnAwareAssertions.class, BpmnAwareTests.class, CmmnAwareTests.class, AbstractAssertions.class})
-public class CmmnAwareTestsTest extends CamundaBpmApiAwareTestCase {
+@PrepareForTest({BpmnAwareTests.class, CmmnAwareTests.class, AbstractAssertions.class})
+public class CmmnAwareTestsTest {
 
   public static final String ACTIVITY_ID = "FOO";
   public static final String CASE_INSTANCE_ID = "BAR";
@@ -67,16 +65,16 @@ public class CmmnAwareTestsTest extends CamundaBpmApiAwareTestCase {
 
     //prepare and mock static methods
     //because we need control over the CaseDefinitionAssert created
-    mockStatic(CmmnAwareAssertions.class);
+    mockStatic(CmmnAwareTests.class);
     CaseDefinitionAssert caseDefinitionAssert = mock(CaseDefinitionAssert.class);
-    when(CmmnAwareAssertions.assertThat(any(CaseDefinition.class))).thenReturn(caseDefinitionAssert);
+    when(CmmnAwareTests.assertThat(any(CaseDefinition.class))).thenReturn(caseDefinitionAssert);
 
     //when calling the method under test with a non-null CaseDefinition object
     CaseDefinitionAssert actualCaseDefinitionAssert = CmmnAwareTests.assertThat(caseDefinition);
 
     //then the delegate is called with that CaseDefinition object
     verifyStatic();
-    CmmnAwareAssertions.assertThat(caseDefinition);
+    CmmnAwareTests.assertThat(caseDefinition);
     //and whatever the delegate returns, is returned by the tested method, too
     Assertions.assertThat(actualCaseDefinitionAssert).isSameAs(caseDefinitionAssert);
   }
@@ -86,16 +84,16 @@ public class CmmnAwareTestsTest extends CamundaBpmApiAwareTestCase {
 
     //prepare and mock static methods
     //because we need control over the CaseExecutionAssert created
-    mockStatic(CmmnAwareAssertions.class);
+    mockStatic(CmmnAwareTests.class);
     CaseExecutionAssert caseExecutionAssert = mock(CaseExecutionAssert.class);
-    when(CmmnAwareAssertions.assertThat(anyCaseExecution())).thenReturn(caseExecutionAssert);
+    when(CmmnAwareTests.assertThat(anyCaseExecution())).thenReturn(caseExecutionAssert);
 
     //when calling the method under test with a non-null CaseExecution object
     CaseExecutionAssert actualCaseExecutionAssert = CmmnAwareTests.assertThat(caseExecution);
 
     //then the delegate is called with that CaseExecution object
     verifyStatic();
-    CmmnAwareAssertions.assertThat(caseExecution);
+    CmmnAwareTests.assertThat(caseExecution);
     //and whatever the delegate returns, is returned by the tested method, too
     Assertions.assertThat(actualCaseExecutionAssert).isSameAs(caseExecutionAssert);
   }
@@ -105,16 +103,16 @@ public class CmmnAwareTestsTest extends CamundaBpmApiAwareTestCase {
 
     //prepare and mock static methods
     //because we need control over the CaseInstanceAssert created
-    mockStatic(CmmnAwareAssertions.class);
+    mockStatic(CmmnAwareTests.class);
     CaseInstanceAssert caseInstanceAssert = mock(CaseInstanceAssert.class);
-    when(CmmnAwareAssertions.assertThat(anyCaseInstance())).thenReturn(caseInstanceAssert);
+    when(CmmnAwareTests.assertThat(anyCaseInstance())).thenReturn(caseInstanceAssert);
 
     //when calling the method under test with a non-null CaseInstance object
     CaseInstanceAssert actualCaseInstanceAssert = CmmnAwareTests.assertThat(caseInstance);
 
     //then the delegate is called with that CaseInstance object
     verifyStatic();
-    CmmnAwareAssertions.assertThat(caseInstance);
+    CmmnAwareTests.assertThat(caseInstance);
     //and whatever the delegate returns, is returned by the tested method, too
     Assertions.assertThat(actualCaseInstanceAssert).isSameAs(caseInstanceAssert);
   }
@@ -155,7 +153,7 @@ public class CmmnAwareTestsTest extends CamundaBpmApiAwareTestCase {
     when(CmmnAwareTests.caseExecution(anyCaseExecutionQuery(), anyCaseInstance())).thenCallRealMethod();
 
     //when getting the CaseExecution for a CaseInstance and a given CaseExecutionQuery
-    CaseExecution actualCaseExecution = CmmnAwareTests.caseExecution(caseExecutionQuery, caseInstance);
+    CmmnAwareTests.caseExecution(caseExecutionQuery, caseInstance);
 
     //then the call is delegated via assertThat to a CaseInstanceAssert
     verifyStatic();
@@ -198,7 +196,7 @@ public class CmmnAwareTestsTest extends CamundaBpmApiAwareTestCase {
     when(CmmnAwareTests.caseExecutionQuery()).thenReturn(caseExecutionQuery);
 
     //when getting the CaseExecution for activity FOO in a given case instance
-    CaseExecution actualCaseExecution = CmmnAwareTests.caseExecution(ACTIVITY_ID, caseInstance);
+    CmmnAwareTests.caseExecution(ACTIVITY_ID, caseInstance);
 
     //then the caseExecutionQuery is enhanced with the activityId only
     verify(caseExecutionQuery).activityId(ACTIVITY_ID);

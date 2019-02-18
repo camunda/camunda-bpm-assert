@@ -1,16 +1,14 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
-import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
-import org.camunda.bpm.engine.test.util.CamundaBpmApi;
 
 import java.util.Map;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
-public abstract class AbstractAssertions extends Assertions {
+public abstract class AbstractAssertions {
 
   static ThreadLocal<ProcessEngine> processEngine = new ThreadLocal<ProcessEngine>();
 
@@ -61,22 +59,6 @@ public abstract class AbstractAssertions extends Assertions {
   public static void reset() {
     AbstractAssertions.processEngine.remove();
     AbstractProcessAssert.resetLastAsserts();
-  }
-
-  /*
-   * *Asserts* that process engine supports the requested API version. Use 
-   * method at the beginning of BPMN related method implementations which 
-   * exceptionally require a Camunda BPM API versions higher than '7.1'
-   * 
-   * @param   api Camunda BPM API version e.g. '7.2', '7.3' etc.
-   * @throws  AssertionError if process engine does not support the requested API version
-   */
-  protected static void assertApi(String api) {
-    AbstractProcessAssert.assertApi(api);
-  }
-
-  protected static boolean supportsApi(String api) {
-    return CamundaBpmApi.supports(api);
   }
 
 }

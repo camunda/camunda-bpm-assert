@@ -1,6 +1,5 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
-import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
@@ -12,8 +11,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
@@ -49,7 +50,7 @@ public class ProcessEngineTestsTest {
     // When
     init(processEngine);
     // Then
-    Assertions.assertThat(BpmnAwareTests.processEngine()).isNotNull().isSameAs(processEngine);
+    assertThat(BpmnAwareTests.processEngine()).isNotNull().isSameAs(processEngine);
   }
 
   @Test

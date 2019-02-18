@@ -590,7 +590,7 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       List<HistoricVariableInstance> instances = historicVariableInstanceQuery().list();
       Map<String, Object> map = new HashMap<String, Object>();
       for (HistoricVariableInstance instance : instances) {
-        map.put(instance.getVariableName(), instance.getValue());
+        map.put(instance.getName(), instance.getValue());
       }
       return map;
     }

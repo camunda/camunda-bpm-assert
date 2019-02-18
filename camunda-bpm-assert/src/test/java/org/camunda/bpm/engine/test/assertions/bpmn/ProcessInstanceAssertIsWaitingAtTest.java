@@ -113,8 +113,8 @@ public class ProcessInstanceAssertIsWaitingAtTest extends ProcessAssertTestCase 
     expect(new Failure() {
       @Override
       public void when() {
-        //noinspection NullArgumentToVariableArgMethod
-        assertThat(processInstance).isWaitingAt(null);
+        String[] waitingAt = null;
+        assertThat(processInstance).isWaitingAt(waitingAt);
       }
     });
     // And

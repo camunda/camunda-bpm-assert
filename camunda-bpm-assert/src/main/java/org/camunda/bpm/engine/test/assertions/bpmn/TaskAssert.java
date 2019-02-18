@@ -87,7 +87,6 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    * @since   Camunda BPM 7.3
    */
   public TaskAssert hasCandidateGroupAssociated(final String candidateGroupId) {
-    assertApi("7.3");
     return hasCandidateGroup(candidateGroupId, false);
   }
 
@@ -131,7 +130,6 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
    * @since   Camunda BPM 7.3
    */
   public TaskAssert hasCandidateUserAssociated(final String candidateUserId) {
-    assertApi("7.3");
     return hasCandidateUser(candidateUserId, false);
   }
 

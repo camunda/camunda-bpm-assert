@@ -266,8 +266,8 @@ public class ProcessInstanceAssertHasPassedInOrderTest extends ProcessAssertTest
     expect(new Failure() {
       @Override
       public void when() {
-        //noinspection NullArgumentToVariableArgMethod
-        assertThat(processInstance).hasPassedInOrder(null);
+        String[] passed = null;
+        assertThat(processInstance).hasPassedInOrder(passed);
       }
     });
     expect(new Failure() {

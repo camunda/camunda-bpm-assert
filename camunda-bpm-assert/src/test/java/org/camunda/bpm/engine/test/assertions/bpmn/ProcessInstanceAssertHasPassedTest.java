@@ -208,8 +208,8 @@ public class ProcessInstanceAssertHasPassedTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        //noinspection NullArgumentToVariableArgMethod
-        assertThat(processInstance).hasPassed(null);
+        String[] passed = null;
+        assertThat(processInstance).hasPassed(passed);
       }
     });
     expect(new Failure() {

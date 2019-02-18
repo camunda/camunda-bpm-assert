@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
 
+import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.CaseService;
 import org.camunda.bpm.engine.repository.CaseDefinition;
 import org.camunda.bpm.engine.repository.CaseDefinitionQuery;
@@ -30,30 +31,30 @@ public class CmmnAwareTests extends BpmnAwareTests {
    * Assert that... the given CaseInstance meets your expectations.
    *
    * @param   actual CaseInstance under test
-   * @return Assert object offering CaseInstance specific assertions.
+   * @return  Assert object offering CaseInstance specific assertions.
    */
-  public static CaseInstanceAssert assertThat(CaseInstance actual) {
-    return CmmnAwareAssertions.assertThat(actual);
+  public static CaseInstanceAssert assertThat(final CaseInstance actual) {
+    return CaseInstanceAssert.assertThat(processEngine(), actual);
   }
 
   /**
    * Assert that... the given CaseExecution meets your expectations.
    *
    * @param   actual CaseExecution under test
-   * @return Assert object offering CaseExecution specific assertions.
+   * @return  Assert object offering CaseExecution specific assertions.
    */
-  public static CaseExecutionAssert assertThat(CaseExecution actual) {
-    return CmmnAwareAssertions.assertThat(actual);
+  public static CaseExecutionAssert assertThat(final CaseExecution actual) {
+    return CaseExecutionAssert.assertThat(processEngine(), actual);
   }
 
   /**
    * Assert that... the given CaseDefinition meets your expectations.
    *
    * @param   actual ProcessDefinition under test
-   * @return Assert object offering ProcessDefinition specific assertions.
+   * @return  Assert object offering ProcessDefinition specific assertions.
    */
-  public static CaseDefinitionAssert assertThat(CaseDefinition actual) {
-    return CmmnAwareAssertions.assertThat(actual);
+  public static CaseDefinitionAssert assertThat(final CaseDefinition actual) {
+    return CaseDefinitionAssert.assertThat(processEngine(), actual);
   }
 
   /**
@@ -135,7 +136,7 @@ public class CmmnAwareTests extends BpmnAwareTests {
      * @return CaseExecution or null
      */
   public static CaseExecution caseExecution(String activityId, CaseInstance caseInstance) {
-    assertThat(activityId).isNotNull();
+    Assertions.assertThat(activityId).isNotNull();
     return caseExecution(caseExecutionQuery().activityId(activityId), caseInstance);
   }
 
