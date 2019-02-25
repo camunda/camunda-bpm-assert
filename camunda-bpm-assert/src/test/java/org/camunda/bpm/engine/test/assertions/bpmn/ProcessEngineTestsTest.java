@@ -1,11 +1,15 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
 import org.camunda.bpm.engine.*;
+import org.camunda.bpm.engine.repository.CaseDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.engine.test.assertions.cmmn.CaseDefinitionAssert;
+import org.camunda.bpm.engine.test.assertions.cmmn.CaseExecutionAssert;
+import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -107,6 +111,36 @@ public class ProcessEngineTestsTest {
     assertThat(returnedAssert).isNotNull().isInstanceOf(JobAssert.class);
     JobAssert jobAssert = assertThat(job);
     assertThat(jobAssert.getActual()).isSameAs(job);
+  }
+  
+  @Test
+  public void testAssertThat_CaseInstance() throws Exception {
+    //Given
+    CaseInstance caseInstance = Mockito.mock(CaseInstance.class);
+    // When
+    CaseInstanceAssert returnedAssert = assertThat(caseInstance);
+    // Then
+    assertThat(returnedAssert.getActual()).isSameAs(caseInstance);
+  }
+
+  @Test
+  public void testAssertThat_CaseExecution() throws Exception {
+    //Given
+    CaseExecution caseExecution = Mockito.mock(CaseExecution.class);
+    // When
+    CaseExecutionAssert returnedAssert = assertThat(caseExecution);
+    // Then
+    assertThat(returnedAssert.getActual()).isSameAs(caseExecution);
+  }
+
+  @Test
+  public void testAssertThat_CaseDefinition() throws Exception {
+    //Given
+    CaseDefinition caseDefinition = Mockito.mock(CaseDefinition.class);
+    // When
+    CaseDefinitionAssert returnedAssert = assertThat(caseDefinition);
+    // Then
+    assertThat(returnedAssert.getActual()).isSameAs(caseDefinition);
   }
 
   @Test
