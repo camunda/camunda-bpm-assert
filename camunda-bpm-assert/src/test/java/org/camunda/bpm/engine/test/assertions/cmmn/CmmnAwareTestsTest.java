@@ -73,7 +73,7 @@ public class CmmnAwareTestsTest {
     CaseDefinitionAssert actualCaseDefinitionAssert = CmmnAwareTests.assertThat(caseDefinition);
 
     //then the delegate is called with that CaseDefinition object
-    verifyStatic();
+    verifyStatic(CmmnAwareTests.class);
     CmmnAwareTests.assertThat(caseDefinition);
     //and whatever the delegate returns, is returned by the tested method, too
     Assertions.assertThat(actualCaseDefinitionAssert).isSameAs(caseDefinitionAssert);
@@ -92,7 +92,7 @@ public class CmmnAwareTestsTest {
     CaseExecutionAssert actualCaseExecutionAssert = CmmnAwareTests.assertThat(caseExecution);
 
     //then the delegate is called with that CaseExecution object
-    verifyStatic();
+    verifyStatic(CmmnAwareTests.class);
     CmmnAwareTests.assertThat(caseExecution);
     //and whatever the delegate returns, is returned by the tested method, too
     Assertions.assertThat(actualCaseExecutionAssert).isSameAs(caseExecutionAssert);
@@ -111,7 +111,7 @@ public class CmmnAwareTestsTest {
     CaseInstanceAssert actualCaseInstanceAssert = CmmnAwareTests.assertThat(caseInstance);
 
     //then the delegate is called with that CaseInstance object
-    verifyStatic();
+    verifyStatic(CmmnAwareTests.class);
     CmmnAwareTests.assertThat(caseInstance);
     //and whatever the delegate returns, is returned by the tested method, too
     Assertions.assertThat(actualCaseInstanceAssert).isSameAs(caseInstanceAssert);
@@ -156,7 +156,7 @@ public class CmmnAwareTestsTest {
     CmmnAwareTests.caseExecution(caseExecutionQuery, caseInstance);
 
     //then the call is delegated via assertThat to a CaseInstanceAssert
-    verifyStatic();
+    verifyStatic(CmmnAwareTests.class);
     CmmnAwareTests.assertThat(caseInstance);
 
     //and the CaseExecutionQuery is used for narrowing down the result
@@ -202,7 +202,7 @@ public class CmmnAwareTestsTest {
     verify(caseExecutionQuery).activityId(ACTIVITY_ID);
     verifyNoMoreInteractions(caseExecutionQuery);
     //and the call is delegated properly
-    verifyStatic();
+    verifyStatic(CmmnAwareTests.class);
     CmmnAwareTests.caseExecution(caseExecutionQuery, caseInstance);
   }
 
@@ -331,7 +331,7 @@ public class CmmnAwareTestsTest {
     when(processEngine.getCaseService()).thenReturn(caseService);
     CaseExecutionCommandBuilder caseExecutionCommandBuilder = mock(CaseExecutionCommandBuilder.class);
     when(caseService.withCaseExecution("baz")).thenReturn(caseExecutionCommandBuilder);
-    when(caseExecutionCommandBuilder.setVariables(CamundaMatchers.anyMapOf(String.class, Object.class))).thenReturn(caseExecutionCommandBuilder);
+    when(caseExecutionCommandBuilder.setVariables(CamundaMatchers.<String, Object>anyMap())).thenReturn(caseExecutionCommandBuilder);
     when(caseExecution.getId()).thenReturn("baz");
 
     CmmnAwareTests.complete(caseExecution, withVariables("aVariable", "aValue"));
@@ -358,7 +358,6 @@ public class CmmnAwareTestsTest {
   @Before
   public void prepareCaseExecutionQuery() {
     caseExecutionQuery = mock(CaseExecutionQuery.class, new CaseExecutionQueryFluentAnswer());
-    when(caseExecutionQuery.singleResult()).thenReturn(caseExecution);
     when(caseExecutionQuery.toString()).thenCallRealMethod();
   }
 
