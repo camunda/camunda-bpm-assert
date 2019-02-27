@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.camunda.bpm.extension</groupId>
+    <groupId>org.camunda.bpm.assert</groupId>
     <artifactId>camunda-bpm-assert-root</artifactId>
     <version>2.0-SNAPSHOT</version>
   </parent>
@@ -21,11 +21,7 @@
       <artifactId>camunda-engine</artifactId>
       <scope>provided</scope>
     </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>provided</scope>
-    </dependency>
+
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
@@ -43,34 +39,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <profiles>
-    <!-- do nothing on JDK 7 -->
-    <profile>
-      <id>jdk7</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <jdk>1.7</jdk>
-      </activation>
-      <properties>
-        <maven.resources.skip>true</maven.resources.skip>
-        <maven.main.skip>true</maven.main.skip>
-        <maven.test.skip>true</maven.test.skip>
-        <maven.install.skip>true</maven.install.skip>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <configuration>
-              <useDefaultManifestFile>false</useDefaultManifestFile>
-              <skipIfEmpty>true</skipIfEmpty>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 
 </project>
