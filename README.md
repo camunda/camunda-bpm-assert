@@ -66,15 +66,20 @@ Congrats! You are successfully using Camunda BPM Assert. Find a more detailed de
 * [Download](https://github.com/camunda/camunda-bpm-assert/releases)
 * [Continuous Integration](https://travis-ci.org/camunda/camunda-bpm-assert)
 
-## Maintenance &amp; License
+## License
 
-<a href="http://plexiti.com"><img src="http://plexiti.com/en/img/logo.png" align="right" width="210"></img></a>Martin Schimak<br/>[Blog](http://plexiti.com) &#8226; [GitHub](https://github.com/martinschimak) &#8226; [eMail](mailto:martin.schimak@plexiti.com)<br/>Apache License, Version 2.0
+The source files in this repository are made available under the Apache License, Version 2.0.
 
-## Contributors
+## Credits
 
+The Camunda BPM Assert project used to be the community extension, created and supported by
+
+<a href="http://plexiti.com"><img src="http://plexiti.com/en/img/logo.png" align="right" width="210"></img></a>[Martin Schimak](https://github.com/martinschimak) (plexiti GmbH)<br>
 <a href="http://www.holisticon.de"><img src="https://www.holisticon.de/wp-content/uploads/2013/05/holisticon-logo-hamburg.gif" align="right" /></a>[Jan Galinski](https://github.com/jangalinski) (Holisticon AG)<br>
 [Martin Günther](https://github.com/margue) (Holisticon AG)<br>
 [Malte Sörensen](https://github.com/malteser) (Holisticon AG)<br>
 [Simon Zambrovski](https://github.com/zambrovski) (Holisticon AG)
 
-... and [many others](https://github.com/camunda/camunda-bpm-assert/graphs/contributors). You want to **contribute**? You are very welcome! Please contact me directly via [eMail](mailto:martin.schimak@plexiti.com).
+... and [many others](https://github.com/camunda/camunda-bpm-assert/graphs/contributors).
+
+Starting from version 2.0.0-alpha3 it was adopted as part of the Camunda BPM Platform.
