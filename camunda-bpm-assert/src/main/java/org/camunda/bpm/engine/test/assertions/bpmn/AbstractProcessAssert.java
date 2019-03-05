@@ -11,7 +11,6 @@ import org.camunda.bpm.engine.runtime.CaseInstanceQuery;
 import org.camunda.bpm.engine.runtime.ExecutionQuery;
 import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
-import org.camunda.bpm.engine.runtime.VariableInstanceQuery;
 import org.camunda.bpm.engine.task.TaskQuery;
 
 import java.util.*;
@@ -108,18 +107,10 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
     return engine.getHistoryService();
   }
 
-  protected IdentityService identityService() {
-    return engine.getIdentityService();
-  }
-
   protected ManagementService managementService() {
     return engine.getManagementService();
   }
 
-  protected AuthorizationService authorizationService() {
-    return engine.getAuthorizationService();
-  }
-  
   protected CaseService caseService() {
     return engine.getCaseService();
   }
@@ -161,15 +152,6 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
   }
 
   /* 
-   * VariableInstanceQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or 
-   * {@link ProcessDefinition}) by overriding this method in sub classes specialised to 
-   * verify a specific process engine domain class. 
-   */
-  protected VariableInstanceQuery variableInstanceQuery() {
-    return runtimeService().createVariableInstanceQuery();
-  }
-
-  /* 
    * HistoricActivityInstanceQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or 
    * {@link ProcessDefinition}) by overriding this method in sub classes specialised to 
    * verify a specific process engine domain class. 
@@ -179,30 +161,12 @@ public abstract class AbstractProcessAssert<S extends AbstractProcessAssert<S, A
   }
 
   /* 
-   * HistoricDetailQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or 
-   * {@link ProcessDefinition}) by overriding this method in sub classes specialised to 
-   * verify a specific process engine domain class. 
-   */
-  protected HistoricDetailQuery historicDetailQuery() {
-    return historyService().createHistoricDetailQuery();
-  }
-
-  /* 
    * HistoricProcessInstanceQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or 
    * {@link ProcessDefinition}) by overriding this method in sub classes specialised to 
    * verify a specific process engine domain class. 
    */
   protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
     return historyService().createHistoricProcessInstanceQuery();
-  }
-
-  /* 
-   * HistoricTaskInstanceQuery, unnarrowed. Narrow this to {@link ProcessInstance} (or 
-   * {@link ProcessDefinition}) by overriding this method in sub classes specialised to 
-   * verify a specific process engine domain class. 
-   */
-  protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
-    return historyService().createHistoricTaskInstanceQuery();
   }
 
   /* 

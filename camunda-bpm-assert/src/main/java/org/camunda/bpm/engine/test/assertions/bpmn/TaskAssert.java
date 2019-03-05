@@ -1,9 +1,6 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
 import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.history.*;
-import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
-import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
 import org.assertj.core.api.Assertions;
@@ -285,84 +282,6 @@ public class TaskAssert extends AbstractProcessAssert<TaskAssert, Task> {
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* JobQuery, automatically narrowed to {@link ProcessInstance} of actual 
-   * {@link Task} 
-   */
-  @Override
-  protected JobQuery jobQuery() {
-    return super.jobQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* ProcessInstanceQuery, automatically narrowed to {@link ProcessInstance} of 
-   * actual {@link Task} 
-   */
-  @Override
-  protected ProcessInstanceQuery processInstanceQuery() {
-    return super.processInstanceQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* ExecutionQuery, automatically narrowed to {@link ProcessInstance} of 
-   * actual {@link Task} 
-   */
-  @Override
-  protected ExecutionQuery executionQuery() {
-    return super.executionQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* VariableInstanceQuery, automatically narrowed to {@link ProcessInstance} of 
-   * actual {@link Task} 
-   */
-  @Override
-  protected VariableInstanceQuery variableInstanceQuery() {
-    return super.variableInstanceQuery().processInstanceIdIn(actual.getProcessInstanceId());
-  }
-
-  /* HistoricActivityInstanceQuery, automatically narrowed to {@link ProcessInstance} of actual {@link Task} */
-  @Override
-  protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
-    return super.historicActivityInstanceQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* HistoricDetailQuery, automatically narrowed to {@link ProcessInstance} of 
-   * actual {@link Task} 
-   */
-  @Override
-  protected HistoricDetailQuery historicDetailQuery() {
-    return super.historicDetailQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* HistoricProcessInstanceQuery, automatically narrowed to {@link ProcessInstance} 
-   * of actual {@link Task} 
-   */
-  @Override
-  protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
-    return super.historicProcessInstanceQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* HistoricTaskInstanceQuery, automatically narrowed to {@link ProcessInstance} 
-   * of actual {@link Task} 
-   */
-  @Override
-  protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
-    return super.historicTaskInstanceQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* HistoricVariableInstanceQuery, automatically narrowed to {@link ProcessInstance} 
-   * of actual {@link Task} 
-   */
-  @Override
-  protected HistoricVariableInstanceQuery historicVariableInstanceQuery() {
-    return super.historicVariableInstanceQuery().processInstanceId(actual.getProcessInstanceId());
-  }
-
-  /* ProcessDefinitionQuery, automatically narrowed to {@link ProcessDefinition} 
-   * of {@link ProcessInstance} of actual {@link Task} 
-   */
-  @Override
-  protected ProcessDefinitionQuery processDefinitionQuery() {
-    return super.processDefinitionQuery().processDefinitionId(actual.getProcessDefinitionId());
   }
 
 }

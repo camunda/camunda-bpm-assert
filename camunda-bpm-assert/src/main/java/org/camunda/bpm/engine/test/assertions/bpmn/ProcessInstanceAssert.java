@@ -625,34 +625,16 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return super.executionQuery().processInstanceId(actual.getId());
   }
 
-  /* VariableInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
-  @Override
-  protected VariableInstanceQuery variableInstanceQuery() {
-    return super.variableInstanceQuery().processInstanceIdIn(actual.getId());
-  }
-
   /* HistoricActivityInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricActivityInstanceQuery historicActivityInstanceQuery() {
     return super.historicActivityInstanceQuery().processInstanceId(actual.getId());
   }
 
-  /* HistoricDetailQuery, automatically narrowed to actual {@link ProcessInstance} */
-  @Override
-  protected HistoricDetailQuery historicDetailQuery() {
-    return super.historicDetailQuery().processInstanceId(actual.getId());
-  }
-
   /* HistoricProcessInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
   @Override
   protected HistoricProcessInstanceQuery historicProcessInstanceQuery() {
     return super.historicProcessInstanceQuery().processInstanceId(actual.getId());
-  }
-
-  /* HistoricTaskInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
-  @Override
-  protected HistoricTaskInstanceQuery historicTaskInstanceQuery() {
-    return super.historicTaskInstanceQuery().processInstanceId(actual.getId());
   }
 
   /* HistoricVariableInstanceQuery, automatically narrowed to actual {@link ProcessInstance} */
