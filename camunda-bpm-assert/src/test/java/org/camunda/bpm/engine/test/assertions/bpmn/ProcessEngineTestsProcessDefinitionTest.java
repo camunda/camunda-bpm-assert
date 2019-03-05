@@ -6,7 +6,6 @@ import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.helpers.Failure;
 import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -21,11 +20,6 @@ public class ProcessEngineTestsProcessDefinitionTest extends ProcessAssertTestCa
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
-  @After
-  public void tearDown() {
-    reset();
-  }
 
   @Test
   public void testProcessDefinition_No_Definition() {

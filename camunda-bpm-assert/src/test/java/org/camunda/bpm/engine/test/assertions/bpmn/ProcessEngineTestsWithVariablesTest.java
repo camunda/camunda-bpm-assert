@@ -51,9 +51,10 @@ public class ProcessEngineTestsWithVariablesTest {
   @Parameterized.Parameters
   public static Collection<Object[]> data() {
     Object[][] data = new Object[][] { 
-      { "key1", 1 , null  , null, null  , null }, 
-      { "key1", 1 , "key2", 2   , null  , null }, 
-      { "key1", 1 , "key2", 2   , "key3", 3    } 
+      { "key1", 1   , null  , null, null  , null }, 
+      { "key1", 1   , "key2", 2   , null  , null },
+      { null  , null, "key2", 2   , null  , null },
+      { "key1", 1   , "key2", 2   , "key3", 3    } 
     };
     return Arrays.asList(data);
   }

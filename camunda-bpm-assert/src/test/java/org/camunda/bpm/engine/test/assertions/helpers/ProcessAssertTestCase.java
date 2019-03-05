@@ -2,19 +2,27 @@ package org.camunda.bpm.engine.test.assertions.helpers;
 
 
 import org.assertj.core.util.Lists;
+import org.junit.After;
 
 import static org.assertj.core.api.Assertions.fail;
+import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.reset;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
 public abstract class ProcessAssertTestCase {
 
+  @After
+  public void tearDown() {
+    reset();
+  }
+  
   protected void expect(Failure fail) {
     expect(fail, AssertionError.class);
   }
 
-  protected void expect(Failure fail, Class<? extends Throwable>... exception) {
+  @SafeVarargs
+  protected final void expect(Failure fail, Class<? extends Throwable>... exception) {
     try {
       fail.when();
     } catch (Throwable e) {

@@ -5,7 +5,6 @@ import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.helpers.Failure;
 import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -18,11 +17,6 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
-  @After
-  public void tearDown() {
-    reset();
-  }
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"
@@ -41,7 +35,7 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"
   })
-  public void testClaim_Failure() {
+  public void testClaimNoTask_Failure() {
     // Given
     final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
       "ProcessEngineTests-claim"
@@ -51,6 +45,23 @@ public class ProcessEngineTestsClaimTest extends ProcessAssertTestCase {
       @Override
       public void when() {
         claim(task("UserTask_2", processInstance), "fozzie");
+      }
+    }, IllegalArgumentException.class);
+  }
+  
+  @Test
+  @Deployment(resources = {"bpmn/ProcessEngineTests-claim.bpmn"
+  })
+  public void testClaimNoUser_Failure() {
+    // Given
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessEngineTests-claim"
+    );
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        claim(task("UserTask_1", processInstance), null);
       }
     }, IllegalArgumentException.class);
   }

@@ -2,6 +2,7 @@ package org.camunda.bpm.engine.test.assertions.bpmn;
 
 import org.camunda.bpm.engine.ProcessEngineException;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.TaskQuery;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.helpers.Failure;
@@ -9,6 +10,8 @@ import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
@@ -27,6 +30,21 @@ public class ProcessInstanceAssertTaskTest extends ProcessAssertTestCase {
     final ProcessInstance processInstance = startProcess();
     // Then
     assertThat(processInstance).task().isNotNull();
+  }
+  
+  @Test
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-task.bpmn"
+  })
+  public void testTask_NullQuery_Failure() {
+    // Given
+    final ProcessInstance processInstance = startProcess();
+    try {
+      // When
+      assertThat(processInstance).task((TaskQuery) null);
+    } catch (IllegalArgumentException e) {
+      // Then
+      assertThat(e).hasMessage("Illegal call of task(query = 'null') - but must not be null!");
+    }
   }
 
   @Test

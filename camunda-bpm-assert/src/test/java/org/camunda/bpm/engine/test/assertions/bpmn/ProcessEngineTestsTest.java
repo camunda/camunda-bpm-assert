@@ -13,17 +13,27 @@ import org.camunda.bpm.engine.test.assertions.cmmn.CaseInstanceAssert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.assertThat;
+import static org.junit.Assert.fail;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
  * @author Martin Schimak <martin.schimak@plexiti.com>
  */
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(ProcessEngines.class)
 public class ProcessEngineTestsTest {
 
   ProcessEngine processEngine;
@@ -45,6 +55,41 @@ public class ProcessEngineTestsTest {
     ProcessEngine returnedEngine = processEngine();
     // Then
     assertThat(returnedEngine).isNotNull().isSameAs(processEngine);
+  }
+  
+  @Test
+  public void testNoProcessEngine_Failure() throws Exception {
+    // Given
+    PowerMockito.spy(ProcessEngines.class);
+    Mockito.when(ProcessEngines.getProcessEngines()).thenReturn(new HashMap<String,ProcessEngine>());
+    reset();
+    try {
+      // When
+      processEngine();
+      fail("Process engine should not be initialized");
+    } catch (IllegalStateException e) {
+      // Then
+      assertThat(e).hasMessage("No ProcessEngine found to be registered with ProcessEngines!");
+    }
+  }
+  
+  @Test
+  public void testMultipleProcessEngine_Failure() throws Exception {
+    // Given
+    Map<String,ProcessEngine> multipleEnginesMap = new HashMap<>();
+    multipleEnginesMap.put("test1", mock(ProcessEngine.class));
+    multipleEnginesMap.put("test2", mock(ProcessEngine.class));
+    PowerMockito.spy(ProcessEngines.class);
+    Mockito.when(ProcessEngines.getProcessEngines()).thenReturn(multipleEnginesMap);
+    reset();
+    try {
+      // When
+      processEngine();
+      fail("Process engine should not be initialized");
+    } catch (IllegalStateException e) {
+      // Then
+      assertThat(e).hasMessage("2 ProcessEngines initialized. Call BpmnAwareTests.init(ProcessEngine processEngine) first!");
+    }
   }
 
   @Test

@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.helpers.Failure;
@@ -8,6 +9,8 @@ import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
@@ -150,4 +153,20 @@ public class ProcessInstanceAssertCalledProcessInstanceTest extends ProcessAsser
     });
   }
 
+  @Test
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-calledProcessInstance-superProcess2.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess1.bpmn", "bpmn/ProcessInstanceAssert-calledProcessInstance-subProcess2.bpmn"
+  })
+  public void testCalledProcessInstance_NullQuery_Failure() {
+    // Given
+    ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+        "ProcessInstanceAssert-calledProcessInstance-superProcess2"
+    );
+    try {
+      // When
+      assertThat(processInstance).calledProcessInstance((ProcessInstanceQuery) null);
+    } catch (IllegalArgumentException e) {
+      // Then
+      assertThat(e).hasMessage("Illegal call of calledProcessInstance(query = 'null') - but must not be null!");
+    }
+  }
 }

@@ -1,6 +1,7 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
 import org.camunda.bpm.engine.ProcessEngineException;
+import org.camunda.bpm.engine.runtime.JobQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
@@ -10,6 +11,8 @@ import org.camunda.bpm.engine.test.mock.Mocks;
 import org.junit.Rule;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.assertThat;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 /**
@@ -30,6 +33,23 @@ public class ProcessInstanceAssertJobTest extends ProcessAssertTestCase {
     );
     // Then
     assertThat(processInstance).job().isNotNull();
+  }
+  
+  @Test
+  @Deployment(resources = {"bpmn/ProcessInstanceAssert-job.bpmn"
+  })
+  public void testJob_NullQuery_Failure() {
+    // Given
+    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
+      "ProcessInstanceAssert-job"
+    );
+    try {
+      // When
+      assertThat(processInstance).job((JobQuery) null);
+    } catch (IllegalArgumentException e) {
+      // Then
+      assertThat(e).hasMessage("Illegal call of job(query = 'null') - but must not be null!");
+    }
   }
 
   @Test

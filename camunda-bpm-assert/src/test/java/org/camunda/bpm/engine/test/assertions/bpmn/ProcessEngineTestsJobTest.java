@@ -7,7 +7,6 @@ import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.assertions.helpers.Failure;
 import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.camunda.bpm.engine.test.mock.Mocks;
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -20,11 +19,6 @@ public class ProcessEngineTestsJobTest extends ProcessAssertTestCase {
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
-  @After
-  public void tearDown() {
-    reset();
-  }
 
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-job.bpmn"
