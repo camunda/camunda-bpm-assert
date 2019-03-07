@@ -38,18 +38,8 @@ public class StageAssert extends AbstractCaseAssert<StageAssert, CaseExecution> 
 	}
 
 	@Override
-	public StageAssert isSuspended() {
-		return super.isSuspended();
-	}
-
-	@Override
 	public StageAssert isCompleted() {
 		return super.isCompleted();
-	}
-
-	@Override
-	public StageAssert isFailed() {
-		return super.isFailed();
 	}
 
 	@Override
@@ -68,11 +58,6 @@ public class StageAssert extends AbstractCaseAssert<StageAssert, CaseExecution> 
 	}
 
 	@Override
-	public HumanTaskAssert humanTask() {
-		return super.humanTask();
-	}
-
-	@Override
 	public CaseTaskAssert caseTask(CaseExecutionQuery query) {
 		return super.caseTask(query);
 	}
@@ -80,11 +65,6 @@ public class StageAssert extends AbstractCaseAssert<StageAssert, CaseExecution> 
 	@Override
 	public CaseTaskAssert caseTask(String activityId) {
 		return super.caseTask(activityId);
-	}
-
-	@Override
-	public CaseTaskAssert caseTask() {
-		return super.caseTask();
 	}
 
 	@Override
@@ -98,11 +78,6 @@ public class StageAssert extends AbstractCaseAssert<StageAssert, CaseExecution> 
 	}
 
 	@Override
-	public ProcessTaskAssert processTask() {
-		return super.processTask();
-	}
-
-	@Override
 	public StageAssert stage(CaseExecutionQuery query) {
 		return super.stage(query);
 	}
@@ -113,11 +88,6 @@ public class StageAssert extends AbstractCaseAssert<StageAssert, CaseExecution> 
 	}
 
 	@Override
-	public StageAssert stage() {
-		return super.stage();
-	}
-
-	@Override
 	public MilestoneAssert milestone(CaseExecutionQuery query) {
 		return super.milestone(query);
 	}
@@ -125,11 +95,6 @@ public class StageAssert extends AbstractCaseAssert<StageAssert, CaseExecution> 
 	@Override
 	public MilestoneAssert milestone(String activityId) {
 		return super.milestone(activityId);
-	}
-
-	@Override
-	public MilestoneAssert milestone() {
-		return super.milestone();
 	}
 
 }

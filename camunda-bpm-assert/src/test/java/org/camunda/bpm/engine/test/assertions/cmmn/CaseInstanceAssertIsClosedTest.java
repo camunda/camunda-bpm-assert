@@ -1,9 +1,7 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertThat;
-import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
-import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.disable;
 
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
@@ -13,37 +11,38 @@ import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class HumanTaskAssertIsDisabledTest extends ProcessAssertTestCase {
+public class CaseInstanceAssertIsClosedTest extends ProcessAssertTestCase {
 
-  public static final String TASK_A = "PI_TaskA";
-  public static final String CASE_KEY = "Case_HumanTaskAssertIsDisabledTest";
+  public static final String TASK_B = "PI_TaskB";
+  public static final String CASE_KEY = "Case_CaseTaskAssertIsTerminatedTest";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
-
+  
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssertIsDisabledTest.cmmn" })
-  public void testIsDisabled_Success() {
+  @Deployment(resources = { "cmmn/CaseTaskAssertIsTerminatedTest.cmmn" })
+  public void testIsTerminated_Success() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
-    HumanTaskAssert humanTask = assertThat(caseInstance).humanTask(TASK_A);
     // When
-    disable(caseExecution(TASK_A, caseInstance));
+    caseService().terminateCaseExecution(caseInstance.getId());
+    assertThat(caseInstance).isTerminated();
+    caseService().closeCaseInstance(caseInstance.getId());
     // Then
-    humanTask.isDisabled();
+    assertThat(caseInstance).isClosed();
   }
 
   @Test
-  @Deployment(resources = { "cmmn/HumanTaskAssertIsDisabledTest.cmmn" })
-  public void testIsDisabled_Failure() {
+  @Deployment(resources = { "cmmn/CaseTaskAssertIsTerminatedTest.cmmn" })
+  public void testIsTerminated_Failure() {
     // Given
-    // When
     final CaseInstance caseInstance = givenCaseIsCreated();
+    // When
     // Then
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(caseInstance).humanTask(TASK_A).isDisabled();
+        assertThat(caseInstance).isClosed();
       }
     });
   }

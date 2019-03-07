@@ -1,6 +1,9 @@
 package org.camunda.bpm.engine.test.assertions.cmmn;
 
+import org.assertj.core.api.Assertions;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.history.HistoricCaseInstance;
+import org.camunda.bpm.engine.impl.persistence.entity.HistoricCaseInstanceEntity;
 import org.camunda.bpm.engine.runtime.CaseExecutionQuery;
 import org.camunda.bpm.engine.runtime.CaseInstance;
 
@@ -40,16 +43,6 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
   }
 
   @Override
-  public CaseInstanceAssert isFailed() {
-    return super.isFailed();
-  }
-
-  @Override
-  public CaseInstanceAssert isSuspended() {
-    return super.isSuspended();
-  }
-
-  @Override
   public HumanTaskAssert humanTask(CaseExecutionQuery query) {
     return super.humanTask(query);
   }
@@ -57,11 +50,6 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
   @Override
   public HumanTaskAssert humanTask(String activityId) {
     return super.humanTask(activityId);
-  }
-
-  @Override
-  public HumanTaskAssert humanTask() {
-    return super.humanTask();
   }
 
   @Override
@@ -75,11 +63,6 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
   }
 
   @Override
-  public CaseTaskAssert caseTask() {
-    return super.caseTask();
-  }
-
-  @Override
   public ProcessTaskAssert processTask(CaseExecutionQuery query) {
     return super.processTask(query);
   }
@@ -87,11 +70,6 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
   @Override
   public ProcessTaskAssert processTask(String activityId) {
     return super.processTask(activityId);
-  }
-
-  @Override
-  public ProcessTaskAssert processTask() {
-    return super.processTask();
   }
 
   @Override
@@ -105,11 +83,6 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
   }
 
   @Override
-  public StageAssert stage() {
-    return super.stage();
-  }
-
-  @Override
   public MilestoneAssert milestone(CaseExecutionQuery query) {
     return super.milestone(query);
   }
@@ -120,13 +93,19 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
   }
 
   @Override
-  public MilestoneAssert milestone() {
-    return super.milestone();
-  }
-
-  @Override
   public CaseExecutionAssert caseExecution(CaseExecutionQuery query) {
     return super.caseExecution(query.caseInstanceId(getActual().getId()));
+  }
+  
+  @Override
+  protected int getHistoricState() {
+    isNotNull();
+    HistoricCaseInstance historicCaseInstance = historyService().createHistoricCaseInstanceQuery().caseInstanceId(actual.getId())
+        .singleResult();
+    String message = "Please make sure you have set the history service of the engine to "
+        + "at least level 'activity' or a higher level before making use of this assertion!";
+    Assertions.assertThat(historicCaseInstance).overridingErrorMessage(message).isNotNull();
+    return ((HistoricCaseInstanceEntity) historicCaseInstance).getState();
   }
 
   //TODO override other caseExecution methods

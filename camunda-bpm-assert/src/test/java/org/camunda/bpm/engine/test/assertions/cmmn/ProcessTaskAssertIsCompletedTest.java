@@ -29,15 +29,11 @@ public class ProcessTaskAssertIsCompletedTest extends ProcessAssertTestCase {
   public void testIsCompleted_Success() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
+    ProcessTaskAssert processTask = assertThat(caseInstance).processTask(TASK_A);
     // When
     complete(task(USER_TASK, calledProcessInstance(caseInstance)));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).processTask(TASK_A).isCompleted();
-      }
-    });
+    processTask.isCompleted();
   }
 
   @Test

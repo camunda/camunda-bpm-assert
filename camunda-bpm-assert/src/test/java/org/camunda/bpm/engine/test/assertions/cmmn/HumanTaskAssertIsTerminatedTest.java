@@ -26,26 +26,20 @@ public class HumanTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
   @Deployment(resources = { "cmmn/HumanTaskAssertIsTerminatedTest.cmmn" })
   public void testIsTerminated_Success() {
     // Given
-    // case model is deployed
     final CaseInstance caseInstance = givenCaseIsCreated();
-    caseExecution(TASK_B, caseInstance);
+    HumanTaskAssert humanTask = assertThat(caseInstance).humanTask(TASK_B);
     // When
     complete(caseExecution(TASK_A, caseInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).humanTask(TASK_B).isTerminated();
-      }
-    });
+    humanTask.isTerminated();
   }
 
   @Test
   @Deployment(resources = { "cmmn/HumanTaskAssertIsTerminatedTest.cmmn" })
   public void testIsTerminated_Failure() {
     // Given
-    // When
     final CaseInstance caseInstance = givenCaseIsCreated();
+    // When
     // Then
     expect(new Failure() {
       @Override

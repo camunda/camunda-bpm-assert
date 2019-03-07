@@ -29,14 +29,10 @@ public class CaseTaskAssertIsDisabledTest extends ProcessAssertTestCase {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When
+    CaseTaskAssert caseTask = assertThat(caseInstance).caseTask(TASK_A);
     disable(caseExecution(TASK_A, caseInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).caseTask(TASK_A).isDisabled();
-      }
-    });
+    caseTask.isDisabled();
   }
 
   @Test

@@ -60,16 +60,6 @@ public class ProcessTaskAssert extends AbstractCaseAssert<ProcessTaskAssert, Cas
   }
 
   /**
-   * Verifies the expectation that the {@link ProcessTask} is in {@link CaseExecutionState} 'suspended'.
-   *
-   * @return this {@link ProcessTaskAssert}
-   */
-  @Override
-  public ProcessTaskAssert isSuspended() {
-    return super.isSuspended();
-  }
-
-  /**
    * Verifies the expectation that the {@link ProcessTask} is in {@link CaseExecutionState} 'completed'.
    *
    * @return this {@link ProcessTaskAssert}
@@ -77,16 +67,6 @@ public class ProcessTaskAssert extends AbstractCaseAssert<ProcessTaskAssert, Cas
   @Override
   public ProcessTaskAssert isCompleted() {
     return super.isCompleted();
-  }
-
-  /**
-   * Verifies the expectation that the {@link ProcessTask} is in {@link CaseExecutionState} 'failed'.
-   *
-   * @return this {@link ProcessTaskAssert}
-   */
-  @Override
-  public ProcessTaskAssert isFailed() {
-    return super.isFailed();
   }
 
   /**

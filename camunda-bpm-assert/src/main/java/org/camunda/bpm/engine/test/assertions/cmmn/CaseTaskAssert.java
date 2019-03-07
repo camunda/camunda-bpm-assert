@@ -61,16 +61,6 @@ public class CaseTaskAssert extends AbstractCaseAssert<CaseTaskAssert, CaseExecu
   }
 
   /**
-   * Verifies the expectation that the {@link CaseTask} is in {@link CaseExecutionState} 'suspended'.
-   * 
-   * @return this {@link CaseTaskAssert}
-   */
-  @Override
-  public CaseTaskAssert isSuspended() {
-    return super.isSuspended();
-  }
-
-  /**
    * Verifies the expectation that the {@link CaseTask} is in {@link CaseExecutionState} 'completed'.
    * 
    * @return this {@link CaseTaskAssert}
@@ -78,16 +68,6 @@ public class CaseTaskAssert extends AbstractCaseAssert<CaseTaskAssert, CaseExecu
   @Override
   public CaseTaskAssert isCompleted() {
     return super.isCompleted();
-  }
-
-  /**
-   * Verifies the expectation that the {@link CaseTask} is in {@link CaseExecutionState} 'failed'.
-   * 
-   * @return this {@link CaseTaskAssert}
-   */
-  @Override
-  public CaseTaskAssert isFailed() {
-    return super.isFailed();
   }
 
   /**

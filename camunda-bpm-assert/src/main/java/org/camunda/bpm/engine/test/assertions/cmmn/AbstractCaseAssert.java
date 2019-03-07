@@ -85,18 +85,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /**
-   * Verifies the expectation that the {@link CaseExecution} is 'suspended'.
-   *
-   * Change visibility to public for those inheriting classes for whose
-   * underlying objects under test this status makes sense
-   *
-   * @return  this
-   */
-  protected S isSuspended() {
-    return hasState(CaseExecutionState.SUSPENDED);
-  }
-
-  /**
    * Verifies the expectation that the {@link CaseExecution} is 'completed'.
    *
    * Change visibility to public for those inheriting classes for whose
@@ -121,18 +109,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /**
-   * Verifies the expectation that the {@link CaseExecution} is 'failed'.
-   *
-   * Change visibility to public for those inheriting classes for whose
-   * underlying objects under test this status makes sense
-   *
-   * @return  this
-   */
-  protected S isFailed() {
-    return hasState(CaseExecutionState.FAILED);
-  }
-
-  /**
    * Verifies the expectation that the {@link CaseExecution} is 'terminated'.
    *
    * Change visibility to public for those inheriting classes for whose
@@ -154,7 +130,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    * @return  this
    */
   protected CaseInstanceAssert isCaseInstance() {
-    Assertions.assertThat(actual).isNotNull();
+    isNotNull();
     Assertions.assertThat(actual.getCaseInstanceId())
         .overridingErrorMessage("Expected %s to be the case instance, but found it not to be!").isEqualTo(actual.getId());
     return CaseInstanceAssert.assertThat(engine, (CaseInstance) actual);
@@ -277,41 +253,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /**
-   * Retrieve a chained {@link CaseExecution} currently available in the context of
-   * the actual caseExecution under test of this AbstractCaseAssert. The query is
-   * automatically narrowed down to the actual caseExecution under test of this
-   * assertion.
-   *
-   * @param   activityId activity id further narrowing down the search for
-   * 					caseExecutions. The query is automatically narrowed down to the
-   * 					actual 'parent' CaseExecution under test of this assertion.
-   * @return  the only CaseExecution with the given activity id. A 'null'
-   * 					CaseExecution in case no such CaseExecution is available.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than
-   *          one CaseExecution is delivered by the query (after being narrowed
-   *          to the actual 'parent' CaseExecution)
-   */
-  protected CaseExecutionAssert caseExecution(final String activityId) {
-    return caseExecution(caseExecutionQuery().activityId(activityId));
-  }
-
-  /**
-   * Retrieve a chained {@link CaseExecution} currently available in the context of
-   * the actual caseExecution under test of this AbstractCaseAssert. The query is
-   * automatically narrowed down to the actual caseExecution under test of this
-   * assertion.
-   *
-   * @return  the only CaseExecution existing in the context of this case execution.
-   * 					A 'null' CaseExecution in case no such CaseExecution is available.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than
-   *          one CaseExecution is delivered by the query (after being narrowed
-   *          to the actual 'parent' CaseExecution)
-   */
-  protected CaseExecutionAssert caseExecution() {
-    return caseExecution(caseExecutionQuery());
-  }
-
-  /**
    * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly
    * one 'humanTask' currently available in the context of the actual caseExecution
    * under test of this AbstractCaseAssert. The query is automatically narrowed down
@@ -358,26 +299,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    */
   protected HumanTaskAssert humanTask(final String activityId) {
     return humanTask(caseExecutionQuery().activityId(activityId));
-  }
-
-  /**
-   * Enter into a chained {@link HumanTaskAssert} inspecting the one and mostly
-   * one 'humanTask' currently available in the context of the actual caseExecution
-   * under test of this AbstractCaseAssert. The query is automatically narrowed down
-   * to the actual caseExecution under test of this assertion as well as to the type
-   * 'humanTask'.
-   *
-   * Change visibility to public for those inheriting classes for whose
-   * underlying objects under test this method makes sense
-   *
-   * @return  the only CaseExecution existing in the context of this case execution.
-   * 					A 'null' CaseExecution in case no such CaseExecution is available.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than
-   *          one CaseExecution is delivered by the query (after being narrowed
-   *          to the actual 'parent' CaseExecution)
-   */
-  protected HumanTaskAssert humanTask() {
-    return humanTask(caseExecutionQuery());
   }
 
   /**
@@ -430,23 +351,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /**
-   * Enter into a chained {@link CaseTaskAssert} inspecting the one and mostly
-   * one 'caseTask' currently available in the context of the actual caseExecution
-   * under test of this AbstractCaseAssert. The query is automatically narrowed down
-   * to the actual caseExecution under test of this assertion as well as to the type
-   * 'caseTask'.
-   *
-   * @return  the only CaseExecution existing in the context of this case execution.
-   * 					A 'null' CaseExecution in case no such CaseExecution is available.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than
-   *          one CaseExecution is delivered by the query (after being narrowed
-   *          to the actual 'parent' CaseExecution)
-   */
-  protected CaseTaskAssert caseTask() {
-    return caseTask(caseExecutionQuery());
-  }
-
-  /**
    * Enter into a chained {@link ProcessTaskAssert} inspecting the one and mostly
    * one 'processTask' currently available in the context of the actual caseExecution
    * under test of this AbstractCaseAssert. The query is automatically narrowed down
@@ -493,23 +397,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
    */
   protected ProcessTaskAssert processTask(final String activityId) {
     return processTask(caseExecutionQuery().activityId(activityId));
-  }
-
-  /**
-   * Enter into a chained {@link ProcessTaskAssert} inspecting the one and mostly
-   * one 'processTask' currently available in the context of the actual caseExecution
-   * under test of this AbstractCaseAssert. The query is automatically narrowed down
-   * to the actual caseExecution under test of this assertion as well as to the type
-   * 'processTask'.
-   *
-   * @return  the only CaseExecution existing in the context of this case execution.
-   * 					A 'null' CaseExecution in case no such CaseExecution is available.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than
-   *          one CaseExecution is delivered by the query (after being narrowed
-   *          to the actual 'parent' CaseExecution)
-   */
-  protected ProcessTaskAssert processTask() {
-    return processTask(caseExecutionQuery());
   }
 
   /**
@@ -562,23 +449,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /**
-   * Enter into a chained {@link StageAssert} inspecting the one and mostly
-   * one 'stage' currently available in the context of the actual caseExecution
-   * under test of this AbstractCaseAssert. The query is automatically narrowed down
-   * to the actual caseExecution under test of this assertion as well as to the type
-   * 'stage'.
-   *
-   * @return  the only CaseExecution existing in the context of this case execution.
-   * 					A 'null' CaseExecution in case no such CaseExecution is available.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than
-   *          one CaseExecution is delivered by the query (after being narrowed
-   *          to the actual 'parent' CaseExecution)
-   */
-  protected StageAssert stage() {
-    return stage(caseExecutionQuery());
-  }
-
-  /**
    * Enter into a chained {@link MilestoneAssert} inspecting the one and mostly
    * one 'milestone' currently available in the context of the actual caseExecution
    * under test of this AbstractCaseAssert. The query is automatically narrowed down
@@ -628,23 +498,6 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   }
 
   /**
-   * Enter into a chained {@link MilestoneAssert} inspecting the one and mostly
-   * one 'milestone' currently available in the context of the actual caseExecution
-   * under test of this AbstractCaseAssert. The query is automatically narrowed down
-   * to the actual caseExecution under test of this assertion as well as to the type
-   * 'milestone'.
-   *
-   * @return  the only CaseExecution existing in the context of this case execution.
-   * 					A 'null' CaseExecution in case no such CaseExecution is available.
-   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than
-   *          one CaseExecution is delivered by the query (after being narrowed
-   *          to the actual 'parent' CaseExecution)
-   */
-  protected MilestoneAssert milestone() {
-    return milestone(caseExecutionQuery());
-  }
-
-  /**
    * Verifies the expectation that the {@link CaseExecution} is currently
    * in the specified state
    *
@@ -654,8 +507,7 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   private S hasState(CaseExecutionState state) {
     Assertions.assertThat(actual).isNotNull();
     CaseExecution current = getCurrent();
-    int actualState = current != null ? ((CaseExecutionEntity) current).getState()
-        : ((HistoricCaseActivityInstanceEntity) getHistoric()).getCaseActivityInstanceState();
+    int actualState = current != null ? ((CaseExecutionEntity) current).getState() : getHistoricState();
     Assertions
         .assertThat(actualState)
         .overridingErrorMessage(
@@ -700,14 +552,14 @@ public abstract class AbstractCaseAssert<S extends AbstractCaseAssert<S, A>, A e
   /**
    * Retrieve HistoricCaseActivityInstance for object under test from history database
    **/
-  protected HistoricCaseActivityInstance getHistoric() {
-    Assertions.assertThat(actual).isNotNull();
+  protected int getHistoricState() {
+    isNotNull();
     HistoricCaseActivityInstance historicCaseActivityInstance = historicCaseActivityInstanceQuery().caseExecutionId(actual.getId())
         .singleResult();
     String message = "Please make sure you have set the history service of the engine to "
         + "at least level 'activity' or a higher level before making use of this assertion!";
     Assertions.assertThat(historicCaseActivityInstance).overridingErrorMessage(message).isNotNull();
-    return historicCaseActivityInstance;
+    return ((HistoricCaseActivityInstanceEntity) historicCaseActivityInstance).getCaseActivityInstanceState();
   }
 
   /**

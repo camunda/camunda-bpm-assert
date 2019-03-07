@@ -4,6 +4,7 @@ import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertT
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
+import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.manuallyStart;
 
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
@@ -13,32 +14,34 @@ import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class CaseTaskAssertIsCompletedTest extends ProcessAssertTestCase {
+public class CaseInstanceAssertIsTerminatedTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String TASK_B = "PI_TaskB";
-  public static final String CASE_KEY = "Case_CaseTaskAssertIsCompletedTest";
-  public static final String CASE_KEY_B = "Case_CaseTaskAssertIsCompletedTest_CaseB";
+  public static final String HTASK_B = "PI_TaskB_HT";
+  public static final String CASE_KEY = "Case_CaseTaskAssertIsTerminatedTest";
+  public static final String CASE_KEY_B = "Case_CaseTaskAssertIsTerminatedTest_CaseB";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/CaseTaskAssertIsCompletedTest.cmmn" })
-  public void testIsCompleted_Success() {
+  @Deployment(resources = { "cmmn/CaseTaskAssertIsTerminatedTest.cmmn" })
+  public void testIsTerminated_Success() {
     // Given
-    CaseInstance caseInstance = givenCaseIsCreated();
+    final CaseInstance caseInstance = givenCaseIsCreated();
     CaseInstance caseInstanceB = caseService().createCaseInstanceQuery().caseDefinitionKey(CASE_KEY_B).singleResult();
     // When
-    CaseTaskAssert caseTask = assertThat(caseInstance).caseTask(TASK_A);
-    complete(caseExecution(TASK_B, caseInstanceB));
+    complete(caseExecution(HTASK_B, caseInstanceB));
+    manuallyStart(caseExecution(TASK_B, caseInstance));
+    caseService().terminateCaseExecution(caseInstance.getId());
     // Then
-    caseTask.isCompleted();
+    assertThat(caseInstance).isTerminated();
   }
 
   @Test
-  @Deployment(resources = { "cmmn/CaseTaskAssertIsCompletedTest.cmmn" })
-  public void testIsCompleted_Failure() {
+  @Deployment(resources = { "cmmn/CaseTaskAssertIsTerminatedTest.cmmn" })
+  public void testIsTerminated_Failure() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When
@@ -46,7 +49,7 @@ public class CaseTaskAssertIsCompletedTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(caseInstance).caseTask(TASK_A).isCompleted();
+        assertThat(caseInstance).isTerminated();
       }
     });
   }

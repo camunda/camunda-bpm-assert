@@ -336,9 +336,7 @@ public class CmmnAwareTestsTest {
 
     CmmnAwareTests.complete(caseExecution, withVariables("aVariable", "aValue"));
 
-    verify(caseService).withCaseExecution("baz");
-    verify(caseExecutionCommandBuilder).setVariables(withVariables("aVariable", "aValue"));
-    verify(caseExecutionCommandBuilder).complete();
+    verify(caseService).completeCaseExecution("baz", withVariables("aVariable", "aValue"));
   }
 
   @Test

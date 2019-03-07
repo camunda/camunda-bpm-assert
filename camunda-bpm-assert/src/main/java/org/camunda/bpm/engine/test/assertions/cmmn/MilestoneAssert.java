@@ -28,16 +28,6 @@ public class MilestoneAssert extends AbstractCaseAssert<MilestoneAssert, CaseExe
 	}
 
   /**
-   *  Verifies the expectation that the {@link CaseExecution} is 'suspended'.
-   *
-   * @return  this
-   **/
-	@Override
-	public MilestoneAssert isSuspended() {
-		return super.isSuspended();
-	}
-
-  /**
    *  Verifies the expectation that the {@link CaseExecution} is 'completed'.
    *  A milestone is 'completed', when his 'occur' transition was performed.
    *

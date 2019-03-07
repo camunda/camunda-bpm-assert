@@ -6,6 +6,7 @@ import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertT
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
+import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.manuallyStart;
 
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
@@ -30,18 +31,14 @@ public class ProcessTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
   @Deployment(resources = { "cmmn/ProcessTaskAssertIsTerminatedTest.cmmn", "cmmn/ProcessTaskAssert-calledProcess.bpmn" })
   public void testIsTerminated_Success() {
     // Given
-    // case model is deployed
     final CaseInstance caseInstance = givenCaseIsCreated();
-    caseExecution(TASK_B, caseInstance);
+    ProcessTaskAssert processTask = assertThat(caseInstance).processTask(TASK_B);
     // When
     complete(task(USER_TASK, calledProcessInstance(caseInstance)));
+    manuallyStart(caseExecution(TASK_B, caseInstance));
+    caseService().terminateCaseExecution(caseExecution(TASK_B, caseInstance).getId());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).processTask(TASK_B).isTerminated();
-      }
-    });
+    processTask.isTerminated();
   }
 
   @Test

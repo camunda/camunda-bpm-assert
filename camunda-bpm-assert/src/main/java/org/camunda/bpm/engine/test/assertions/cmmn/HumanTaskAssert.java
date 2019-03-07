@@ -60,16 +60,6 @@ public class HumanTaskAssert extends AbstractCaseAssert<HumanTaskAssert, CaseExe
   }
 
   /**
-   * Verifies the expectation that the {@link HumanTask} is in {@link CaseExecutionState} 'suspended'.
-   * 
-   * @return this {@link HumanTaskAssert}
-   */
-  @Override
-  public HumanTaskAssert isSuspended() {
-    return super.isSuspended();
-  }
-
-  /**
    * Verifies the expectation that the {@link HumanTask} is in {@link CaseExecutionState} 'completed'.
    * 
    * @return this {@link HumanTaskAssert}
@@ -77,16 +67,6 @@ public class HumanTaskAssert extends AbstractCaseAssert<HumanTaskAssert, CaseExe
   @Override
   public HumanTaskAssert isCompleted() {
     return super.isCompleted();
-  }
-
-  /**
-   * Verifies the expectation that the {@link HumanTask} is in {@link CaseExecutionState} 'failed'.
-   * 
-   * @return this {@link HumanTaskAssert}
-   */
-  @Override
-  public HumanTaskAssert isFailed() {
-    return super.isFailed();
   }
 
   /**

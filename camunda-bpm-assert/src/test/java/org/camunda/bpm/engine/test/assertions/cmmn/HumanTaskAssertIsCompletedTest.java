@@ -26,15 +26,11 @@ public class HumanTaskAssertIsCompletedTest extends ProcessAssertTestCase {
   public void testIsCompleted_Success() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
+    HumanTaskAssert humanTask = assertThat(caseInstance).humanTask(TASK_A);
     // When
     complete(caseExecution(TASK_A, caseInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).humanTask(TASK_A).isCompleted();
-      }
-    });
+    humanTask.isCompleted();
   }
 
   @Test

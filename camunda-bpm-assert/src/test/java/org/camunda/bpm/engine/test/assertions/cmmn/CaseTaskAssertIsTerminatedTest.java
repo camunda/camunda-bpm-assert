@@ -4,6 +4,7 @@ import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.assertT
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseExecution;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.caseService;
 import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.complete;
+import static org.camunda.bpm.engine.test.assertions.cmmn.CmmnAwareTests.manuallyStart;
 
 import org.camunda.bpm.engine.runtime.CaseInstance;
 import org.camunda.bpm.engine.test.Deployment;
@@ -30,16 +31,13 @@ public class CaseTaskAssertIsTerminatedTest extends ProcessAssertTestCase {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     CaseInstance caseInstanceB = caseService().createCaseInstanceQuery().caseDefinitionKey(CASE_KEY_B).singleResult();
-    caseExecution(TASK_B, caseInstance);
+    CaseTaskAssert caseTask = assertThat(caseInstance).caseTask(TASK_B);
     // When
     complete(caseExecution(HTASK_B, caseInstanceB));
+    manuallyStart(caseExecution(TASK_B, caseInstance));
+    caseService().terminateCaseExecution(caseExecution(TASK_B, caseInstance).getId());
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).caseTask(TASK_B).isTerminated();
-      }
-    });
+    caseTask.isTerminated();
   }
 
   @Test

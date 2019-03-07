@@ -26,15 +26,11 @@ public class ProcessTaskAssertIsDisabledTest extends ProcessAssertTestCase {
   public void testIsDisabled_Success() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
+    ProcessTaskAssert processTask = assertThat(caseInstance).processTask(TASK_A);
     // When
     disable(caseExecution(TASK_A, caseInstance));
     // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(caseInstance).processTask(TASK_A).isDisabled();
-      }
-    });
+    processTask.isDisabled();
   }
 
   @Test

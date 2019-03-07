@@ -164,21 +164,7 @@ public class CmmnAwareTests extends BpmnAwareTests {
     if (caseExecution == null || variables == null) {
       throw new IllegalArgumentException(format("Illegal call of complete(caseExecution = '%s', variables = '%s') - both must not be null!", caseExecution, variables));
     }
-    caseService().withCaseExecution(caseExecution.getId()).setVariables(variables).complete();
-  }
-
-  /**
-   * Helper method to easily construct a map of case variables
-   *
-   * @param   key (obligatory) key of first case variable
-   * @param   value (obligatory) value of first case variable
-   * @param   furtherKeyValuePairs (optional) key/value pairs for further
-   *          case variables
-   * @return  a map of case variables by passing a list of String
-   *          -> Object key value pairs.
-   */
-  public static Map<String, Object> withVariables(final String key, final Object value, final Object... furtherKeyValuePairs) {
-    return BpmnAwareTests.withVariables(key,value,furtherKeyValuePairs);
+    caseService().completeCaseExecution(caseExecution.getId(), variables);
   }
 
 }

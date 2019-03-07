@@ -39,23 +39,8 @@ public class CaseExecutionAssert extends AbstractCaseAssert<CaseExecutionAssert,
   }
 
   @Override
-  public CaseExecutionAssert isSuspended() {
-    return super.isSuspended();
-  }
-
-  @Override
   public CaseExecutionAssert isCompleted() {
     return super.isCompleted();
-  }
-
-  @Override
-  public CaseExecutionAssert isClosed() {
-    return super.isClosed();
-  }
-
-  @Override
-  public CaseExecutionAssert isFailed() {
-    return super.isFailed();
   }
 
   @Override

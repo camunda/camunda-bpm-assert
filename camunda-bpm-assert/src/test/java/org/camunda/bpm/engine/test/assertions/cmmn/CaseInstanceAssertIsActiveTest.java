@@ -13,40 +13,40 @@ import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class CaseTaskAssertIsCompletedTest extends ProcessAssertTestCase {
+public class CaseInstanceAssertIsActiveTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String TASK_B = "PI_TaskB";
-  public static final String CASE_KEY = "Case_CaseTaskAssertIsCompletedTest";
-  public static final String CASE_KEY_B = "Case_CaseTaskAssertIsCompletedTest_CaseB";
+  public static final String CASE_KEY = "Case_CaseTaskAssertIsActiveTest";
+  public static final String CASE_KEY_B = "Case_CaseTaskAssertIsActiveTest_CaseB";
 
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
   @Test
-  @Deployment(resources = { "cmmn/CaseTaskAssertIsCompletedTest.cmmn" })
-  public void testIsCompleted_Success() {
+  @Deployment(resources = { "cmmn/CaseTaskAssertIsActiveTest.cmmn" })
+  public void testIsActive_Success() {
     // Given
-    CaseInstance caseInstance = givenCaseIsCreated();
-    CaseInstance caseInstanceB = caseService().createCaseInstanceQuery().caseDefinitionKey(CASE_KEY_B).singleResult();
+    // case model is deployed
     // When
-    CaseTaskAssert caseTask = assertThat(caseInstance).caseTask(TASK_A);
-    complete(caseExecution(TASK_B, caseInstanceB));
+    CaseInstance caseInstance = givenCaseIsCreated();
     // Then
-    caseTask.isCompleted();
+    assertThat(caseInstance).isActive();
   }
 
   @Test
-  @Deployment(resources = { "cmmn/CaseTaskAssertIsCompletedTest.cmmn" })
-  public void testIsCompleted_Failure() {
+  @Deployment(resources = { "cmmn/CaseTaskAssertIsActiveTest.cmmn" })
+  public void testIsActive_Failure() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
+    CaseInstance caseInstanceB = caseService().createCaseInstanceQuery().caseDefinitionKey(CASE_KEY_B).singleResult();
     // When
+    complete(caseExecution(TASK_B, caseInstanceB));
     // Then
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(caseInstance).caseTask(TASK_A).isCompleted();
+        assertThat(caseInstance).isActive();
       }
     });
   }

@@ -13,7 +13,7 @@ import org.camunda.bpm.engine.test.assertions.helpers.ProcessAssertTestCase;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class CaseTaskAssertIsCompletedTest extends ProcessAssertTestCase {
+public class CaseInstanceAssertIsCompletedTest extends ProcessAssertTestCase {
 
   public static final String TASK_A = "PI_TaskA";
   public static final String TASK_B = "PI_TaskB";
@@ -30,10 +30,9 @@ public class CaseTaskAssertIsCompletedTest extends ProcessAssertTestCase {
     CaseInstance caseInstance = givenCaseIsCreated();
     CaseInstance caseInstanceB = caseService().createCaseInstanceQuery().caseDefinitionKey(CASE_KEY_B).singleResult();
     // When
-    CaseTaskAssert caseTask = assertThat(caseInstance).caseTask(TASK_A);
     complete(caseExecution(TASK_B, caseInstanceB));
     // Then
-    caseTask.isCompleted();
+    assertThat(caseInstance).isCompleted();
   }
 
   @Test
@@ -46,7 +45,7 @@ public class CaseTaskAssertIsCompletedTest extends ProcessAssertTestCase {
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(caseInstance).caseTask(TASK_A).isCompleted();
+        assertThat(caseInstance).isCompleted();
       }
     });
   }
