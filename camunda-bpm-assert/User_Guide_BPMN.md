@@ -30,10 +30,10 @@
    * [Accessing called process instances in the context of a process instance under test](#helpers-called-process-instance-last)
    * [Accessing process definitions](#helpers-process-definition)
 
-<a name="assertions"/>
+<a name="assertions"></a>
 ## Assertions
 
-<a name="processInstance-isActive"/>
+<a name="processInstance-isActive"></a>
 #### Instance: isActive
 
 Assert that a process instance is currently 'active', so neither suspended nor ended:
@@ -42,7 +42,7 @@ Assert that a process instance is currently 'active', so neither suspended nor e
 assertThat(processInstance).isActive();
 ```
 
-<a name="processInstance-isEnded"/>
+<a name="processInstance-isEnded"></a>
 #### Instance: isEnded
 
 Assert that a process instance is already ended:
@@ -51,7 +51,7 @@ Assert that a process instance is already ended:
 assertThat(processInstance).isEnded();
 ```
 
-<a name="processInstance-isNotEnded"/>
+<a name="processInstance-isNotEnded"></a>
 #### Instance: isNotEnded
 
 Assert that a process instance is not ended:
@@ -60,7 +60,7 @@ Assert that a process instance is not ended:
 assertThat(processInstance).isNotEnded();
 ```
 
-<a name="processInstance-isStarted"/>
+<a name="processInstance-isStarted"></a>
 #### Instance: isStarted
 
 Assert that a process instance is started:
@@ -69,7 +69,7 @@ Assert that a process instance is started:
 assertThat(processInstance).isStarted();
 ```
 
-<a name="processInstance-isSuspended"/>
+<a name="processInstance-isSuspended"></a>
 #### Instance: isSuspended
 
 Assert that a process instance is suspended:
@@ -78,7 +78,7 @@ Assert that a process instance is suspended:
 assertThat(processInstance).isSuspended();
 ```
 
-<a name="processInstance-hasPassed"/>
+<a name="processInstance-hasPassed"></a>
 #### Instance: hasPassed
 
 Assert that a process instance has passed a specified activity:
@@ -93,7 +93,7 @@ Assert that a process instance has passed several specified activities:
 assertThat(processInstance).hasPassed("edit", "correct");
 ```
 
-<a name="processInstance-hasPassedInOrder"/>
+<a name="processInstance-hasPassedInOrder"></a>
 #### Instance: hasPassedInOrder
 
 Assert that a process instance has passed several specified activities 
@@ -117,7 +117,7 @@ So in the example just given, this more minimalistic assertion would also pass:
 assertThat(processInstance).hasPassedInOrder("edit", "review", "publish");
 ```
 
-<a name="processInstance-hasNotPassed"/>
+<a name="processInstance-hasNotPassed"></a>
 #### Instance: hasNotPassed
 
 Assert that a process instance has not passed a specified activity:
@@ -132,7 +132,7 @@ Assert that a process instance has not passed any of several specified activitie
 assertThat(processInstance).hasNotPassed("edit", "correct");
 ```
 
-<a name="processInstance-hasVariables"/>
+<a name="processInstance-hasVariables"></a>
 #### Instance: hasVariables
 
 Assert that a process instance holds at least one process variable:
@@ -149,7 +149,7 @@ assertThat(processInstance)
   .hasVariables("jobAnnouncementId", "approved");
 ```
 
-<a name="processInstance-hasNoVariables"/>
+<a name="processInstance-hasNoVariables"></a>
 #### Instance: hasNoVariables
 
 Assert that a process instance holds no process variables at all:
@@ -158,7 +158,7 @@ Assert that a process instance holds no process variables at all:
 assertThat(processInstance).hasNoVariables();
 ```
 
-<a name="processInstance-hasProcessDefinitionKey"/>
+<a name="processInstance-hasProcessDefinitionKey"></a>
 #### Instance: hasProcessDefinitionKey
 
 Assert that a process instance is based on a specific process definition:
@@ -167,7 +167,7 @@ Assert that a process instance is based on a specific process definition:
 assertThat(processInstance).hasProcessDefinitionKey("myProcessDefinitionKey");
 ```
 
-<a name="processInstance-isWaitingAt"/>
+<a name="processInstance-isWaitingAt"></a>
 #### Instance: isWaitingAt
 
 Assert that a process instance is currently waiting at a specified activity:
@@ -182,7 +182,7 @@ Assert that a process instance is currently waiting at several specified activit
 assertThat(processInstance).isWaitingAt("edit", "correct");
 ```
 
-<a name="processInstance-isNotWaitingAt"/>
+<a name="processInstance-isNotWaitingAt"></a>
 #### Instance: isNotWaitingAt
 
 Assert that a process instance is currently NOT waiting at a specified activity:
@@ -197,7 +197,7 @@ Assert that a process instance is currently NOT waiting at several specified act
 assertThat(processInstance).isNotWaitingAt("edit", "correct");
 ```
 
-<a name="processInstance-isWaitingAtExactly"/>
+<a name="processInstance-isWaitingAtExactly"></a>
 #### Instance: isWaitingAtExactly
 
 Assert that a process instance is currently waiting at exactly one specified activity:
@@ -212,7 +212,7 @@ Assert that a process instance is currently waiting at exactly the several speci
 assertThat(processInstance).isWaitingAtExactly("edit", "correct");
 ```
 
-<a name="processInstance-isWaitingFor"/>
+<a name="processInstance-isWaitingFor"></a>
 #### Instance: isWaitingFor
 
 Assert that a process instance is currently waiting for a specified message:
@@ -227,7 +227,7 @@ Assert that a process instance is currently waiting for several specified messag
 assertThat(processInstance).isWaitingFor("myMessage", "yourMessage");
 ```
 
-<a name="processInstance-isNotWaitingFor"/>
+<a name="processInstance-isNotWaitingFor"></a>
 #### Instance: isNotWaitingFor
 
 Assert that a process instance is currently NOT waiting for a specified message:
@@ -242,7 +242,7 @@ Assert that a process instance is currently NOT waiting for any of several speci
 assertThat(processInstance).isNotWaitingFor("myMessage", "yourMessage");
 ```
 
-<a name="processDefinition-hasActiveInstances"/>
+<a name="processDefinition-hasActiveInstances"></a>
 #### Definition: hasActiveInstances
 
 Assert that a process definition currently has exactly the expected number of 'active' 
@@ -252,7 +252,7 @@ Assert that a process definition currently has exactly the expected number of 'a
 assertThat(processDefinition).hasActiveInstances("1");
 ```
 
-<a name="job-hasActivityId"/>
+<a name="job-hasActivityId"></a>
 #### Job: hasActivityId
 
 Assert that a job is based on an activity definition with a specific id:
@@ -261,7 +261,7 @@ Assert that a job is based on an activity definition with a specific id:
 assertThat(job).hasActivityId("ServiceTask_1");
 ```
  
-<a name="job-hasDeploymentId"/>
+<a name="job-hasDeploymentId"></a>
 #### Job: hasDeploymentId
 
 Assert that a job has a specific deployment id:
@@ -270,7 +270,7 @@ Assert that a job has a specific deployment id:
 assertThat(job).hasDeploymentId(deploymentId);
 ```
  
-<a name="job-hasDueDate"/>
+<a name="job-hasDueDate"></a>
 #### Job: hasDueDate
 
 Assert that a job is due at a specific date:
@@ -279,7 +279,7 @@ Assert that a job is due at a specific date:
 assertThat(job).hasDueDate(dueDate);
 ```
 
-<a name="job-hasId"/>
+<a name="job-hasId"></a>
 #### Job: hasId
 
 Assert a specific internal id for the job:
@@ -288,7 +288,7 @@ Assert a specific internal id for the job:
 assertThat(job).hasId(id);
 ```
 
-<a name="job-hasRetries"/>
+<a name="job-hasRetries"></a>
 #### Job: hasRetries
 
 Assert that a job has a specific number of retries left:
@@ -297,7 +297,7 @@ Assert that a job has a specific number of retries left:
 assertThat(job).hasRetries(3);
 ```
 
-<a name="task-isAssignedTo"/>
+<a name="task-isAssignedTo"></a>
 #### Task: isAssignedTo
 
 Assert that a specified user is assigned to a task:
@@ -306,7 +306,7 @@ Assert that a specified user is assigned to a task:
 assertThat(task).isAssignedTo("kermit");
 ```
 
-<a name="task-isNotAssigned"/>
+<a name="task-isNotAssigned"></a>
 #### Task: isNotAssigned
 
 Assert that a task is currently not assigned to any user:
@@ -315,7 +315,7 @@ Assert that a task is currently not assigned to any user:
 assertThat(task).isNotAssigned();
 ```
 
-<a name="task-hasCandidateGroup"/>
+<a name="task-hasCandidateGroup"></a>
 #### Task: hasCandidateGroup
 
 Assert that a task is is currently waiting to be assigned 
@@ -329,7 +329,7 @@ Note that (in line with Camunda's interpretation of the term
 'candidate') **assigned** tasks will not pass this assertion. 
 However, the next assertion discussed here, would pass:                      
                       
-<a name="task-hasCandidateGroupAssociated"/>
+<a name="task-hasCandidateGroupAssociated"></a>
 #### Task: hasCandidateGroupAssociated
 
 Use from Camunda BPM **7.3** on: 
@@ -342,7 +342,7 @@ specific user or not.
 assertThat(task).hasCandidateGroupAssociated("human-resources-department");
 ```
 
-<a name="task-hasCandidateUser"/>
+<a name="task-hasCandidateUser"></a>
 #### Task: hasCandidateUser
 
 Assert that a task is currently waiting to be assigned to a specified candidate user:
@@ -355,7 +355,7 @@ Note that (in line with Camunda's interpretation of the term
 'candidate') **assigned** tasks will not pass this assertion. 
 However, the next assertion discussed here, would pass:                      
 
-<a name="task-hasCandidateUserAssociated"/>
+<a name="task-hasCandidateUserAssociated"></a>
 #### Task: hasCandidateUserAssociated
 
 Use from Camunda BPM **7.3** on: 
@@ -368,7 +368,7 @@ specific user or not.
 assertThat(task).hasCandidateUserAssociated("kermit");
 ```
 
-<a name="task-hasDefinitionKey"/>
+<a name="task-hasDefinitionKey"></a>
 #### Task: hasDefinitionKey
 
 Assert that a task has the specified definition key (aka the id attribute of the <code>&lt;userTask id="review-and-approve" .../&gt;</code> element in the process definition BPMN 2.0 XML file):
@@ -377,7 +377,7 @@ Assert that a task has the specified definition key (aka the id attribute of the
 assertThat(task).hasDefinitionKey("review-and-approve");
 ```
 
-<a name="task-hasDescription"/>
+<a name="task-hasDescription"></a>
 #### Task: hasDescription
 
 Assert that the task has the specified free text description:
@@ -386,7 +386,7 @@ Assert that the task has the specified free text description:
 assertThat(task).hasDescription("Please review and approve the result document.");
 ```
 
-<a name="task-hasDueDate"/>
+<a name="task-hasDueDate"></a>
 #### Task: hasDueDate
 
 Assert that a task is due at a specified date:
@@ -395,7 +395,7 @@ Assert that a task is due at a specified date:
 assertThat(task).hasDueDate(expectedDueDate);
 ```
 
-<a name="task-hasFormKey"/>
+<a name="task-hasFormKey"></a>
 #### Task: hasFormKey
 
 Assert that a task is associated to a specified form (key):
@@ -404,7 +404,7 @@ Assert that a task is associated to a specified form (key):
 assertThat(task).hasFormKey("myForm.html");
 ```
 
-<a name="task-hasId"/>
+<a name="task-hasId"></a>
 #### Task: hasId
 
 Assert that a task has the specified internal id:
@@ -413,7 +413,7 @@ Assert that a task has the specified internal id:
 assertThat(task).hasId("1");
 ```
 
-<a name="task-hasName"/>
+<a name="task-hasName"></a>
 #### Task: hasName
 
 Assert that the task has the specified name:
@@ -422,10 +422,10 @@ Assert that the task has the specified name:
 assertThat(task).hasName("Review and approve");
 ```
 
-<a name="helpers"/>
+<a name="helpers"></a>
 ## Helpers
 
-<a name="helpers-claim"/>
+<a name="helpers-claim"></a>
 #### Claiming tasks
 
 You can directly claim a task by means of a static helper method:
@@ -434,7 +434,7 @@ You can directly claim a task by means of a static helper method:
 claim(task, "fozzie"); 
 ```
 
-<a name="helpers-unclaim"/>
+<a name="helpers-unclaim"></a>
 #### Unclaiming tasks
 
 You can directly unclaim a task by means of a static helper method:
@@ -443,7 +443,7 @@ You can directly unclaim a task by means of a static helper method:
 unclaim(task); 
 ```
 
-<a name="helpers-complete"/>
+<a name="helpers-complete"></a>
 #### Completing tasks
 
 You can directly complete a task by means of a static helper method:
@@ -452,7 +452,7 @@ You can directly complete a task by means of a static helper method:
 complete(task);
 ```
 
-<a name="helpers-complete-variables"/>
+<a name="helpers-complete-variables"></a>
 #### Completing tasks and passing process variables
 
 You can directly construct a map of process variables by passing a sequence 
@@ -468,7 +468,7 @@ You can therefore e.g. write
 complete(task, withVariables("documentId", 5, "approved", true)); 
 ```
 
-<a name="helpers-execute"/>
+<a name="helpers-execute"></a>
 #### Executing jobs
 
 You can directly execute a job by means of a static helper method:
@@ -477,7 +477,7 @@ You can directly execute a job by means of a static helper method:
 execute(job());
 ```
 
-<a name="helpers-queries"/>
+<a name="helpers-queries"></a>
 #### Creating queries
 
 You can directly create queries by means of a static helper methods:
@@ -495,7 +495,7 @@ You can therefore e.g. write
 assertThat(processInstance).task(taskQuery().taskAssignee("fozzie")).hasCandidateGroup("human-resources-department");
 ```
 
-<a name="helpers-services"/>
+<a name="helpers-services"></a>
 #### Accessing engine and engine API services
 
 You can directly access the engine and API services by means of static helper methods:
@@ -513,7 +513,7 @@ RuntimeService runtimeService = runtimeService();
 TaskService taskService = taskService();
 ```
 
-<a name="helpers-task"/>
+<a name="helpers-task"></a>
 #### Making assertions on the only task of an instance
  
 You can retrieve a "chained" task assert inspecting the one and only 
@@ -529,7 +529,7 @@ assertThat(processInstance).task();
 assertThat(processInstance).task().isNotAssigned();
 ```
 
-<a name="helpers-task-taskquery"/>
+<a name="helpers-task-taskquery"></a>
 #### Making assertions on a specific task of an instance
 
 You can retrieve a "chained" task assert inspecting a very specific task currently 
@@ -551,7 +551,7 @@ assertThat(processInstance).task(taskQuery().taskAssignee("fozzie"));
 assertThat(processInstance).task("edit").isAssignedTo("fozzie");
 ```
 
-<a name="helpers-job"/>
+<a name="helpers-job"></a>
 #### Making assertions on the only job of an instance
  
 You can retrieve a "chained" job assert inspecting the one and only 
@@ -567,7 +567,7 @@ assertThat(processInstance).job();
 assertThat(processInstance).job().hasRetries(0);
 ```
 
-<a name="helpers-job-jobquery"/>
+<a name="helpers-job-jobquery"></a>
 #### Making assertions on a specific job of an instance
 
 You can retrieve a "chained" job assert inspecting a very specific job currently 
@@ -588,7 +588,7 @@ assertThat(processInstance).job(jobQuery().executionId(executionId));
 assertThat(processInstance).job("ServiceTask_1").hasRetries(0);
 ```
 
-<a name="helpers-called-process-instance"/>
+<a name="helpers-called-process-instance"></a>
 #### Making assertions on the only called process of a super process instance
  
 You can retrieve a "chained" process instance assert inspecting the one and only 
@@ -604,7 +604,7 @@ assertThat(processInstance).calledProcessInstance();
 assertThat(processInstance).calledProcessInstance().hasProcessDefinitionKey("mySubProcessDefinitionKey");
 ```
 
-<a name="helpers-called-process-instance-jobquery"/>
+<a name="helpers-called-process-instance-jobquery"></a>
 #### Making assertions on a specific called process instance of a super process instance
 
 You can retrieve a "chained" process instance assert inspecting a very specific called process instance currently 
@@ -625,7 +625,7 @@ assertThat(processInstance).calledProcessInstance(processInstanceQuery().process
 assertThat(processInstance).calledProcessInstance("mySubProcessDefinitionKey").isNotNull();
 ```
 
-<a name="helpers-variables"/>
+<a name="helpers-variables"></a>
 #### Making assertions on the process variables map of an instance
 
 You can retrieve a "chained" process variables map assert inspecting all the process variables 
@@ -645,7 +645,7 @@ assertThat(processInstance).variables()
 You may want to compare that with the other possibility to assert whether a process instance 
 [hasVariables](#processInstance-hasVariables) (without leaving your current ProcessInstanceAssert). 
 
-<a name="helpers-task-last"/>
+<a name="helpers-task-last"></a>
 #### Accessing tasks in the context of a process instance under test
 
 You can directly access tasks in the context of the last asserted process 
@@ -681,7 +681,7 @@ You can therefore e.g. write ...
 complete(task("review-and-approve", processInstance), withVariables("documentId", 5, "approved", true)); 
 ```
 
-<a name="helpers-job-last"/>
+<a name="helpers-job-last"></a>
 #### Accessing jobs in the context of a process instance under test
 
 You can directly access jobs in the context of the last asserted process 
@@ -717,7 +717,7 @@ You can therefore e.g. write ...
 execute(job("publish", processInstance)); 
 ```
 
-<a name="helpers-called-process-instance-last"/>
+<a name="helpers-called-process-instance-last"></a>
 #### Accessing called process instances in the context of a process instance under test
 
 You can directly access called process instances in the context of the last asserted process 
@@ -753,7 +753,7 @@ You can therefore e.g. write ...
 ProcessInstance calledProcessInstance = calledProcessInstance("myCalledProcessDefinitionKey", superProcessInstance); 
 ```
 
-<a name="helpers-process-definition"/>
+<a name="helpers-process-definition"></a>
 #### Accessing process definitions
 
 You can directly access process definitions by means of static helper methods:
