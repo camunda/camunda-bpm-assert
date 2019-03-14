@@ -1,9 +1,11 @@
 # ![camunda logo](http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png)&nbsp;camunda-bpm-assert User Guide for CMMN
 
+### Table of Contents
+
  * [Assertions](#assertions)
-   * for case instances: [assertThat](#assertthat-caseinstance)
-   * for case executions: [assertThat](#assertthat-caseexecution)
-   * for case definitions: [assertThat](#assertthat-casedefinition)
+   * for case instances: [assertThat](#assertThat-caseInstance)
+   * for case executions: [assertThat](#assertThat-caseExecution)
+   * for case definitions: [assertThat](#assertThat-caseDefinition)
    * for human tasks: [isActive](#humanTask-isActive), [isAvailable](#humanTask-isAvailable), [isCompleted](#humanTask-isCompleted), [isDisabled](#humanTask-isDisabled), [isEnabled](#humanTask-isEnabled), [isTerminated](#humanTask-isTerminated), [hasVariables](#humanTask-hasVariables), [hasNoVariables](#humanTask-hasNoVariables)
    * for milestones: [isAvailable](#milestone-isAvailable), [isCompleted](#milestone-isCompleted), [isTerminated](#milestone-isTerminated)
    * for process tasks: [isActive](#processTask-isActive), [isAvailable](#processTask-isAvailable), [isCompleted](#processTask-isCompleted), [isDisabled](#processTask-isDisabled), [isEnabled](#processTask-isEnabled), [isTerminated](#processTask-isTerminated), [hasVariables](#processTask-hasVariables), [hasNoVariables](#processTask-hasNoVariables)
@@ -11,24 +13,25 @@
  
  * [Helpers](#helpers)
    * retrieve CaseService
-     * [caseService()](#caseService)
+     * [caseService()](#caseservice)
    * lookup things
-     * [caseExecution()](#caseExecution-String-CaseInstance)
-     * [caseExecution()](#caseExecution-CaseExecutionQuery-CaseInstance)
-     * [caseInstanceQuery()](#caseInstanceQuery)
-     * [caseExecutionQuery()](#caseExecutionQuery)
-     * [caseDefinitionQuery()](#caseDefinitionQuery)
+     * [caseInstanceQuery()](#caseinstancequery)
+     * [caseExecutionQuery()](#caseexecutionquery)
+     * [caseDefinitionQuery()](#casedefinitionquery)
+	 * [caseExecution()](#caseexecutionstring-caseinstance)
+     * [caseExecution()](#caseexecutioncaseexecutionquery-caseinstance)
    * manage lifecycles
-     * [complete()](#complete-CaseExecution)
+     * [complete()](#completecaseexecution)
      * [complete(caseExecution, variables)](#helpers-complete-variables)
-     * [disable()](#disable-CaseExecution)
-     * [manuallyStart()](#manuallyStart-CaseExecution)
+     * [disable()](#disablecaseexecution)
+     * [manuallyStart()](#manuallystartcaseexecution)
    * lookup variables
      * [Making assertions on the case variables map of an instance](#helpers-variables)
 
 ## Assertions
 
-### assertThat(CaseInstance)
+<a name="assertThat-caseInstance"></a>
+#### assertThat(CaseInstance)
 
 Entrypoint to CaseInstance assertions.
 
@@ -38,8 +41,8 @@ Following this statement, you can fluently continue with your assertions, e.g.
 
     assertThat(caseInstance).isNotNull();
 
-
-### assertThat(CaseDefinition)
+<a name="assertThat-caseExecution"></a>
+#### assertThat(CaseDefinition)
 
 Entrypoint to CaseDefinition assertions.
 
@@ -49,8 +52,8 @@ Following this statement, you can fluently continue with your assertions, e.g.
 
     assertThat(caseDefinition).isNotNull();
 
-
-### assertThat(CaseExecution)
+<a name="assertThat-caseDefinition"></a>
+#### assertThat(CaseExecution)
 
 Entrypoint to CaseExecution assertions.
 
@@ -60,7 +63,7 @@ Following this statement, you can fluently continue with your assertions, e.g.
 
     assertThat(caseExecution).isNotNull();
 
-<a name="humanTask-hasVariables"/>
+<a name="humanTask-hasVariables"></a>
 #### HumanTask: hasVariables
 
 Assert that a human task holds at least one case variable:
@@ -77,7 +80,7 @@ assertThat(caseInstance).humanTask("PI_TaskA")
   .hasVariables("jobAnnouncementId", "approved");
 ```
 
-<a name="humanTask-hasNoVariables"/>
+<a name="humanTask-hasNoVariables"></a>
 #### HumanTask: hasNoVariables
 
 Assert that a human task holds no case variables at all:
@@ -86,7 +89,7 @@ Assert that a human task holds no case variables at all:
 assertThat(caseInstance).humanTask("PI_TaskA").hasNoVariables();
 ```
 
-<a name="humanTask-isActive"/>
+<a name="humanTask-isActive"></a>
 #### HumanTask: isActive
 
 Assert that a human task is currently 'active':
@@ -94,7 +97,7 @@ Assert that a human task is currently 'active':
 ```java
 assertThat(caseInstance).humanTask("PI_TaskA").isActive();
 ```
-<a name="humanTask-isAvailable"/>
+<a name="humanTask-isAvailable"></a>
 #### HumanTask: isAvailable
 
 Assert that a human task is currently 'available':
@@ -102,7 +105,7 @@ Assert that a human task is currently 'available':
 ```java
 assertThat(caseInstance).humanTask("PI_TaskA").isAvailable();
 ```
-<a name="humanTask-isCompleted"/>
+<a name="humanTask-isCompleted"></a>
 #### HumanTask: isCompleted
 
 Assert that a human task is currently 'completed':
@@ -110,7 +113,7 @@ Assert that a human task is currently 'completed':
 ```java
 assertThat(caseInstance).humanTask("PI_TaskA").isCompleted();
 ```
-<a name="humanTask-isDisabled"/>
+<a name="humanTask-isDisabled"></a>
 #### HumanTask: isDisabled
 
 Assert that a human task is currently 'disabled':
@@ -118,7 +121,7 @@ Assert that a human task is currently 'disabled':
 ```java
 assertThat(caseInstance).humanTask("PI_TaskA").isDisabled();
 ```
-<a name="humanTask-isEnabled"/>
+<a name="humanTask-isEnabled"></a>
 #### HumanTask: isEnabled
 
 Assert that a human task is currently 'enabled':
@@ -126,7 +129,7 @@ Assert that a human task is currently 'enabled':
 ```java
 assertThat(caseInstance).humanTask("PI_TaskA").isEnabled();
 ```
-<a name="humanTask-isTerminated"/>
+<a name="humanTask-isTerminated"></a>
 #### HumanTask: isTerminated
 
 Assert that a human task is currently 'terminated':
@@ -134,7 +137,7 @@ Assert that a human task is currently 'terminated':
 ```java
 assertThat(caseInstance).humanTask("PI_TaskA").isTerminated();
 ```
-<a name="milestone-isAvailable"/>
+<a name="milestone-isAvailable"></a>
 #### Milestone: isAvailable
 
 Assert that a milestone is currently 'available':
@@ -142,7 +145,7 @@ Assert that a milestone is currently 'available':
 ```java
 assertThat(caseInstance).milestone("M_ImportantState").isAvailable();
 ```
-<a name="milestone-isCompleted"/>
+<a name="milestone-isCompleted"></a>
 #### Milestone: isCompleted
 
 Assert that a milestone is currently 'completed':
@@ -153,7 +156,7 @@ assertThat(caseInstance).milestone("M_ImportantState").isCompleted();
 
 N.B.: A milestone that is completed (= has reached the Completed state) is sometimes also said to _have occurred_.
 This is because the transition leading to the Completed state is labelled _occur_. 
-<a name="milestone-isTerminated"/>
+<a name="milestone-isTerminated"></a>
 #### Milestone: isTerminated
 
 Assert that a milestone is currently 'terminated':
@@ -162,7 +165,7 @@ Assert that a milestone is currently 'terminated':
 assertThat(caseInstance).milestone("M_ImportantState").isTerminated();
 ```
 
-<a name="processTask-hasVariables"/>
+<a name="processTask-hasVariables"></a>
 #### ProcessTask: hasVariables
 
 Assert that a process task holds at least one case variable:
@@ -179,7 +182,7 @@ assertThat(caseInstance).processTask("PI_TaskA")
   .hasVariables("jobAnnouncementId", "approved");
 ```
 
-<a name="processTask-hasNoVariables"/>
+<a name="processTask-hasNoVariables"></a>
 #### ProcessTask: hasNoVariables
 
 Assert that a process task holds no case variables at all:
@@ -188,7 +191,7 @@ Assert that a process task holds no case variables at all:
 assertThat(caseInstance).processTask("PI_TaskA").hasNoVariables();
 ```
 
-<a name="processTask-isActive"/>
+<a name="processTask-isActive"></a>
 #### ProcessTask: isActive
 
 Assert that a process task is currently 'active':
@@ -196,7 +199,7 @@ Assert that a process task is currently 'active':
 ```java
 assertThat(caseInstance).processTask("PI_TaskA").isActive();
 ```
-<a name="processTask-isAvailable"/>
+<a name="processTask-isAvailable"></a>
 #### ProcessTask: isAvailable
 
 Assert that a process task is currently 'available':
@@ -204,7 +207,7 @@ Assert that a process task is currently 'available':
 ```java
 assertThat(caseInstance).processTask("PI_TaskA").isAvailable();
 ```
-<a name="processTask-isCompleted"/>
+<a name="processTask-isCompleted"></a>
 #### ProcessTask: isCompleted
 
 Assert that a process task is currently 'completed':
@@ -212,7 +215,7 @@ Assert that a process task is currently 'completed':
 ```java
 assertThat(caseInstance).processTask("PI_TaskA").isCompleted();
 ```
-<a name="processTask-isDisabled"/>
+<a name="processTask-isDisabled"></a>
 #### ProcessTask: isDisabled
 
 Assert that a process task is currently 'disabled':
@@ -220,7 +223,7 @@ Assert that a process task is currently 'disabled':
 ```java
 assertThat(caseInstance).processTask("PI_TaskA").isDisabled();
 ```
-<a name="processTask-isEnabled"/>
+<a name="processTask-isEnabled"></a>
 #### ProcessTask: isEnabled
 
 Assert that a process task is currently 'enabled':
@@ -228,7 +231,7 @@ Assert that a process task is currently 'enabled':
 ```java
 assertThat(caseInstance).processTask("PI_TaskA").isEnabled();
 ```
-<a name="processTask-isTerminated"/>
+<a name="processTask-isTerminated"></a>
 #### ProcessTask: isTerminated
 
 Assert that a process task is currently 'terminated':
@@ -237,7 +240,7 @@ Assert that a process task is currently 'terminated':
 assertThat(caseInstance).processTask("PI_TaskA").isTerminated();
 ```
 
-<a name="caseTask-hasVariables"/>
+<a name="caseTask-hasVariables"></a>
 #### CaseTask: hasVariables
 
 Assert that a case task holds at least one case variable:
@@ -254,7 +257,7 @@ assertThat(caseInstance).caseTask("PI_TaskA")
   .hasVariables("jobAnnouncementId", "approved");
 ```
 
-<a name="caseTask-hasNoVariables"/> 
+<a name="caseTask-hasNoVariables"></a> 
 #### CaseTask: hasNoVariables
 
 Assert that a case task holds no case variables at all:
@@ -263,7 +266,7 @@ Assert that a case task holds no case variables at all:
 assertThat(caseInstance).caseTask("PI_TaskA").hasNoVariables();
 ```
 
-<a name="caseTask-isActive"/>
+<a name="caseTask-isActive"></a>
 #### CaseTask: isActive
 
 Assert that a case task is currently 'active':
@@ -271,7 +274,7 @@ Assert that a case task is currently 'active':
 ```java
 assertThat(caseInstance).caseTask("PI_TaskA").isActive();
 ```
-<a name="caseTask-isAvailable"/>
+<a name="caseTask-isAvailable"></a>
 #### CaseTask: isAvailable
 
 Assert that a case task is currently 'available':
@@ -279,7 +282,7 @@ Assert that a case task is currently 'available':
 ```java
 assertThat(caseInstance).caseTask("PI_TaskA").isAvailable();
 ```
-<a name="caseTask-isCompleted"/>
+<a name="caseTask-isCompleted"></a>
 #### CaseTask: isCompleted
 
 Assert that a case task is currently 'completed':
@@ -287,7 +290,7 @@ Assert that a case task is currently 'completed':
 ```java
 assertThat(caseInstance).caseTask("PI_TaskA").isCompleted();
 ```
-<a name="caseTask-isDisabled"/>
+<a name="caseTask-isDisabled"></a>
 #### CaseTask: isDisabled
 
 Assert that a case task is currently 'disabled':
@@ -295,7 +298,7 @@ Assert that a case task is currently 'disabled':
 ```java
 assertThat(caseInstance).caseTask("PI_TaskA").isDisabled();
 ```
-<a name="caseTask-isEnabled"/>
+<a name="caseTask-isEnabled"></a>
 #### CaseTask: isEnabled
 
 Assert that a case task is currently 'enabled':
@@ -303,7 +306,7 @@ Assert that a case task is currently 'enabled':
 ```java
 assertThat(caseInstance).caseTask("PI_TaskA").isEnabled();
 ```
-<a name="caseTask-isTerminated"/>
+<a name="caseTask-isTerminated"></a>
 #### CaseTask: isTerminated
 
 Assert that a case task is currently 'terminated':
@@ -314,55 +317,83 @@ assertThat(caseInstance).caseTask("PI_TaskA").isTerminated();
 
 ## Helpers
 
-### caseService()
+#### caseService()
 
 Shortcut for retrieving the process engine's CaseService. 
 
     caseService()
   
   
-### caseInstanceQuery()
+#### caseInstanceQuery()
 
 Helper method to easily create a new CaseInstanceQuery. The query is naked and will return all available CaseInstances. 
 Please note that, in a test context, there is usually only one CaseInstance. Exceptions are sub-cases started via case tasks.
 
     caseInstanceQuery()
 
-Can be used with [assertThat(CaseInstance)](#assertthat-caseinstance), e.g,
+Can be used with [assertThat(CaseInstance)](#assertThat-caseInstance), e.g,
  
     assertThat(caseInstanceQuery().caseInstanceBusinessKey("foo").singleResult())
     
     
-### caseExecutionQuery()
+#### caseExecutionQuery()
 
 Helper method to easily create a new CaseExecutionQuery. The query is naked and will return all available CaseExecutions. 
 
     caseExecutionQuery()
 
-Can be used with [assertThat(CaseExecution)](#assertthat-caseexecution), e.g.
+Can be used with [assertThat(CaseExecution)](#assertThat-caseExecution), e.g.
 
     assertThat(caseExecutionQuery().activityId("foo").singleResult())
 
 
-### caseDefinitionQuery()
+#### caseDefinitionQuery()
 
 Helper method to easily create a new CaseDefinitionQuery.
 
     caseDefinitionQuery()
     
-Can be used with [assertThat(CaseDefinition)](#assertthat-casedefinition), e.g.
+Can be used with [assertThat(CaseDefinition)](#assertThat-caseDefinition), e.g.
 
     assertThat(caseDefinitionQuery().caseDefinitionKey("foo").singleResult())
     
 
-### complete(CaseExecution)
+#### caseExecution(String, CaseInstance)
+
+Helper method to find any CaseExecution in the context of a CaseInstance.
+A CaseExecution is used very often. Its activityId is the same as its planItem ID from the CMMN file.
+
+    caseExecution(activityId, caseInstance)
+    
+You can further work with the found CaseExecution by passing it as argument to other functions, e.g.:   
+
+    complete(caseExecution("foo", caseInstance))
+
+
+#### caseExecution(CaseExecutionQuery, CaseInstance)
+
+Helper method to find any CaseExecution in the context of a CaseInstance.
+
+    caseExecution(caseExecutionQuery, caseInstance)
+    
+You can further work with the found CaseExecution by passing it as argument to other functions, e.g.:   
+
+    complete(caseExecution(caseExecutionQuery, caseInstance))
+    
+You can also easily combine it with [caseExecutionQuery()](#caseexecutionquery), e.g.:
+    
+    caseExecution(caseExecutionQuery().variableValueEquals("foo","bar"), caseInstance)
+	
+	
+#### complete(CaseExecution)
     
 Helper method to easily complete a caseExecution.
 
     complete(caseExecution)    
     
-<a name="helpers-complete-variables"/>
-### complete(caseExecution, variables)
+	
+<a name="helpers-complete-variables"></a>
+#### complete(caseExecution, variables)
 
 You can directly construct a map of case variables by passing a sequence 
 of key/value pairs to the static helper method "withVariables":
@@ -378,48 +409,22 @@ complete(caseExecution, withVariables("documentId", 5, "approved", true));
 ```
 
 
-### disable(CaseExecution)
+#### disable(CaseExecution)
 
 Helper method to easily disable a case execution.
 
     disable(caseExecution)
 
 
-### manuallyStart(CaseExecution)
+#### manuallyStart(CaseExecution)
 
 Helper method to easily manually start a case execution.
 
     manuallyStart(caseExecution)
 
 
-### caseExecution(String, CaseInstance)
-
-Helper method to find any CaseExecution in the context of a CaseInstance.
-A CaseExecution is used very often. Its activityId is the same as its planItem ID from the CMMN file.
-
-    caseExecution(activityId, caseInstance)
-    
-You can further work with the found CaseExecution by passing it as argument to other functions, e.g.:   
-
-    complete(caseExecution("foo", caseInstance))
-
-
-### caseExecution(CaseExecutionQuery, CaseInstance)
-
-Helper method to find any CaseExecution in the context of a CaseInstance.
-
-    caseExecution(caseExecutionQuery, caseInstance)
-    
-You can further work with the found CaseExecution by passing it as argument to other functions, e.g.:   
-
-    complete(caseExecution(caseExecutionQuery, caseInstance))
-    
-You can also easily combine it with [caseExecutionQuery()](#caseexecutionquery), e.g.:
-    
-    caseExecution(caseExecutionQuery().variableValueEquals("foo","bar"), caseInstance)
-
-<a name="helpers-variables"/>
-### Making assertions on the case variables map of an case execution
+<a name="helpers-variables"></a>
+#### Making assertions on the case variables map of an case execution
 
 You can retrieve a "chained" case variables map assert inspecting all the case variables 
 available in the context of a case execution...
