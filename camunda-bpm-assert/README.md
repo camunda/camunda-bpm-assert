@@ -11,14 +11,13 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
   
  * [User Guide for CMMN](./User_Guide_CMMN.md)
   
- * [Advanced Topics](#advanced)
-   * [Add camunda-bpm-assert to Eclipse](#add-to-eclipse)
-   * [Using a non-default process engine](#non-default-engine)
+ * [Advanced Topics](#advanced-topics)
+   * [Add camunda-bpm-assert to Eclipse](#add-camunda-bpm-assert-to-eclipse)
+   * [Using a non-default process engine](#using-a-non-default-process-engine)
 
-<a name="advanced"/>
-## Advanced topics
 
-<a name="#add-to-eclipse"/>
+### Advanced topics
+
 #### Add camunda-bpm-assert to Eclipse
 
 Eclipse will remove the static import, when it organizes the imports. Thus it is recommended to add camunda-bpm-assert to your 'Content Assist Favorites'.In Eclipse go to Window -> Preferences -> Java -> Editor -> Content Assist -> Favorites -> New Type... and add the following type:
@@ -27,7 +26,6 @@ Eclipse will remove the static import, when it organizes the imports. Thus it is
 org.camunda.bpm.engine.test.assertions.ProcessEngineTests
 ```
 
-<a name="non-default-engine"/>
 #### Using a non-default process engine
  
 In case you want to test with a process engine, which is neither the default engine,
