@@ -10,23 +10,22 @@
     <version>2.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-bpm-assert-assertj2</artifactId>
+  <artifactId>camunda-bpm-assert-assertj3-9-1</artifactId>
 
   <packaging>jar</packaging>
 
   <properties>
-    <version.assertj>2.9.0</version.assertj>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <version.assertj>3.9.1</version.assertj>
   </properties>
 
   <dependencies>
-
+  
     <dependency>
       <groupId>org.camunda.bpm</groupId>
       <artifactId>camunda-engine</artifactId>
       <scope>provided</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
@@ -34,21 +33,6 @@
     </dependency>
 
   </dependencies>
-  
-  <profiles>
-    <!-- ensure that the project can be build with JDK 1.7 as well -->
-    <profile>
-      <id>jdk7</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <jdk>1.7</jdk>
-      </activation>
-      <properties>
-        <version.mockito>2.8.9</version.mockito>
-        <version.powermock>1.7.4</version.powermock>
-      </properties>
-    </profile>
-  </profiles>
 
   <build>
     <plugins>

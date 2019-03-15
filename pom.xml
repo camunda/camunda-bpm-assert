@@ -167,6 +167,16 @@
       <artifactId>java-uuid-generator</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.powermock</groupId>
+      <artifactId>powermock-api-mockito2</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <profiles>
@@ -190,6 +200,7 @@
       </activation>
       <modules>
         <module>camunda-bpm-assert</module>
+        <module>camunda-bpm-assert-assertj3-9-1</module>
       </modules>
     </profile>
   </profiles>
