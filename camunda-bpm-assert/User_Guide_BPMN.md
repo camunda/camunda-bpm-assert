@@ -7,12 +7,15 @@
    * for process definitions: [hasActiveInstances](#processDefinition-hasActiveInstances)
    * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasCandidateGroupAssociated](#task-hasCandidateGroupAssociated), [hasCandidateUser](#task-hasCandidateUser), [hasCandidateUserAssociated](#task-hasCandidateUserAssociated), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasFormKey](#task-hasFormKey), [hasId](#task-hasId), [hasName](#task-hasName)
+   * for external tasks: [hasActivityId](#external-task-hasActivityId), [hasTopicName](#external-task-hasTopicName)
  
  * [Helpers](#helpers)
    * [Claiming tasks](#helpers-claim)
    * [Unclaiming tasks](#helpers-unclaim)
    * [Completing tasks](#helpers-complete)
    * [Completing tasks and passing process variables](#helpers-complete-variables)
+   * [Completing external tasks](#helpers-complete-external)
+   * [Completing external tasks and passing process variables](#helpers-complete-external-variables)
    * [Executing jobs](#helpers-execute)
    * [Sending messages](#helpers-send)
    * [Sending messages and passing process variables](#helpers-send-variables)
@@ -20,12 +23,15 @@
    * [Accessing engine and engine API services](#helpers-services)
    * [Making assertions on the only task of an instance](#helpers-task)
    * [Making assertions on a specific task of an instance](#helpers-task-taskquery)
+   * [Making assertions on the only external task of an instance](#helpers-task-external)
+   * [Making assertions on a specific external task of an instance](#helpers-task-external-taskquery)
    * [Making assertions on the only job of an instance](#helpers-job)
    * [Making assertions on a specific jobs of an instance](#helpers-job-jobquery)
    * [Making assertions on the only called process instance of a super instance](#helpers-called-process-instance)
    * [Making assertions on a specific called process instance of a super instance](#helpers-called-process-instance-jobquery)
    * [Making assertions on the process variables map of an instance](#helpers-variables)
    * [Accessing tasks in the context of a process instance under test](#helpers-task-last)
+   * [Accessing external tasks in the context of a process instance under test](#helpers-task-external-last)
    * [Accessing jobs in the context of a process instance under test](#helpers-job-last)
    * [Accessing called process instances in the context of a process instance under test](#helpers-called-process-instance-last)
    * [Accessing process definitions](#helpers-process-definition)
@@ -422,6 +428,24 @@ Assert that the task has the specified name:
 assertThat(task).hasName("Review and approve");
 ```
 
+<a name="external-task-hasActivityId"></a>
+#### External Task: hasActivityId
+
+Assert that the external task has the specified activity id:
+
+```java
+assertThat(externalTask).hasActivityId("review-and-approve");
+```
+
+<a name="external-task-hasTopicName"></a>
+#### External Task: hasTopicName
+
+Assert that the external task has the specified topic name:
+
+```java
+assertThat(externalTask).hasTopicName("Review and approve");
+```
+
 <a name="helpers"></a>
 ## Helpers
 
@@ -466,6 +490,31 @@ You can therefore e.g. write
 
 ```java
 complete(task, withVariables("documentId", 5, "approved", true)); 
+```
+
+<a name="helpers-complete-external"></a>
+#### Completing external tasks
+
+You can directly complete an external task by means of a static helper method:
+
+```java
+complete(externalTask);
+```
+
+<a name="helpers-complete-external-variables"></a>
+#### Completing external tasks and passing process variables
+
+You can directly construct a map of process variables by passing a sequence 
+of key/value pairs to the static helper method "withVariables":
+
+```java
+Map<String, Object> variables = withVariables("documentId", 5, "approved", true); 
+```
+
+You can therefore e.g. write
+
+```java
+complete(externalTask, withVariables("documentId", 5, "approved", true)); 
 ```
 
 <a name="helpers-execute"></a>
@@ -549,6 +598,44 @@ assertThat(processInstance).task(taskQuery().taskAssignee("fozzie"));
 
 ```java
 assertThat(processInstance).task("edit").isAssignedTo("fozzie");
+```
+
+<a name="helpers-task-external"></a>
+#### Making assertions on the only external task of an instance
+ 
+You can retrieve a "chained" external task assert inspecting the one and only 
+one external task currently available in the context of a process instance...
+
+```java
+assertThat(processInstance).externalTask();
+```
+
+... in order to directly make assertions on it, e.g. 
+
+```java
+assertThat(processInstance).externalTask().hasTopicName("editing");
+```
+
+<a name="helpers-task-external-taskquery"></a>
+#### Making assertions on a specific external task of an instance
+
+You can retrieve a "chained" external task assert inspecting a very specific external task currently 
+available in the context of a process instance...
+
+```java
+assertThat(processInstance).externalTask("edit");
+```
+
+or
+
+```java
+assertThat(processInstance).externalTask(externalTaskQuery().activityId("edit"));
+```
+
+... in order to directly make assertions on it, e.g. 
+
+```java
+assertThat(processInstance).externalTask("edit").hasTopicName("editing");
 ```
 
 <a name="helpers-job"></a>
@@ -679,6 +766,42 @@ You can therefore e.g. write ...
 
 ```java
 complete(task("review-and-approve", processInstance), withVariables("documentId", 5, "approved", true)); 
+```
+
+<a name="helpers-task-external-last"></a>
+#### Accessing external tasks in the context of a process instance under test
+
+You can directly access external tasks in the context of the last asserted process 
+instance by means of static helper methods:
+
+```java
+assertThat(processInstance).isNotNull();
+...
+ExternalTask onlyTaskOflastAssertedProcessInstance = externalTask();
+ExternalTask someTaskOflastAssertedProcessInstance = externalTask("review-and-approve");
+ExternalTask sameTaskOflastAssertedProcessInstance = externalTask(externalTaskQuery().activityId("review-and-approve"));
+```
+  
+You can therefore e.g. write ...
+
+```java
+assertThat(processInstance).externalTask().hasActivityId("review-and-approve");
+complete(externalTask(), withVariables("documentId", 5, "approved", true)); 
+```
+
+Furthermore you can directly access external tasks in the context of a *specified* process 
+instance by means of static helper methods:
+
+```java
+ExternalTask onlyTaskOfProcessInstance = externalTask(processInstance);
+ExternalTask someTaskOfProcessInstance = externalTask("review-and-approve", processInstance);
+ExternalTask sameTaskOfProcessInstance = externalTask(externalTaskQuery().activityId("review-and-approve"), processInstance);
+```
+  
+You can therefore e.g. write ...
+
+```java
+complete(externalTask("review-and-approve", processInstance), withVariables("documentId", 5, "approved", true)); 
 ```
 
 <a name="helpers-job-last"></a>

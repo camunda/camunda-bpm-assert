@@ -1,20 +1,30 @@
 # Contributing Guide
 
-There are several ways in which you may contribute to this project.
+First of all, please follow the same [contributing guidelines](https://github.com/camunda/camunda-bpm-platform/blob/master/CONTRIBUTING.md) as for the Camunda BPM Platform.
 
-* [File issues](./../../issues)
-* [Submit a pull requests](#submit-a-pull-request)
-* [What means DONE?](#what-means-done)
+We would love for you to contribute to this project by filing bugs, helping others on the [issue tracker](https://app.camunda.com/jira/browse/CAM/component/14065) and by contributing features/bug fixes through pull requests. When creating an issue, please add "spring-boot" as a component, so that we can easily track all the issues related to this project.
 
-## Submit a Pull Request
+Before v. 3.0.0, the issues were tracked in GitHub: https://github.com/camunda/camunda-bpm-assert/issues. They are now preserved for the reference. However, please, DON'T create new issues here any more.
 
-If you would like to submit a pull request make sure to 
+## Creating pull requests
 
-1. [Create an issue](./../../issues) for your work. Take care that your piece of work isn't too big. Usually adding one single assertion is big enough. 
-1. Fork camunda/camunda-bpm-assert and create a branch for your issue. Don't reuse existing branches. 
-1. Implement, document and test (see [What means DONE?](#what-means-done))
-1. If working on CMMN features, mark the method in the [Coverage_CMMN.md](./camunda-bpm-assert/Coverage_CMMN.md) with a :white_check_mark: `:white_check_mark:`
-1. Create a pull request
+We use pull requests for feature discussion and bug fixes. If you are not yet familiar on how to create a pull request, [read this great guide](https://gun.io/blog/how-to-github-fork-branch-and-pull-request).
+
+Some things that make it easier for us to accept your pull requests:
+
+We use http://editorconfig.org in this project. If your IDE supports it, you do not have to add any additional configuration.
+If you are not able to use this, make sure you use the [eclipse formatter](https://github.com/camunda/camunda-bpm-platform/blob/master/settings/eclipse/formatter.xml).
+
+* The code adheres to our conventions
+    * spaces instead of tabs
+    * single-quotes
+    * ...
+    * see the [.editorconfig](https://github.com/camunda/camunda-bpm-spring-boot-starter/blob/master/.editorconfig) file
+* The code is tested
+* The `mvn clean install` build passes including tests
+* The work is combined into a single commit
+
+We'd be glad to assist you if you do not get these things right at first.
 
 ## What means DONE?
 
