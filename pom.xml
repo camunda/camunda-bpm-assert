@@ -51,6 +51,10 @@
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
+    <!-- disable javadoc -->
+    <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+    <!-- disable javadoc linter for JDK8 to not fail on incomplete javadoc -->
+    <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
 
   <dependencyManagement>
