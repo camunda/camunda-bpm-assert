@@ -1,2 +1,2 @@
-@Library("camunda-ci") _
+@Library("camunda-ci-stage@stage") _
 buildMavenAndDeployToMavenCentral([jdk:8, licenseCheck:false])
