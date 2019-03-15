@@ -39,7 +39,7 @@ public class CaseInstanceAssertIsClosedTest extends ProcessAssertTestCase {
   
   @Test
   @Deployment(resources = { "cmmn/CaseTaskAssertIsTerminatedTest.cmmn" })
-  public void testIsTerminated_Success() {
+  public void testIsClosed_Success() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When
@@ -52,7 +52,7 @@ public class CaseInstanceAssertIsClosedTest extends ProcessAssertTestCase {
 
   @Test
   @Deployment(resources = { "cmmn/CaseTaskAssertIsTerminatedTest.cmmn" })
-  public void testIsTerminated_Failure() {
+  public void testIsClosed_Failure() {
     // Given
     final CaseInstance caseInstance = givenCaseIsCreated();
     // When
