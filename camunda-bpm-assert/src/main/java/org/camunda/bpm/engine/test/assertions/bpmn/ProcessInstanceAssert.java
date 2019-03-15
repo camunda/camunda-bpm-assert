@@ -23,6 +23,7 @@ import java.util.*;
 import org.assertj.core.api.*;
 import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.externaltask.ExternalTaskQuery;
 import org.camunda.bpm.engine.history.*;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
@@ -449,6 +450,9 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
    *          ProcessInstance)
    */
   public TaskAssert task(String taskDefinitionKey) {
+    if (taskDefinitionKey == null) {
+      throw new IllegalArgumentException("Illegal call of task(taskDefinitionKey = 'null') - must not be null!");
+    }
     isWaitingAt(taskDefinitionKey);
     return task(taskQuery().taskDefinitionKey(taskDefinitionKey));
   }
@@ -475,6 +479,67 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     isNotNull();
     TaskQuery narrowed = query.processInstanceId(actual.getId());
     return TaskAssert.assertThat(engine, narrowed.singleResult());
+  }
+  
+  /**
+   * Enter into a chained external task assert inspecting the one and mostly 
+   * one external task currently available in the context of the process instance
+   * under test of this ProcessInstanceAssert.
+   * 
+   * @return  ExternalTaskAssert inspecting the only external task available. Inspecting a 
+   *          'null' external task in case no such external task is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more 
+   *          than one external task is delivered by the query (after being narrowed 
+   *          to actual ProcessInstance)
+   */
+  public ExternalTaskAssert externalTask() {
+    return externalTask(externalTaskQuery());
+  }
+
+  /**
+   * Enter into a chained external task assert inspecting the one and mostly 
+   * one external task of the specified activity id currently available in the 
+   * context of the process instance under test of this ProcessInstanceAssert.
+   * 
+   * @param   activityId activity id narrowing down the search for external 
+   *          tasks
+   * @return  ExternalTaskAssert inspecting the only external task available. Inspecting a 
+   *          'null' external task in case no such external task is available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than one 
+   *          external task is delivered by the query (after being narrowed to actual 
+   *          ProcessInstance)
+   */
+  public ExternalTaskAssert externalTask(String activityId) {
+    if (activityId == null) {
+      throw new IllegalArgumentException("Illegal call of externalTask(activityId = 'null') - must not be null!");
+    }
+    isWaitingAt(activityId);
+    return externalTask(externalTaskQuery().activityId(activityId));
+  }
+
+  /**
+   * Enter into a chained external task assert inspecting only external tasks 
+   * currently available in the context of the process instance under test of this
+   * ProcessInstanceAssert. The query is automatically narrowed down to
+   * the actual ProcessInstance under test of this assertion.
+   *
+   * @param   query ExternalTaskQuery further narrowing down the search for external
+   *          tasks. The query is automatically narrowed down to the actual 
+   *          ProcessInstance under test of this assertion.
+   * @return  ExternalTaskAssert inspecting the only external task resulting from the given
+   *          search. Inspecting a 'null' external task in case no such external task is 
+   *          available.
+   * @throws  org.camunda.bpm.engine.ProcessEngineException in case more than 
+   *          one external task is delivered by the query (after being narrowed to 
+   *          actual ProcessInstance)
+   */
+  public ExternalTaskAssert externalTask(final ExternalTaskQuery query) {
+    if (query == null) {
+      throw new IllegalArgumentException("Illegal call of externalTask(query = 'null') - but must not be null!");
+    }
+    isNotNull();
+    ExternalTaskQuery narrowed = query.processInstanceId(actual.getId());
+    return ExternalTaskAssert.assertThat(engine, narrowed.singleResult());
   }
 
   /**
@@ -623,6 +688,11 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
   @Override
   protected TaskQuery taskQuery() {
     return super.taskQuery().processInstanceId(actual.getId());
+  }
+  
+  @Override
+  protected ExternalTaskQuery externalTaskQuery() {
+    return super.externalTaskQuery().processInstanceId(actual.getId());
   }
 
   /* JobQuery, automatically narrowed to actual {@link ProcessInstance} */
