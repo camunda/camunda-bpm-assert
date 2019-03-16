@@ -21,7 +21,7 @@ complete(task(instance), withVariables("approved", true));
 
 ## Get started in _3 simple steps_!
 
-<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.extension/camunda-bpm-assert/badge.svg" align="right"/></a>**1.** Add a maven **test dependency** to your project:
+<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert/badge.svg" align="right"/></a>**1.** Add a maven **test dependency** to your project:
 
 ```xml  
 <dependency>
