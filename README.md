@@ -3,7 +3,6 @@
 <a href="https://travis-ci.org/camunda/camunda-bpm-assert"><img src="https://travis-ci.org/camunda/camunda-bpm-assert.svg?branch=master"/></a>
 <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
 <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert/badge.svg"/></a>
-<a href="https://www.openhub.net/p/camunda-bpm-assert"><img src="https://www.openhub.net/p/camunda-bpm-spring-boot-starter/widgets/project_thin_badge.gif"/></a>
 
 **Camunda BPM Assert** makes it easy to assert the status of your BPMN processes and CMMN cases when driving them forward in your typical unit test methods. Simply write code like
 
