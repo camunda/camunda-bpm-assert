@@ -1,6 +1,11 @@
 # <img src="http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png" width="23" height="23"></img>&nbsp;Camunda BPM Assert
 
-**Camunda BPM Assert** makes it easy to **assert** the status of your BPMN processes and CMMN cases when **driving** them forward in your typical unit test methods. Simply write code like
+<a href="https://travis-ci.org/camunda/camunda-bpm-assert"><img src="https://travis-ci.org/camunda/camunda-bpm-assert.svg?branch=master"/></a>
+<a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
+<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert/badge.svg"/></a>
+<a href="https://www.openhub.net/p/camunda-bpm-assert"><img src="https://www.openhub.net/p/camunda-bpm-spring-boot-starter/widgets/project_thin_badge.gif"/></a>
+
+**Camunda BPM Assert** makes it easy to assert the status of your BPMN processes and CMMN cases when driving them forward in your typical unit test methods. Simply write code like
 
 ```groovy
 assertThat(instance).isWaitingAt("UserTask_InformCustomer");
@@ -13,15 +18,13 @@ Furthermore a set of static helper methods is provided to make it easier to driv
 complete(task(instance), withVariables("approved", true));
 ```
 
-<img src="http://camunda.github.io/camunda-bpm-assert/resources/images/spaghetti-test.jpg" align="left" width="400"><br/>The goal? More **readable code** - less **spaghetti tests**!<br/>The increased readability will make it much easier to dig through your test code, the next time you need to change it will ultimately come. And your increased efficiency will make your organisational stakeholders happy, too! :smile:<br/></img>
-
-## <a href="https://travis-ci.org/camunda/camunda-bpm-assert"><img src="https://travis-ci.org/camunda/camunda-bpm-assert.svg?branch=master" align="right"/></a>Use it with confidence!
+## Compatibility
 
 <img src="http://camunda.github.io/camunda-bpm-assert/resources/images/community-award.png" align="right" width="76">Camunda BPM Assert works with the versions of Camunda BPM as shown [in the documentation](https://docs.camunda.org/manual/develop/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.7, 1.8+). This is continuously verified by executing around 500 test cases against a [travis ci test matrix](https://travis-ci.org/camunda/camunda-bpm-assert). In 2014, the library won the **Camunda BPM Community Award**. 
 
 ## Get started in _3 simple steps_!
 
-<a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert/badge.svg" align="right"/></a>**1.** Add a maven **test dependency** to your project:
+**1.** Add a maven **test dependency** to your project:
 
 ```xml  
 <dependency>
@@ -31,9 +34,10 @@ complete(task(instance), withVariables("approved", true));
     <scope>test</scope>
 </dependency>
 ```
+
 Additionally, Joel Costigliola's [AssertJ](http://joel-costigliola.github.io/assertj/) needs to be provided as a dependency with a version that is compatible with the one documented in the [compatibility matrix](https://docs.camunda.org/manual/develop/user-guide/testing/#assertions-version-compatibility).
 
-Please note that if you use [Spring Boot](https://spring.io/projects/spring-boot) or the [Camunda Spring Boot Starter](https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/) in your project, AssertJ is already included in your project's setup. Please choose a compatible Camunda BPM Assert artifact in this case. 
+Please note that if you use [Spring Boot](https://spring.io/projects/spring-boot) or the [Camunda Spring Boot Starter](https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/) in your project, AssertJ is already included in your project's setup. Please choose a compatible Camunda BPM Assert artifact in this case as explained in the [documentation](https://docs.camunda.org/manual/develop/user-guide/testing#camunda-assertions).
 
 **2.** Add a **static import** to your test class
 
@@ -60,9 +64,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 ```
 
-<img src="http://camunda.github.io/camunda-bpm-assert/resources/images/green-bar.png" align="right"></img> Green bar? 
-
-Congrats! You are successfully using Camunda BPM Assert. Find a more detailed description of the assertions and helper methods available in the Camunda BPM Assert [**User Guide**](./camunda-bpm-assert/README.md).
+Find a more detailed description of the assertions and helper methods available in the Camunda BPM Assert [**User Guide**](./camunda-bpm-assert/README.md).
 
 ## Further Resources
 
