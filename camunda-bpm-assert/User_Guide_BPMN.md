@@ -17,8 +17,6 @@
    * [Completing external tasks](#helpers-complete-external)
    * [Completing external tasks and passing process variables](#helpers-complete-external-variables)
    * [Executing jobs](#helpers-execute)
-   * [Sending messages](#helpers-send)
-   * [Sending messages and passing process variables](#helpers-send-variables)
    * [Creating queries](#helpers-queries)
    * [Accessing engine and engine API services](#helpers-services)
    * [Making assertions on the only task of an instance](#helpers-task)
