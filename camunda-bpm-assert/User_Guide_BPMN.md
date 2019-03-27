@@ -338,8 +338,6 @@ However, the next assertion discussed here, would pass:
 <a name="task-hasCandidateGroupAssociated"></a>
 #### Task: hasCandidateGroupAssociated
 
-Use from Camunda BPM **7.3** on: 
-
 Assert the expectation that a task is currently associated to the 
 specified candidate group - no matter whether it is already assigned to a 
 specific user or not.
@@ -363,8 +361,6 @@ However, the next assertion discussed here, would pass:
 
 <a name="task-hasCandidateUserAssociated"></a>
 #### Task: hasCandidateUserAssociated
-
-Use from Camunda BPM **7.3** on: 
 
 Assert the expectation that a task is currently associated to the 
 specified candidate user - no matter whether it is already assigned to a 
