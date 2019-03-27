@@ -19,7 +19,7 @@ complete(task(instance), withVariables("approved", true));
 
 ## Compatibility
 
-<img src="http://camunda.github.io/camunda-bpm-assert/resources/images/community-award.png" align="right" width="76">Camunda BPM Assert works with the versions of Camunda BPM as shown [in the documentation](https://docs.camunda.org/manual/develop/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.7, 1.8+). This is continuously verified by executing around 500 test cases against a [travis ci test matrix](https://travis-ci.org/camunda/camunda-bpm-assert). In 2014, the library won the **Camunda BPM Community Award**. 
+Camunda BPM Assert works with the versions of Camunda BPM as shown [in the documentation](https://docs.camunda.org/manual/develop/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.7, 1.8+). This is continuously verified by executing around 500 test cases against a [travis ci test matrix](https://travis-ci.org/camunda/camunda-bpm-assert). 
 
 ## Get started in _3 simple steps_!
 
@@ -80,12 +80,19 @@ The source files in this repository are made available under the Apache License,
 
 The Camunda BPM Assert project used to be the community extension, created and supported by
 
-<a href="http://plexiti.com"><img src="http://plexiti.com/en/img/logo.png" align="right" width="210"></img></a>[Martin Schimak](https://github.com/martinschimak) (plexiti GmbH)<br>
-<a href="http://www.holisticon.de"><img src="https://www.holisticon.de/wp-content/uploads/2013/05/holisticon-logo-hamburg.gif" align="right" /></a>[Jan Galinski](https://github.com/jangalinski) (Holisticon AG)<br>
+<a href="http://plexiti.com"><img src="http://plexiti.com/en/img/logo.png" align="right" width="210"></img></a>
+<a href="http://www.holisticon.de"><img src="https://www.holisticon.de/wp-content/uploads/2013/05/holisticon-logo-hamburg.gif" align="right" /></a>
+
+[Martin Schimak](https://github.com/martinschimak) (plexiti GmbH)<br>
+[Jan Galinski](https://github.com/jangalinski) (Holisticon AG)<br>
 [Martin Günther](https://github.com/margue) (Holisticon AG)<br>
 [Malte Sörensen](https://github.com/malteser) (Holisticon AG)<br>
 [Simon Zambrovski](https://github.com/zambrovski) (Holisticon AG)
 
+<img src="http://camunda.github.io/camunda-bpm-assert/resources/images/community-award.png" align="right" width="76">
+
 ... and [many others](https://github.com/camunda/camunda-bpm-assert/graphs/contributors).
+
+In 2014, the library won the **Camunda BPM Community Award**.
 
 Starting from version 3.0.0 it was adopted as part of the Camunda BPM Platform.
