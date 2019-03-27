@@ -17,8 +17,6 @@
    * [Completing external tasks](#helpers-complete-external)
    * [Completing external tasks and passing process variables](#helpers-complete-external-variables)
    * [Executing jobs](#helpers-execute)
-   * [Sending messages](#helpers-send)
-   * [Sending messages and passing process variables](#helpers-send-variables)
    * [Creating queries](#helpers-queries)
    * [Accessing engine and engine API services](#helpers-services)
    * [Making assertions on the only task of an instance](#helpers-task)
@@ -338,8 +336,6 @@ However, the next assertion discussed here, would pass:
 <a name="task-hasCandidateGroupAssociated"></a>
 #### Task: hasCandidateGroupAssociated
 
-Use from Camunda BPM **7.3** on: 
-
 Assert the expectation that a task is currently associated to the 
 specified candidate group - no matter whether it is already assigned to a 
 specific user or not.
@@ -363,8 +359,6 @@ However, the next assertion discussed here, would pass:
 
 <a name="task-hasCandidateUserAssociated"></a>
 #### Task: hasCandidateUserAssociated
-
-Use from Camunda BPM **7.3** on: 
 
 Assert the expectation that a task is currently associated to the 
 specified candidate user - no matter whether it is already assigned to a 
