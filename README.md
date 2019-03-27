@@ -80,11 +80,8 @@ The source files in this repository are made available under the Apache License,
 
 The Camunda BPM Assert project used to be the community extension, created and supported by
 
-<a href="http://www.holisticon.de"><img src="https://www.holisticon.de/wp-content/uploads/2013/05/holisticon-logo-hamburg.gif" align="right" /></a>
-<a href="http://plexiti.com"><img src="http://plexiti.com/en/img/logo.png" align="right" width="210"></img></a>
-
-[Martin Schimak](https://github.com/martinschimak) (plexiti GmbH)<br>
-[Jan Galinski](https://github.com/jangalinski) (Holisticon AG)<br>
+[Martin Schimak](https://github.com/martinschimak) (plexiti GmbH)<a href="http://plexiti.com"><img src="http://plexiti.com/en/img/logo.png" align="right" width="210"></img></a><br>
+[Jan Galinski](https://github.com/jangalinski) (Holisticon AG)<a href="http://www.holisticon.de"><img src="https://www.holisticon.de/wp-content/uploads/2013/05/holisticon-logo-hamburg.gif" align="right" /></a><br>
 [Martin Günther](https://github.com/margue) (Holisticon AG)<br>
 [Malte Sörensen](https://github.com/malteser) (Holisticon AG)<br>
 [Simon Zambrovski](https://github.com/zambrovski) (Holisticon AG)
