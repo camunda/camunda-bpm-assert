@@ -2,7 +2,7 @@
 
 First of all, please follow the same [contributing guidelines](https://github.com/camunda/camunda-bpm-platform/blob/master/CONTRIBUTING.md) as for the Camunda BPM Platform.
 
-We would love for you to contribute to this project by filing bugs, helping others on the [issue tracker](https://app.camunda.com/jira/browse/CAM/component/14065) and by contributing features/bug fixes through pull requests. When creating an issue, please add "spring-boot" as a component, so that we can easily track all the issues related to this project.
+We would love for you to contribute to this project by filing bugs, helping others on the [issue tracker](https://app.camunda.com/jira/browse/CAM/component/14065) and by contributing features/bug fixes through pull requests. When creating an issue, please add "assert" as a component, so that we can easily track all the issues related to this project.
 
 Before v. 3.0.0, the issues were tracked in GitHub: https://github.com/camunda/camunda-bpm-assert/issues. They are now preserved for the reference. However, please, DON'T create new issues here any more.
 

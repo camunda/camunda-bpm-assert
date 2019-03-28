@@ -20,7 +20,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 
 #### Add Camunda BPM Assert to Eclipse
 
-Eclipse will remove the static import, when it organizes the imports. Thus it is recommended to add camunda-bpm-assert to your 'Content Assist Favorites'.In Eclipse go to Window -> Preferences -> Java -> Editor -> Content Assist -> Favorites -> New Type... and add the following type:
+Eclipse will remove the static import, when it organizes the imports. Thus it is recommended to add camunda-bpm-assert to your 'Content Assist Favorites'. In Eclipse go to Window -> Preferences -> Java -> Editor -> Content Assist -> Favorites -> New Type... and add the following type:
 
 ```java
 org.camunda.bpm.engine.test.assertions.ProcessEngineTests
