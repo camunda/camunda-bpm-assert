@@ -109,11 +109,6 @@ public class CaseInstanceAssert extends AbstractCaseAssert<CaseInstanceAssert, C
   public MilestoneAssert milestone(String activityId) {
     return super.milestone(activityId);
   }
-
-  @Override
-  public CaseExecutionAssert caseExecution(CaseExecutionQuery query) {
-    return super.caseExecution(query.caseInstanceId(getActual().getId()));
-  }
   
   @Override
   protected int getHistoricState() {
