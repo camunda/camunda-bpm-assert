@@ -10,10 +10,9 @@
 - isEnabled()
 - isDisabled()
 - isActive()
-- isSuspended()
 - isCompleted()
 - isClosed()
-- isFailed()
+- isTerminated()
 
 ### "Type" assertions
 
@@ -31,23 +30,16 @@
 (Implementation, systematical tests, javadoc and markdown documentation)
 
 - caseExecution(query)
-- caseExecution(activityId)
-- caseExecution()
 - humanTask(query)     
 - humanTask(activityId)
-- humanTask()          
 - caseTask(query)     
 - caseTask(activityId)
-- caseTask()          
 - processTask(query)     
 - processTask(activityId)
-- processTask()          
 - stage(query)     
 - stage(activityId)
-- stage()          
 - milestone(query)     
 - milestone(activityId)
-- milestone()          
 
 ### "Variable" assertions
 
@@ -63,22 +55,26 @@
 
 ### Make inherited methods available public
 
-- all "status" assertions
-- all "type" assertions
+- :white_check_mark: isAvailable()
+- :white_check_mark: isEnabled()
+- :white_check_mark: isDisabled()
+- :white_check_mark: isActive()
+- :white_check_mark: isCompleted()
+- :white_check_mark: isTerminated()
+
+- :white_check_mark: all "type" assertions
 - all "variable" assertions
 
 ## CaseInstanceAssert 
 
 ### Make inherited methods available public
 
-- isActive()
-- isCompleted()
-- isClosed()
-- isTerminated()
-- isFailed()
-- isSuspended()
+- :white_check_mark: isActive()
+- :white_check_mark: isCompleted()
+- :white_check_mark: isClosed()
+- :white_check_mark: isTerminated()
 
-- all "chained" assert objects
+- :white_check_mark: all "chained" assert objects
 - all "variable" assertions
 
 ## CaseTaskAssert
@@ -89,9 +85,7 @@
 - :white_check_mark: isEnabled()
 - :white_check_mark: isDisabled()
 - :white_check_mark: isActive()
-- isSuspended()
 - :white_check_mark: isCompleted()
-- isFailed()
 - :white_check_mark: isTerminated()
 
 - :white_check_mark: all "variable" assertions
@@ -104,9 +98,7 @@
 - :white_check_mark: isEnabled()
 - :white_check_mark: isDisabled()
 - :white_check_mark: isActive()
-- isSuspended()
 - :white_check_mark: isCompleted()
-- isFailed()
 - :white_check_mark: isTerminated()
 
 - :white_check_mark: all "variable" assertions
@@ -123,83 +115,70 @@
 
 ## MilestoneAssert
 
-- isAvailable()
-- isCompleted()
-- isTerminated()
-
-:white_check_mark:
+- :white_check_mark: isAvailable()
+- :white_check_mark: isCompleted()
+- :white_check_mark: isTerminated()
 
 ## ProcessTaskAssert
 
-- isAvailable()
-- isEnabled()
-- isDisabled()
-- isActive()
-- isSuspended()
-- isCompleted()
-- isFailed()
-- isTerminated()
+- :white_check_mark: isAvailable()
+- :white_check_mark: isEnabled()
+- :white_check_mark: isDisabled()
+- :white_check_mark: isActive()
+- :white_check_mark: isCompleted()
+- :white_check_mark: isTerminated()
 
-- all "variable" assertions
-
-:white_check_mark:
+- :white_check_mark: all "variable" assertions
 
 ## StageAssert
 
 ### Make inherited methods available public
 
-- isAvailable()
-- isEnabled()
-- isDisabled()
-- isActive()
-- isSuspended()
-- isCompleted()
-- isFailed()
-- isTerminated()
+- :white_check_mark: isAvailable()
+- :white_check_mark: isEnabled()
+- :white_check_mark: isDisabled()
+- :white_check_mark: isActive()
+- :white_check_mark: isCompleted()
+- :white_check_mark: isTerminated()
+
+- :white_check_mark: all "chained" assert objects
 
 - all "variable" assertions
-
-## CmmnAwareAssertions
-
-(Implementation, systematical tests, javadoc and markdown documentation)
-
-- assertThat(caseExecution)
-- assertThat(caseDefinition)
 
 ## CmmnAwareTests
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
-:white_check_mark:
+- :white_check_mark: assertThat(caseInstance)
+- :white_check_mark: assertThat(caseExecution)
+- :white_check_mark: assertThat(caseDefinition)
 
 ### "Service" retrievers
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
-- caseService()
-- caseInstanceQuery()
-- caseExecutionQuery()
-- caseDefinitionQuery()
+- :white_check_mark: caseService()
+- :white_check_mark: caseInstanceQuery()
+- :white_check_mark: caseExecutionQuery()
+- :white_check_mark: caseDefinitionQuery()
 
 ### "Status" changers
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
-- complete(caseExecution)
+- :white_check_mark: complete(caseExecution)
 - :white_check_mark: complete(caseExecution, variables)
-- disable(caseExecution)
-- manuallyStart(caseExecution)
+- :white_check_mark: disable(caseExecution)
+- :white_check_mark: manuallyStart(caseExecution)
 
 ### "CaseExecution" finders
 
 (Implementation, systematical tests, javadoc and markdown documentation)
 
-- caseExecution()
 - caseExecution(activityId)
 - caseExecution(query)
-- caseExecution(parent)
-- caseExecution(activityId, parent)
-- caseExecution(query, parent)
+- :white_check_mark: caseExecution(activityId, parent)
+- :white_check_mark: caseExecution(query, parent)
 - descendantCaseExecution(query)
 
 ### static helper methods
