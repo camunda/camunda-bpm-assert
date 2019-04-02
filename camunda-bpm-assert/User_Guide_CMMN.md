@@ -10,6 +10,7 @@
    * for milestones: [isAvailable](#milestone-isAvailable), [isCompleted](#milestone-isCompleted), [isTerminated](#milestone-isTerminated)
    * for process tasks: [isActive](#processTask-isActive), [isAvailable](#processTask-isAvailable), [isCompleted](#processTask-isCompleted), [isDisabled](#processTask-isDisabled), [isEnabled](#processTask-isEnabled), [isTerminated](#processTask-isTerminated), [hasVariables](#processTask-hasVariables), [hasNoVariables](#processTask-hasNoVariables)
    * for case tasks: [isActive](#caseTask-isActive), [isAvailable](#caseTask-isAvailable), [isCompleted](#caseTask-isCompleted), [isDisabled](#caseTask-isDisabled), [isEnabled](#caseTask-isEnabled), [isTerminated](#caseTask-isTerminated), [hasVariables](#caseTask-hasVariables), [hasNoVariables](#caseTask-hasNoVariables)
+   * for stages: [isActive](#stage-isActive), [isAvailable](#stage-isAvailable), [isCompleted](#stage-isCompleted), [isDisabled](#stage-isDisabled), [isEnabled](#stage-isEnabled), [isTerminated](#stage-isTerminated)
  
  * [Helpers](#helpers)
    * retrieve CaseService
@@ -313,6 +314,55 @@ Assert that a case task is currently 'terminated':
 
 ```java
 assertThat(caseInstance).caseTask("PI_TaskA").isTerminated();
+```
+
+<a name="stage-isActive"></a>
+#### Stage: isActive
+
+Assert that a stage is currently 'active':
+
+```java
+assertThat(caseInstance).stage("PI_StageA").isActive();
+```
+<a name="stage-isAvailable"></a>
+#### Stage: isAvailable
+
+Assert that a stage is currently 'available':
+
+```java
+assertThat(caseInstance).stage("PI_StageA").isAvailable();
+```
+<a name="stage-isCompleted"></a>
+#### Stage: isCompleted
+
+Assert that a stage is currently 'completed':
+
+```java
+assertThat(caseInstance).stage("PI_StageA").isCompleted();
+```
+<a name="stage-isDisabled"></a>
+#### Stage: isDisabled
+
+Assert that a stage is currently 'disabled':
+
+```java
+assertThat(caseInstance).stage("PI_StageA").isDisabled();
+```
+<a name="stage-isEnabled"></a>
+#### Stage: isEnabled
+
+Assert that a stage is currently 'enabled':
+
+```java
+assertThat(caseInstance).stage("PI_StageA").isEnabled();
+```
+<a name="stage-isTerminated"></a>
+#### Stage: isTerminated
+
+Assert that a stage is currently 'terminated':
+
+```java
+assertThat(caseInstance).stage("PI_StageA").isTerminated();
 ```
 
 ## Helpers
