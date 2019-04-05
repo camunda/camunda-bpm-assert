@@ -19,7 +19,7 @@ If you are not able to use this, make sure you use the [eclipse formatter](https
     * spaces instead of tabs
     * single-quotes
     * ...
-    * see the [.editorconfig](https://github.com/camunda/camunda-bpm-spring-boot-starter/blob/master/.editorconfig) file
+    * see the [.editorconfig](https://github.com/camunda/camunda-bpm-assert/blob/master/.editorconfig) file
 * The code is tested
 * The `mvn clean install` build passes including tests
 * The work is combined into a single commit
@@ -33,7 +33,7 @@ We'd be glad to assist you if you do not get these things right at first.
     - Use small commit
     - Use [semantic commit messages](http://seesparkbox.com/foundry/semantic_commit_messages) AKA [Karma commit message style](http://karma-runner.github.io/0.13/dev/git-commit-msg.html) 
 * Javadoc has been created or changed accordingly
-* It is documented in the [README.md](./camunda-bpm-assert/README.md) - not the top-level one, but the one inside the camunda-bpm-assert folder
+* It is documented in the [README.md](./docs/README.md) - not the top-level one, but the one inside the docs folder
 * It is thoroughly tested. 
     'What's _thoroughly_?' you might ask, well, here's the answer:
     - One test class for each method. E.g. if you are going to work on `CaseInstanceAssert.isActive()` you will have a test class `CaseInstanceAssertIsActiveTest` containing all tests for the `isActive()` method.

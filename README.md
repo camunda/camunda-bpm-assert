@@ -68,7 +68,7 @@ Find a more detailed description of the assertions and helper methods available 
 ## Further Resources
 
 * [Documentation](https://docs.camunda.org/manual/develop/user-guide/testing#camunda-assertions)
-* [User Guide](./camunda-bpm-assert/README.md)
+* [User Guide](./docs/README.md)
 * [Issue Tracker](https://app.camunda.com/jira/browse/CAM/component/14065) 
 * [Contributing](./CONTRIBUTING.md)
 
