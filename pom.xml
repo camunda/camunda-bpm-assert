@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -17,15 +19,12 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>camunda-bpm-assert-assertj2</module>
+    <module>compatibility</module>
+    <module>compatibility/assertj2</module>
     <module>examples</module>
-    <module>examples/camunda-bpm-assert-bpmn-examples</module>
-    <module>examples/camunda-bpm-assert-cmmn-examples</module>
   </modules>
 
   <properties>
-
-    <camunda-bpm-assert.version>${project.version}</camunda-bpm-assert.version>
 
     <camunda-bpm.version>7.10.0</camunda-bpm.version>
 
@@ -35,7 +34,7 @@
     <version.commons-lang3>3.1</version.commons-lang3>
     <version.fasterxml.uuid>3.1.3</version.fasterxml.uuid>
 
-    <!-- Avoid the message "[WARNING] Using platform encoding (UTF-8 actually)
+    <!-- Avoid the message "[WARNING] Using platform encoding (UTF-8 actually) 
       ... also for the failsafe plugin -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -202,8 +201,8 @@
         <jdk>[1.8,]</jdk>
       </activation>
       <modules>
-        <module>camunda-bpm-assert</module>
-        <module>camunda-bpm-assert-assertj3-9-1</module>
+        <module>core</module>
+        <module>compatibility/assertj3-9-1</module>
       </modules>
     </profile>
   </profiles>

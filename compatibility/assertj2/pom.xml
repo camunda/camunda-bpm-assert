@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.camunda.bpm.assert</groupId>
+    <artifactId>camunda-bpm-assert-compatibility-parent</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>camunda-bpm-assert-assertj2</artifactId>
+
+  <packaging>jar</packaging>
+
+  <properties>
+    <version.assertj>2.9.0</version.assertj>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
+  <profiles>
+    <!-- ensure that the project can be build with JDK 1.7 as well -->
+    <profile>
+      <id>jdk7</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+        <jdk>1.7</jdk>
+      </activation>
+      <properties>
+        <version.mockito>2.8.9</version.mockito>
+        <version.powermock>1.7.4</version.powermock>
+      </properties>
+    </profile>
+  </profiles>
+
+</project>
