@@ -57,7 +57,7 @@ assertThat(processInstance).isStarted()
     .isNotAssigned();
 ```
 
-In case you want to combine Camunda BPM Assert with the assertions provided by AssertJ, your imports should like this:
+In case you want to combine Camunda BPM Assert with the assertions provided by AssertJ, your imports should look like this:
 ```groovy  
 import static org.assertj.core.api.Assertions.*;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
