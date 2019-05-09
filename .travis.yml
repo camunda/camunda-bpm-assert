@@ -17,6 +17,11 @@ jdk:
   - oraclejdk7
   - oraclejdk8
   - oraclejdk11
+  - oraclejdk12
+  - openjdk-ea
+matrix:
+  allow_failures:
+    - jdk: openjdk-ea
 env:
   - CAMUNDA=7.10.0
 install: true
