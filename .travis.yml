@@ -27,4 +27,4 @@ env:
   - CAMUNDA=7.11.0-alpha5
   - CAMUNDA=7.10.0
 install: true
-script: mvn -Dcamunda-bpm.version=$CAMUNDA
+script: mvn -Dcamunda.version=$CAMUNDA
