@@ -8,12 +8,12 @@
     <version>4.0.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>camunda-bpm-assert-assertj3-9-1</artifactId>
+  <artifactId>camunda-bpm-assert-assertj3-11-1</artifactId>
 
   <packaging>jar</packaging>
 
   <properties>
-    <version.assertj>3.9.1</version.assertj>
+    <version.assertj>3.11.1</version.assertj>
   </properties>
 
 </project>
