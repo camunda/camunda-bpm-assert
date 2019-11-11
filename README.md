@@ -19,7 +19,7 @@ complete(task(instance), withVariables("approved", true));
 
 ## Compatibility
 
-Camunda BPM Assert works with the versions of Camunda BPM as shown [in the documentation](https://docs.camunda.org/manual/develop/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.7, 1.8+). This is continuously verified by executing around 500 test cases against a [travis ci test matrix](https://travis-ci.org/camunda/camunda-bpm-assert). 
+Camunda BPM Assert works with the versions of Camunda BPM as shown [in the documentation](https://docs.camunda.org/manual/latest/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.8+). This is continuously verified by executing around 500 test cases against a [travis ci test matrix](https://travis-ci.org/camunda/camunda-bpm-assert). 
 
 ## Get started in _3 simple steps_!
 
@@ -29,14 +29,14 @@ Camunda BPM Assert works with the versions of Camunda BPM as shown [in the docum
 <dependency>
     <groupId>org.camunda.bpm.assert</groupId>
     <artifactId>camunda-bpm-assert</artifactId>
-    <version>3.0.0</version>
+    <version>5.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
 
-Additionally, Joel Costigliola's [AssertJ](http://joel-costigliola.github.io/assertj/) needs to be provided as a dependency with a version that is compatible with the one documented in the [compatibility matrix](https://docs.camunda.org/manual/develop/user-guide/testing/#assertions-version-compatibility).
+Additionally, Joel Costigliola's [AssertJ](https://assertj.github.io/doc/) needs to be provided as a dependency with a version that is compatible with the one documented in the [compatibility matrix](https://docs.camunda.org/manual/latest/user-guide/testing/#assertions-version-compatibility).
 
-Please note that if you use [Spring Boot](https://spring.io/projects/spring-boot) or the [Camunda Spring Boot Starter](https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/) in your project, AssertJ is already included in your project's setup. Please choose a compatible Camunda BPM Assert artifact in this case as explained in the [documentation](https://docs.camunda.org/manual/develop/user-guide/testing#camunda-assertions).
+Please note that if you use [Spring Boot](https://spring.io/projects/spring-boot) or the [Camunda Spring Boot Starter](https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/) in your project, AssertJ is already included in your project's setup.
 
 **2.** Add a **static import** to your test class
 
@@ -63,11 +63,11 @@ import static org.assertj.core.api.Assertions.*;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 ```
 
-Find a more detailed description of the assertions and helper methods available in the Camunda BPM Assert [**User Guide**](./camunda-bpm-assert/README.md).
+Find a more detailed description of the assertions and helper methods available in the Camunda BPM Assert [**User Guide**](./docs/README.md).
 
 ## Further Resources
 
-* [Documentation](https://docs.camunda.org/manual/develop/user-guide/testing#camunda-assertions)
+* [Documentation](https://docs.camunda.org/manual/latest/user-guide/testing#camunda-assertions)
 * [User Guide](./docs/README.md)
 * [Issue Tracker](https://app.camunda.com/jira/browse/CAM/component/14065) 
 * [Contributing](./CONTRIBUTING.md)

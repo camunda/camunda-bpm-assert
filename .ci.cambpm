@@ -3,7 +3,6 @@ buildMavenAndDeployToMavenCentral([
   jdk:8, 
   licenseCheck:true,
   extraJdks: [
-    'jdk-7-latest',
 	'jdk-11-latest',
     'jdk-12-latest'
   ]
