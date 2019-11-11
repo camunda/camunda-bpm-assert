@@ -17,33 +17,32 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>compatibility</module>
-    <module>compatibility/assertj2</module>
+	<module>core</module>
     <module>examples</module>
   </modules>
 
   <properties>
 
-    <camunda.version>7.11.0</camunda.version>
+    <camunda.version>7.12.0-alpha4</camunda.version>
 
-    <version.assertj>3.12.2</version.assertj>
+    <version.assertj>3.13.2</version.assertj>
     <version.slf4j>1.7.25</version.slf4j>
-    <version.guava>18.0</version.guava>
-    <version.commons-lang3>3.1</version.commons-lang3>
-    <version.fasterxml.uuid>3.1.3</version.fasterxml.uuid>
+    <version.guava>28.1</version.guava>
+    <version.commons-lang3>3.9</version.commons-lang3>
+    <version.fasterxml.uuid>3.2.0</version.fasterxml.uuid>
 
     <!-- Avoid the message "[WARNING] Using platform encoding (UTF-8 actually) 
       ... also for the failsafe plugin -->
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- test tools -->
-    <version.mockito>2.24.5</version.mockito>
-    <version.powermock>2.0.0</version.powermock>
+    <version.mockito>3.1.0</version.mockito>
+    <version.powermock>2.0.4</version.powermock>
     <version.junit>4.12</version.junit>
-    <version.h2>1.4.197</version.h2>
+    <version.h2>1.4.200</version.h2>
 
     <!-- java -->
-    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <!-- disable javadoc -->
@@ -190,18 +189,6 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
-    <!-- ensure that the project can be build with JDK 1.7 as well -->
-    <profile>
-      <id>jdk8</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-        <jdk>[1.8,]</jdk>
-      </activation>
-      <modules>
-        <module>core</module>
-        <module>compatibility/assertj3-11-1</module>
-      </modules>
     </profile>
   </profiles>
 
