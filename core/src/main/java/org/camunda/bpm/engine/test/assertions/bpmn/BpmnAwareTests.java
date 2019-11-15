@@ -28,7 +28,12 @@ import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.model.bpmn.BpmnModelInstance;
+import org.camunda.bpm.model.bpmn.instance.Activity;
+import org.camunda.bpm.model.bpmn.instance.Event;
+import org.camunda.bpm.model.bpmn.instance.Gateway;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +54,7 @@ import static java.lang.String.format;
  *      for full Camunda BPM Assertions functionality  
  *
  * @author Martin Schimak <martin.schimak@plexiti.com>
+ * @author Ingo Richtsmeier <ingo.richtsmeier@camunda.com>
  */
 public class BpmnAwareTests extends AbstractAssertions {
 
@@ -1011,5 +1017,38 @@ public class BpmnAwareTests extends AbstractAssertions {
       throw new IllegalStateException(format("Illegal state when calling execute(job = '%s') - job does not exist anymore!", job));
     managementService().executeJob(job.getId());
   }
-
+  
+  /**
+   * Maps any element (task, event, gateway) from the name to the ID.
+   * 
+   * @param name
+   * @return the ID of the element
+   */
+  public static String find(String name) {
+    Map<String, String> nameToIDMapping = new HashMap<>();
+    // find deployed process models
+    List<ProcessDefinition> processDefinitions = repositoryService().createProcessDefinitionQuery().orderByProcessDefinitionVersion().asc().list();
+    // parse process models
+    for (ProcessDefinition processDefinition : processDefinitions) {
+      BpmnModelInstance bpmnModelInstance = repositoryService().getBpmnModelInstance(processDefinition.getId());
+      Collection<Activity> activities = bpmnModelInstance.getModelElementsByType(Activity.class);
+      for (Activity activity: activities) {
+        nameToIDMapping.put(activity.getName(), activity.getId());
+      }
+      Collection<Event> events = bpmnModelInstance.getModelElementsByType(Event.class);
+      for (Event event : events) {
+        nameToIDMapping.put(event.getName(), event.getId());
+      }
+      Collection<Gateway> gateways = bpmnModelInstance.getModelElementsByType(Gateway.class);
+      for (Gateway gateway : gateways) {
+        nameToIDMapping.put(gateway.getName(), gateway.getId());
+      }
+    }
+    // look for name and return ID
+    if (nameToIDMapping.containsKey(name)) {
+      return nameToIDMapping.get(name);
+    } else {
+      return "Element with name '" + name + "' doesn't exist";
+    }
+  }
 }

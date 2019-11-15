@@ -10,6 +10,7 @@
    * for external tasks: [hasActivityId](#external-task-hasActivityId), [hasTopicName](#external-task-hasTopicName)
  
  * [Helpers](#helpers)
+   * [Finding tasks by name](#helpers-find)
    * [Claiming tasks](#helpers-claim)
    * [Unclaiming tasks](#helpers-unclaim)
    * [Completing tasks](#helpers-complete)
@@ -442,6 +443,14 @@ assertThat(externalTask).hasTopicName("Review and approve");
 
 <a name="helpers"></a>
 ## Helpers
+
+<a name="helpers-find"></a>
+#### Finding tasks, events and gateways by name
+You can map the name of a task, event or a gateway to it's ID by the means of a static helper method:
+
+```java
+find("My verbose task name");
+```
 
 <a name="helpers-claim"></a>
 #### Claiming tasks
