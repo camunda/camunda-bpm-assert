@@ -105,7 +105,11 @@ public class JobAnnouncementProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
     verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
 
-    assertThat(processInstance).hasPassedInOrder("edit", "review", "publish", "publication", "mail");
+    assertThat(processInstance).hasPassedInOrder(find("Stelle beschreiben"), 
+        find("Stellenbeschreibung sichten"), 
+        find("Ausschreibung anstoßen"), 
+        find("Durchführung der Ausschreibung"), 
+        find("Erfolgsmeldung senden"));
 
     assertThat(processInstance).isEnded();
 
@@ -136,7 +140,7 @@ public class JobAnnouncementProcessTest {
   public void should_fail_if_processInstance_is_not_waiting_at_expected_task() {
     final ProcessInstance processInstance = startProcess();
     try {
-      assertThat(processInstance).task("review");
+      assertThat(processInstance).task(find("Stellenbeschreibung sichten"));
     } catch (AssertionError e) {
       return;
     }
@@ -147,7 +151,7 @@ public class JobAnnouncementProcessTest {
   @Deployment(resources = { "camunda-testing-job-announcement.bpmn", "camunda-testing-job-announcement-publication.bpmn" })
   public void should_not_fail_if_processInstance_is_waiting_at_expected_task() {
     final ProcessInstance processInstance = startProcess();
-    assertThat(processInstance).task("edit").isNotAssigned();
+    assertThat(processInstance).task(find("Stelle beschreiben")).isNotAssigned();
   }
 
   private ProcessInstance startProcess() {
