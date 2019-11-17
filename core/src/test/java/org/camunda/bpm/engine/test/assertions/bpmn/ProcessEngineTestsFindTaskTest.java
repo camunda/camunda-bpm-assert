@@ -204,7 +204,7 @@ public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
   }
   
   @Test
-  @Deployment(resources = "bpmn/ProcessEngineTests-findduplicateNamesOnTaskAndGateway.bpmn")
+  @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNamesOnTaskAndGateway.bpmn")
   public void testProcessWithDuplicateNamesDindTheUniqueOnly() {
     // Given
     // Process model with two pools and a mix of duplicate and unique names deployed
