@@ -58,6 +58,7 @@ import static java.lang.String.format;
  */
 public class BpmnAwareTests extends AbstractAssertions {
 
+  private static final String DUPLICATED_NAME = "This is a duplicated name, impossible to map to a single ID";
   public static final long DEFAULT_LOCK_DURATION_EXTERNAL_TASK = 30L * 1000L;// 30 seconds
   public static final String DEFAULT_WORKER_EXTERNAL_TASK      = "anonymousWorker";
 
@@ -1027,28 +1028,45 @@ public class BpmnAwareTests extends AbstractAssertions {
   public static String find(String name) {
     Map<String, String> nameToIDMapping = new HashMap<>();
     // find deployed process models
-    List<ProcessDefinition> processDefinitions = repositoryService().createProcessDefinitionQuery().orderByProcessDefinitionVersion().asc().list();
+    List<ProcessDefinition> processDefinitions = repositoryService()
+        .createProcessDefinitionQuery()
+        .orderByProcessDefinitionVersion().asc()
+        .list();
     // parse process models
     for (ProcessDefinition processDefinition : processDefinitions) {
       BpmnModelInstance bpmnModelInstance = repositoryService().getBpmnModelInstance(processDefinition.getId());
       Collection<Activity> activities = bpmnModelInstance.getModelElementsByType(Activity.class);
       for (Activity activity: activities) {
-        nameToIDMapping.put(activity.getName(), activity.getId());
+        insertAndCheckForDuplicateNames(nameToIDMapping, activity.getName(), activity.getId());
       }
       Collection<Event> events = bpmnModelInstance.getModelElementsByType(Event.class);
       for (Event event : events) {
-        nameToIDMapping.put(event.getName(), event.getId());
+        insertAndCheckForDuplicateNames(nameToIDMapping, event.getName(), event.getId());
       }
       Collection<Gateway> gateways = bpmnModelInstance.getModelElementsByType(Gateway.class);
       for (Gateway gateway : gateways) {
-        nameToIDMapping.put(gateway.getName(), gateway.getId());
-      }
+        insertAndCheckForDuplicateNames(nameToIDMapping, gateway.getName(), gateway.getId());
+       }
     }
     // look for name and return ID
+    Assertions.assertThat(nameToIDMapping.containsKey(name))
+      .overridingErrorMessage("Element with name '%s' doesn't exist", name)
+      .isTrue();
+    Assertions.assertThat(nameToIDMapping.get(name))
+      .overridingErrorMessage("Name '%s' is not unique", name)
+      .isNotEqualTo(DUPLICATED_NAME);
+    return nameToIDMapping.get(name);
+  }
+
+  private static void insertAndCheckForDuplicateNames(Map<String, String> nameToIDMapping, String name, String id) {
     if (nameToIDMapping.containsKey(name)) {
-      return nameToIDMapping.get(name);
+      if (nameToIDMapping.get(name).equals(id)) {
+        // already inserted as diagram includes two pools
+      } else {
+        nameToIDMapping.put(name, DUPLICATED_NAME);
+      }
     } else {
-      return "Element with name '" + name + "' doesn't exist";
+      nameToIDMapping.put(name, id);
     }
   }
 }

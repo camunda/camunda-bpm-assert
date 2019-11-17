@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_018db43" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.3.2">
-  <bpmn:process id="Process_TestID" isExecutable="true">
+  <bpmn:process id="Process_TestID" name="Find tasks process" isExecutable="true">
     <bpmn:startEvent id="Start_TestID" name="Start">
       <bpmn:outgoing>SequenceFlow_07jrjb2</bpmn:outgoing>
     </bpmn:startEvent>
@@ -14,12 +14,12 @@
       <bpmn:incoming>SequenceFlow_1y4dmex</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1j3bp7n</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1j3bp7n" sourceRef="UserTask_TestID" targetRef="Task_1fqq793" />
-    <bpmn:receiveTask id="Task_1fqq793" name="Receive task">
+    <bpmn:sequenceFlow id="SequenceFlow_1j3bp7n" sourceRef="UserTask_TestID" targetRef="ReceiveTask_TestID" />
+    <bpmn:receiveTask id="ReceiveTask_TestID" name="Receive task">
       <bpmn:incoming>SequenceFlow_1j3bp7n</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1dr1mbo</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:boundaryEvent id="n2Days_TestID" name="2 days" attachedToRef="Task_1fqq793">
+    <bpmn:boundaryEvent id="n2Days_TestID" name="2 days" attachedToRef="ReceiveTask_TestID">
       <bpmn:timerEventDefinition>
         <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P2D</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
@@ -27,7 +27,7 @@
     <bpmn:endEvent id="End_TestID" name="End">
       <bpmn:incoming>SequenceFlow_0dntn20</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_1dr1mbo" sourceRef="Task_1fqq793" targetRef="Continue_TestID" />
+    <bpmn:sequenceFlow id="SequenceFlow_1dr1mbo" sourceRef="ReceiveTask_TestID" targetRef="Continue_TestID" />
     <bpmn:exclusiveGateway id="Continue_TestID" name="Continue?" default="SequenceFlow_1pv5pmd">
       <bpmn:incoming>SequenceFlow_1dr1mbo</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dntn20</bpmn:outgoing>
@@ -69,7 +69,7 @@
         <di:waypoint x="530" y="117" />
         <di:waypoint x="590" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ReceiveTask_0ekjs2a_di" bpmnElement="Task_1fqq793">
+      <bpmndi:BPMNShape id="ReceiveTask_0ekjs2a_di" bpmnElement="ReceiveTask_TestID">
         <dc:Bounds x="590" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BoundaryEvent_1q3f3xr_di" bpmnElement="n2Days_TestID">
