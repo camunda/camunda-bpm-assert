@@ -26,4 +26,4 @@ env:
   - CAMUNDA=7.11.0
   - CAMUNDA=7.10.0
 install: true
-script: mvn -Dcamunda.version=$CAMUNDA -Pinclude-examples
+script: mvn -Dcamunda.version=$CAMUNDA -Pinclude-examples com.mycila:license-maven-plugin:check
