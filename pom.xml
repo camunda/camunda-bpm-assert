@@ -40,8 +40,6 @@
     <version.junit>4.12</version.junit>
     <version.h2>1.4.200</version.h2>
 
-    <!-- disable javadoc -->
-    <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
     <!-- disable javadoc linter for JDK8 to not fail on incomplete javadoc -->
     <additionalparam>-Xdoclint:none</additionalparam>
   </properties>
