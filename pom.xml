@@ -207,6 +207,14 @@
           <artifactId>maven-failsafe-plugin</artifactId>
           <version>2.16</version>
         </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${plugin.version.javadoc}</version>
+          <configuration>
+            <source>1.8</source>
+          </configuration>
+        </plugin>
       </plugins>
     </pluginManagement>
   </build>
