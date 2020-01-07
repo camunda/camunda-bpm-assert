@@ -23,7 +23,7 @@ matrix:
     - jdk: openjdk-ea
 env:
   - CAMUNDA=LATEST
+  - CAMUNDA=7.12.0
   - CAMUNDA=7.11.0
-  - CAMUNDA=7.10.0
 install: true
 script: mvn -Dcamunda.version=$CAMUNDA -Pinclude-examples com.mycila:license-maven-plugin:check
