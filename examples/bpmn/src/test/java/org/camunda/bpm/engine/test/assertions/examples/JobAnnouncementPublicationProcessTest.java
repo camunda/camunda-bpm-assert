@@ -43,7 +43,7 @@ public class JobAnnouncementPublicationProcessTest {
   @Mock public JobAnnouncementService jobAnnouncementService;
   @Mock public JobAnnouncement jobAnnouncement;
 
-          // Some boilerplate - we can easily get rid of again by 
+          // Some boilerplate - we can easily get rid of again by
   @Before // deciding where to ultimately put the jUnit integration
   public void setUp() {
     MockitoAnnotations.initMocks(this);
@@ -55,7 +55,7 @@ public class JobAnnouncementPublicationProcessTest {
   public void tearDown() {
     Mocks.reset();
   }
-  
+
   @Test
   @Deployment(resources = { "camunda-testing-job-announcement-publication.bpmn" })
   public void testPublishOnlyOnCompanyWebsite() {
@@ -76,7 +76,7 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService, never()).postToFacebook(any(Long.class));
 
     assertThat(processInstance).hasPassed(
-      find("Anzeige auf Firmenwebsite publizieren")
+      findId("Anzeige auf Firmenwebsite publizieren")
     );
 
     assertThat(processInstance).isEnded();
@@ -103,8 +103,8 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService, never()).postToFacebook(any(Long.class));
 
     assertThat(processInstance).hasPassed(
-      find("Anzeige auf Firmenwebsite publizieren"),
-      find("Anzeige auf Twitter publizieren")
+      findId("Anzeige auf Firmenwebsite publizieren"),
+      findId("Anzeige auf Twitter publizieren")
     );
 
     assertThat(processInstance).isEnded();
@@ -131,8 +131,8 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 
     assertThat(processInstance).hasPassed(
-      find("Anzeige auf Firmenwebsite publizieren"),
-      find("Anzeige auf Facebook Page publizieren")
+      findId("Anzeige auf Firmenwebsite publizieren"),
+      findId("Anzeige auf Facebook Page publizieren")
     );
 
     assertThat(processInstance).isEnded();
@@ -159,11 +159,11 @@ public class JobAnnouncementPublicationProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
 
     assertThat(processInstance).hasPassed(
-      find("Anzeige auf Firmenwebsite publizieren"),
-      find("Anzeige auf Twitter publizieren"),
-      find("Anzeige auf Facebook Page publizieren")
+      findId("Anzeige auf Firmenwebsite publizieren"),
+      findId("Anzeige auf Twitter publizieren"),
+      findId("Anzeige auf Facebook Page publizieren")
     );
-    
+
     assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
