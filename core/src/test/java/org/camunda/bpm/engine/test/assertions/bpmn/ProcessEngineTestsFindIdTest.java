@@ -26,8 +26,8 @@ import org.junit.Test;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 import static org.assertj.core.api.Assertions.*;
 
-public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
-  
+public class ProcessEngineTestsFindIdTest extends ProcessAssertTestCase {
+
   @Rule
   public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
@@ -37,8 +37,8 @@ public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
     // Given
     // Process model deployed
     // When
-    String id = find("Plain task");
-    // Then 
+    String id = findId("Plain task");
+    // Then
     assertThat(id).isEqualTo("PlainTask_TestID");
   }
 
@@ -48,8 +48,8 @@ public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
     // Given
     // Process model deployed
     // When
-    String end = find("End");
-    // Then 
+    String end = findId("End");
+    // Then
     assertThat(end).isEqualTo("End_TestID");
   }
 
@@ -59,8 +59,8 @@ public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
     // Given
     // Process model deployed
     // When
-    String attachedBoundaryEvent = find("2 days");
-    // Then 
+    String attachedBoundaryEvent = findId("2 days");
+    // Then
     assertThat(attachedBoundaryEvent).isEqualTo("n2Days_TestID");
   }
 
@@ -70,41 +70,57 @@ public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
     // Given
     // process model deployed
     // When
-    String gateway = find("Continue?");
-    // Then 
+    String gateway = findId("Continue?");
+    // Then
     assertThat(gateway).isEqualTo("Continue_TestID");
   }
 
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
-  public void testElementbyNameNotFound() {
+  public void testNameNotFound() {
     // Given
     // Process model deployed
     // When
-    // find("This should not be found"); 
-    // Then 
+    // findId("This should not be found");
+    // Then
     expect(new Failure() {
       @Override
       public void when() {
-        find("This should not be found");
+        findId("This should not be found");
       }
     }, "doesn't exist");
   }
-  
+
+  @Test
+  @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
+  public void testNameNull() {
+    // Given
+    // Process model deployed
+    // When
+    // findId(null);
+    // Then
+    expect(new Failure() {
+      @Override
+      public void when() {
+        findId(null);
+      }
+    }, IllegalArgumentException.class);
+  }
+
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findTest.bpmn")
   public void testFindAllElements() {
     // Given
     // Process model deployed
     // When
-    String start = find("Start");
-    String plainTask = find("Plain task");
-    String userTask = find("User task");
-    String receiveTask = find("Receive task");
-    String attachedBoundaryEvent = find("2 days");
-    String gateway = find("Continue?");
-    String end = find("End");
-    String messageEnd = find("Message End");
+    String start = findId("Start");
+    String plainTask = findId("Plain task");
+    String userTask = findId("User task");
+    String receiveTask = findId("Receive task");
+    String attachedBoundaryEvent = findId("2 days");
+    String gateway = findId("Continue?");
+    String end = findId("End");
+    String messageEnd = findId("Message End");
     //Then
     assertThat(start).isEqualTo("Start_TestID");
     assertThat(plainTask).isEqualTo("PlainTask_TestID");
@@ -115,14 +131,14 @@ public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
     assertThat(end).isEqualTo("End_TestID");
     assertThat(messageEnd).isEqualTo("MessageEnd_TestID");
   }
-  
+
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findInTwoPools.bpmn")
   public void testFindInTwoPoolsInPool1() {
     // Given
     // Process model with two pools deployed
     // When
-    String callActivity = find("Call activity one");
+    String callActivity = findId("Call activity one");
     // Then
     assertThat(callActivity).isEqualTo("CallActivityOne_TestID");
   }
@@ -133,22 +149,22 @@ public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
     // Given
     // Process model with two pools deployed
     // When
-    String task = find("Subprocess task");
+    String task = findId("Subprocess task");
     // Then
     assertThat(task).isEqualTo("SubProcessTask_TestID");
   }
-  
+
   @Test
   @Deployment(resources = {"bpmn/ProcessEngineTests-findTest.bpmn", "bpmn/ProcessEngineTests-findInTwoPools.bpmn"})
   public void testFindOneInEachOfTwoDiagrams() {
     // Given
     // Two process models deployed
     // When
-    String start = find("Start");
-    String plainTask = find("Plain task");
-    String startSuperProcess = find("Super started");
-    String taskTwo = find("Task two");
-    String proc2Started = find("Proc 2 started");
+    String start = findId("Start");
+    String plainTask = findId("Plain task");
+    String startSuperProcess = findId("Super started");
+    String taskTwo = findId("Task two");
+    String proc2Started = findId("Proc 2 started");
     // Then
     assertThat(start).isEqualTo("Start_TestID");
     assertThat(plainTask).isEqualTo("PlainTask_TestID");
@@ -156,61 +172,61 @@ public class ProcessEngineTestsFindTaskTest extends ProcessAssertTestCase {
     assertThat(taskTwo).isEqualTo("TaskTwo_TestID");
     assertThat(proc2Started).isEqualTo("Proc2Started_TestID");
   }
-  
+
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNames.bpmn")
   public void testProcessWithDuplicateNames() {
     // Given
     // Process model with duplicate task names deployed
     // When
-    // find("Task one"); find("Event one"); find("Gateway one");
-    // Then 
+    // findId("Task one"); findId("Event one"); findId("Gateway one");
+    // Then
     expect(new Failure() {
       @Override
       public void when() {
-        find("Task one");
+        findId("Task one");
       }
     }, "not unique");
     // And
     expect(new Failure() {
       @Override
       public void when() {
-        find("Event one");
+        findId("Event one");
       }
     }, "not unique");
-    // And 
+    // And
     expect(new Failure() {
       @Override
       public void when() {
-        find("Gateway one");
+        findId("Gateway one");
       }
     }, "not unique");
   }
-  
+
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNamesOnTaskAndGateway.bpmn")
   public void testProcesswithDuplicateNamesOnDifferentElementsTypes() {
     // Given
     // Process model with same name on task and gateway deployed
     // When
-    // find("Element one");
+    // findId("Element one");
     // Then
     expect(new Failure() {
       @Override
       public void when() {
-        find("Element one");
+        findId("Element one");
       }
     }, "not unique");
   }
-  
+
   @Test
   @Deployment(resources = "bpmn/ProcessEngineTests-findDuplicateNamesOnTaskAndGateway.bpmn")
   public void testProcessWithDuplicateNamesDindTheUniqueOnly() {
     // Given
     // Process model with two pools and a mix of duplicate and unique names deployed
     // When
-    String startOne = find("Start one");
-    String endTwo = find("End two");
+    String startOne = findId("Start one");
+    String endTwo = findId("End two");
     // Then
     assertThat(startOne).isEqualTo("StartOne_TestID");
     assertThat(endTwo).isEqualTo("EndTwo_TestID");
