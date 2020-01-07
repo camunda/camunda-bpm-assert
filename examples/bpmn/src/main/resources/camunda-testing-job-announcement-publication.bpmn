@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sid-c2339534-7029-477b-9831-3df9906509f9" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="6.0.0" targetNamespace="http://www.signavio.com/bpmn20">
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:signavio="http://www.signavio.com" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="sid-c2339534-7029-477b-9831-3df9906509f9" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="6.0.0" targetNamespace="http://www.signavio.com/bpmn20">
   <process id="camunda-testing-job-announcement-publication" name="Job Announcement Publication (Subprocess)" isExecutable="true">
     <startEvent id="startEvent_1" name="">
       <extensionElements>
@@ -7,7 +7,7 @@
       </extensionElements>
       <outgoing>sequenceFlow_68</outgoing>
     </startEvent>
-    <serviceTask id="Anzeige_auf_Firmenwebsite_publizieren" activiti:expression="#{jobAnnouncementService.postToWebsite(jobAnnouncementId)}" name="Anzeige auf Firmenwebsite publizieren" implementation="webService">
+    <serviceTask id="Anzeige_auf_Firmenwebsite_publizieren" camunda:expression="#{jobAnnouncementService.postToWebsite(jobAnnouncementId)}" name="Anzeige auf Firmenwebsite publizieren" implementation="webService">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
         <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
@@ -33,7 +33,7 @@
       <outgoing>sequenceFlow_69</outgoing>
       <outgoing>sequenceFlow_73</outgoing>
     </exclusiveGateway>
-    <serviceTask id="Anzeige_auf_Twitter_publizieren" activiti:expression="#{jobAnnouncementService.postToTwitter(jobAnnouncementId)}" name="Anzeige auf Twitter publizieren" implementation="webService">
+    <serviceTask id="Anzeige_auf_Twitter_publizieren" camunda:expression="#{jobAnnouncementService.postToTwitter(jobAnnouncementId)}" name="Anzeige auf Twitter publizieren" implementation="webService">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
         <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>
@@ -66,7 +66,7 @@
       <incoming>sequenceFlow_74</incoming>
       <outgoing>sequenceFlow_75</outgoing>
     </exclusiveGateway>
-    <serviceTask id="Anzeige_auf_Facebook_Page_publizieren" activiti:expression="#{jobAnnouncementService.postToFacebook(jobAnnouncementId)}" name="Anzeige auf Facebook Page publizieren" implementation="webService">
+    <serviceTask id="Anzeige_auf_Facebook_Page_publizieren" camunda:expression="#{jobAnnouncementService.postToFacebook(jobAnnouncementId)}" name="Anzeige auf Facebook Page publizieren" implementation="webService">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
         <signavio:signavioMetaData metaKey="risklevel" metaValue=""/>

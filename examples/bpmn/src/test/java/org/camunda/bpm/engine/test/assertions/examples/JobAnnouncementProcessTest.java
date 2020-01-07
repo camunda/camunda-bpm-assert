@@ -45,7 +45,7 @@ public class JobAnnouncementProcessTest {
   @Mock
   public JobAnnouncement jobAnnouncement;
 
-          // Some boilerplate - we can easily get rid of again by 
+          // Some boilerplate - we can easily get rid of again by
   @Before // deciding where to ultimately put the jUnit integration
   public void setUp() {
     MockitoAnnotations.initMocks(this);
@@ -57,7 +57,7 @@ public class JobAnnouncementProcessTest {
   public void tearDown() {
     Mocks.reset();
   }
-  
+
   @Test
   @Deployment(resources = {
     "camunda-testing-job-announcement.bpmn",
@@ -88,7 +88,7 @@ public class JobAnnouncementProcessTest {
     complete(task(), withVariables("approved", true));
 
     assertThat(processInstance).task().hasDefinitionKey("publish").hasCandidateGroup("engineering").isNotAssigned();
-    
+
     assertThat(processInstance).hasVariables();
     assertThat(processInstance).hasVariables("jobAnnouncementId", "approved");
     assertThat(processInstance).variables()
@@ -105,12 +105,16 @@ public class JobAnnouncementProcessTest {
     verify(jobAnnouncementService).postToFacebook(jobAnnouncement.getId());
     verify(jobAnnouncementService).notifyAboutPostings(jobAnnouncement.getId());
 
-    assertThat(processInstance).hasPassedInOrder("edit", "review", "publish", "publication", "mail");
+    assertThat(processInstance).hasPassedInOrder(findId("Stelle beschreiben"),
+        findId("Stellenbeschreibung sichten"),
+        findId("Ausschreibung anstoßen"),
+        findId("Durchführung der Ausschreibung"),
+        findId("Erfolgsmeldung senden"));
 
     assertThat(processInstance).isEnded();
 
     verifyNoMoreInteractions(jobAnnouncementService);
-    
+
   }
 
   @Test
@@ -136,7 +140,7 @@ public class JobAnnouncementProcessTest {
   public void should_fail_if_processInstance_is_not_waiting_at_expected_task() {
     final ProcessInstance processInstance = startProcess();
     try {
-      assertThat(processInstance).task("review");
+      assertThat(processInstance).task(findId("Stellenbeschreibung sichten"));
     } catch (AssertionError e) {
       return;
     }
@@ -147,7 +151,7 @@ public class JobAnnouncementProcessTest {
   @Deployment(resources = { "camunda-testing-job-announcement.bpmn", "camunda-testing-job-announcement-publication.bpmn" })
   public void should_not_fail_if_processInstance_is_waiting_at_expected_task() {
     final ProcessInstance processInstance = startProcess();
-    assertThat(processInstance).task("edit").isNotAssigned();
+    assertThat(processInstance).task(findId("Stelle beschreiben")).isNotAssigned();
   }
 
   private ProcessInstance startProcess() {
