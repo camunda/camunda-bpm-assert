@@ -1,29 +1,20 @@
-dist: precise
 sudo: false
-before_install:
-  - cat /etc/hosts # optionally check the content *before*
-  - sudo hostname "$(hostname | cut -c1-63)"
-  - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo tee /etc/hosts
-  - cat /etc/hosts # optionally check the content *after*
-  - echo "Downloading Maven 3.2.5" 
-   && wget https://archive.apache.org/dist/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip 
-   && unzip -q apache-maven-3.2.5-bin.zip 
-   && export M2_HOME=$PWD/apache-maven-3.2.5 
-   && export PATH=$M2_HOME/bin:$PATH 
-   && cp ./.travis.settings.xml $HOME/.m2/settings.xml
-   && mvn -version
 language: java
 jdk:
-  - oraclejdk8
-  - oraclejdk11
+  - openjdk8
+  - openjdk11
   - openjdk12
+  - openjdk13
   - openjdk-ea
 matrix:
   allow_failures:
     - jdk: openjdk-ea
+install: true
+cache:
+  directories:
+    - $HOME/.m2
 env:
   - CAMUNDA=LATEST
   - CAMUNDA=7.12.0
   - CAMUNDA=7.11.0
-install: true
-script: mvn -Dcamunda.version=$CAMUNDA -Pinclude-examples com.mycila:license-maven-plugin:check
+script: mvn clean install com.mycila:license-maven-plugin:check -Pinclude-examples -Dcamunda.version=$CAMUNDA
