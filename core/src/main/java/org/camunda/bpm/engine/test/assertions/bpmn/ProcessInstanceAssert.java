@@ -17,6 +17,9 @@
 package org.camunda.bpm.engine.test.assertions.bpmn;
 
 import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.assertj.core.api.*;
 import org.assertj.core.util.Lists;
@@ -32,6 +35,7 @@ import org.camunda.bpm.engine.task.TaskQuery;
  * Assertions for a {@link ProcessInstance}
  * @author Martin Schimak (martin.schimak@plexiti.com)
  * @author Rafael Cordones (rafael@cordones.me)
+ * @author Ingo Richtsmeier
  */
 public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstanceAssert, ProcessInstance> {
 
@@ -175,6 +179,58 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       } else {
         assertion.isEmpty();
       }
+    }
+    return this;
+  }
+  
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
+   * at the specified joining parallel or inclusive gateway.
+   *  
+   * @param gatewayId the ID of the gateway
+   * @return this {@link ProcessInstanceAssert}
+   */
+  public ProcessInstanceAssert isWaitingForJoinAt(final String gatewayId) {
+    return isWaitingForJoinAt(gatewayId, true);
+  }
+  
+  /**
+   * Verifies the expectation that the {@link ProcessInstance} doesn't wait 
+   * at the specified joining parallel or inclusive gateway.
+   * 
+   * @param gatewayId
+   * @return
+   */
+  public ProcessInstanceAssert isNotWaitingForJoinAt(final String gatewayId) {
+    return isWaitingForJoinAt(gatewayId, false);
+  }
+  
+  private ProcessInstanceAssert isWaitingForJoinAt(final String gatewayId, boolean isWaiting) {
+    isNotNull();
+    Assertions.assertThat(gatewayId)
+        .overridingErrorMessage("Expecting gatewayId not to be null and not to be empty: %s", gatewayId)
+        .isNotNull().isNotEmpty();
+    Assertions.assertThat(getCurrent())
+    .overridingErrorMessage("The %s is not available, maybe completed?", toString(actual))
+    .isNotNull();
+    
+    ActivityInstance activityInstanceTree = runtimeService().getActivityInstance(actual.getId());
+    ActivityInstance[] decendentActivities = activityInstanceTree.getChildActivityInstances();
+    Supplier<Stream<String>> decendentActivityIdSupplier = () -> Arrays.stream(decendentActivities)
+        .map(activity -> activity.getActivityId());
+    if (isWaiting) {
+      boolean gatewayFound = decendentActivityIdSupplier.get()
+          .anyMatch(activityId -> activityId.equals(gatewayId));
+      Assertions.assertThat(gatewayFound)
+          .overridingErrorMessage("Expecting %s to be waining for join at %s, but it is not. Instead it is waiting at [%s]", 
+              toString(actual), gatewayId, decendentActivityIdSupplier.get().collect(Collectors.joining(", ")))
+          .isTrue();
+    } else {
+      boolean gatewayNotFound = decendentActivityIdSupplier.get()
+          .noneMatch(activityId -> activityId.equals(gatewayId));
+      Assertions.assertThat(gatewayNotFound)
+          .overridingErrorMessage("Expecting %s NOT to be waiting for join at %s, but is is.", toString(actual), gatewayId)
+          .isTrue();
     }
     return this;
   }
