@@ -46,7 +46,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     complete(task("UserTask1"));
     
     // Then
-    assertThat(processInstance).isWaitingForJoinAt("JoinGateway");
+    assertThat(processInstance).isWaitingAt("UserTask2", "JoinGateway");
   }
   
   @Test
@@ -58,7 +58,7 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     );
     
     // Then
-    assertThat(processInstance).isNotWaitingForJoinAt("JoinGateway");
+    assertThat(processInstance).isNotWaitingAt("JoinGateway");
   }
 
   @Test
@@ -73,13 +73,13 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     complete(task("Task3"));
 
     // Then
-    assertThat(processInstance).isWaitingForJoinAt("JoinGateway1");
-    assertThat(processInstance).isWaitingForJoinAt("JoinGateway2");
+    assertThat(processInstance).isWaitingAt("JoinGateway1");
+    assertThat(processInstance).isWaitingAt("JoinGateway2");
     
     // And 
     complete(task("Task2"));
-    assertThat(processInstance).isWaitingForJoinAt("JoinGateway2");
-    assertThat(processInstance).isWaitingForJoinAt("JoinGateway3");
+    assertThat(processInstance).isWaitingAt("JoinGateway2");
+    assertThat(processInstance).isWaitingAt("JoinGateway3");
   }
   
   @Test
@@ -93,11 +93,11 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     complete(task("Task1"));  
     
     // Then
-    assertThat(processInstance).isWaitingForJoinAt("JoinInclusiveGateway1");
+    assertThat(processInstance).isWaitingAt("JoinInclusiveGateway1");
     
     // And
     complete(task("Task3"));
-    assertThat(processInstance).isWaitingForJoinAt("JoinInclusiveGateway2");
+    assertThat(processInstance).isWaitingAt("JoinInclusiveGateway2");
   }
   
   @Test
@@ -114,9 +114,9 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).isNotWaitingForJoinAt("JoinGateway");
+        assertThat(processInstance).isNotWaitingAt("JoinGateway");
       }
-    }, "NOT to be waiting for join");
+    }, "NOT to be waiting at [");
   }
   
   @Test
@@ -131,28 +131,11 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).isWaitingForJoinAt(null);        
+        assertThat(processInstance).isWaitingAt(null);        
       }
-    }, "Expecting gatewayId not to be null and not to be empty");
+    }, "Expecting list of activityIds not to be null, not to be empty");
   }
 
-  @Test
-  @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")
-  public void testIsWaitingForJoinAtEmpty() {
-    // When
-    final ProcessInstance processInstance = runtimeService().startProcessInstanceByKey(
-      "ProcessInstanceAssert-isWaitingForJoinAt"
-    );
-    
-    // Then
-    expect(new Failure() {
-      @Override
-      public void when() {
-        assertThat(processInstance).isWaitingForJoinAt("");        
-      }
-    }, "Expecting gatewayId not to be null and not to be empty");
-  }
-  
   @Test
   @Deployment(resources = "bpmn/ProcessInstanceAssert-isWaitingForJoinAt.bpmn")
   public void testIsWaitingForJoinAtWrongActivityId() {
@@ -167,9 +150,9 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).isWaitingForJoinAt("WrongGateway");
+        assertThat(processInstance).isWaitingAt("WrongGateway");
       }
-    }, "Instead it is waiting at [");
+    }, "is actually waiting at [");
     
   }
 
@@ -188,8 +171,8 @@ public class ProcessInstanceAssertIsWaitingForJoinTest extends ProcessAssertTest
     expect(new Failure() {
       @Override
       public void when() {
-        assertThat(processInstance).isWaitingForJoinAt("JoinGateway");
+        assertThat(processInstance).isWaitingAt("JoinGateway");
       }
-    }, "maybe completed");
+    }, "already finished");
   }
 }
