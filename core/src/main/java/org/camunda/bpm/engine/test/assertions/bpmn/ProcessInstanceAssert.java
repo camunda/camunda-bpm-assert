@@ -18,6 +18,8 @@ package org.camunda.bpm.engine.test.assertions.bpmn;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import org.assertj.core.api.*;
 import org.assertj.core.util.Lists;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -27,6 +29,7 @@ import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.*;
 import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.engine.test.assertions.AssertionsLogger;
 
 /**
  * Assertions for a {@link ProcessInstance}
@@ -35,6 +38,8 @@ import org.camunda.bpm.engine.task.TaskQuery;
  * @author Ingo Richtsmeier
  */
 public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstanceAssert, ProcessInstance> {
+  
+  protected static final AssertionsLogger LOG = AssertionsLogger.INSTANCE;
 
   protected ProcessInstanceAssert(final ProcessEngine engine, final ProcessInstance actual) {
     super(engine, actual, ProcessInstanceAssert.class);
@@ -111,10 +116,16 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
       .isNotNull().isNotEmpty().doesNotContainNull();
 
     ActivityInstance activityInstanceTree = runtimeService().getActivityInstance(actual.getId());
-    ActivityInstance[] decendentActivities = activityInstanceTree.getChildActivityInstances();
-    List<String> decendentActivityIds = Arrays.stream(decendentActivities)
-        .map(activity -> activity.getActivityId())
-        .collect(Collectors.toList());
+    
+    // Collect all children recursively
+    Stream <ActivityInstance> flattendActivityInstances = collectAllDecendentActivities(activityInstanceTree);
+    
+    Stream<String> decendentActivityIdStream = flattendActivityInstances
+        .flatMap(activityInstance -> getActivityIdAndCollectTransitions(activityInstance));
+    List<String> decendentActivityIds = decendentActivityIdStream.filter(
+        // remove the root id from the list
+        activityId -> !activityId.equals(activityInstanceTree.getActivityId()) 
+    ).collect(Collectors.toList());
     
     final String message = "Expecting %s " +
       (isWaitingAt ? "to be waiting at " + (exactly ? "exactly " : "") + "%s, ": "NOT to be waiting at %s, ") +
@@ -141,6 +152,26 @@ public class ProcessInstanceAssert extends AbstractProcessAssert<ProcessInstance
     return this;
   }
 
+  private Stream<ActivityInstance> collectAllDecendentActivities(ActivityInstance root) {
+    ActivityInstance[] childActivityInstances = root.getChildActivityInstances();
+    return Stream.concat(
+        Stream.of(root), 
+        Arrays.stream(childActivityInstances).flatMap(child -> collectAllDecendentActivities(child))
+    );
+  }
+  
+  private Stream<String> getActivityIdAndCollectTransitions(ActivityInstance root) {
+    LOG.collectTransitionInstances(root);
+    return Stream.concat(
+        Stream.of(root.getActivityId()), 
+        Arrays.stream(root.getChildTransitionInstances())
+            .map(transitionInstance -> {
+              LOG.foundTransitionInstances(transitionInstance);
+              return transitionInstance.getActivityId(); 
+            })
+    );
+  }
+  
   /**
    * Verifies the expectation that the {@link ProcessInstance} is currently waiting 
    * for one or more specified messages.
