@@ -3,7 +3,7 @@
 ### Table of Contents
 
  * [Assertions](#assertions)
-   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasPassedInOrder](#processInstance-hasPassedInOrder), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [hasProcessDefinitionKey](#processInstance-hasProcessDefinitionKey), [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly), [isWaitingForJoinAt](#processInstance-isWaitingForJoinAt), [isNotWaitingForJoinAt](#processInstance-isNotWaitingForJoinAt), [isWaitingFor](#processInstance-isWaitingFor), [isNotWaitingFor](#processInstance-isNotWaitingFor)
+   * for process instances: [isActive](#processInstance-isActive), [isEnded](#processInstance-isEnded), [isNotEnded](#processInstance-isNotEnded), [isStarted](#processInstance-isStarted), [isSuspended](#processInstance-isSuspended), [hasPassed](#processInstance-hasPassed), [hasPassedInOrder](#processInstance-hasPassedInOrder), [hasNotPassed](#processInstance-hasNotPassed), [hasVariables](#processInstance-hasVariables), [hasNoVariables](#processInstance-hasNoVariables), [hasProcessDefinitionKey](#processInstance-hasProcessDefinitionKey), [isWaitingAt](#processInstance-isWaitingAt), [isNotWaitingAt](#processInstance-isNotWaitingAt), [isWaitingAtExactly](#processInstance-isWaitingAtExactly), [isWaitingFor](#processInstance-isWaitingFor), [isNotWaitingFor](#processInstance-isNotWaitingFor)
    * for process definitions: [hasActiveInstances](#processDefinition-hasActiveInstances)
    * for jobs: [hasActivityId](#job-hasActivityId), [hasDeploymentId](#job-hasDeploymentId), [hasDueDate](#job-hasDueDate), [hasId](#job-hasId), [hasRetries](#job-hasRetries)
    * for tasks: [isAssignedTo](#task-isAssignedTo), [isNotAssigned](#task-isNotAssigned), [hasCandidateGroup](#task-hasCandidateGroup), [hasCandidateGroupAssociated](#task-hasCandidateGroupAssociated), [hasCandidateUser](#task-hasCandidateUser), [hasCandidateUserAssociated](#task-hasCandidateUserAssociated), [hasDefinitionKey](#task-hasDefinitionKey), [hasDescription](#task-hasDescription), [hasDueDate](#task-hasDueDate), [hasFormKey](#task-hasFormKey), [hasId](#task-hasId), [hasName](#task-hasName)
@@ -215,24 +215,6 @@ Assert that a process instance is currently waiting at exactly the several speci
 
 ```java
 assertThat(processInstance).isWaitingAtExactly("edit", "correct");
-```
-
-<a name="processInstance-isWaitingForJoinAt"></a>
-#### Instance: isWaitingForJoinAt
-
-Assert that a process instance is currently waiting at a joining gateway (inclusive or parallel):
-
-```java
-assertThat(processInstance).isWaitingForJoinAt("joinGateway");
-```
-
-<a name="processInstance-isNotWaitingForJoinAt"></a>
-#### Instance: isNotWaitingForJoinAt
-
-Assert that a process instance currently doesn't wait at a joining gateway (inclusive or parallel):
-
-```java
-assertThat(processInstance).isNotWaitingForJoinAt("joinGateway");
 ```
 
 <a name="processInstance-isWaitingFor"></a>
