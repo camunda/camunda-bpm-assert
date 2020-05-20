@@ -1,4 +1,4 @@
-# <img src="http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png" width="23" height="23"></img>&nbsp;Camunda BPM Assert
+# Camunda BPM Assert
 
 <a href="https://travis-ci.org/camunda/camunda-bpm-assert"><img src="https://travis-ci.org/camunda/camunda-bpm-assert.svg?branch=master"/></a>
 <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
@@ -29,7 +29,7 @@ Camunda BPM Assert works with the versions of Camunda BPM as shown [in the docum
 <dependency>
     <groupId>org.camunda.bpm.assert</groupId>
     <artifactId>camunda-bpm-assert</artifactId>
-    <version>5.0.0</version>
+    <version>6.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -69,7 +69,7 @@ Find a more detailed description of the assertions and helper methods available 
 
 * [Documentation](https://docs.camunda.org/manual/latest/user-guide/testing#camunda-assertions)
 * [User Guide](./docs/README.md)
-* [Issue Tracker](https://app.camunda.com/jira/browse/CAM/component/14065) 
+* [Issue Tracker](https://jira.camunda.com/projects/CAM) 
 * [Contributing](./CONTRIBUTING.md)
 
 ## License
