@@ -12,7 +12,7 @@
 
   <groupId>org.camunda.bpm.assert.project</groupId>
   <artifactId>camunda-bpm-assert-root</artifactId>
-  <version>7.0.0-SNAPSHOT</version>
+  <version>7.0.0</version>
 
   <packaging>pom</packaging>
 
@@ -230,7 +230,7 @@
     <connection>scm:git:git@github.com:camunda/camunda-bpm-assert.git</connection>
     <url>scm:git:git@github.com:camunda/camunda-bpm-assert.git</url>
     <developerConnection>scm:git:git@github.com:camunda/camunda-bpm-assert.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>7.0.0</tag>
   </scm>
 
   <repositories>
