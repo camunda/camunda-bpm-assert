@@ -1,8 +1,8 @@
 # Contributing Guide
 
-First of all, please follow the same [contributing guidelines](https://github.com/camunda/camunda-bpm-platform/blob/master/CONTRIBUTING.md) as for the Camunda BPM Platform.
+First of all, please have a look at our general [contribution guide](https://github.com/camunda/camunda-bpm-platform/blob/master/CONTRIBUTING.md) for how to contribute to this repository.
 
-We would love for you to contribute to this project by filing bugs, helping others on the [issue tracker](https://app.camunda.com/jira/browse/CAM/component/14065) and by contributing features/bug fixes through pull requests. When creating an issue, please add "assert" as a component, so that we can easily track all the issues related to this project.
+When creating an issue, please add "assert" as a component, so that we can easily track all the issues related to this project.
 
 Before v. 3.0.0, the issues were tracked in GitHub: https://github.com/camunda/camunda-bpm-assert/issues. They are now preserved for the reference. However, please, DON'T create new issues here any more.
 
@@ -30,8 +30,7 @@ We'd be glad to assist you if you do not get these things right at first.
 
 * Stuff is _implemented_, of course.
     - Stick to project coding conventions. Until these are documented, follow the style of existing code.
-    - Use small commit
-    - Use [semantic commit messages](http://seesparkbox.com/foundry/semantic_commit_messages) AKA [Karma commit message style](http://karma-runner.github.io/0.13/dev/git-commit-msg.html) 
+    - Use small commits
 * Javadoc has been created or changed accordingly
 * It is documented in the [README.md](./docs/README.md) - not the top-level one, but the one inside the docs folder
 * It is thoroughly tested. 
