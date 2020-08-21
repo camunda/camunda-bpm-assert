@@ -30,8 +30,7 @@ We'd be glad to assist you if you do not get these things right at first.
 
 * Stuff is _implemented_, of course.
     - Stick to project coding conventions. Until these are documented, follow the style of existing code.
-    - Use small commit
-    - Use [semantic commit messages](http://seesparkbox.com/foundry/semantic_commit_messages) AKA [Karma commit message style](http://karma-runner.github.io/0.13/dev/git-commit-msg.html) 
+    - Use small commits
 * Javadoc has been created or changed accordingly
 * It is documented in the [README.md](./docs/README.md) - not the top-level one, but the one inside the docs folder
 * It is thoroughly tested. 
