@@ -86,7 +86,7 @@ The Camunda BPM Assert project used to be the community extension, created and s
 [Jan Galinski](https://github.com/jangalinski) (Holisticon AG)<br>
 [Martin Günther](https://github.com/margue) (Holisticon AG)<br>
 [Malte Sörensen](https://github.com/malteser) (Holisticon AG)<br>
-<a href="http://www.holisticon.de"><img src="https://www.holisticon.de/wp-content/uploads/2013/05/holisticon-logo-hamburg.gif" align="right" /></a>[Simon Zambrovski](https://github.com/zambrovski) (Holisticon AG)
+<a href="http://www.holisticon.de"><img src="https://www.holisticon.de/wp-content/uploads/2020/08/logo2016_black_242.png" align="right" /></a>[Simon Zambrovski](https://github.com/zambrovski) (Holisticon AG)
 
 
 ... and [many others](https://github.com/camunda/camunda-bpm-assert/graphs/contributors).
