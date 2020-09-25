@@ -82,7 +82,7 @@ The Camunda BPM Assert project used to be the community extension, created and s
 
 <img src="http://camunda.github.io/camunda-bpm-assert/resources/images/community-award.png" align="right" width="76">
 
-[Martin Schimak](https://github.com/martinschimak) (plexiti GmbH)<a href="http://plexiti.com"><img src="https://plexiti.com/images/plexiti-home.png" align="right"></img></a><br>
+[Martin Schimak](https://github.com/martinschimak) (plexiti GmbH)<a href="http://plexiti.com"><img src="https://plexiti.com/images/plexiti-home.png" align="right" width="80"></img></a><br>
 [Jan Galinski](https://github.com/jangalinski) (Holisticon AG)<br>
 [Martin Günther](https://github.com/margue) (Holisticon AG)<br>
 [Malte Sörensen](https://github.com/malteser) (Holisticon AG)<br>
