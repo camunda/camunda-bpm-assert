@@ -29,7 +29,7 @@ Camunda BPM Assert works with the versions of Camunda BPM as shown [in the docum
 <dependency>
     <groupId>org.camunda.bpm.assert</groupId>
     <artifactId>camunda-bpm-assert</artifactId>
-    <version>7.0.0</version>
+    <version>8.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
