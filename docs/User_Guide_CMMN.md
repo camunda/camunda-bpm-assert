@@ -1,4 +1,4 @@
-# ![camunda logo](http://camunda.github.io/camunda-bpm-assert/resources/images/camunda.png)&nbsp;camunda-bpm-assert User Guide for CMMN
+# Camunda BPM Assert User Guide for CMMN
 
 ### Table of Contents
 
