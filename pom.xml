@@ -37,7 +37,7 @@
     <!-- test tools -->
     <version.mockito>3.1.0</version.mockito>
     <version.powermock>2.0.4</version.powermock>
-    <version.junit>4.12</version.junit>
+    <version.junit>4.13.1</version.junit>
     <version.h2>1.4.200</version.h2>
 
     <plugin.version.javadoc>3.1.1</plugin.version.javadoc>
