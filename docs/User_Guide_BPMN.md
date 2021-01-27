@@ -1,4 +1,4 @@
-# Camunda BPM Assert User Guide for BPMN
+# Camunda Platform Assert User Guide for BPMN
 
 ### Table of Contents
 
