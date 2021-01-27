@@ -1,6 +1,6 @@
-# Camunda BPM Assert User Guide
+# Camunda Platform Assert User Guide
 
-This project wants to make it easier to write tests for BPMN process definitions executed with [Camunda BPM](http://camunda.org). 
+This project wants to make it easier to write tests for BPMN process definitions executed with [Camunda Platform](http://camunda.org). 
 For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](https://github.com/joel-costigliola/assertj-core) rich assertions library for java are provided as well as a few little **helpers** to make it a bit easier to drive you through your process.
 
 [Getting started](../README.md#get-started-in-3-simple-steps)
@@ -18,7 +18,7 @@ For that reason, a set of **assertions** based on Joel Costigliola's [AssertJ](h
 
 ### Advanced topics
 
-#### Add Camunda BPM Assert to Eclipse
+#### Add Camunda Platform Assert to Eclipse
 
 Eclipse will remove the static import, when it organizes the imports. Thus it is recommended to add camunda-bpm-assert to your 'Content Assist Favorites'. In Eclipse go to Window -> Preferences -> Java -> Editor -> Content Assist -> Favorites -> New Type... and add the following type:
 

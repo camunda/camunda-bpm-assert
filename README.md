@@ -1,10 +1,10 @@
-# Camunda BPM Assert
+# Camunda Platform Assert
 
 <a href="https://travis-ci.org/camunda/camunda-bpm-assert"><img src="https://travis-ci.org/camunda/camunda-bpm-assert.svg?branch=master"/></a>
 <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
 <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert/badge.svg"/></a>
 
-**Camunda BPM Assert** makes it easy to assert the status of your BPMN processes and CMMN cases when driving them forward in your typical unit test methods. Simply write code like
+**Camunda Platform Assert** makes it easy to assert the status of your BPMN processes and CMMN cases when driving them forward in your typical unit test methods. Simply write code like
 
 ```groovy
 assertThat(instance).isWaitingAt("UserTask_InformCustomer");
@@ -19,7 +19,7 @@ complete(task(instance), withVariables("approved", true));
 
 ## Compatibility
 
-Camunda BPM Assert works with the versions of Camunda BPM as shown [in the documentation](https://docs.camunda.org/manual/latest/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.8+). This is continuously verified by executing around 500 test cases against a [travis ci test matrix](https://travis-ci.org/camunda/camunda-bpm-assert). 
+Camunda Platform Assert works with the versions of Camunda Platform as shown [in the documentation](https://docs.camunda.org/manual/latest/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.8+). This is continuously verified by executing around 500 test cases against a [travis ci test matrix](https://travis-ci.org/camunda/camunda-bpm-assert). 
 
 ## Get started in _3 simple steps_!
 
@@ -40,7 +40,7 @@ Please note that if you use [Spring Boot](https://spring.io/projects/spring-boot
 
 **2.** Add a **static import** to your test class
 
-Create your test case just as described in the [Camunda BPM Testing Guide](https://docs.camunda.org/manual/latest/user-guide/testing/) and add Camunda BPM Assert by statically importing it in your test class:
+Create your test case just as described in the [Camunda Platform Testing Guide](https://docs.camunda.org/manual/latest/user-guide/testing/) and add Camunda Platform Assert by statically importing it in your test class:
 
 ```groovy  
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
@@ -48,7 +48,7 @@ import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 
 **3.** Start using the assertions in your **test methods**
 
-You now have access to all the Camunda BPM assertions. Assuming you want to assert that your process instance is actually **started**, **waiting** at a specific **user task** and that task should yet be **unassigned**, but waiting to be assigned to a user of a specific group, just write:
+You now have access to all the Camunda Platform assertions. Assuming you want to assert that your process instance is actually **started**, **waiting** at a specific **user task** and that task should yet be **unassigned**, but waiting to be assigned to a user of a specific group, just write:
 
 ```groovy
 assertThat(processInstance).isStarted()
@@ -57,13 +57,13 @@ assertThat(processInstance).isStarted()
     .isNotAssigned();
 ```
 
-In case you want to combine Camunda BPM Assert with the assertions provided by AssertJ, your imports should look like this:
+In case you want to combine Camunda Platform Assert with the assertions provided by AssertJ, your imports should look like this:
 ```groovy  
 import static org.assertj.core.api.Assertions.*;
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 ```
 
-Find a more detailed description of the assertions and helper methods available in the Camunda BPM Assert [**User Guide**](./docs/README.md).
+Find a more detailed description of the assertions and helper methods available in the Camunda Platform Assert [**User Guide**](./docs/README.md).
 
 ## Further Resources
 
@@ -78,7 +78,7 @@ The source files in this repository are made available under the Apache License,
 
 ## Credits
 
-The Camunda BPM Assert project used to be the community extension, created and supported by
+The Camunda Platform Assert project used to be the community extension, created and supported by
 
 <img src="http://camunda.github.io/camunda-bpm-assert/resources/images/community-award.png" align="right" width="76">
 
@@ -91,6 +91,6 @@ The Camunda BPM Assert project used to be the community extension, created and s
 
 ... and [many others](https://github.com/camunda/camunda-bpm-assert/graphs/contributors).
 
-In 2014, the library won the **Camunda BPM Community Award**.
+In 2014, the library won the **Camunda Platform Community Award**.
 
-Starting from version 3.0.0 it was adopted as part of the Camunda BPM Platform.
+Starting from version 3.0.0 it was adopted as part of the Camunda Platform.
