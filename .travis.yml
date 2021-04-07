@@ -17,6 +17,6 @@ cache:
     - $HOME/.m2
 env:
   - CAMUNDA=LATEST
+  - CAMUNDA=7.15.0
   - CAMUNDA=7.14.0
-  - CAMUNDA=7.13.0
 script: mvn clean install com.mycila:license-maven-plugin:check -Pinclude-examples -Dcamunda.version=$CAMUNDA
