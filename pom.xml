@@ -24,7 +24,7 @@
 
     <camunda.version>7.15.0</camunda.version>
 
-    <version.assertj>3.18.1</version.assertj>
+    <version.assertj>3.20.2</version.assertj>
     <version.slf4j>1.7.26</version.slf4j>
     <version.commons-lang3>3.9</version.commons-lang3>
     <version.fasterxml.uuid>3.2.0</version.fasterxml.uuid>
