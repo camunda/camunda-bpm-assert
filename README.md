@@ -1,6 +1,5 @@
 # Camunda Platform Assert
 
-<a href="https://travis-ci.org/camunda/camunda-bpm-assert"><img src="https://travis-ci.org/camunda/camunda-bpm-assert.svg?branch=master"/></a>
 <a href="./LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
 <a href="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert"><img src="https://maven-badges.herokuapp.com/maven-central/org.camunda.bpm.assert/camunda-bpm-assert/badge.svg"/></a>
 
@@ -19,7 +18,7 @@ complete(task(instance), withVariables("approved", true));
 
 ## Compatibility
 
-Camunda Platform Assert works with the versions of Camunda Platform as shown [in the documentation](https://docs.camunda.org/manual/latest/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.8+). This is continuously verified by executing around 500 test cases against a [travis ci test matrix](https://travis-ci.org/camunda/camunda-bpm-assert). 
+Camunda Platform Assert works with the versions of Camunda Platform as shown [in the documentation](https://docs.camunda.org/manual/latest/user-guide/testing/#assertions-version-compatibility) and multiple Java versions (1.8+). This is continuously verified by executing around 500 test cases. 
 
 ## Get started in _3 simple steps_!
 
@@ -29,7 +28,7 @@ Camunda Platform Assert works with the versions of Camunda Platform as shown [in
 <dependency>
     <groupId>org.camunda.bpm.assert</groupId>
     <artifactId>camunda-bpm-assert</artifactId>
-    <version>11.0.0</version>
+    <version>12.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
