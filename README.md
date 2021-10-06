@@ -28,7 +28,7 @@ Camunda Platform Assert works with the versions of Camunda Platform as shown [in
 <dependency>
     <groupId>org.camunda.bpm.assert</groupId>
     <artifactId>camunda-bpm-assert</artifactId>
-    <version>12.0.0</version>
+    <version>13.0.0</version>
     <scope>test</scope>
 </dependency>
 ```
