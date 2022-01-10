@@ -37,12 +37,20 @@ Additionally, Joel Costigliola's [AssertJ](https://assertj.github.io/doc/) needs
 
 Please note that if you use [Spring Boot](https://spring.io/projects/spring-boot) or the [Camunda Spring Boot Starter](https://docs.camunda.org/manual/latest/user-guide/spring-boot-integration/) in your project, AssertJ is already included in your project's setup.
 
-**2.** Add a **static import** to your test class
+**2a.** Add a **static import** to your test class ...
 
 Create your test case just as described in the [Camunda Platform Testing Guide](https://docs.camunda.org/manual/latest/user-guide/testing/) and add Camunda Platform Assert by statically importing it in your test class:
 
 ```groovy  
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
+```
+
+**2b.** ... or implement `With*Assertions` interface
+
+```groovy  
+class MyTest implements WithProcessEngineAssertions {
+  // ...
+} 
 ```
 
 **3.** Start using the assertions in your **test methods**
