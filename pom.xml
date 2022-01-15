@@ -42,6 +42,7 @@
     <plugin.version.javadoc>3.1.1</plugin.version.javadoc>
     <!-- disable javadoc linter for JDK8 to not fail on incomplete javadoc -->
     <additionalparam>-Xdoclint:none</additionalparam>
+  	<closeTestReports>true</closeTestReports>
   </properties>
 
   <dependencyManagement>
