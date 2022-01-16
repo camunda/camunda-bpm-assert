@@ -198,6 +198,7 @@
           <configuration>
             <runOrder>hourly</runOrder>
             <redirectTestOutputToFile>true</redirectTestOutputToFile>
+            <disableXmlReport>${closeTestReports}</disableXmlReport>
           </configuration>
         </plugin>
         <plugin>
