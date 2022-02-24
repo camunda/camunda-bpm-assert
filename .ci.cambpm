@@ -9,6 +9,7 @@ buildMavenAndDeployToMavenCentral([
     'jdk-12-latest',
     'jdk-13-latest',
     'jdk-14-latest',
-    'jdk-15-latest'
+    'jdk-15-latest',
+    'jdk-17-latest'
   ]
 ])
