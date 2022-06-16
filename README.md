@@ -1,7 +1,7 @@
 # This project was moved
 
 This repository was merged with the `camunda-bpm-platform` repository starting with Camunda BPM Runtime 7.17.0-alpha6. Please find the new location of the source code here: 
-https://github.com/camunda/camunda-bpm-platform/tree/master/test-utils/assert. Please find the documentation here: https://docs.camunda.org/manual/7.17/user-guide/testing/#camunda-assertions.
+https://github.com/camunda/camunda-bpm-platform/tree/master/test-utils/assert. Please find the documentation here: https://docs.camunda.org/manual/7.17/user-guide/testing/#camunda-assertions. And the examples here: https://docs.camunda.org/manual/7.17/user-guide/testing/assert-examples/.
 
 See our [How to contribute guide](https://github.com/camunda/camunda-bpm-platform/blob/master/CONTRIBUTING.md) for where to raise tickets and how to make code contributions.
 
